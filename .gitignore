@@ -1,4 +1,3 @@
-/docs/examples/**/*.*
 # dependencies
 /node_modules/
 /apps/**/node_modules/
@@ -53,4 +52,7 @@ packages/db/prisma/taxonomy-map-overrides.json
 /docs/stakeholders_docs/
 /docs/prototype/reports/
 
-/templates/**/*.*
+# Pulse reference snapshot (docs/examples/pulse/.gitignore — local excludes)
+/docs/examples/pulse/**/node_modules/
+/docs/examples/pulse/**/.next/
+/docs/examples/pulse/packages/db/src/generated/

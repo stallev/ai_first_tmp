@@ -1,0 +1,13 @@
+{
+  "eslint.workingDirectories": [
+    { "directory": "apps/web", "changeProcessCWD": true },
+    { "directory": "packages/domain", "changeProcessCWD": true },
+    { "directory": "packages/db", "changeProcessCWD": true },
+    { "directory": "packages/policy/edge", "changeProcessCWD": true },
+    { "directory": "packages/policy/server", "changeProcessCWD": true }
+  ],
+  "eslint.ignorePatterns": ["docs/examples/**"],
+  "typescript.tsserver.watchOptions": {
+    "excludeDirectories": ["**/docs/examples/**"]
+  }
+}

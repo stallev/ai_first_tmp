@@ -1,0 +1,13 @@
+# Pulse reference snapshot — do not commit build artifacts
+node_modules/
+**/node_modules/
+**/.next/
+**/out/
+**/build/
+**/.vercel
+.env*
+**/*.tsbuildinfo
+**/next-env.d.ts
+packages/db/src/generated/
+apps/**/text_data/
+**/.DS_Store
