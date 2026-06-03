@@ -1,0 +1,81 @@
+---
+description: "{{PROJECT_NAME}} project context — stack, reference Pulse, document precedence"
+alwaysApply: true
+---
+
+# {{PROJECT_NAME}} — project context
+
+## Product
+
+**{{PROJECT_NAME}}** — {{PRODUCT_DESCRIPTION}}  
+Роли: **{{USER_ROLES}}**.  
+MVP scope: см. [`docs/prds/01_product_scope/mvp_scope.md`](docs/prds/01_product_scope/mvp_scope.md) (после W1).
+
+## Reference project (mandatory patterns)
+
+Architectural and AI-first patterns inherit from **Pulse** (fitness marketplace — full implementation snapshot):
+
+- Reference code/docs: [`docs/examples/pulse/`](docs/examples/pulse/)
+- Reference summary: [`docs/reference/pulse_project_reference.md`](docs/reference/pulse_project_reference.md)
+- Methodology: [`docs/meta/ai_first_project_methodology.md`](docs/meta/ai_first_project_methodology.md)
+
+When {{PROJECT_NAME}} docs are silent — follow Pulse reference **architecture and methodology**, adapting domain and ADR deltas.  
+**{{PROJECT_NAME}} Cursor Rules and Guidelines override Pulse reference code** when they conflict — see [`pulse_project_reference.md`](docs/reference/pulse_project_reference.md) §Priority.
+
+## Stack (baseline — full Pulse stack)
+
+- **Next.js** **16.2.6** (pinned) App Router, **TypeScript** — [ADR-002](docs/prds/07_governance/adr_002_next162_vercel_runtime_policy.md)
+- **Request interception:** **`proxy.ts`** (Next.js 16); `middleware.ts` — только временная миграция
+- **Hosting:** Vercel · **UI:** shadcn/ui + Tailwind CSS v4 ({{DESIGN_SYSTEM_NAME}} tokens)
+- **Database:** Neon **PostgreSQL 17** + **Prisma v7** (pooled `DATABASE_URL`, `DIRECT_URL` for migrations)
+- **Auth:** Auth.js v5, **Credentials** (email + password), JWT sessions, role in token
+- **Email:** Resend — **post-MVP** (MVP: schema `job_execution`/`delivery_log` only)
+- **Storage:** **AWS S3** — presigned PUT/GET — [ADR-007](docs/prds/07_governance/adr_007_file_asset_blob_lifecycle.md)
+- **Observability:** Sentry (`@sentry/nextjs`)
+- **Monorepo:** `apps/web`, `apps/workers` (planned), `packages/{domain,policy,db}`
+
+Runtime policy: [ADR-001](docs/prds/07_governance/adr_001_stack_and_runtime.md), [ADR-002](docs/prds/07_governance/adr_002_next162_vercel_runtime_policy.md).
+
+## Source-of-truth order when documents conflict
+
+1. **Cursor Rules** (`.cursor/rules/*.mdc`)
+2. **[`AGENTS.md`](AGENTS.md)** — monorepo entry
+3. **Contracts** (`docs/implementation/mvp/contracts/`)
+4. **PRD** (`docs/prds/`) — when created; interim: [`{{INTERIM_DOCS_GLOB}}`]({{INTERIM_DOCS_GLOB}})
+5. **[`docs/design/canonical_routes.md`](docs/design/canonical_routes.md)** — single route inventory
+6. **Guidelines** (`docs/guidelines/`) — index in [`README.md`](docs/guidelines/README.md)
+7. **HTML prototype** — visual reference only, subordinate to canonical docs
+
+## Domain invariants (do not break — fill during W3/W4)
+
+1. **{{DOMAIN_INVARIANT_1}}**
+2. **{{DOMAIN_INVARIANT_2}}**
+3. **{{DOMAIN_INVARIANT_3}}**
+4. **Background jobs (post-MVP email)** — {{DOMAIN_INVARIANT_4}}
+5. **Post-MVP columns** — {{DOMAIN_INVARIANT_5}}
+
+## Where to find norms
+
+| Area | Document |
+|------|----------|
+| Methodology | [`docs/meta/ai_first_project_methodology.md`](docs/meta/ai_first_project_methodology.md) |
+| Doc creation order | [`docs/meta/documentation_creation_registry.md`](docs/meta/documentation_creation_registry.md) |
+| Architecture map | [`docs/prds/architecture_master_index.md`](docs/prds/architecture_master_index.md) |
+| Agent onboarding | [`docs/architecture_learning_pack/01_architecture_overview.md`](docs/architecture_learning_pack/01_architecture_overview.md) |
+| Database schema | [`docs/prds/03_data_model/database_schema_v1.md`](docs/prds/03_data_model/database_schema_v1.md) |
+| Guidelines | [`docs/guidelines/README.md`](docs/guidelines/README.md) |
+| **UI component catalog (Design Lab)** | `/design-system` — spec: [`design_system_lab_spec.md`](docs/implementation/mvp/specs/design_system_lab_spec.md) |
+| Pulse reference | [`docs/reference/pulse_project_reference.md`](docs/reference/pulse_project_reference.md) |
+| Prompt orchestration | [`prompts/00-orchestration.md`](prompts/00-orchestration.md) |
+
+## Cursor rules tiers
+
+| Tier | When | Manifest |
+|------|------|----------|
+| T0 | Bootstrap | [`.cursor/rules/README.md`](.cursor/rules/README.md) §T0 |
+| T1 | After docs W1–W2 | §T1 |
+| T2 | After Design Lab (P6) | §T2 |
+
+## Repository status
+
+**Текущая фаза:** {{CURRENT_PHASE}}. Не расширять реализацию без явной фазы и contract.
