@@ -29,6 +29,13 @@ Senior Fullstack Developer (Next.js 16 + PostgreSQL + monorepo).
    - `globals.css` with token placeholders
 6. Rename `AGENTS.template.md` → `apps/web/AGENTS.md`
 7. Env example: `DATABASE_URL`, `DIRECT_URL`, `AUTH_SECRET`, S3 (`AWS_IAM_*`, `S3_BUCKET_*`), Sentry vars — см. [`BOOTSTRAP.md`](../BOOTSTRAP.md) §6–§10, [`ai_s3_file_upload_guidelines.md`](../guidelines/nextjs/ai_s3_file_upload_guidelines.md)
+8. Создать `.cursor/skills/app-conventions/SKILL.md` — **проектный скилл поверх cursor rules**:
+   - Frontmatter: `name: app-conventions`; description без слов `performance`/`optimization`/`bundle`
+   - Раздел `## Relationship to other skills` (defer-clause — обязателен, см. §4)
+   - Раздел `## Cursor rules index` — таблица `контекст → существующий .mdc файл` (не копировать содержимое rules, только ссылки)
+   - Раздел `## Project structure` — папки из Directory conventions AGENTS.md
+   - Раздел `## Deviations from vercel-react-best-practices` (пустой по умолчанию)
+   - Spec: [`docs/project-react-skill-requirements.md`](../docs/project-react-skill-requirements.md)
 
 ## Stack (full Pulse — all required)
 Next.js 16.2.6 · Vercel · Neon · Prisma v7 · Auth.js v5 · AWS S3 · Resend (schema-only MVP) · Sentry · shadcn · Tailwind v4 · Sonner
@@ -44,6 +51,9 @@ Next.js 16.2.6 · Vercel · Neon · Prisma v7 · Auth.js v5 · AWS S3 · Resend 
 - [ ] `next build` pass (minimal pages OK)
 - [ ] `proxy.ts` uses nodejs runtime
 - [ ] Prisma migrate dev succeeds
+- [ ] `.cursor/skills/app-conventions/SKILL.md` создан, содержит defer-clause и cursor rules index
+- [ ] Скилл ссылается на `.cursor/rules/*.mdc`, не дублирует их содержимое
+- [ ] `apps/web/AGENTS.md` содержит секцию `## Skills` со ссылкой на `app-conventions`
 
 ## Next
 → [`P6-design-system-lab.md`](P6-design-system-lab.md)

@@ -21,8 +21,10 @@ alwaysApply: true
 ## Functions & variables
 
 - **camelCase** — `trainerProfileId`, `isSubmitting`, `handleSubmit`.
-- **Boolean** — prefix `is`, `has`, `can`, `should` (`isPending`, `hasSlots`).
-- **Event handlers** — `handle` + Event (`handleClick`, `handleFormSubmit`).
+- **Boolean** — prefix `is`, `has`, `can`, `should` (`isPending`, `hasSlots`, `canCancelBooking`).
+- **Event handlers** — `handle` + предметная область + событие (`handleBookingConfirm`, `handleSlotSelect`) — не просто `handleClick` без контекста.
+- **Функции** — **глагол + объект**, отражающие действие: `formatBookingTime`, `getTrainerProfile`, `validateSlotAvailability` — не `process`, `run`, `doAction`.
+- **Коллекции** — **во множественном числе**: `trainers`, `bookingSlots`, `upcomingEvents`.
 - **Module constants** — **SCREAMING_SNAKE_CASE** (`PRODUCT_TOAST_DURATION_MS`).
 
 ## Files (non-component)
@@ -42,8 +44,11 @@ alwaysApply: true
 
 ## Антипаттерны
 
-- `data`, `item`, `temp` для non-trivial bindings.
-- `useFoo` для функции без React Hooks внутри.
+- `data`, `item`, `temp`, `res`, `val`, `obj` для non-trivial bindings — использовать описательное имя.
+- `flag`, `check`, `status`, `info` без предметной области — использовать `isProfileComplete`, `hasActiveBookings`.
+- `handleClick`, `handleChange` без контекста — добавить предметную область: `handleAvatarUpload`, `handleSlotSelect`.
+- `process`, `run`, `doAction`, `getList` без объекта — называть что именно: `processBookingPayment`, `getTrainerList`.
+- `useFoo` для функции без React Hooks внутри — использовать `getFoo` / `formatFoo`.
 - Смешение snake_case и camelCase в TS/React code (DB `@map` — исключение в Prisma schema).
 
 Reference: Pulse (docs/examples/pulse) `ai_react_utilities_guidelines.md` §2.1; React.dev custom hooks naming.
