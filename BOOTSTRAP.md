@@ -102,6 +102,10 @@ rsync -a \
 | `{{PRODUCT_DESCRIPTION}}` | B2B marketplace for … |
 | `{{USER_ROLES}}` | client, vendor, admin |
 | `{{DESIGN_SYSTEM_NAME}}` | Warm Forest |
+| `{{DESIGN_SYSTEM_SLUG}}` | warm-forest |
+| `{{MAIN_PROTOTYPE_HTML}}` | Acme_Prototype_v1.html |
+| `{{INTERIM_DESIGN_SYSTEM_DOC}}` | acme-design-system.md |
+| `{{DOMAIN_COMPONENT_FOLDER}}` | catalog |
 | `{{S3_KEY_PREFIX}}` | `acme/` |
 | `{{DOMAIN_INVARIANT_*}}` | из domain design |
 | `{{CURRENT_PHASE}}` | Documentation — W0 |

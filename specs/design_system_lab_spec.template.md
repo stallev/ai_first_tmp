@@ -2,11 +2,11 @@
 
 **Тип:** Spec  
 **Статус:** Canonical  
-**Версия:** 1.2  
+**Версия:** 1.3  
 **Дата:** 2026-05-23  
 **Волна:** W15  
 **Фаза:** P01 (scaffold) — блокирует P02 UI  
-**Зависит от:** [`visual_identity_contract.md`](../../../design/visual_identity_contract.md), [`styleguide.md`](../../../design/styleguide.md), [`typography_text_guidelines.md`](../../../guidelines/typography_text_guidelines.md), [`example_components/README.md`](../../../example_components/README.md)  
+**Зависит от:** [`visual_identity_contract.md`](../../../design/visual_identity_contract.md), [`styleguide.md`](../../../design/styleguide.md), [`typography_text_guidelines.md`](../../../guidelines/typography_text_guidelines.md)  
 **Связанные документы:** [`global_shell_spec.md`](./global_shell_spec.md), [`prototype_route_mapping.md`](../../../design/prototype_route_mapping.md), [`ux_ui_principles.md`](../../../design/ux_ui_principles.md), [`accessibility_requirements.md`](../../../design/accessibility_requirements.md)
 
 **Context7 verified:** Next.js 16.2 — route groups `(folder)` не попадают в URL; nested `layout.tsx` через `children` (`/vercel/next.js/v16.2.2`).
@@ -15,11 +15,13 @@
 
 ## Purpose
 
-Implementation-spec для AI-агента: перенос **shared UI primitives** (typography atoms, tokenized Button/Link/Card) из [`docs/example_components/`](../../../example_components/) в `apps/web`, дополнение **design tokens** в `globals.css`, и создание **Design Lab page** — dev-only маршрута для визуальной сверки всех вариантов компонентов с HTML-прототипом.
+Implementation-spec для AI-агента: реализация **shared UI primitives** (typography atoms, tokenized Button/Link/Card) в `apps/web` **из канонических design contracts** и HTML-прототипа {{PROJECT_NAME}}, дополнение **design tokens** в `globals.css`, и создание **Design Lab page** — dev-only маршрута для визуальной сверки всех вариантов компонентов с прототипом.
 
 **Аудитория:** AI-агенты фазы P01; frontend implementers; design QA.
 
-**Цель продукта:** единый визуальный фундамент Warm Forest **до** массовой реализации экранов P02–P05; снижение drift между generic shadcn и прототипом.
+**Цель продукта:** единый визуальный фундамент **{{DESIGN_SYSTEM_NAME}}** **до** массовой реализации экранов P02–P05; снижение drift между generic shadcn и прототипом {{PROJECT_NAME}}.
+
+**Не цель:** копирование дизайн-системы или `example_components` референсного проекта (Pulse). Референс — **pattern library** для архитектуры Design Lab и CVA-паттернов; визуал и токены — только из контрактов и прототипа текущего проекта.
 
 ---
 
@@ -33,7 +35,7 @@ Implementation-spec для AI-агента: перенос **shared UI primitive
 
 | Шаг | Действие агента |
 |-----|-----------------|
-| **КОНТЕКСТ** | Прочитать этот spec + `visual_identity_contract.md` + открыть соответствующий экран в [`Fitness_Platform_Prototype_v1.html`](../../../prototypes/Fitness_Platform_Prototype_v1.html); для новых primitives — **Context7** (§ Component catalog placement) |
+| **КОНТЕКСТ** | Прочитать этот spec + `visual_identity_contract.md` + открыть соответствующий экран в [`{{MAIN_PROTOTYPE_HTML}}`](../../../prototypes/{{MAIN_PROTOTYPE_HTML}}); для новых primitives — **Context7** (§ Component catalog placement) |
 | **ФАЗА** | P01 — не расширять scope за пределы spec без ADR/contract |
 | **КОНТРАКТ** | Этот документ + Cursor Rules (§ Enforcement ниже) |
 | **ЗАДАЧИ** | Чеклист § Implementation tasks (ordered) |
@@ -63,7 +65,7 @@ Implementation-spec для AI-агента: перенос **shared UI primitive
 | Typography atoms | `Heading`, `SectionTitle`, `ContentText`, `AlertText` |
 | Actions | Tokenized `Button` (replace shadcn default) |
 | Navigation primitive | `CustomLink` |
-| Surfaces | shadcn `Card*` + **`PulseCard`** (CVA; rename from design kit `BsfyCard`) |
+| Surfaces | shadcn `Card*` + **`SurfaceCard`** (CVA surface primitive — neutral catalog name) |
 | Design Lab | `/design-system` dev-only page, L1 Tokens + L2 Primitives + L3 Patterns (minimal) |
 | Docs sync | `canonical_routes.md`, `P01_tasks.md` — см. § Documentation updates |
 
@@ -73,7 +75,7 @@ Implementation-spec для AI-агента: перенос **shared UI primitive
 - Storybook / Chromatic
 - Playwright visual regression CI
 - Side-by-side iframe прототипа (optional post-MVP lab v2)
-- Domain/feature molecules (`TrainerCard`, `BookingRow` — в specs фаз P02–P05)
+- Domain/feature molecules — в specs фаз P02+ (§ Appendix A — populate from phase specs; **не** копировать inventory референса)
 - `@/lib/messages` для lab placeholder copy (допустим dev-only literal strings с пометкой `// design-lab-only`)
 
 ---
@@ -86,7 +88,7 @@ Implementation-spec для AI-агента: перенос **shared UI primitive
 
 | Rule file | Что проверять при реализации |
 |-----------|------------------------------|
-| [`project-context.mdc`](../../../../.cursor/rules/project-context.mdc) | Next.js **16.2.6**, Warm Forest, не расширять beyond P01 без фазы |
+| [`project-context.mdc`](../../../../.cursor/rules/project-context.mdc) | Next.js **16.2.6**, {{DESIGN_SYSTEM_NAME}}, не расширять beyond P01 без фазы |
 | [`product-docs-alignment.mdc`](../../../../.cursor/rules/product-docs-alignment.mdc) | Обновить `canonical_routes.md` при добавлении `/design-system` |
 | [`typescript-monorepo-types.mdc`](../../../../.cursor/rules/typescript-monorepo-types.mdc) | `npm run typecheck` после scaffold packages; no ad-hoc types in atoms |
 | [`ai-dry-deduplication.mdc`](../../../../.cursor/rules/ai-dry-deduplication.mdc) | Один CVA source (`buttonVariants`, `contentTextVariants`); matrix in `lib/design-lab/` |
@@ -97,7 +99,7 @@ Implementation-spec для AI-агента: перенос **shared UI primitive
 
 | Rule file | Что проверять |
 |-----------|---------------|
-| [`ui-warm-forest-shadcn.mdc`](../../../../.cursor/rules/ui-warm-forest-shadcn.mdc) | Semantic tokens only (`bg-primary`, `text-muted-foreground`); Manrope/Source Serif 4/Mono; states empty/loading/error |
+| [`ui-{{DESIGN_SYSTEM_SLUG}}-shadcn.mdc`](../../../../.cursor/rules/ui-{{DESIGN_SYSTEM_SLUG}}-shadcn.mdc) | Semantic tokens only (`bg-primary`, `text-muted-foreground`); fonts from `visual_identity_contract`; states empty/loading/error |
 | [`ui-prototype-fidelity.mdc`](../../../../.cursor/rules/ui-prototype-fidelity.mdc) | Сверка каждого L2/L3 блока с прототипом: font, size, weight, radius, spacing |
 | [`ui-mobile-first.mdc`](../../../../.cursor/rules/ui-mobile-first.mdc) | Base = mobile; touch targets ≥ **44×44px**; Design Lab viewport control 390px |
 | [`ui-semantics-a11y.mdc`](../../../../.cursor/rules/ui-semantics-a11y.mdc) | Semantic HTML; icon-only `aria-label`; `AlertText role="alert"`; WCAG 2.1 AA contrast |
@@ -141,16 +143,41 @@ Implementation-spec для AI-агента: перенос **shared UI primitive
 
 ---
 
+## Reference adaptation policy (MUST)
+
+Референсный проект (Pulse) и его design kit — **не** source of truth для визуала {{PROJECT_NAME}}.
+
+| Источник | Роль | Агент |
+|----------|------|-------|
+| [`visual_identity_contract.md`](../../../design/visual_identity_contract.md) | **Primary** — token names, typography, semantic colors | MUST implement |
+| [`{{MAIN_PROTOTYPE_HTML}}`](../../../prototypes/{{MAIN_PROTOTYPE_HTML}}) | **Primary** — visual ground truth для MVP screens | MUST match via semantic tokens |
+| [`{{INTERIM_DESIGN_SYSTEM_DOC}}`](../../../default_docs/{{INTERIM_DESIGN_SYSTEM_DOC}}) | Detail when contract silent | SHOULD read |
+| Pulse reference [`{{REFERENCE_EXAMPLE_COMPONENTS_REL_PATH}}`](../../../{{REFERENCE_EXAMPLE_COMPONENTS_REL_PATH}}) | **Optional** — CVA/layout patterns only | MAY read; **MUST NOT** verbatim copy tokens, colors, or domain variants |
+
+**MUST NOT:**
+
+- Copy-paste `globals.css` brand values from Pulse / reference kit without mapping to {{PROJECT_NAME}} contract.
+- Import reference component names (`PulseCard`, `BsfyCard`, domain-specific Button variants) into `apps/web`.
+- Treat `fitness-platform-*` interim docs as canonical for {{PROJECT_NAME}}.
+
+**MUST:**
+
+- Map every visual parameter to semantic token or atom variant from {{PROJECT_NAME}} contracts.
+- Remove reference-only CVA variants on adaptation (§ Reference kit cleanup).
+- When reference code and {{PROJECT_NAME}} Cursor Rules conflict — **{{PROJECT_NAME}} Rules win** (см. [`pulse_project_reference.md`](../../../reference/pulse_project_reference.md) §Priority).
+
+---
+
 ## Design sources (read before coding)
 
 | Source | Path | Role |
 |--------|------|------|
-| Design kit (copy source) | [`docs/example_components/`](../../../example_components/) | Reference implementation atoms + CVA |
-| Prototype | [`docs/prototypes/Fitness_Platform_Prototype_v1.html`](../../../prototypes/Fitness_Platform_Prototype_v1.html) | Visual ground truth |
+| Visual tokens (canonical) | [`visual_identity_contract.md`](../../../design/visual_identity_contract.md) | Token names, typography, semantic color roles |
+| Prototype | [`docs/prototypes/{{MAIN_PROTOTYPE_HTML}}`](../../../prototypes/{{MAIN_PROTOTYPE_HTML}}) | Visual ground truth for MVP screens |
 | Prototype mapping | [`prototype_route_mapping.md`](../../../design/prototype_route_mapping.md) | screen ID → L3 pattern anchor |
-| Visual tokens | [`visual_identity_contract.md`](../../../design/visual_identity_contract.md) | Canonical token names |
-| Interim DS archive | [`fitness-platform-design-system.md`](../../../default_docs/fitness-platform-design-system.md) | Detail when contract silent |
+| Interim DS archive | [`{{INTERIM_DESIGN_SYSTEM_DOC}}`](../../../default_docs/{{INTERIM_DESIGN_SYSTEM_DOC}}) | Detail when contract silent |
 | Component recipes | [`styleguide.md`](../../../design/styleguide.md) | L3 composed patterns |
+| Reference pattern library (optional) | [`{{REFERENCE_EXAMPLE_COMPONENTS_REL_PATH}}`](../../../{{REFERENCE_EXAMPLE_COMPONENTS_REL_PATH}}) | CVA structure inspiration — **not** default copy source |
 
 ### Prototype fidelity workflow (MUST per component)
 
@@ -165,27 +192,24 @@ Implementation-spec для AI-агента: перенос **shared UI primitive
 
 ## Token migration — `globals.css`
 
-Текущий `apps/web/src/app/globals.css` содержит Warm Forest shadcn mapping, но **не хватает** tokens для design kit Card/Button hover shadows.
+Текущий `apps/web/src/app/globals.css` содержит shadcn semantic mapping для **{{DESIGN_SYSTEM_NAME}}**, но может **не хватать** tokens для SurfaceCard/Button hover shadows и elevation.
 
-**MUST add** to `:root` and `.dark` (values from [`example_components/README.md`](../../../example_components/README.md) § Token reference + prototype):
+**MUST derive values from** [`visual_identity_contract.md`](../../../design/visual_identity_contract.md) + [`{{MAIN_PROTOTYPE_HTML}}`](../../../prototypes/{{MAIN_PROTOTYPE_HTML}}) — **not** from reference `example_components` README.
 
-| Token | Purpose |
-|-------|---------|
-| `--forest`, `--forest-mid`, `--gold`, `--gold-light`, `--cream`, `--cream-border` | Brand refs for CVA |
-| `--green-soft`, `--amber-soft` | PulseCard `state=active|warning` |
+**MUST add** to `:root` and `.dark` per contract (illustrative categories — exact names from `visual_identity_contract`):
+
+| Token category | Purpose |
+|----------------|---------|
+| Brand semantic refs | CVA variants referencing brand palette |
+| Surface state soft tints | `SurfaceCard` `state=active|warning` backgrounds |
 | `--shadow-card`, `--shadow-hover`, `--shadow-overlay` | Card elevation |
-| `--card-radius-sm` … `--card-radius-xl` | PulseCard variants |
-| `--card-p-sm`, `--card-p-md`, `--card-p-lg` | PulseCard padding |
-| `--green-text` | Success text (stat labels) |
+| `--card-radius-sm` … `--card-radius-xl` | SurfaceCard radius variants |
+| `--card-p-sm`, `--card-p-md`, `--card-p-lg` | SurfaceCard padding |
+| Status / success text tokens | Stat labels, success copy roles |
 
-**MUST add** to `@theme inline` (if used as Tailwind colors):
+**MUST add** to `@theme inline` (if used as Tailwind colors): utilities named in `visual_identity_contract` (e.g. `text-subtle-foreground`, primary container pairs).
 
-| Utility | Source |
-|---------|--------|
-| `text-subtle-foreground` | Map to ink-3 / muted tertiary |
-| `bg-primary-container`, `text-on-primary-container` | Already in design kit button tonal variant |
-
-**MUST NOT:** hardcode `#2D5A40` etc. in component TSX — only semantic classes or `var(--token)`.
+**MUST NOT:** hardcode reference-project hex (e.g. Pulse forest green) in component TSX — only semantic classes or `var(--token)` from {{PROJECT_NAME}} contract.
 
 **SHOULD:** migrate elevation constants to `apps/web/src/lib/ui/elevation.ts` per styleguide note.
 
@@ -203,7 +227,7 @@ Implementation-spec для AI-агента: перенос **shared UI primitive
 | **Typography atoms** | `apps/web/src/components/atoms/` | `@/components/atoms` |
 | **Tokenized primitives** | `apps/web/src/components/ui/` | `@/components/ui/{Component}` |
 | **App shell (layout chrome)** | `apps/web/src/components/shell/` | `@/components/shell/*` — см. [`global_shell_spec.md`](./global_shell_spec.md) |
-| **Domain molecules** | `apps/web/src/components/{domain}/` | `@/components/catalog/*`, `booking/*`, `trainer/*`, `admin/*` |
+| **Domain molecules** | `apps/web/src/components/{domain}/` | `@/components/{{DOMAIN_COMPONENT_FOLDER}}/*` — пути из phase specs |
 | **Design tokens** | `apps/web/src/app/globals.css` | semantic Tailwind / CSS variables |
 | **UI helpers (non-JSX)** | `apps/web/src/lib/ui/` | status maps, elevation — не product UI-import как компонент |
 | **Variant matrices (reference)** | `apps/web/src/lib/design-lab/` | read-only для сверки; не UI-import |
@@ -215,45 +239,42 @@ Implementation-spec для AI-агента: перенос **shared UI primitive
 2. Импортировать только из `@/components/atoms` и `@/components/ui/*`.
 3. L3 patterns (KPI card, empty state, section header) — **компоновать** из catalog primitives по [`styleguide.md`](../../../design/styleguide.md); не копировать разметку из `design-lab/` fixtures.
 4. Новый повторяющийся primitive → добавить в `components/atoms/` или `components/ui/`, обновить Design Lab секцию, затем использовать на product routes.
-5. Domain molecules (`TrainerCard`, `BookingRow`) — `components/{domain}/`; внутри **только** catalog imports (`atoms/`, `ui/`, при необходимости `shell/`).
+5. Domain molecules — `components/{domain}/` per phase specs; внутри **только** catalog imports (`atoms/`, `ui/`, при необходимости `shell/`). См. § Appendix A.
 6. Размещение каждого нового компонента — по § **Component catalog placement & Phase 2–3 inventory**; FAANG UX + prototype parity обязательны.
 
-**Enforcement:** Cursor Rules **ui-warm-forest-shadcn** §Design Lab catalog, **react-logic-presentation**, **react-ui-components**, **ui-prototype-fidelity**.
+**Enforcement:** Cursor Rules **ui-{{DESIGN_SYSTEM_SLUG}}-shadcn** §Design Lab catalog, **react-logic-presentation**, **react-ui-components**, **ui-prototype-fidelity**.
 
 **Context7 verified:** route group `(dev)` не попадает в URL — `/design-system` maps to `app/(dev)/design-system/page.tsx` ([Next.js v16.2 route groups](https://github.com/vercel/next.js/blob/v16.2.2/docs/01-app/03-api-reference/03-file-conventions/route-groups.mdx)).
 
-### Copy map (design kit → apps/web)
+### Adaptation map (reference kit → apps/web)
 
-| From (`docs/example_components/`) | To (`apps/web/src/`) | Action |
-|-------------------------------------|----------------------|--------|
-| `components/atoms/**` | `components/atoms/**` | Copy + adapt variants |
-| `components/ui/button.tsx` | `components/ui/button.tsx` | **Replace** current shadcn default |
-| `components/ui/CustomLink.tsx` | `components/ui/CustomLink.tsx` | **Add** |
-| `components/ui/card.tsx` | `components/ui/card.tsx` | **Merge**: keep shadcn `Card*` slots + add `PulseCard` |
+**Workflow:** implement from contracts + prototype; **adapt** reference CVA patterns only when they accelerate tokenization. **MUST NOT** bulk-copy reference `example_components/` into `apps/web`.
+
+| From (optional reference) | To (`apps/web/src/`) | Action |
+|-----------------------------|----------------------|--------|
+| `components/atoms/**` in reference kit | `components/atoms/**` | **Implement** from contract; MAY adapt CVA structure |
+| reference `button.tsx` patterns | `components/ui/button.tsx` | **Replace** shadcn default with {{PROJECT_NAME}} tokenized version |
+| reference `CustomLink.tsx` | `components/ui/CustomLink.tsx` | **Add** per styleguide |
+| reference surface card CVA | `components/ui/card.tsx` | **Merge**: keep shadcn `Card*` slots + add `SurfaceCard` |
 | `lib/utils.ts` | `lib/utils.ts` | Skip if identical `cn()` exists |
 
-### Rename: `BsfyCard` → `PulseCard`
+### `SurfaceCard` naming (MUST)
 
-Design kit uses `BsfyCard` / `bsfyCardVariants` (Pulse reference legacy).
+Neutral catalog name — **не** префикс референсного проекта (`PulseCard`, `BsfyCard`).
 
 **MUST:**
 
-- Export `PulseCard`, `pulseCardVariants`, `PulseCardProps`
-- `bsfyCardVariants` → `pulseCardVariants` internally
-- Update all lab section imports
-- **MUST NOT** leave `Bsfy` prefix in production `apps/web` code
+- Export `SurfaceCard`, `surfaceCardVariants`, `SurfaceCardProps`
+- **MUST NOT** leave reference legacy prefixes (`Bsfy`, `Pulse`) in production `apps/web` code
 
-### Pulse reference domain cleanup (MUST remove on copy)
+### Reference kit cleanup (MUST on adaptation)
 
-**Button** — удалить variants без {{PROJECT_NAME}} MVP reference:
+При адаптации из optional reference kit — **удалить** variants, не входящие в {{PROJECT_NAME}} MVP:
 
-- `leaderPrimaryCta`, `editorSave`, `submitDay`
+- **Button** — domain-specific variants from reference (e.g. fitness/onboarding CTAs not in wireframes)
+- **ContentText** — domain-specific variants from reference (e.g. reading/streak/passage roles)
 
-**ContentText** — удалить variants:
-
-- `passageTriggerTitle`, `verseReading`, `streakSecondary`
-
-**Add later (Phase 2)** only when wireframe requires: gold accent CTA, domain-specific labels.
+**Add later (Phase 2+)** only when {{PROJECT_NAME}} wireframe requires them.
 
 ---
 
@@ -284,7 +305,7 @@ Design kit uses `BsfyCard` / `bsfyCardVariants` (Pulse reference legacy).
 | `mutedMicro`, `hint`, `subtleFine` | Fine print, timestamps |
 | `blockLabel`, `statusLabel`, `caption` | Section labels, uppercase captions |
 | `smallEmphasisPrimary`, `eyebrowOnBrand` | Links emphasis, brand eyebrows |
-| `statValue` | KPI numbers (trainer/admin dashboard) |
+| `statValue` | KPI numbers (dashboard KPI patterns) |
 
 ### Button (`components/ui/button.tsx`)
 
@@ -295,7 +316,7 @@ Design kit uses `BsfyCard` / `bsfyCardVariants` (Pulse reference legacy).
 | **state** | default, disabled, `loading` (spinner + `data-loading`) |
 | **composition** | `asChild` + Radix Slot for Next.js `<Link>` |
 
-**Visual canon (prototype):** `rounded-full`, h-11 default, `active:scale-[0.97]`, forest primary hover.
+**Visual canon (prototype):** per `visual_identity_contract` + prototype inspect — radius, height, hover/active affordances.
 
 **Hierarchy (P4):** one `default` per pattern demo block.
 
@@ -316,7 +337,7 @@ import Link from "next/link";
 import { Button } from "@/components/ui/button";
 
 <Button asChild>
-  <Link href="/trainers">Browse trainers</Link>
+  <Link href="/catalog">Browse catalog</Link>
 </Button>
 ```
 
@@ -326,13 +347,13 @@ import { Button } from "@/components/ui/button";
 
 **Keep** shadcn primitives: `Card`, `CardHeader`, `CardTitle`, `CardDescription`, `CardContent`, `CardFooter`, `CardAction` — used by Dialog, Sheet, forms.
 
-**Add** `PulseCard`:
+**Add** `SurfaceCard`:
 
 | variant | Usage |
 |---------|--------|
 | `base` | Dashboard blocks, forms |
-| `elevated` | Hero / today session panel |
-| `compact` | List items (bookings, queue rows) |
+| `elevated` | Hero / featured panel |
+| `compact` | List items (rows, queue entries) |
 | `row` | Horizontal task/diary rows |
 
 | Modifier | Values |
@@ -344,7 +365,7 @@ import { Button } from "@/components/ui/button";
 
 ### Form controls (`components/ui/` — Phase 2)
 
-Tokenize shadcn primitives to Warm Forest / prototype parity. Composition via `Field` + `FieldLabel` + `FieldError` per [`forms_and_validation_ux.md`](../../../design/forms_and_validation_ux.md).
+Tokenize shadcn primitives to **{{DESIGN_SYSTEM_NAME}}** / prototype parity. Composition via `Field` + `FieldLabel` + `FieldError` per [`forms_and_validation_ux.md`](../../../design/forms_and_validation_ux.md).
 
 | Component | Key props | Variants / notes |
 |-----------|-----------|------------------|
@@ -365,14 +386,14 @@ Tokenize shadcn primitives to Warm Forest / prototype parity. Composition via `F
 **Применяется:** Phase 2–3 Design Lab + **P03–P13** product UI  
 **Связанные UX-контракты:** [`ux_ui_principles.md`](../../../design/ux_ui_principles.md), [`forms_and_validation_ux.md`](../../../design/forms_and_validation_ux.md), [`accessibility_requirements.md`](../../../design/accessibility_requirements.md), [`styleguide.md`](../../../design/styleguide.md)
 
-Нормы зрелых consumer/enterprise продуктов (informally «FAANG-level») адаптированы для {{PROJECT_NAME}} из [`ux_ui_principles.md`](../../../design/ux_ui_principles.md) и Pulse reference [`ux_ui_faang_principles_for_agents.md`](../../../examples/Pulse reference/docs/design/ux_ui_faang_principles_for_agents.md). **Visual canon** — Warm Forest + HTML-прототип; FAANG-контракт задаёт **поведение, состояния и a11y**, не подменяя токены прототипа.
+Нормы зрелых consumer/enterprise продуктов (informally «FAANG-level») адаптированы для {{PROJECT_NAME}} из [`ux_ui_principles.md`](../../../design/ux_ui_principles.md). **Visual canon** — **{{DESIGN_SYSTEM_NAME}}** + HTML-прототип {{PROJECT_NAME}}; FAANG-контракт задаёт **поведение, состояния и a11y**, не подменяя токены прототипа. Pulse reference UX doc — optional pattern library only ([`docs/examples/pulse/`](../../../examples/pulse/)); **MUST NOT** override {{PROJECT_NAME}} contracts.
 
 ### Agent prerequisites — Context7 (MUST)
 
 Перед реализацией **любого** компонента из inventory ниже агент **MUST**:
 
 1. **`resolve-library-id`** → **`query-docs`** (Context7 MCP) для актуальных API — не полагаться только на training data.
-2. Сверить визуал с [`Fitness_Platform_Prototype_v1.html`](../../../prototypes/Fitness_Platform_Prototype_v1.html) (§ Prototype column) + [`fitness-platform-design-system.md`](../../../default_docs/fitness-platform-design-system.md).
+2. Сверить визуал с [`{{MAIN_PROTOTYPE_HTML}}`](../../../prototypes/{{MAIN_PROTOTYPE_HTML}}) (§ Prototype column) + [`{{INTERIM_DESIGN_SYSTEM_DOC}}`](../../../default_docs/{{INTERIM_DESIGN_SYSTEM_DOC}}).
 3. Пройти § **FAANG UX/UI contract** и § **Per-component verification** для строки inventory.
 
 | Задача | Context7 library (приоритет) | Query focus |
@@ -393,12 +414,12 @@ Typography text role only?           → components/atoms/
 shadcn/Radix or tokenized control?   → components/ui/ (tokenize in place if exists)
 Cross-role composed block (≥2 roles)? → components/ui/ (catalog L3) OR styleguide recipe
 Global nav / top bar / app chrome?   → components/shell/
-Domain-specific card/row/wizard?     → components/{catalog|booking|trainer|admin}/
+Domain-specific card/row/wizard?     → components/{{DOMAIN_COMPONENT_FOLDER}}/
 Design Lab matrix / fixtures only?   → components/design-lab/ (never product import)
 Status/domain maps, elevation?       → lib/ui/ or @{{PACKAGE_SCOPE}}/domain (no JSX)
 ```
 
-**MUST NOT** создавать `components/patterns/` — cross-role L3 живёт в `ui/` (прецедент: `PulseCardKpi`) или в domain folder.
+**MUST NOT** создавать `components/patterns/` — cross-role L3 живёт в `ui/` (прецедент: `KpiCard`) или в domain folder.
 
 **MUST NOT** класть в `atoms/`: chips, badges, stars, inputs — только typography atoms.
 
@@ -410,7 +431,7 @@ Status/domain maps, elevation?       → lib/ui/ or @{{PACKAGE_SCOPE}}/domain (n
 |----|---------|------------|-------------------|
 | **FX-1** | Predictability | Одинаковые паттерны на sibling routes (CTA placement, labels) | [`ux_ui_principles.md`](../../../design/ux_ui_principles.md) P4; `@/lib/messages` |
 | **FX-2** | Hierarchy | Один primary focus; secondary не конкурирует | P4 One Primary Action; `Button` variant `default` |
-| **FX-3** | Progressive disclosure | Сложность по шагам (wizard, tabs, sheet) | P1; booking 3 steps, onboarding ~5 |
+| **FX-3** | Progressive disclosure | Сложность по шагам (wizard, tabs, sheet) | P1; per {{PROJECT_NAME}} user flows |
 | **FX-4** | Production states | `default`, `hover`, `focus`, `disabled`, `error`, `empty`, `loading` — где применимо | [`ui_states_contract.md`](../../../design/ui_states_contract.md); Lab matrix |
 | **FX-5** | Accessibility | WCAG 2.1 AA: names, contrast, keyboard, focus visible | **ui-semantics-a11y**; Radix/shadcn first |
 | **FX-6** | Mobile-first | Base = 390px; touch ≥ **44×44px**; thumb-zone CTAs | **ui-mobile-first** |
@@ -432,32 +453,32 @@ Status/domain maps, elevation?       → lib/ui/ or @{{PACKAGE_SCOPE}}/domain (n
 
 | Component | Target file | Phase | Prototype anchor | FAANG UX notes |
 |-----------|-------------|-------|------------------|----------------|
-| `Button` | `button.tsx` | ✅ 1 | `c.book`, CTAs | FX-2, FX-6; loading + `aria-busy` |
-| `CustomLink` | `CustomLink.tsx` | ✅ 1 | `c.home` «All →» | FX-5; icon `aria-label` |
-| `PulseCard`, `Card*` | `card.tsx` | ✅ 1 | `c.bookings`, cards | FX-4 interactive/hover; keyboard if clickable |
+| `Button` | `button.tsx` | ✅ 1 | primary CTA screens | FX-2, FX-6; loading + `aria-busy` |
+| `CustomLink` | `CustomLink.tsx` | ✅ 1 | in-content / footer links | FX-5; icon `aria-label` |
+| `SurfaceCard`, `Card*` | `card.tsx` | ✅ 1 | prototype list/card screens | FX-4 interactive/hover; keyboard if clickable |
 | `Container` | `container.tsx` | ✅ 1 | page width | Responsive padding mobile-first |
-| `Input`, `Textarea`, `Field*` | `input.tsx`, etc. | ✅ 2a | `c.book` payment, catalog search | FX-5 labels; FX-4 error/disabled; Context7 Field pattern |
+| `Input`, `Textarea`, `Field*` | `input.tsx`, etc. | ✅ 2a | form/search screens | FX-5 labels; FX-4 error/disabled; Context7 Field pattern |
 | `Checkbox`, `RadioGroup`, `Switch` | respective | ✅ 2a | onboarding terms, filters, `t.services` | FX-6 touch; FX-5 fieldset/legend for groups |
-| `RatingStars` | `RatingStars.tsx` | 2b | TrainerCard, reviews | **Gold** `text-secondary`; interactive: keyboard stars |
-| `SpecChip` | `SpecChip.tsx` | 2b | Trainer specializations | Display-only; not interactive filter |
-| `FilterChip` | `FilterChip.tsx` | 2c | `c.catalog` mobile chips | FX-7 instant filter response; selected state clear |
-| `PhotoSlot` | `PhotoSlot.tsx` | 2b | TrainerCard, onboarding photo | Empty/upload states; meaningful `alt` when image |
-| `Tabs` (pill) | `tabs.tsx` | 2b | Trainer profile, schedule | FX-3; mobile `overflow-x-auto`; Context7 Tabs |
-| `Badge` / `StatusBadge` | `badge.tsx` or `StatusBadge.tsx` | 2b | `c.bookings`, admin queue | Domain status from `@{{PACKAGE_SCOPE}}/domain`; labels `@/lib/messages` |
+| `RatingStars` | `RatingStars.tsx` | 2b | review/rating patterns | `text-secondary` accent; interactive: keyboard stars |
+| `SpecChip` | `SpecChip.tsx` | 2b | attribute/tag display | Display-only; not interactive filter |
+| `FilterChip` | `FilterChip.tsx` | 2c | catalog/filter mobile chips | FX-7 instant filter response; selected state clear |
+| `PhotoSlot` | `PhotoSlot.tsx` | 2b | profile/media upload patterns | Empty/upload states; meaningful `alt` when image |
+| `Tabs` (pill) | `tabs.tsx` | 2b | tabbed detail views | FX-3; mobile `overflow-x-auto`; Context7 Tabs |
+| `Badge` / `StatusBadge` | `badge.tsx` or `StatusBadge.tsx` | 2b | list/status screens | Domain status from `@{{PACKAGE_SCOPE}}/domain`; labels `@/lib/messages` |
 | `Avatar` | `avatar.tsx` | 2b | everywhere | Size matrix xs→2xl; fallback initials |
-| `VerifiedBadge` | `VerifiedBadge.tsx` | 2b | TrainerCard check | Decorative icon `aria-hidden`; trust signal in text nearby |
+| `VerifiedBadge` | `VerifiedBadge.tsx` | 2b | trust/verification UI | Decorative icon `aria-hidden`; trust signal in text nearby |
 | `Sheet`, `Dialog` | `sheet.tsx`, `dialog.tsx` | 2c | filters mobile, new service | FX-6 bottom sheet `< md`; focus trap; Escape |
-| `Progress` | `progress.tsx` | 2c | booking/onboarding wizard | Visible step label + bar; FX-3 |
-| `Slider` | `slider.tsx` | 2c | catalog max price | FX-5 label + value; `accent-primary` |
+| `Progress` | `progress.tsx` | 2c | wizard/onboarding flows | Visible step label + bar; FX-3 |
+| `Slider` | `slider.tsx` | 2c | filter/range UIs | FX-5 label + value; `accent-primary` |
 | `Skeleton` | `skeleton.tsx` | 2c | async lists | FX-4; shape matches final layout (P6) |
 | `Empty` | `empty.tsx` | ✅ L3 demo | empty lists | FX-8 mandatory CTA |
 | `FileUploadZone` | `FileUploadZone.client.tsx` | 3 | cert upload P04 | FX-4 uploading/error; per-file errors |
 | `Calendar` | `calendar.tsx` | 3 | schedule exceptions | FX-6 day cells ≥44px; blocked/today states |
-| `DatePickerField` | `DatePickerField.client.tsx` | 3 | onboarding birth date, booking | Popover + grid month/year dropdown; hidden ISO input; `disableFuture` / `disablePast` |
+| `DatePickerField` | `DatePickerField.client.tsx` | 3 | date fields in forms | Popover + grid month/year dropdown; hidden ISO input; `disableFuture` / `disablePast` |
 | `DayPill` | `DayPill.tsx` | 2c | `ScheduleGrid` | Horizontal scroll; selected primary |
-| `TimeSlotButton` | `TimeSlotButton.tsx` | 2c | booking step 2 | Disabled + line-through; FX-6 h-11 |
-| `SchedulePicker` | `SchedulePicker.client.tsx` | 2c | `c.book` step 2 | Compose DayPill + TimeSlot; timezone label |
-| `SearchTrigger` | `SearchTrigger.tsx` | 2c | `c.home` search affordance | Navigational button, not fake input without action |
+| `TimeSlotButton` | `TimeSlotButton.tsx` | 2c | time/slot selection UIs | Disabled + line-through; FX-6 h-11 |
+| `SchedulePicker` | `SchedulePicker.client.tsx` | 2c | schedule selection patterns | Compose DayPill + TimeSlot; timezone label |
+| `SearchTrigger` | `SearchTrigger.tsx` | 2c | search affordance patterns | Navigational button, not fake input without action |
 | `IconBadge` | `IconBadge.tsx` | 2c | admin nav counts | FX-5; not color-alone (pair with number) |
 
 **Radio `tile` / `card` variants** — остаются в `radio-group.tsx`; отдельный `FilterTile` **не** создавать.
@@ -466,40 +487,42 @@ Status/domain maps, elevation?       → lib/ui/ or @{{PACKAGE_SCOPE}}/domain (n
 
 | Component | Target file | Phase | Prototype anchor | FAANG UX notes |
 |-----------|-------------|-------|------------------|----------------|
-| `PulseCardKpi` | `PulseCardKpi.tsx` | ✅ L3 | `t.home`, `a.home` | Scannable stat; tone semantic |
-| `SectionHeader` | `SectionHeader.tsx` | 2c | `c.home` sections | Title + optional `CustomLink`; FX-2 |
+| `KpiCard` | `KpiCard.tsx` | ✅ L3 | dashboard KPI screens | Scannable stat; tone semantic |
+| `SectionHeader` | `SectionHeader.tsx` | 2c | home/list section patterns | Title + optional `CustomLink`; FX-2 |
 | `PageHeader` | `PageHeader.tsx` | 2c | list pages | h1 + secondary action; admin max-width inputs |
-| `KeyValueRow` | `KeyValueRow.tsx` | 2c | booking confirm, payment | Scannable pairs; truncate long values |
-| `ChoiceCard` | `ChoiceCard.tsx` | 2c | booking service pick | Selected border primary; FX-6 full-width tap |
-| `WizardHeader` | `WizardHeader.tsx` | 2c | `c.book` | Back + step + price; progress sibling |
-| `SummaryCard` | `SummaryCard.tsx` | 2c | booking sidebar md+ | Sticky; FX-2 no competing CTA inside |
+| `KeyValueRow` | `KeyValueRow.tsx` | 2c | confirm/summary screens | Scannable pairs; truncate long values |
+| `ChoiceCard` | `ChoiceCard.tsx` | 2c | option/service pick flows | Selected border primary; FX-6 full-width tap |
+| `WizardHeader` | `WizardHeader.tsx` | 2c | multi-step flows | Back + step + meta; progress sibling |
+| `SummaryCard` | `SummaryCard.tsx` | 2c | wizard sidebar md+ | Sticky; FX-2 no competing CTA inside |
 | `MetaRow` | `MetaRow.tsx` | 2c | service duration/price | Icon `aria-hidden`; text from messages |
 
 ### Component inventory — `components/shell/`
 
 | Component | Target file | Phase | Prototype anchor | FAANG UX notes |
 |-----------|-------------|-------|------------------|----------------|
-| `AppTopBar` | `shell/AppTopBar.tsx` | P03 | RoleSwitcher area | Sticky; safe-area; FX-1 |
-| `BottomNav` | `shell/BottomNav.client.tsx` | P03 | `BottomNav` | FX-6; `aria-current`; safe-area inset |
-| `SideNav` | `shell/SideNav.client.tsx` | P03 | `SideNav` | Distinct `aria-label`; badge counts |
+| `AppTopBar` | `shell/AppTopBar.tsx` | P03 | role switcher area | Sticky; safe-area; FX-1 |
+| `BottomNav` | `shell/BottomNav.client.tsx` | P03 | mobile bottom nav | FX-6; `aria-current`; safe-area inset |
+| `SideNav` | `shell/SideNav.client.tsx` | P03 | desktop side nav | Distinct `aria-label`; badge counts |
 | `NavItem` | `shell/NavItem.tsx` | P03 | nav items | 44px touch; active state container |
 | `AppShell` | `shell/AppShell.tsx` | P03 | layout compose | Landmarks: `nav`, `main` |
 
 Spec: [`global_shell_spec.md`](./global_shell_spec.md). Shell **MUST NOT** import domain molecules.
 
-### Component inventory — `components/{domain}/` (L4 molecules)
+### Appendix A — Domain molecule inventory (populate per phase specs)
 
-Domain folders **MUST** compose only from `atoms/`, `ui/`, `shell/`. Lab показывает **fixture import**, не копию JSX.
+**Не копировать** inventory референсного проекта (fitness marketplace). Заполнить из [`prototype_route_mapping.md`](../../../design/prototype_route_mapping.md), wireframes MVP и `P{N}_tasks.md` для {{PROJECT_NAME}}.
 
-| Component | Folder | Phase | Prototype anchor | FAANG UX notes |
-|-----------|--------|-------|------------------|----------------|
-| `TrainerCard` | `catalog/` | P05 | `c.catalog`, `c.home` | Whole card one focus target + wishlist separate; FX-8 |
-| `BookingListItem` | `booking/` | P08 | `c.bookings` | StatusBadge + compact PulseCard |
-| `BookingWizard` | `booking/` | P07 | `c.book` | P1 wizard; FX-3; sticky footer CTA P3 |
-| `ReviewForm` | `booking/` | P09 | reviews | Interactive RatingStars required |
-| `ServiceCard` | `trainer/` | P11 | `t.services` | Switch optimistic optional; FX-7 |
-| `ClientListCard` | `trainer/` | P12 | `t.clients` | Search + empty state |
-| `ModerationQueueRow` | `admin/` | P13 | `a.trainers` | Approve/Reject hierarchy P4; confirm reject |
+Domain folders **MUST** compose only from `atoms/`, `ui/`, `shell/`. Design Lab показывает **fixture import**, не копию JSX.
+
+| Pattern | Folder (example) | Phase | Source for {{PROJECT_NAME}} |
+|---------|------------------|-------|-----------------------------|
+| Catalog/list card molecule | `components/{{DOMAIN_COMPONENT_FOLDER}}/` | P05+ | wireframe + phase spec |
+| List row molecule | same | P08+ | list wireframes |
+| Multi-step wizard | same | P07+ | wizard wireframe |
+| Review/rating form | same | P09+ | review flow spec |
+| Admin queue row | same | P13+ | admin wireframes |
+
+**Pulse reference examples** (illustrative only — replace names/anchors): `TrainerCard`, `BookingWizard`, `ModerationQueueRow` — see [`docs/examples/pulse/`](../../../examples/pulse/) phase specs if needed for pattern inspiration.
 
 ### `lib/ui/` helpers (non-components)
 
@@ -602,7 +625,7 @@ Data-driven from `lib/design-lab/matrices.ts`:
 | Typography | All Heading visualLevels; all ContentText variants; SectionTitle; AlertText |
 | Button | variants × sizes × states (default, disabled, loading) |
 | CustomLink | as × variant combinations |
-| PulseCard | variant × interactive × state grid |
+| SurfaceCard | variant × interactive × state grid |
 | shadcn Card | Card + Header + Title + Description + Content + Footer example |
 
 Each L2 block **MUST** include:
@@ -617,21 +640,21 @@ Composed blocks from [`styleguide.md`](../../../design/styleguide.md) — **not*
 
 | Pattern | Prototype screen | Styleguide § |
 |---------|------------------|--------------|
-| Primary CTA row | `c.book` | Button |
-| KPI card (4-up grid) | `t.home`, `a.home` | KPI card |
-| Booking list item (compact card) | `c.bookings` | Card interactive |
-| Status badge row | `c.bookings`, `a.trainers` | Badge |
-| Section header + «Все →» | `c.home` | Section header |
+| Primary CTA row | per `prototype_route_mapping.md` | Button |
+| KPI card (4-up grid) | dashboard screens | KPI card |
+| List item (compact card) | list wireframes | Card interactive |
+| Status badge row | list/admin screens | Badge |
+| Section header + link | home/list sections | Section header |
 | Empty state block | any list empty | ui_states + `Empty` shadcn |
 
 #### L3 — Marketing / Landing (P16, `#marketing`)
 
-**Showcase:** `/design-system` → `DesignLabMarketing` (`id="marketing"`). **Product import:** `@/components/atoms`, `@/components/ui/*`, `@/components/catalog/*` only — **MUST NOT** import `@/components/design-lab/**` on product routes.
+**Showcase:** `/design-system` → `DesignLabMarketing` (`id="marketing"`). **Product import:** `@/components/atoms`, `@/components/ui/*`, `@/components/{{DOMAIN_COMPONENT_FOLDER}}/*` only — **MUST NOT** import `@/components/design-lab/**` on product routes.
 
 | Wave | Components | Path |
 |------|------------|------|
 | **Wave A** | `SectionEyebrow`, `Container` (`variant="marketing"`), `MarketingSectionHeader`, `TrustFeaturePill`, `StepCard`, `DiscoveryPill`, `TestimonialCard`, `StatMetricCell`, `StatsBar`, `BenefitRow`, `DarkStatTile`, `BrandSection`, `CtaBand`, `Reveal`, `MarketingAccordion` | `components/atoms/`, `components/ui/` |
-| **L3 patterns** | `FeaturedTrainerCard` (vertical marketing card) | `components/catalog/FeaturedTrainerCard.tsx` |
+| **L3 patterns** | Featured/marketing card molecule (per landing spec) | `components/{{DOMAIN_COMPONENT_FOLDER}}/` |
 | **Hooks** | `use-reveal-on-scroll`, `use-count-up`, `use-landing-scrolled`, `use-prefers-reduced-motion` | `lib/ui/` |
 | **Fixtures (showcase)** | `marketing-fixtures.ts` | `lib/design-lab/` (dev-only) |
 
@@ -680,13 +703,15 @@ apps/web/src/components/design-lab/
 
 ## Prototype anchors (L2/L3)
 
-| Lab section | Prototype `screen` | Wireframe |
-|-------------|-------------------|-----------|
-| Button primary | `c.book` | [`booking_wizard.md`](../../../design/wireframes/mvp/booking_wizard.md) |
-| PulseCard compact interactive | `c.bookings` | [`client_bookings_list.md`](../../../design/wireframes/mvp/client_bookings_list.md) |
-| KPI pattern | `t.home` | [`trainer_dashboard.md`](../../../design/wireframes/mvp/trainer_dashboard.md) |
-| Admin queue row | `a.trainers` | [`admin_trainers_queue.md`](../../../design/wireframes/mvp/admin_trainers_queue.md) |
-| Hero typography | `/` P16 landing | [`public_landing.md`](../../../design/wireframes/mvp/public_landing.md), [`public_landing_spec.md`](../public_landing_spec.md) |
+Populate from [`prototype_route_mapping.md`](../../../design/prototype_route_mapping.md) and MVP wireframes for {{PROJECT_NAME}} — **не** из fitness-marketplace reference.
+
+| Lab section | Mapping source | Wireframe source |
+|-------------|----------------|------------------|
+| Button primary | `prototype_route_mapping.md` | primary CTA wireframe |
+| SurfaceCard compact interactive | list screen IDs | list wireframe in `design/wireframes/mvp/` |
+| KPI pattern | dashboard screen IDs | dashboard wireframe |
+| Admin queue row | admin screen IDs | admin wireframe |
+| Hero typography | landing route (P16) | [`public_landing.md`](../../../design/wireframes/mvp/public_landing.md), [`public_landing_spec.md`](./public_landing_spec.md) |
 | SectionTitle | marketing blocks (P16) | [`public_landing.md`](../../../design/wireframes/mvp/public_landing.md) |
 
 ---
@@ -704,12 +729,12 @@ apps/web/src/components/design-lab/
 ### Step 1 — Tokens
 
 - [ ] Add missing CSS variables to `globals.css` (`:root`, `.dark`, `@theme inline`)
-- [ ] Verify fonts wired in root `layout.tsx` (Source Serif 4, Manrope, JetBrains Mono; `latin` + `cyrillic` subsets)
+- [ ] Verify fonts wired in root `layout.tsx` per `visual_identity_contract.md` (`latin` + `cyrillic` subsets as required)
 - [ ] Optional: `lib/ui/elevation.ts`
 
 ### Step 2 — Atoms
 
-- [ ] Create `components/atoms/` from design kit (with Pulse reference cleanup)
+- [ ] Create `components/atoms/` from {{PROJECT_NAME}} contracts (with reference kit cleanup if adapted)
 - [ ] `content-text-variants.ts` — {{PROJECT_NAME}} MVP set only
 - [ ] `components/atoms/index.ts` barrel
 
@@ -717,7 +742,7 @@ apps/web/src/components/design-lab/
 
 - [ ] Replace `components/ui/button.tsx` with tokenized version
 - [ ] Add `components/ui/CustomLink.tsx`
-- [ ] Merge `components/ui/card.tsx` — shadcn slots + `PulseCard`
+- [ ] Merge `components/ui/card.tsx` — shadcn slots + `SurfaceCard`
 - [ ] Fix any broken imports from button/card API change across `apps/web` (grep `Button`, `Card`)
 
 ### Step 4 — Design Lab route
@@ -751,10 +776,10 @@ apps/web/src/components/design-lab/
 
 - [ ] No raw hex/rgba in new component TSX (semantic tokens only)
 - [ ] `components/atoms/` exports all four typography atoms
-- [ ] `Button` matches prototype: pill, h-11 default, loading state, Warm Forest hover
-- [ ] `PulseCard` replaces `BsfyCard` naming; all CVA variants render on lab page
+- [ ] `Button` matches prototype: dimensions, loading state, {{DESIGN_SYSTEM_NAME}} hover per contract
+- [ ] `SurfaceCard` uses neutral naming; all CVA variants render on lab page
 - [ ] `CustomLink` three modes demonstrated
-- [ ] Pulse reference-only variants removed from Button and ContentText
+- [ ] Reference-only variants removed from Button and ContentText (if kit was adapted)
 - [ ] shadcn `Card*` primitives still exported for Dialog/Sheet compatibility
 
 ### Design Lab
@@ -762,7 +787,7 @@ apps/web/src/components/design-lab/
 - [ ] Route `/design-system` accessible in development
 - [ ] Production guard returns 404 (unless `ALLOW_DESIGN_LAB=1`)
 - [ ] L1 token swatches for brand, radius, elevation, typography
-- [ ] L2 exhaustive matrix for atoms, Button, CustomLink, PulseCard
+- [ ] L2 exhaustive matrix for atoms, Button, CustomLink, SurfaceCard
 - [ ] L3 at least 5 composed patterns with prototype anchors labeled
 - [ ] Theme toggle + 390px viewport control functional
 - [ ] Page uses semantic landmarks (`main`, `nav` for section index)
@@ -783,7 +808,7 @@ apps/web/src/components/design-lab/
 | Scenario | Expected behavior |
 |----------|-------------------|
 | Production deploy without env flag | `/design-system` → 404 |
-| Missing `--shadow-card` token | PulseCard falls back visibly wrong — fix tokens, not component hacks |
+| Missing `--shadow-card` token | SurfaceCard falls back visibly wrong — fix tokens, not component hacks |
 | Icon Button without label | Dev console warning; lab demo includes good/bad example in comments only |
 | shadcn CLI overwrites `button.tsx` | Re-apply tokenized version; document in PR — prefer manual merge |
 | Prototype vs contract color mismatch | Follow contract; note in lab section «Known drift» |
@@ -797,7 +822,7 @@ apps/web/src/components/design-lab/
 | Generic shadcn re-install overwrites tokens | PR review + pin customized files |
 | Two Button implementations | **Replace**, never duplicate |
 | Lab not updated when CVA changes | `matrices.ts` must import variant keys from CVA or duplicate const with comment «sync with buttonVariants» |
-| `docs/example_components` diverges from web | After merge, design kit README notes «implemented in apps/web» |
+| Reference kit diverges from web | After merge, note in PR: implemented from {{PROJECT_NAME}} contract |
 | Lab strings bypass `@/lib/messages` | Allowed only in `components/design-lab/**` |
 | Agent skips Context7 for shadcn/Radix | Reject on verification; § Agent prerequisites — Context7 |
 | Component in wrong folder (`patterns/`, duplicate tile) | § Catalog layers decision tree |
@@ -812,7 +837,9 @@ apps/web/src/components/design-lab/
 | [`typography_text_guidelines.md`](../../../guidelines/typography_text_guidelines.md) | Atoms policy |
 | [`styleguide.md`](../../../design/styleguide.md) | L3 pattern recipes |
 | [`ui_states_contract.md`](../../../design/ui_states_contract.md) | Empty/loading/error demos Phase 2 |
-| [`example_components/README.md`](../../../example_components/README.md) | Copy source & token reference |
+| [`visual_identity_contract.md`](../../../design/visual_identity_contract.md) | Canonical token source |
+| [`{{INTERIM_DESIGN_SYSTEM_DOC}}`](../../../default_docs/{{INTERIM_DESIGN_SYSTEM_DOC}}) | Interim DS detail |
+| [`{{REFERENCE_EXAMPLE_COMPONENTS_REL_PATH}}`](../../../{{REFERENCE_EXAMPLE_COMPONENTS_REL_PATH}}) | Optional CVA pattern library (not copy source) |
 | [`P01_tasks.md`](../tasks/P01_tasks.md) | Phase checklist (W16 P03 for Lab QA) |
 | [`forms_and_validation_ux.md`](../../../design/forms_and_validation_ux.md) | Form controls UX (Phase 2a+) |
 | [`ux_ui_principles.md`](../../../design/ux_ui_principles.md) | FAANG-adapted {{PROJECT_NAME}} UX (FX contract) |
@@ -825,15 +852,15 @@ apps/web/src/components/design-lab/
 
 - **Do not** add Storybook in this task.
 - **Do not** tokenize all shadcn components — only inventory in § Shared components and § Component catalog placement.
-- **Do not** use `BsfyCard` naming in production code.
+- **Do not** use reference legacy card naming (`BsfyCard`, `PulseCard`) in production code.
 - **MUST** use **Context7** before implementing inventory components (§ Agent prerequisites — Context7).
 - **MUST** satisfy FAANG UX contract FX-1–FX-10 per component where applicable.
 - **MUST** match prototype visual params via semantic tokens (§ Prototype fidelity workflow) — prototype wins for look; PRD wins for behavior.
 - **Prefer** Server Components for lab sections; client only for `DesignLabControls` and interactive demos.
-- When copying from Pulse reference reference — **{{PROJECT_NAME}} Cursor Rules win** over reference code.
-- Rating stars use **`text-secondary` (gold)** — not primary green ([`visual_identity_contract.md`](../../../design/visual_identity_contract.md)).
-- After implementation, feature routes P02+ **must import** atoms/Button/PulseCard from catalog paths — no one-off typography strings. See §Product UI catalog contract.
-- Domain molecules: `components/{domain}/` only; Lab imports fixtures — never duplicate markup in product from `design-lab/`.
+- When adapting from Pulse reference — **{{PROJECT_NAME}} Cursor Rules win** over reference code.
+- Rating stars use **`text-secondary`** accent — not primary ([`visual_identity_contract.md`](../../../design/visual_identity_contract.md)).
+- After implementation, feature routes P02+ **must import** atoms/Button/SurfaceCard from catalog paths — no one-off typography strings. See §Product UI catalog contract.
+- Domain molecules: `components/{{DOMAIN_COMPONENT_FOLDER}}/` per phase specs; Lab imports fixtures — never duplicate markup in product from `design-lab/`.
 
 ---
 
@@ -841,6 +868,7 @@ apps/web/src/components/design-lab/
 
 | Date | Change |
 |------|--------|
+| 2026-06-19 | v1.3 — contract-first DS bootstrap: {{DESIGN_SYSTEM_NAME}} placeholders, SurfaceCard/KpiCard neutral naming, Reference adaptation policy, Appendix A domain inventory, remove mandatory copy from reference kit |
 | 2026-05-23 | v1.2 — §Component catalog placement & Phase 2–3 inventory: folder map, FAANG UX contract (FX-1–FX-10), Context7 MUST, per-component verification |
 | 2026-05-23 | v1.1 — §Product UI catalog contract: mandatory catalog imports for P02+ |
 | 2026-05-23 | v1.0 — Design System Lab + shared UI primitives spec (W15-01) |

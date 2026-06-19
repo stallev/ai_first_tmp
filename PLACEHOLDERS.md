@@ -9,7 +9,12 @@
 | `{{PACKAGE_SCOPE}}` | acme | `@acme/domain`, `@acme/db`, npm scope |
 | `{{PRODUCT_DESCRIPTION}}` | B2B marketplace for … | project-context, AGENTS |
 | `{{USER_ROLES}}` | client, vendor, admin | project-context, schema |
-| `{{DESIGN_SYSTEM_NAME}}` | Warm Forest | ui-warm-forest-shadcn (или переименовать rule) |
+| `{{DESIGN_SYSTEM_NAME}}` | Warm Forest | project-context, design_system_lab_spec, UI rules |
+| `{{DESIGN_SYSTEM_SLUG}}` | warm-forest | `ui-{{DESIGN_SYSTEM_SLUG}}-shadcn.mdc` Cursor Rule file name |
+| `{{MAIN_PROTOTYPE_HTML}}` | Acme_Prototype_v1.html | основной HTML-прототип в `docs/prototypes/` |
+| `{{INTERIM_DESIGN_SYSTEM_DOC}}` | acme-design-system.md | interim DS в `docs/default_docs/` (detail when contract silent) |
+| `{{REFERENCE_EXAMPLE_COMPONENTS_REL_PATH}}` | examples/pulse/docs/example_components/ | optional pattern library relative to `docs/` — **не** default copy source |
+| `{{DOMAIN_COMPONENT_FOLDER}}` | catalog | primary domain molecules folder under `components/` (adjust per project) |
 | `{{DOMAIN_INVARIANT_1}}` | e.g. `Entity.timezone` source of truth | project-context §Domain invariants |
 | `{{DOMAIN_INVARIANT_2}}` | … | … |
 | `{{DOMAIN_INVARIANT_3}}` | … | … |
@@ -35,4 +40,4 @@
 | `AGENTS.template.md` | `AGENTS.md` |
 | `docs/meta/*.template.md` | убрать `.template` |
 | `project-context.template.mdc` | `.cursor/rules/project-context.mdc` |
-| `apps/web/AGENTS.template.md` | `apps/web/AGENTS.md` |
+| `specs/design_system_lab_spec.template.md` | `docs/implementation/mvp/specs/design_system_lab_spec.md` (после P2) |
