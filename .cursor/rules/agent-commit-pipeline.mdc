@@ -43,7 +43,7 @@ Stage только релевантные файлы (`git add`). Не комм�
 Выполнить **[`agent-code-review-subagent.mdc`](agent-code-review-subagent.mdc)** в режиме **pre-commit**:
 
 1. Проверить threshold — можно ли пропустить review
-2. Если review нужен — Task → `bugbot` (+ `security-review` при sensitive zone)
+2. Если review нужен — **[`agent-code-review-subagent.mdc`](agent-code-review-subagent.mdc)** → Task `generalPurpose` (`readonly: true`). **Не** `bugbot` (платный)
 3. **Blocker** → исправить diff → re-review если правка нетривиальна → только потом commit
 4. **Suggestions only / no findings** → продолжить §4
 

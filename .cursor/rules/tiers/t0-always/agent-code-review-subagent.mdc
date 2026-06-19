@@ -1,11 +1,17 @@
 ---
-description: "Run bugbot/security-review subagent on local diff; structured Blockers/Suggestions per project conventions. Use for standalone review or pre-commit (via agent-commit-pipeline)."
+description: "Run readonly generalPurpose subagent on local diff; structured Blockers/Suggestions. Standalone review or pre-commit (via agent-commit-pipeline). Do NOT use bugbot."
 alwaysApply: false
 ---
 
 # Code review subagent
 
 **Commit orchestration:** [`agent-commit-pipeline.mdc`](agent-commit-pipeline.mdc) — вызывает этот rule в **pre-commit** mode перед `git commit`.
+
+## Запрещено: bugbot
+
+**Не вызывать** `subagent_type: "bugbot"` — платная функция Cursor.
+
+Review выполнять через **`generalPurpose`** subagent (`readonly: true`). Skills `review-bugbot` / `review-security` **не использовать**.
 
 ## Triggers
 
@@ -43,42 +49,38 @@ Sensitive zone → review **обязателен** независимо от р�
 
 ## Diff scope
 
-| Mode | Default `Diff` | Override |
-|------|----------------|----------|
-| pre-commit | `uncommitted changes` (staged) | — |
-| standalone | `uncommitted changes` | `branch changes` — если пользователь просит review ветки / PR scope |
-
-Skills: `review-bugbot`, `review-security` — canonical prompt shape и retry policy.
+| Mode | Default scope | Override |
+|------|---------------|----------|
+| pre-commit | staged diff (`git diff --staged`) | — |
+| standalone | uncommitted / working tree | full branch — если пользователь просит review ветки / PR scope |
 
 ## Subagent invocation
 
-- Cursor `Task` tool, `readonly: true`, `run_in_background: false`
-- **Не** Background Agent; **не** «новый чат вручную»
+- Cursor `Task` tool: `subagent_type: "generalPurpose"`, `readonly: true`, `run_in_background: false`
+- **Не** `bugbot`; **не** Background Agent; **не** «новый чат вручную»
 
-### bugbot (default)
-
-`subagent_type: "bugbot"`
+Prompt для Task:
 
 ```text
-Full Repository Path: <absolute repo root>
-Diff: <uncommitted changes | branch changes>
-Custom Instructions: Review this diff. Check: logical bugs; violations of AGENTS.md and
-.cursor/rules (cite rule); Next.js 16 / React 19 anti-patterns; security if auth/api/db/policy
-touched. Return structured Blockers and Suggestions with file:line. Subagent must NOT edit code.
+Review the local diff in <absolute repo root> before commit.
+
+Scope: <staged only | uncommitted | branch vs main — по режиму>
+
+Return structured markdown:
+## Review Result
+### Blockers — [file:line] issue — rule reference
+### Suggestions — [file:line] optional improvement
+
+Checklist:
+1. Logical bugs, edge cases, diff vs task intent
+2. AGENTS.md + .cursor/rules violations (cite rule name)
+3. Next.js 16 / React 19 anti-patterns ('use client', useEffect, useOptimistic, barrel imports)
+4. <If sensitive zone: secrets, API validation, XSS, cookie httpOnly/secure>
+
+Do NOT edit files. If no issues: "No blockers or suggestions found."
 ```
 
-### security-review (sensitive zone)
-
-Дополнительно или вместо bugbot, если diff затрагивает sensitive zone:
-
-`subagent_type: "security-review"`, skill `review-security`
-
-```text
-Full Repository Path: <absolute repo root>
-Diff: <uncommitted changes | branch changes>
-Custom Instructions: Security-focused review. Secrets, input validation, XSS, cookie flags.
-Return Blockers and Suggestions with file:line. Subagent must NOT edit code.
-```
+Sensitive zone → добавить в prompt пункт 4 (security checklist); **отдельный bugbot/security-review subagent не вызывать**.
 
 ## Checklist (structured — не «оцени код»)
 
@@ -90,8 +92,6 @@ Return Blockers and Suggestions with file:line. Subagent must NOT edit code.
 LLM review **не заменяет** `npm run typecheck`, ESLint, тесты.
 
 ## Output format
-
-Subagent возвращает **структурированный** результат:
 
 ```markdown
 ## Review Result
@@ -110,7 +110,7 @@ Subagent возвращает **структурированный** резул�
 | `blocker` | Баг, явное нарушение правила, security red flag |
 | `suggestion` | Стиль, опциональные улучшения |
 
-После standalone review — краткая таблица для пользователя (Severity · Location · Finding), как в skill `review-bugbot`.
+После standalone review — краткая таблица для пользователя: Severity · Location · Finding.
 
 ## Disposition
 
@@ -125,4 +125,3 @@ Subagent возвращает **структурированный** резул�
 ## Related
 
 - **agent-commit-pipeline** — pre-commit orchestration
-- Skills: `review-bugbot`, `review-security`
