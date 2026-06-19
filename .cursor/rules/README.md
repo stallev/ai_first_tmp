@@ -22,6 +22,8 @@
 | `typescript-monorepo-types.mdc` | ✅ | typecheck, package boundaries |
 | `domain-literals-and-codes.mdc` | ✅ | Mutation codes, no magic strings |
 | `ai-dry-deduplication.mdc` | ✅ | DRY / SOLID for agents |
+| `agent-commit-pipeline.mdc` | ✅ | Verify → review → conventional commit |
+| `agent-code-review-subagent.mdc` | — | Standalone / pre-commit subagent review (requestable) |
 
 Файлы: [`tiers/t0-always/`](tiers/t0-always/)
 

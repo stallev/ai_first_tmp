@@ -17,19 +17,20 @@ Senior Fullstack Developer (Next.js 16 + PostgreSQL + monorepo).
 
 ## Task
 1. **Monorepo root:** package.json workspaces, `npm run typecheck`, `npm run lint`
-2. **packages/db:** Prisma schema from `database_schema_v1.md`, Neon URLs
-3. **packages/domain:** mutation codes scaffold, ports
-4. **packages/policy/edge + server:** empty policy stubs
-5. **apps/web:**
+2. **Git commit tooling:** скопировать из [`scaffold/`](../scaffold/) → `commitlint.config.mjs`, `.husky/`; установить devDeps и scripts по **`.cursor/rules/agent-commit-pipeline.mdc` § Git tooling setup**
+3. **packages/db:** Prisma schema from `database_schema_v1.md`, Neon URLs
+4. **packages/domain:** mutation codes scaffold, ports
+5. **packages/policy/edge + server:** empty policy stubs
+6. **apps/web:**
    - Next.js **16.2.6** pinned
    - `src/proxy.ts` (NOT middleware.ts for new code)
    - `src/data/`, `src/lib/`, `src/components/{atoms,ui,design-lab}/`
    - Auth.js v5 Credentials scaffold
    - Sentry stub (`@sentry/nextjs`)
    - `globals.css` with token placeholders
-6. Rename `AGENTS.template.md` → `apps/web/AGENTS.md`
-7. Env example: `DATABASE_URL`, `DIRECT_URL`, `AUTH_SECRET`, S3 (`AWS_IAM_*`, `S3_BUCKET_*`), Sentry vars — см. [`BOOTSTRAP.md`](../BOOTSTRAP.md) §6–§10, [`ai_s3_file_upload_guidelines.md`](../guidelines/nextjs/ai_s3_file_upload_guidelines.md)
-8. Создать `.cursor/skills/app-conventions/SKILL.md` — **проектный скилл поверх cursor rules**:
+7. Rename `AGENTS.template.md` → root `AGENTS.md` и `apps/web/AGENTS.template.md` → `apps/web/AGENTS.md`
+8. Env example: `DATABASE_URL`, `DIRECT_URL`, `AUTH_SECRET`, S3 (`AWS_IAM_*`, `S3_BUCKET_*`), Sentry vars — см. [`BOOTSTRAP.md`](../BOOTSTRAP.md) §6–§10, [`ai_s3_file_upload_guidelines.md`](../guidelines/nextjs/ai_s3_file_upload_guidelines.md)
+9. Создать `.cursor/skills/app-conventions/SKILL.md` — **проектный скилл поверх cursor rules**:
    - Frontmatter: `name: app-conventions`; description без слов `performance`/`optimization`/`bundle`
    - Раздел `## Relationship to other skills` (defer-clause — обязателен, см. §4)
    - Раздел `## Cursor rules index` — таблица `контекст → существующий .mdc файл` (не копировать содержимое rules, только ссылки)
@@ -54,6 +55,7 @@ Next.js 16.2.6 · Vercel · Neon · Prisma v7 · Auth.js v5 · AWS S3 · Resend 
 - [ ] `.cursor/skills/app-conventions/SKILL.md` создан, содержит defer-clause и cursor rules index
 - [ ] Скилл ссылается на `.cursor/rules/*.mdc`, не дублирует их содержимое
 - [ ] `apps/web/AGENTS.md` содержит секцию `## Skills` со ссылкой на `app-conventions`
+- [ ] commitlint + husky: `echo "main: chore: test" | npx commitlint` pass; `.husky/commit-msg` в репо
 
 ## Next
 → [`P6-design-system-lab.md`](P6-design-system-lab.md)

@@ -64,6 +64,15 @@ Monorepo: **Next.js 16.2.6** App Router + Vercel + Neon PostgreSQL.
 4. Выполнить чеклист `docs/implementation/mvp/tasks/P{N}_tasks.md`
 5. `npm run typecheck` + `npm run lint` перед DoD
 
+## Commit & review
+
+| Задача | Rule |
+|--------|------|
+| Commit (verify → review → message → hook) | **`.cursor/rules/agent-commit-pipeline.mdc`** (always) |
+| Standalone review («review diff», проверка перед PR) | **`.cursor/rules/agent-code-review-subagent.mdc`** (requestable) |
+
+Кратко: prefix = `git branch --show-current`; формат `<branch-name>: type(scope): subject`.
+
 ## Stack (full Pulse)
 
 Next.js 16.2.6 · Vercel · Neon PG 17 · Prisma v7 · Auth.js v5 · Resend (post-MVP) · AWS S3 · Sentry · shadcn/ui · Tailwind v4 · Sonner
