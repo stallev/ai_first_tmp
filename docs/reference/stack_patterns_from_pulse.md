@@ -130,6 +130,19 @@ Cursor rule: **ui-animation-performance**
 
 ---
 
+## Agent skills & RSC streaming
+
+| Resource | Role |
+|----------|------|
+| `.cursor/skills/app-conventions/` | **Only** project architecture skill for agents |
+| [`adr_010_nextjs_app_architecture_skill.md`](./adr_010_nextjs_app_architecture_skill.md) | Adopt/reject from evaluated community skill — **do not install** external copy |
+
+**Forbidden:** `npx skills install` for third-party Next.js architecture skills.
+
+**In-repo canon:** page-owned Suspense, parent→child DTO props, opt-in `params.then()` (§4.1), region `unstable_catchError` (§12.1) — see `ai_loading_patterns.md`, `ai_data_fetching_patterns.md`.
+
+---
+
 ## Pulse reference files (study order)
 
 1. `docs/examples/pulse/apps/web/src/proxy.ts`

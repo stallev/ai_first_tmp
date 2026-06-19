@@ -12,7 +12,7 @@ alwaysApply: false
 
 **Methodology:** [`docs/meta/ai_first_project_methodology.md`](docs/meta/ai_first_project_methodology.md)  
 **Normative doc:** [`guidelines/nextjs/ai_nextjs_db_data_handle.md`](guidelines/nextjs/ai_nextjs_db_data_handle.md) (§7 iOS Safari)  
-**Data fetching:** [`guidelines/nextjs/ai_data_fetching_patterns.md`](guidelines/nextjs/ai_data_fetching_patterns.md) — no self-fetch, `cache()`, `'use cache'`  
+**Data fetching:** [`guidelines/nextjs/ai_data_fetching_patterns.md`](guidelines/nextjs/ai_data_fetching_patterns.md) — no self-fetch, `cache()`, `'use cache'`, parent→child DTO (§7)  
 **Incidents:** [`docs/incidents/ios-safari-mutation-transport-pattern.md`](docs/incidents/ios-safari-mutation-transport-pattern.md)
 
 ## Core behavior

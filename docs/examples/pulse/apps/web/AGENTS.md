@@ -101,6 +101,14 @@ Visual and interaction canon — **do not invent** ad-hoc styles:
 
 Full index: [`docs/guidelines/README.md`](../../docs/guidelines/README.md).
 
+## Skills (`.cursor/skills/`)
+
+| Skill | Focus |
+|-------|-------|
+| **`app-conventions`** | Project layout (`data/`, `actions/`, `components/`), Design Lab, DAL, RSC streaming — see boilerplate [`.cursor/skills/app-conventions/SKILL.md`](../../../../.cursor/skills/app-conventions/SKILL.md) |
+
+**Do not install** external Next.js architecture skills. Provenance: [`adr_010_nextjs_app_architecture_skill.md`](../../../../docs/reference/adr_010_nextjs_app_architecture_skill.md).
+
 ## Observability (Sentry)
 
 Error tracking via `@sentry/nextjs` — config in `src/instrumentation*.ts`, `src/sentry.*.config.ts`, `src/app/global-error.tsx`.

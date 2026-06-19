@@ -19,7 +19,7 @@ Verify against Context7 `/vercel/next.js/v16.2.2` and [Loading UI and Streaming]
 1. [Overview & key concepts](#1-overview--key-concepts)
 2. [Streaming model in App Router](#2-streaming-model-in-app-router)
 3. [Mechanisms: `loading.tsx` and Suspense](#3-mechanisms-loadingtsx-and-suspense)
-4. [Light `page.tsx` and layout](#4-light-pagetsx-and-layout)
+4. [Light `page.tsx` and layout](#4-light-pagetsx-and-layout) — incl. [§4.1 `params.then()` opt-in](#41-opt-in-synchronous-page--paramsthen-cache-components)
 5. [Independent regions behind Suspense](#5-independent-regions-behind-suspense)
 6. [`auth()` cost and request dedup](#6-auth-cost-and-request-dedup)
 7. [Eliminating DB waterfalls](#7-eliminating-db-waterfalls)
@@ -27,7 +27,7 @@ Verify against Context7 `/vercel/next.js/v16.2.2` and [Loading UI and Streaming]
 9. [Neon: cold start and connection](#9-neon-cold-start-and-connection)
 10. [`loading.tsx` as navigation insurance](#10-loadingtsx-as-navigation-insurance)
 11. [Skeletons without CLS](#11-skeletons-without-cls)
-12. [Error handling near data](#12-error-handling-near-data)
+12. [Error handling near data](#12-error-handling-near-data) — incl. [§12.1 region boundaries](#121-region-error-boundaries-unstable_catcherror--opt-in)
 13. [Mutation loading vs route loading](#13-mutation-loading-vs-route-loading)
 14. [Pulse route examples](#14-pulse-route-examples)
 15. [Metrics and budgets](#15-metrics-and-budgets)
@@ -211,6 +211,41 @@ export default async function ClientBookingDetailPage({
 ```
 
 Data fetching lives in `booking-detail-content.server.tsx` via DAL `apps/web/src/data/**` with `import 'server-only'`.
+
+### 4.1 Opt-in: synchronous page + `params.then()` (Cache Components)
+
+**Default (ADR-002):** `await params` / `await searchParams` in async `page.tsx` — see examples above.
+
+**Opt-in** when `cacheComponents: true` and stable page chrome must paint **before** dynamic params resolve (static shell / Partial Prerendering). Provenance: evaluated against [nextjs-app-architecture-skill](https://github.com/aurorascharff/nextjs-app-architecture-skill) — **not installed**; governance: [`adr_010_nextjs_app_architecture_skill.md`](../../reference/adr_010_nextjs_app_architecture_skill.md).
+
+```tsx
+import { Suspense } from 'react'
+import { BookingDetailContent } from './_components/booking-detail-content.server'
+import { BookingDetailSkeleton } from './_components/booking-detail-skeleton'
+
+// Sync page — chrome above .then() is static-shell eligible
+export default function ClientBookingDetailPage({
+  params,
+}: PageProps<'/client/bookings/[id]'>) {
+  return (
+    <div className="space-y-4">
+      <PageHeader title="…" /> {/* paints immediately */}
+      <Suspense fallback={<BookingDetailSkeleton />}>
+        {params.then(({ id }) => (
+          <BookingDetailContent bookingId={id} />
+        ))}
+      </Suspense>
+    </div>
+  )
+}
+```
+
+**Rules**
+
+- Use **`PageProps<'/route'>`** from `typedRoutes: true` — do not hand-roll param types.
+- **`generateMetadata` may still `await params`** — runs before page render.
+- Fast auth guard: prefer layout/segment guard or sync redirect pattern documented in phase contract; do not block static shell with heavy `auth()` + DB.
+- Document opt-in in PR when first applying to a route (§18 exception **Sync shell + params.then**).
 
 ---
 
@@ -679,6 +714,49 @@ export default function ClientBookingError({
 
 Independent Suspense regions **should** pair with error boundaries when partial failure is acceptable (catalog grid fails, filters still work).
 
+### 12.1 Region error boundaries (`unstable_catchError`) — opt-in
+
+Segment **`error.tsx`** handles route-level failures. For **partial** UI (one Suspense region fails, siblings stay), wrap the region in a client error boundary that understands Next.js control-flow throws.
+
+Next.js 16.2+ provides [`unstable_catchError`](https://nextjs.org/docs/app/api-reference/functions/unstable_catchError) from `next/error` — re-fetches server data on retry; does not swallow `notFound()` / `redirect()`.
+
+```tsx
+// components/ui/region-error-boundary.tsx
+'use client'
+
+import { unstable_catchError as catchError, type ErrorInfo } from 'next/error'
+import { Button } from '@/components/ui/button'
+import { AlertText } from '@/components/atoms'
+
+function RegionErrorFallback(
+  props: { title?: string },
+  { unstable_retry: retry }: ErrorInfo,
+) {
+  return (
+    <div className="rounded-lg border border-border bg-card p-4">
+      <AlertText>{props.title ?? '…'}</AlertText>
+      <Button type="button" variant="outline" className="mt-3" onClick={() => retry()}>
+        …
+      </Button>
+    </div>
+  )
+}
+
+export const RegionErrorBoundary = catchError(RegionErrorFallback)
+```
+
+```tsx
+<RegionErrorBoundary title="…">
+  <Suspense fallback={<ReviewsSkeleton />}>
+    <TrainerReviews trainerId={id} />
+  </Suspense>
+</RegionErrorBoundary>
+```
+
+**When to use:** catalog grid, reviews block, admin queue table — not for auth redirects or whole-page failures (use `error.tsx`).
+
+Provenance: evaluated against nextjs-app-architecture-skill — in-repo only; see ADR-010.
+
 ---
 
 ## 13. Mutation loading vs route loading
@@ -810,6 +888,7 @@ Verify on **Vercel preview** when available.
 | `cookies()` / `getLocale()` in sync `page.tsx` or sync root layout | `blocking-route` — whole route blocked | Sync fallback shell + async child inside `<Suspense>` (§14.1) |
 | Duplicate `<html>` in layout Suspense fallback vs content | Full document remount; DevTools noise | One `<html>/<body>`; bridge locale via `LocaleHydrationBridge` |
 | Route skeleton for mutation pending | Wrong UX layer | `useTransition` + pending UI |
+| Child async component refetches entity parent already loaded | N+1 queries; wasted latency | Pass plain DTO from parent list/detail — see **ai_data_fetching_patterns** §9 |
 
 ---
 
@@ -823,6 +902,7 @@ State briefly in PR/task which exception applies:
 | **Single bounded query** | One fast `findUnique`, no other independent slow regions |
 | **Inherited loading** | Parent `loading.tsx` matches chrome; page uses Suspense for regions |
 | **Client-only data** | Region loaded via client fetch after paint — document tradeoff vs RSC streaming |
+| **Sync shell + `params.then()`** | Route with `cacheComponents: true`; stable chrome above dynamic block — §4.1 |
 
 ---
 
@@ -842,9 +922,10 @@ State briefly in PR/task which exception applies:
 | [Next.js: `use cache`](https://nextjs.org/docs/app/api-reference/directives/use-cache) | Cross-request cache directive (replaces `unstable_cache`) |
 | [Next.js: Cache Components](https://nextjs.org/docs/app/getting-started/cache-components) | `cacheComponents`, PPR, static + cached + dynamic mix |
 | Pulse reference [`ai_page_performance_streaming.md`](../../examples/lampto/docs/guidelines/nextjs/ai_page_performance_streaming.md) | Source reference (BSFY) |
+| [`adr_010_nextjs_app_architecture_skill.md`](../../reference/adr_010_nextjs_app_architecture_skill.md) | External RSC skill — adopt/reject mapping |
 
 ---
 
-**Version:** 2.1  
-**Last updated:** May 2026  
+**Version:** 2.2  
+**Last updated:** June 2026  
 **Next.js:** 16.2.6 · **Hosting:** Vercel · **Cross-request cache:** `'use cache'` (not `unstable_cache`)

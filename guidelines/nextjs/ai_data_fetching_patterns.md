@@ -132,18 +132,54 @@ useEffect(() => {
 
 ---
 
-## 7. Agent checklist
+## 7. Parent–child data: no refetch waterfall
+
+When a parent server component already loaded a list or entity from DAL, **pass plain serializable props** to children. Do not refetch the same row by id in each child.
+
+```tsx
+// ✅ Parent fetched list; children receive DTOs
+async function TrainerCatalogGrid({ query }: { query: CatalogQuery }) {
+  const trainers = await getCatalogTrainers(query)
+  return trainers.map((trainer) => (
+    <TrainerCard key={trainer.id} trainer={trainer} />
+  ))
+}
+
+function TrainerCard({ trainer }: { trainer: CatalogTrainerDto }) {
+  return (/* presentational — no await */)
+}
+```
+
+```tsx
+// ❌ Parent had the row; child refetches by id
+async function TrainerCard({ trainerId }: { trainerId: string }) {
+  const trainer = await getTrainerById(trainerId) // duplicate query
+  return (/* … */)
+}
+```
+
+**Exceptions**
+
+- Child needs **different** data shape or authorization scope — separate DAL function, still prefer passing id only when parent did not already load entity.
+- Client leaf with `use(promise)` — server passes unresolved `Promise` only when documented (search-as-you-type, hover popover).
+
+Provenance: evaluated against [nextjs-app-architecture-skill](https://github.com/aurorascharff/nextjs-app-architecture-skill) — **not installed**; [`adr_010_nextjs_app_architecture_skill.md`](../../docs/reference/adr_010_nextjs_app_architecture_skill.md).
+
+---
+
+## 8. Agent checklist
 
 - [ ] RSC не self-fetch к `/api/*`
 - [ ] Shared server reads обёрнуты в `cache()` или `'use cache'`
 - [ ] Server Action mutations → `updateTag` / `revalidatePath` где нужно
 - [ ] Client effects с changing deps → `AbortController`
 - [ ] Parallel `Promise.all` vs sequential await — осознанный выбор
-- [ ] Mutation vs route loading разделены (**ai_loading_patterns** §6)
+- [ ] Mutation vs route loading разделены (**ai_loading_patterns** §13)
+- [ ] Parent не refetch'ит то, что уже передал дочернему компоненту (§7)
 
 ---
 
-## 8. Related
+## 9. Related
 
 | Document | Topic |
 |----------|--------|
@@ -151,5 +187,6 @@ useEffect(() => {
 | [`ai_nextjs_db_data_handle.md`](./ai_nextjs_db_data_handle.md) | Actions vs Route Handlers |
 | [`ai_optimistic_ui_pattern.md`](../react/ai_optimistic_ui_pattern.md) | Client optimistic |
 | Pulse reference | `docs/examples/pulse/apps/web/src/data/` |
+| [`adr_010_nextjs_app_architecture_skill.md`](../../docs/reference/adr_010_nextjs_app_architecture_skill.md) | External RSC skill mapping |
 
 **Reference:** Pulse (docs/examples/pulse) — DAL structure; **Guidelines текущего проекта override Pulse**.

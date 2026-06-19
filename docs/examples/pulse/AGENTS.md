@@ -82,6 +82,16 @@ Web AGENTS не отменяет Cursor Rules — только маршрути�
 5. Выполнить чеклист из `docs/implementation/mvp/tasks/P{N}_tasks.md`
 6. Верифицировать по чеклисту фазы и обновить документацию при изменении behavior
 
+## Agent skills (`.cursor/skills/`)
+
+| Skill | When |
+|-------|------|
+| **`app-conventions`** | New features, routes, components — see [`../../.cursor/skills/app-conventions/SKILL.md`](../../.cursor/skills/app-conventions/SKILL.md) in boilerplate |
+
+**Do not install** external Next.js architecture skills — RSC patterns in-repo: [`../../docs/reference/adr_010_nextjs_app_architecture_skill.md`](../../docs/reference/adr_010_nextjs_app_architecture_skill.md).
+
+Web detail: [`apps/web/AGENTS.md`](apps/web/AGENTS.md) § Skills.
+
 ## Статус репозитория
 
 **Текущая фаза:** P14 complete (quality gate). **Post-P14 tracks:** **P16** (public landing v2), **P17** (UI i18n EN/RU — **complete**), **P19** (complaint resolution v2 — in progress), **P18** (admin people ops, spec only), **P21** (email & jobs, post-MVP deferral). См. [`_migration_P17_to_P19.md`](docs/implementation/mvp/phases_tasks_descriptions/_migration_P17_to_P19.md) (complaints renumber only).  

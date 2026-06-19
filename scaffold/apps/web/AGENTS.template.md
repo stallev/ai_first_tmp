@@ -102,13 +102,15 @@ Visual and interaction canon — **do not invent** ad-hoc styles:
 
 Full index: [`docs/guidelines/README.md`](../../docs/guidelines/README.md).
 
-## Skills (.cursor/skills/)
+## Skills (`.cursor/skills/`)
 
 | Skill | Focus |
 |-------|-------|
-| `app-conventions` | Project conventions: folder structure, naming, Shadcn patterns, Server Actions. Orchestrates existing Cursor rules — does NOT duplicate their content. Complements `vercel-react-best-practices`; does NOT override its performance rules. Spec: [`docs/project-react-skill-requirements.md`](../../docs/project-react-skill-requirements.md) |
+| **`app-conventions`** | Project conventions: `data/` + `actions/` + `components/`, Design Lab, DAL, RSC streaming. Spec: [`docs/project-react-skill-requirements.md`](../../docs/project-react-skill-requirements.md) |
 
-> Created during **P5** (Next.js scaffold). Read `.cursor/skills/app-conventions/SKILL.md` when scaffolding new features, components, routes, or DB schemas in this project.
+**Do not install** external Next.js architecture skills (`npx skills install …`). Mapping: [`docs/reference/adr_010_nextjs_app_architecture_skill.md`](../../docs/reference/adr_010_nextjs_app_architecture_skill.md).
+
+> Read `.cursor/skills/app-conventions/SKILL.md` when scaffolding features.
 
 ## Observability (Sentry)
 

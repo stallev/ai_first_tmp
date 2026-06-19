@@ -73,6 +73,16 @@ Monorepo: **Next.js 16.2.6** App Router + Vercel + Neon PostgreSQL.
 
 Кратко: prefix = `git branch --show-current`; формат `<branch-name>: type(scope): subject`.
 
+## Agent skills (`.cursor/skills/`)
+
+| Skill | When |
+|-------|------|
+| **`app-conventions`** | New features, routes, components — project layout + RSC patterns (single project skill) |
+
+**Do not install** external Next.js architecture skills (`npx skills install …`). Patterns from [nextjs-app-architecture-skill](https://github.com/aurorascharff/nextjs-app-architecture-skill) are in-repo only: [`docs/reference/adr_010_nextjs_app_architecture_skill.md`](docs/reference/adr_010_nextjs_app_architecture_skill.md) · spec: [`docs/project-react-skill-requirements.md`](docs/project-react-skill-requirements.md).
+
+Web detail: [`apps/web/AGENTS.md`](apps/web/AGENTS.md) § Skills.
+
 ## Stack (full Pulse)
 
 Next.js 16.2.6 · Vercel · Neon PG 17 · Prisma v7 · Auth.js v5 · Resend (post-MVP) · AWS S3 · Sentry · shadcn/ui · Tailwind v4 · Sonner

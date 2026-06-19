@@ -17,7 +17,8 @@ dependencies:
 >
 > **Фаза создания:** P5 (Next.js scaffold) — после активации T1/T2 rules.
 > **Обязательно:** перед созданием скилла устранить дубль источников (см. §0).
-> **Обязательно:** после создания скилла добавить ссылку в `apps/web/AGENTS.md`.
+> **Обязательно:** после создания скилла добавить ссылку в `apps/web/AGENTS.md` и `AGENTS.md` (§ Agent skills).
+> **RSC streaming:** patterns evaluated from [nextjs-app-architecture-skill](https://github.com/aurorascharff/nextjs-app-architecture-skill) — **in-repo only**, do not install; [`adr_010_nextjs_app_architecture_skill.md`](./adr_010_nextjs_app_architecture_skill.md).
 
 ---
 
@@ -213,7 +214,8 @@ description: >
 - [ ] Проверено в чате: задача «создай новую фичу X» триггерит ОБА скилла;
       задача «оптимизируй ре-рендеры» триггерит только `react-best-practices`.
 - [ ] Скилл закоммичен в `.cursor/skills/` (проектный уровень, не глобальный).
-- [ ] Ссылка на скилл добавлена в `apps/web/AGENTS.md` секция `## Skills`.
+- [ ] Ссылка на скилл добавлена в `apps/web/AGENTS.md` и root `AGENTS.md` § Agent skills
+- [ ] RSC patterns documented in-repo: [`adr_010_nextjs_app_architecture_skill.md`](./adr_010_nextjs_app_architecture_skill.md) — **no** external `npx skills install`
 
 ---
 
