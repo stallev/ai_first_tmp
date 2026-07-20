@@ -107,7 +107,7 @@ useEffect(() => {
 
 ### Stable Promise for `use()` (React 19)
 
-Не создавать новый Promise каждый render — кэшировать вне компонента или передавать с сервера как prop.
+Не создавать новый Promise каждый render — кэшировать вне компонента или передавать с сервера как prop. Consumer обязательно оборачивать в `<Suspense>` + `ErrorBoundary` — rejected Promise без него крашит дерево. Hooks-канон: [`ai_react_hooks_guidelines.md`](../react/ai_react_hooks_guidelines.md) §7.
 
 ---
 

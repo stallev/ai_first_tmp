@@ -125,6 +125,8 @@ rg '\{\{' --glob '!node_modules' .
 | `project-context.template.mdc` | `.cursor/rules/project-context.mdc` |
 | `docs/meta/*.template.md` | убрать `.template` (после P2) |
 
+**Claude Code (`CLAUDE.md`):** не создавать вручную — статичный `@AGENTS.md`-импорт уже в boilerplate (`CLAUDE.md` в корне, `scaffold/apps/web/CLAUDE.md` для `apps/web/` на P5). Не редактировать и не дублировать туда содержимое Cursor Rules — единственный источник истины остаётся Cursor Rules → AGENTS.md.
+
 ---
 
 ## Шаг 4 — Cursor Rules по tier
@@ -252,6 +254,7 @@ Env `RESEND_API_KEY` — когда фаза email (P21 analog).
 ### После P0
 
 - [ ] `AGENTS.md` exists
+- [ ] `CLAUDE.md` exists at root (`@AGENTS.md` import)
 - [ ] T0 rules (5) in `.cursor/rules/`
 - [ ] `docs/` tree created
 - [ ] Guidelines in `docs/guidelines/` (copy from boilerplate `guidelines/`)
@@ -267,6 +270,7 @@ Env `RESEND_API_KEY` — когда фаза email (P21 analog).
 - [ ] `npm run lint` (root)
 - [ ] `cd apps/web && npm run build`
 - [ ] `proxy.ts` present, not legacy middleware patterns
+- [ ] `apps/web/CLAUDE.md` exists (`@AGENTS.md` import)
 
 ### После P6
 
@@ -281,7 +285,10 @@ Env `RESEND_API_KEY` — когда фаза email (P21 analog).
 ```
 my-new-project/
 ├── AGENTS.md
+├── CLAUDE.md                 # @AGENTS.md import (Claude Code entry point)
 ├── apps/web/                 # Next.js 16.2.6
+│   ├── AGENTS.md
+│   └── CLAUDE.md             # @AGENTS.md import
 ├── packages/{domain,policy,db}/
 ├── docs/
 │   ├── meta/

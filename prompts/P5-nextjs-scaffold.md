@@ -28,7 +28,7 @@ Senior Fullstack Developer (Next.js 16 + PostgreSQL + monorepo).
    - Auth.js v5 Credentials scaffold
    - Sentry stub (`@sentry/nextjs`)
    - `globals.css` with token placeholders
-7. Rename `AGENTS.template.md` → root `AGENTS.md` и `apps/web/AGENTS.template.md` → `apps/web/AGENTS.md`
+7. Rename `AGENTS.template.md` → root `AGENTS.md` и `apps/web/AGENTS.template.md` → `apps/web/AGENTS.md`; скопировать `scaffold/apps/web/CLAUDE.md` → `apps/web/CLAUDE.md` (статичный `@AGENTS.md`-импорт, без изменений)
 8. Env example: `DATABASE_URL`, `DIRECT_URL`, `AUTH_SECRET`, S3 (`AWS_IAM_*`, `S3_BUCKET_*`), Sentry vars — см. [`BOOTSTRAP.md`](../BOOTSTRAP.md) §6–§10, [`ai_s3_file_upload_guidelines.md`](../guidelines/nextjs/ai_s3_file_upload_guidelines.md)
 9. Создать `.cursor/skills/app-conventions/SKILL.md` — **проектный скилл поверх cursor rules**:
    - Frontmatter: `name: app-conventions`; description без слов `performance`/`optimization`/`bundle`
@@ -55,6 +55,7 @@ Next.js 16.2.6 · Vercel · Neon · Prisma v7 · Auth.js v5 · AWS S3 · Resend 
 - [ ] `.cursor/skills/app-conventions/SKILL.md` создан, содержит defer-clause и cursor rules index
 - [ ] Скилл ссылается на `.cursor/rules/*.mdc`, не дублирует их содержимое
 - [ ] `apps/web/AGENTS.md` содержит секцию `## Skills` со ссылкой на `app-conventions`
+- [ ] `apps/web/CLAUDE.md` exists, содержит `@AGENTS.md`
 - [ ] commitlint + husky: `echo "main: chore: test" | npx commitlint` pass; `.husky/commit-msg` в репо
 
 ## Next

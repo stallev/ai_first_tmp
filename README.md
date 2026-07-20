@@ -39,6 +39,7 @@
 ```
 ├── BOOTSTRAP.md                      → пошаговый bootstrap нового проекта
 ├── AGENTS.template.md                → AGENTS.md после bootstrap
+├── CLAUDE.md                         → @AGENTS.md import (Claude Code entry point)
 ├── PLACEHOLDERS.md                   → список {{PLACEHOLDER}} для замены
 ├── .cursor/rules/                    → 29 rules (Pulse stack, parameterized)
 │   ├── tiers/                        → t0 / t1 / t2 — порядок активации
@@ -69,6 +70,7 @@
 | [`docs/general/`](docs/general/README.md) | Senior deep dives; нормы синтезированы в guidelines/rules |
 | [`docs/general/ai_agent_ui_ux_guideline.md`](docs/general/ai_agent_ui_ux_guideline.md) | FX-1–FX-10, overlay tree, pre-merge UI checklist |
 | [`docs/examples/pulse/`](docs/examples/pulse/) | Reference: architecture, contracts, phases, code patterns |
+| [`CLAUDE.md`](CLAUDE.md) | Claude Code entry point — `@AGENTS.md` import, не дублировать правила |
 
 ### Practices из `docs/general/` → guidelines
 

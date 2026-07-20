@@ -65,6 +65,17 @@ alwaysApply: false
 - [ai_form_handling_pattern.md](docs/guidelines/react/ai_form_handling_pattern.md)
 - Toast: **ui-toast-mutations**; pending: **ui-mutation-pending**
 
+## Hooks discipline (MUST)
+
+Full contract: [ai_react_hooks_guidelines.md](docs/guidelines/react/ai_react_hooks_guidelines.md).
+
+- **Rules of Hooks** — top level only, only from components/custom hooks; component body stays a pure render (no `fetch`/`localStorage`/timers outside `useEffect`).
+- **`useState`** — never mutate directly (`prev => ...` / new array/object); derived values (`fullName`, formatted totals) computed in render, not synced via `useEffect`.
+- **`useEffect`** — never pass an `async` function directly; declare it inside and invoke. Always clean up subscriptions/timers/in-flight requests (`AbortController` for fetch — [ai_data_fetching_patterns.md](docs/guidelines/nextjs/ai_data_fetching_patterns.md) §4).
+- **`useRef`** — for mutable values that must not trigger a re-render (render counters, prev-prop tracking, DOM refs); do not model them with `useState`.
+- **`use()`** — Promise must be stable across renders (parent-created/memoized); consumer wrapped in `<Suspense>` + `ErrorBoundary`.
+- Hand-rolled async UI state (rare — prefer `useActionState`/RSC) → discriminated union (`{ status: 'idle'|'loading'|'success'|'error' }`), not independent `isLoading`/`isError` booleans.
+
 ## React Compiler
 
 When `reactCompiler: true` in `next.config.ts` — do not add `memo` / `useCallback` / `useMemo` without profiled need. Follow [Rules of React](https://react.dev/reference/rules).

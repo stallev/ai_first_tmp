@@ -36,6 +36,7 @@ Software Architect (AI-first monorepo).
 
 ## Verification
 - [ ] `AGENTS.md` exists, ссылается на methodology
+- [ ] `CLAUDE.md` exists at root, содержит `@AGENTS.md`
 - [ ] `.cursor/rules/project-context.mdc` — no unreplaced `{{`
 - [ ] T0 rules (5) в `.cursor/rules/`
 - [ ] `docs/meta/` готов для P2
