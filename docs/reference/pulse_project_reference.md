@@ -27,10 +27,12 @@
 
 **При разработке:**
 
-1. **Cursor Rules** (`.cursor/rules/*.mdc`) и **Guidelines** (`guidelines/`) — **канон** (наивысший приоритет для агентов).
-2. **General deep dives** (`docs/general/`) — теория и Senior-контекст; операционные нормы синтезированы в Guidelines.
-3. **Код и docs Pulse** — read-only **reference for structure and flows**; при конфликте — **следовать Rules/Guidelines текущего проекта**.
-4. **HTML prototype** целевого продукта — visual reference; subordinate to Rules/PRD.
+Базовый порядок — канон: [`.cursor/rules/project-context.mdc`](../../.cursor/rules/project-context.mdc) § Source-of-truth order (Cursor Rules и Guidelines — наивысший приоритет для агентов).
+
+Применительно к Pulse:
+
+1. **Код и docs Pulse** — read-only **reference for structure and flows**; при конфликте — **следовать Rules/Guidelines текущего проекта**.
+2. **HTML prototype** целевого продукта — visual reference; subordinate to Rules/PRD.
 
 Сводка stack-паттернов: [`stack_patterns_from_pulse.md`](./stack_patterns_from_pulse.md)
 

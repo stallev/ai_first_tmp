@@ -114,13 +114,6 @@
 
 ## Иерархия источников истины
 
-1. **Cursor Rules** (`.cursor/rules/*.mdc`)
-2. **AGENTS.md**
-3. **Contracts** (`docs/implementation/mvp/contracts/`)
-4. **PRD** (`docs/prds/`)
-5. **Guidelines** (`guidelines/`)
-6. **General deep dives** (`docs/general/`) — теория; операционный канон в guidelines
-7. **Pulse reference** (`docs/examples/pulse/`) — architecture & feature patterns; **не override Rules/Guidelines**
-8. **HTML prototype** — visual reference only
+Полный канонический список — [`.cursor/rules/project-context.mdc`](.cursor/rules/project-context.mdc) § Source-of-truth order. Не дублировать список здесь.
 
 Подробнее: [`docs/reference/pulse_project_reference.md`](docs/reference/pulse_project_reference.md)

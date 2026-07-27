@@ -21,16 +21,12 @@
 
 ## Precedence (иерархия источников истины)
 
-При конфликте источников — строгий порядок:
+Базовый порядок — канон: [`.cursor/rules/project-context.mdc`](../../.cursor/rules/project-context.mdc) § Source-of-truth order. Не дублировать список здесь.
 
-1. **Cursor Rules** (`.cursor/rules/*.mdc`)
-2. **Guidelines** (`guidelines/`) — operational implementation norms
-3. **Product contracts** — `ux_ui_principles.md`, `interaction_design_contract.md`, `forms_and_validation_ux.md`, `styleguide.md`
-4. **PRD / user flows / implementation specs**
-5. **General deep dives** (`docs/general/`) — theory; norms synthesized in Guidelines
-6. **Pulse reference** (`docs/examples/pulse/`) — architecture & feature patterns; **subordinate to Rules/Guidelines**
-7. **Этот документ** — UX thinking + operational checklists for agents
-8. **HTML-прототип** — visual reference (subordinate to routes and MVP scope)
+UI-специфичные уточнения к канону:
+- **Product UX contracts** (`ux_ui_principles.md`, `interaction_design_contract.md`, `forms_and_validation_ux.md`, `styleguide.md`) — на уровне Contracts/PRD канона.
+- **Этот документ** — операционный чеклист для агентов, ниже Guidelines.
+- **HTML-прототип** — visual reference only, как в каноне (subordinate to routes and MVP scope).
 
 **Visual canon:** `fitness-platform-design-system.md` + `Fitness_Platform_Prototype_v1.html`.
 

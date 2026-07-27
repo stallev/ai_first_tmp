@@ -19,7 +19,7 @@ Architectural and AI-first patterns inherit from **Pulse** (fitness marketplace 
 - Reference summary: [`docs/reference/pulse_project_reference.md`](docs/reference/pulse_project_reference.md)
 - Methodology: [`docs/meta/ai_first_project_methodology.md`](docs/meta/ai_first_project_methodology.md)
 
-When {{PROJECT_NAME}} docs are silent — follow Pulse reference **architecture and methodology**, adapting domain and ADR deltas.  
+When {{PROJECT_NAME}} docs are silent — follow Pulse reference **architecture, feature patterns, and methodology**, adapting domain and ADR deltas.  
 **{{PROJECT_NAME}} Cursor Rules and Guidelines override Pulse reference code** when they conflict — see [`pulse_project_reference.md`](docs/reference/pulse_project_reference.md) §Priority.
 
 ## Stack (baseline — full Pulse stack)
@@ -38,6 +38,8 @@ Runtime policy: [ADR-001](docs/prds/07_governance/adr_001_stack_and_runtime.md),
 
 ## Source-of-truth order when documents conflict
 
+**Canonical list — do not restate elsewhere; other docs must link here.**
+
 1. **Cursor Rules** (`.cursor/rules/*.mdc`)
 2. **[`AGENTS.md`](AGENTS.md)** — monorepo entry
 3. **Contracts** (`docs/implementation/mvp/contracts/`)
@@ -45,6 +47,8 @@ Runtime policy: [ADR-001](docs/prds/07_governance/adr_001_stack_and_runtime.md),
 5. **[`docs/design/canonical_routes.md`](docs/design/canonical_routes.md)** — single route inventory
 6. **Guidelines** (`docs/guidelines/`) — index in [`README.md`](docs/guidelines/README.md)
 7. **HTML prototype** — visual reference only, subordinate to canonical docs
+
+**Pulse namesakes are not authoritative.** `docs/examples/pulse/.cursor/rules/*.mdc` and `docs/examples/pulse/docs/guidelines/**` contain files with the *same names* as the ones above (e.g. `ui-warm-forest-shadcn.mdc`). Those are a read-only reference snapshot — only `.cursor/rules/*.mdc` and `docs/guidelines/**` at the project root are enforceable, regardless of filename matches under `docs/examples/pulse/`.
 
 ## Domain invariants (do not break — fill during W3/W4)
 

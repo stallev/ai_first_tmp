@@ -120,7 +120,7 @@ docs/implementation/mvp/
 
 См. §3.1 в `documentation_creation_registry.template.md` и полный образец Pulse registry.
 
-**Иерархия истины:** Cursor Rules → AGENTS.md → Contracts → PRD → Guidelines → Prototype (visual only)
+**Иерархия истины:** канон — [`.cursor/rules/project-context.mdc`](../../.cursor/rules/project-context.mdc) § Source-of-truth order.
 
 ---
 

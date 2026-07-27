@@ -37,7 +37,7 @@ Monorepo: **Next.js 16.2.6** App Router + Vercel + Neon PostgreSQL.
 
 ## Иерархия источников истины
 
-**Cursor Rules** → **AGENTS.md** → **Contracts** → **PRD** → **Guidelines** → **Prototype (visual only)**
+Полный канонический список — [`.cursor/rules/project-context.mdc`](.cursor/rules/project-context.mdc) § Source-of-truth order. Не дублировать список здесь.
 
 ## Документация — точки входа
 
@@ -61,8 +61,10 @@ Monorepo: **Next.js 16.2.6** App Router + Vercel + Neon PostgreSQL.
 1. Прочитать этот файл + `project-context.mdc`
 2. Определить фазу (`docs/implementation/mvp/phases_tasks_descriptions/P{N}_*.md`)
 3. Прочитать contracts для фазы
-4. Выполнить чеклист `docs/implementation/mvp/tasks/P{N}_tasks.md`
-5. `npm run typecheck` + `npm run lint` перед DoD
+4. **Перед написанием/правкой кода** — прочитать применимые `.cursor/rules/*.mdc` для затрагиваемой области (индекс: [`.cursor/rules/README.md`](.cursor/rules/README.md) или таблица в `app-conventions` skill). Эти файлы — enforceable и имеют приоритет над `docs/examples/pulse/**` при конфликте (Pulse — донор/референс, не источник истины).
+   Индекс в `.cursor/skills/app-conventions` может быть не виден Claude Code (в репозитории нет `.claude/skills/`) — при сомнении читать `.cursor/rules/` напрямую, не полагаясь только на skill.
+5. Выполнить чеклист `docs/implementation/mvp/tasks/P{N}_tasks.md`
+6. `npm run typecheck` + `npm run lint` перед DoD
 
 ## Commit & review
 

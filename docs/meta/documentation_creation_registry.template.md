@@ -50,16 +50,13 @@
 
 ### 2.1 Иерархия источников истины
 
-При конфликте — порядок приоритета (не нарушать):
+Базовый порядок — канон: [`.cursor/rules/project-context.mdc`](../../.cursor/rules/project-context.mdc) § Source-of-truth order. Не дублировать список здесь.
 
-1. **Cursor Rules** (`.cursor/rules/*.mdc`)
-2. **`AGENTS.md`** (+ `apps/web/AGENTS.md` для web-кода)
-3. **Contracts** (`docs/implementation/mvp/contracts/`)
-4. **PRD** (`docs/prds/`)
-5. **Interim** (`docs/default_docs/`) — только до завершения миграции
-6. **Guidelines** (`docs/guidelines/`)
-7. **ADR** (`docs/prds/07_governance/`)
-8. **Wireframes / prototype** — визуальный эталон, subordinate to canonical routes
+Уточнения для документации (в рамках соответствующих уровней канона):
+- **`AGENTS.md`** — включая `apps/web/AGENTS.md` для web-кода
+- **Interim** (`docs/default_docs/`) — только до завершения миграции, на уровне PRD
+- **ADR** (`docs/prds/07_governance/`) — на уровне PRD
+- **Wireframes / prototype** — визуальный эталон, subordinate to canonical routes, на уровне HTML prototype канона
 
 ### 2.2 Формат каждого нового файла (обязательный front matter)
 

@@ -6,10 +6,7 @@
 
 ## Приоритет источников (для агентов)
 
-1. **Cursor Rules** (`.cursor/rules/*.mdc`) — операционный MUST для агента
-2. **Guidelines** (этот каталог) — детализация паттернов
-3. **General deep dives** ([`docs/general/`](../docs/general/)) — теория и Senior-контекст; нормы синтезированы в guidelines/rules
-4. **Pulse reference** ([`docs/examples/pulse/`](../docs/examples/pulse/)) — образец архитектуры и flows; **не override Rules/Guidelines**
+Полный канонический список — [`.cursor/rules/project-context.mdc`](../.cursor/rules/project-context.mdc) § Source-of-truth order. Не дублировать список здесь; кратко: Cursor Rules → Guidelines (этот каталог) → General deep dives → Pulse reference (не override Rules/Guidelines).
 
 См. [`docs/reference/pulse_project_reference.md`](../docs/reference/pulse_project_reference.md).
 
