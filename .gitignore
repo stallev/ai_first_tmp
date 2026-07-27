@@ -56,3 +56,4 @@ packages/db/prisma/taxonomy-map-overrides.json
 /docs/examples/pulse/**/node_modules/
 /docs/examples/pulse/**/.next/
 /docs/examples/pulse/packages/db/src/generated/
+/docs/examples/js-course/**/*
