@@ -89,7 +89,7 @@
 | Tier | Когда активировать | Кол-во |
 |------|-------------------|--------|
 | **T0** | Bootstrap (день 0) | 5 rules — alwaysApply |
-| **T1** | Docs phase + scaffold | 8 rules — implementation (+ security-xss-csrf) |
+| **T1** | Docs phase + scaffold | 9 rules — implementation (+ security-xss-csrf, javascript-fundamentals) |
 | **T2** | Design System Lab (P6) | 17 rules — UI/React (+ ui-animation-performance, react-state-management) |
 
 Полный список: [`.cursor/rules/README.md`](.cursor/rules/README.md)

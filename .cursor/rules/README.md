@@ -41,6 +41,7 @@
 | `app-router-streaming-loading.mdc` | Suspense, `loading.tsx`, cache |
 | `ios-safari-mutation-transport.mdc` | iOS Safari dual transport |
 | `s3-file-asset-uploads.mdc` | FileAsset + AWS S3 presigned |
+| `javascript-fundamentals.mdc` | Closures, map/filter/reduce, generators, ESM modules, TS generics |
 
 Файлы: [`tiers/t1-implementation/`](tiers/t1-implementation/)
 

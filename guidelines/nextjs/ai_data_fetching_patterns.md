@@ -85,6 +85,17 @@ const [user, stats] = await Promise.all([
 
 Prefer **separate Suspense boundaries** per slow region — см. **app-router-streaming-loading**.
 
+### 3.1 Promise combinators — `all` vs `allSettled` vs `any` vs `race`
+
+- **`Promise.all` fails fast on the first rejection** — the other promises keep running to completion with their results discarded ("ghost requests": wasted work/resources). For independent sources where a non-critical one may fail (e.g. dashboard: user + recommendations + ads), use **`Promise.allSettled`** and treat critical results as throw-worthy, non-critical ones as default-on-`rejected`.
+- **`Promise.any`** resolves on the first **success** (ignores rejections until all reject, then throws `AggregateError`) — use for racing fallback sources (multiple CDN mirrors), not a sequential `for (url of sources) { try { await fetch(url) } catch { continue } }` loop.
+- **`Promise.race`** settles on the first **completion**, success or failure — distinct from `any`. **Never call it with an empty array** — `Promise.race([])` never resolves (silent hang/leak). `Promise.all([])`/`Promise.allSettled([])` resolve immediately with `[]`; `Promise.any([])` rejects immediately with `AggregateError`.
+
+### 3.2 Async/await error handling
+
+- **Every promise chain ends in a `.catch()`** (or is wrapped in `try/catch` under `await`) that logs and returns a fallback — an unhandled rejection crashes the Node process (Node 15+) or fails silently in the browser. "Swallow vs propagate" must be a conscious choice, not an omission.
+- **Prefer an explicit Result shape over nested try/catch** for multi-step await chains where different failures mean different things (e.g. payment step vs non-critical email-send step) — a `{ data, error }` / discriminated-union return makes it explicit in the function signature which failures are expected/recoverable vs which should propagate, instead of relying on catch-block nesting depth to convey severity. In Server Actions, this is the same discipline as `MutationResult<T>` — see [`ai_typescript_monorepo_guidelines.md`](../typescript/ai_typescript_monorepo_guidelines.md) §4.
+
 ---
 
 ## 4. Client fetch — race conditions
@@ -174,6 +185,8 @@ Provenance: evaluated against [nextjs-app-architecture-skill](https://github.com
 - [ ] Server Action mutations → `updateTag` / `revalidatePath` где нужно
 - [ ] Client effects с changing deps → `AbortController`
 - [ ] Parallel `Promise.all` vs sequential await — осознанный выбор
+- [ ] Non-critical parallel source → `Promise.allSettled`, not `Promise.all` (§3.1)
+- [ ] Every promise chain has a terminal `.catch()` / `try-catch` (§3.2)
 - [ ] Mutation vs route loading разделены (**ai_loading_patterns** §13)
 - [ ] Parent не refetch'ит то, что уже передал дочернему компоненту (§7)
 

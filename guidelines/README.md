@@ -38,6 +38,7 @@
 | `domain-literals-and-codes.mdc` | Always applied — mutation codes, domain literals |
 | `ai-dry-deduplication.mdc` | Always applied — DRY for agents |
 | `data-server-actions-and-api.mdc` | DAL, Actions vs Route Handlers |
+| `javascript-fundamentals.mdc` | Closures, map/filter/reduce, generators, ESM modules, TS generics |
 | `ios-safari-mutation-transport.mdc` | iOS Safari `Load failed` — Class A/B dual transport |
 | `policy-packages.mdc` | `@{{PACKAGE_SCOPE}}/policy-*` boundaries |
 | `auth-security.mdc` | Auth.js, defense in depth |
