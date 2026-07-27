@@ -12,6 +12,8 @@
 - **Client:** hooks, events, browser APIs only
 - New client modules: **`.client.tsx`** suffix for clarity
 - **Heavy client deps** in shared `components/ui/*` → lazy-load per [ai_client_lazy_loading.md](../nextjs/ai_client_lazy_loading.md) (`next/dynamic`, interaction-gated panels)
+- **Extract the interactive leaf, don't promote the whole page** — one interactive element (e.g. a like button) does not justify marking the entire page/route `'use client'`; extract only that element into its own small Client Component. Every client component adds to the hydration/JS bundle; static text/markup needs neither.
+- **Fetch once on the server, pass down as props** — a Client Component fetching data client-side via `useEffect` for data the Server Component already had access to creates an avoidable client-side request waterfall.
 
 ---
 
@@ -46,6 +48,16 @@
 - Routes stay thin — compose features, do not embed large UI trees.
 
 Spec: [`design_system_lab_spec.md`](../../implementation/mvp/specs/design_system_lab_spec.md) §Product UI catalog contract.
+
+---
+
+## 2.3 Rendering: props, keys, and DOM
+
+- **Destructure props with defaults in the function signature** (`({ variant = 'primary', ...props }: Props) => …`) instead of scattered `props.xxx || default` in the body — an explicit contract, and avoids `||` silently clobbering falsy values (`0`, `''`, `false`).
+- **Early `return` per UI state** — separate `if (loading) return <Spinner />`, `if (error) return <ErrorState />`, `if (!items.length) return <EmptyState />` branches instead of nesting loading/error/empty/success into one ternary chain in JSX; each state stays independently readable and extensible.
+- **Stable `key` from data** — `key={item.id}`, never array `index` on a reorderable/mutable list and never `Math.random()`. An unstable key makes React misattribute DOM nodes (state/focus/animation) on reorder/delete, or — with `Math.random()` — treats every item as new on every render, destroying all diffing benefit.
+- **`key` as an intentional remount trigger** — when a component's logical identity changes but its type doesn't (e.g. `userId` changes but `<ProfileForm>` keeps stale field state), setting `key={userId}` is the sanctioned way to force unmount+remount instead of relying on prop-diffing an otherwise-unrelated instance.
+- **Never mutate the real DOM directly** (`ref.current.innerHTML = ...`) outside React — drive all content through JSX/state; manual DOM changes desync React's virtual tree from the real one, and the next diff can silently revert or corrupt them.
 
 ---
 

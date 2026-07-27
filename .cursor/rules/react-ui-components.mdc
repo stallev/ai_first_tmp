@@ -9,7 +9,7 @@ alwaysApply: false
 # React / components (`apps/web`)
 
 **Methodology:** [`docs/meta/ai_first_project_methodology.md`](docs/meta/ai_first_project_methodology.md)  
-**Guides:** [ai_component_guidelines.md](docs/guidelines/react/ai_component_guidelines.md), [ai_react_hooks_guidelines.md](docs/guidelines/react/ai_react_hooks_guidelines.md), [ai_react_utilities_guidelines.md](docs/guidelines/react/ai_react_utilities_guidelines.md)  
+**Guides:** [ai_component_guidelines.md](docs/guidelines/react/ai_component_guidelines.md), [ai_react_hooks_guidelines.md](docs/guidelines/react/ai_react_hooks_guidelines.md), [ai_react_utilities_guidelines.md](docs/guidelines/react/ai_react_utilities_guidelines.md), [ai_react_state_management_guidelines.md](docs/guidelines/react/ai_react_state_management_guidelines.md)
 **Client lazy loading:** [ai_client_lazy_loading.md](docs/guidelines/nextjs/ai_client_lazy_loading.md) — `next/dynamic` for heavy deps in shared `components/ui/*`  
 **Naming:** **react-naming-conventions** · **Logic/presentation:** **react-logic-presentation**
 
@@ -19,6 +19,7 @@ alwaysApply: false
 - **`'use client'`** only for hooks, DOM events, client-only APIs; directive at **top of file**.
 - Prefer `.client.tsx` / `.client.ts` for new client-entry modules.
 - **Heavy client libs** (`react-day-picker`, `recharts`, editors) in shared UI → **`next/dynamic`** per [ai_client_lazy_loading.md](docs/guidelines/nextjs/ai_client_lazy_loading.md) — not static import in cross-route modules.
+- **Extract the interactive leaf** — one interactive element does not justify `'use client'` on the whole page; isolate it in a small client component. **Fetch once on the server**, pass down as props — don't re-fetch client-side via `useEffect` for data the Server Component already had.
 
 ## Domain literals
 
@@ -30,6 +31,7 @@ alwaysApply: false
 
 - Explicit **props interfaces**; **no `React.FC`** for new components.
 - Arrow components `const X = (props: Props) => …` (exceptions: `page.tsx`, `layout.tsx`, `'use server'`).
+- Destructure props with defaults in the signature; early `return` per UI state (loading/error/empty/success), not nested ternaries; stable `key={item.id}` (never `index` on reorderable lists, never `Math.random()`) — full rationale: [ai_component_guidelines.md](docs/guidelines/react/ai_component_guidelines.md) §2.3.
 - Primitives in `components/ui/`; typography atoms in `components/atoms/`; features in dedicated folders.
 - **Design Lab catalog:** product UI **MUST** import from paths listed on `/design-system` — `@/components/atoms`, `@/components/ui/*` — not from `@/components/design-lab/**` (showcase-only). See **ui-warm-forest-shadcn** §Design Lab catalog.
 
@@ -75,6 +77,15 @@ Full contract: [ai_react_hooks_guidelines.md](docs/guidelines/react/ai_react_hoo
 - **`useRef`** — for mutable values that must not trigger a re-render (render counters, prev-prop tracking, DOM refs); do not model them with `useState`.
 - **`use()`** — Promise must be stable across renders (parent-created/memoized); consumer wrapped in `<Suspense>` + `ErrorBoundary`.
 - Hand-rolled async UI state (rare — prefer `useActionState`/RSC) → discriminated union (`{ status: 'idle'|'loading'|'success'|'error' }`), not independent `isLoading`/`isError` booleans.
+- **Memoization** — measure before `useMemo`/`useCallback`/`memo` (no default use); always memoize Context Provider `value`. **`useLayoutEffect`** — default to `useEffect`, switch only for a measured pre-paint flash. **`useTransition`** — never disable/block the triggering input while `isPending`. **`useId`** — SSR-safe DOM/aria ids, never a list `key`. **`useSyncExternalStore`** — required for subscribing to non-React sources (avoids tearing). Full detail: [ai_react_hooks_guidelines.md](docs/guidelines/react/ai_react_hooks_guidelines.md) §11–§14.
+- **Custom hooks** — one concern per hook (no "god hooks"); return a named object once 3+ values; never return JSX.
+
+## State management
+
+Default to `useState`/`useReducer` + Server Components — reach for a client store only for genuinely cross-cutting state. Decision table + full rules: **react-state-management**, [ai_react_state_management_guidelines.md](docs/guidelines/react/ai_react_state_management_guidelines.md).
+
+- **Zustand/Redux Toolkit — always select narrowly** (`useStore(s => s.count)` / `useSelector`), never destructure the whole store.
+- **Never a module-level store singleton on the server** in Next.js App Router — per-request/per-user state must use a store-per-request pattern (`useRef` in a Provider), or it leaks between users.
 
 ## React Compiler
 

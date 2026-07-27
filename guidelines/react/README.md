@@ -27,7 +27,8 @@ Patterns for **Next.js 16.2.6 App Router**, **React 19**, **TypeScript**, **Tail
 | [copy_and_messages.md](./copy_and_messages.md) | `@/lib/messages`, i18n-ready copy |
 | [ai_form_handling_pattern.md](./ai_form_handling_pattern.md) | Forms, Server Actions, busy UI §4, iOS Safari §7 |
 | [ai_optimistic_ui_pattern.md](./ai_optimistic_ui_pattern.md) | Wishlist, service toggle |
-| [ai_react_hooks_guidelines.md](./ai_react_hooks_guidelines.md) | Hooks for mutations/data |
+| [ai_react_hooks_guidelines.md](./ai_react_hooks_guidelines.md) | Hooks for mutations/data, memoization, concurrent/advanced hooks |
+| [ai_react_state_management_guidelines.md](./ai_react_state_management_guidelines.md) | useReducer/useContext/Zustand/Redux Toolkit — when to use which, SSR safety |
 | [ai_react_utilities_guidelines.md](./ai_react_utilities_guidelines.md) | Pure helpers, no magic strings |
 | [ai_component_guidelines.md](./ai_component_guidelines.md) | RSC/client, shadcn workflow |
 | [ai_client_lazy_loading.md](../nextjs/ai_client_lazy_loading.md) | `next/dynamic`, heavy client bundles |
@@ -71,6 +72,7 @@ Patterns for **Next.js 16.2.6 App Router**, **React 19**, **TypeScript**, **Tail
 | `react-one-component-per-file.mdc` | One component; ≤140 lines |
 | `react-logic-presentation.mdc` | Logic vs UI; shared components |
 | `react-naming-conventions.mdc` | Components, hooks, utils naming |
+| `react-state-management.mdc` | useReducer/useContext/Zustand/Redux Toolkit, SSR safety |
 | `ui-warm-forest-shadcn.mdc` | Tokens, states |
 | `ui-mobile-first.mdc` | Mobile-first responsive |
 | `ui-prototype-fidelity.mdc` | Prototype typography/colors |

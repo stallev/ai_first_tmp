@@ -54,6 +54,7 @@
 | `react-one-component-per-file.mdc` | One export; ≤140 lines |
 | `react-logic-presentation.mdc` | Logic vs presentation split |
 | `react-naming-conventions.mdc` | Naming conventions |
+| `react-state-management.mdc` | useReducer/useContext/Zustand/Redux Toolkit, SSR safety |
 | `ui-warm-forest-shadcn.mdc` | Design tokens, shadcn catalog |
 | `ui-mobile-first.mdc` | Bottom nav / sidebar |
 | `ui-prototype-fidelity.mdc` | Prototype visual parity |

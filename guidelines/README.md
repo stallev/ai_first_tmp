@@ -52,6 +52,7 @@
 | `react-one-component-per-file.mdc` | One component; ≤140 lines |
 | `react-logic-presentation.mdc` | Logic vs presentation; shared UI |
 | `react-naming-conventions.mdc` | Naming best practices |
+| `react-state-management.mdc` | useReducer/useContext/Zustand/Redux Toolkit, SSR safety |
 | `ui-warm-forest-shadcn.mdc` | Design tokens, shadcn |
 | `ui-mobile-first.mdc` | Mobile-first responsive |
 | `ui-prototype-fidelity.mdc` | Prototype visual parity |
