@@ -417,7 +417,11 @@ Verify against Context7 `/vercel/next.js` — [Cache Components](https://nextjs.
 
 ### 8.1 Instant Navigations (Next.js 16.3) — best practice
 
-Instant Navigations = `cacheComponents` + `partialPrefetching` (Stream / Cache / Block) — **recommended** on pin **16.3.0** ([ADR-002 §9](../../prds/07_governance/adr_002_next162_vercel_runtime_policy.md)). Canonical detail: repo root [`guidelines/nextjs/ai_loading_patterns.md`](../../../../../guidelines/nextjs/ai_loading_patterns.md) §8.1.
+Instant Navigations = `cacheComponents` + `partialPrefetching` (Stream / Cache / Block) — **recommended** on pin **16.3.0** ([ADR-002 §9](../../prds/07_governance/adr_002_next162_vercel_runtime_policy.md)). Canonical detail: repo root [`guidelines/nextjs/ai_loading_patterns.md`](../../../../../../guidelines/nextjs/ai_loading_patterns.md) §8.1.
+
+#### 8.1.1 Instant Insights (dev)
+
+**Instant Insights** detail lives in the repo-root canon: [`guidelines/nextjs/ai_loading_patterns.md`](../../../../../../guidelines/nextjs/ai_loading_patterns.md) §8.1.1 (blocking-route overlay only — not general QA).
 
 ### React `cache()` — per-request dedup
 

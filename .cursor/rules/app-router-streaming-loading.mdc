@@ -16,12 +16,13 @@ When you **add or edit** `page.tsx`, segment `layout.tsx`, colocated `loading.ts
 ## Do
 
 1. **Design for Instant Navigations:** prefer Stream (`<Suspense>` / `loading.tsx`) or Cache (`'use cache'`) so navigations stay instant; use `export const instant = false` only with an explicit product reason (Block) — §8.1.
-2. **Multiple independent Prisma queries** for **different UI sections** → separate async Server Components (prefer `*.server.tsx`), each in **`<Suspense fallback={<RegionSkeleton />}>`**. Avoid blocking the whole page with one top-level `Promise.all` unless a [§18 exception](docs/guidelines/nextjs/ai_loading_patterns.md#18-documented-exceptions) is documented.
-3. **New or materially changed data-heavy route** → colocated **`loading.tsx`** (skeleton matching page chrome) per §10.
-4. Keep **`page.tsx` light** (§4): `await params` / `searchParams`, fast `auth()` + redirects, static shell; defer heavy work to Suspense children in `src/data/**` or `*.server.tsx`. **Opt-in:** sync page + `params.then()` when `cacheComponents: true` — see `ai_loading_patterns.md` §4.1 / ADR-010.
-5. **Independent queries in one async child** → `Promise.all`, not sequential awaits (§7). For independent **UI regions**, prefer sibling Suspense over one `Promise.all` that fails atomically (§5).
-6. **Repeated session/DB reads in one request** → React `cache()` (§6, §8); cross-request public reads → **`'use cache'`** + `cacheTag()` per cache policy (§8) — **not** `unstable_cache`.
-7. Pair Suspense with segment **`error.tsx`** where failure is possible (§12). Optional **region** boundaries: `catchError` per `ai_loading_patterns.md` §12.1. Skeletons match final layout — CLS target < 0.1 (§11).
+2. **Instant Insights (dev):** when Instant Navigations flags are on, read the Instant Insights overlay for the touched route and close findings with Stream / Cache / Block — [`ai_loading_patterns.md`](docs/guidelines/nextjs/ai_loading_patterns.md) §8.1.1. Insights is **not** general QA (≠ `next-dev-loop`).
+3. **Multiple independent Prisma queries** for **different UI sections** → separate async Server Components (prefer `*.server.tsx`), each in **`<Suspense fallback={<RegionSkeleton />}>`**. Avoid blocking the whole page with one top-level `Promise.all` unless a [§18 exception](docs/guidelines/nextjs/ai_loading_patterns.md#18-documented-exceptions) is documented.
+4. **New or materially changed data-heavy route** → colocated **`loading.tsx`** (skeleton matching page chrome) per §10.
+5. Keep **`page.tsx` light** (§4): `await params` / `searchParams`, fast `auth()` + redirects, static shell; defer heavy work to Suspense children in `src/data/**` or `*.server.tsx`. **Opt-in:** sync page + `params.then()` when `cacheComponents: true` — see `ai_loading_patterns.md` §4.1 / ADR-010.
+6. **Independent queries in one async child** → `Promise.all`, not sequential awaits (§7). For independent **UI regions**, prefer sibling Suspense over one `Promise.all` that fails atomically (§5).
+7. **Repeated session/DB reads in one request** → React `cache()` (§6, §8); cross-request public reads → **`'use cache'`** + `cacheTag()` per cache policy (§8) — **not** `unstable_cache`.
+8. Pair Suspense with segment **`error.tsx`** where failure is possible (§12). Optional **region** boundaries: `catchError` per `ai_loading_patterns.md` §12.1. Skeletons match final layout — CLS target < 0.1 (§11).
 
 ## Do not
 
@@ -31,7 +32,7 @@ When you **add or edit** `page.tsx`, segment `layout.tsx`, colocated `loading.ts
 - Cache authorization, use **`unstable_cache`** in new code, or skip `updateTag` after mutations that affect tagged reads (§8).
 - Enable **`partialPrefetching`** without **`cacheComponents`**.
 - Blind **`export const instant = false`** on every route (defeats Instant Navigations).
-- Leave empty shells (`fallback={null}` / Suspense around the entire page body) that Instant Insights would treat as “instant” but show nothing.
+- Leave empty shells (`fallback={null}` / Suspense around the entire page body) that Instant Insights would treat as “instant” but show nothing — §8.1.1.
 
 ## Pulse examples
 

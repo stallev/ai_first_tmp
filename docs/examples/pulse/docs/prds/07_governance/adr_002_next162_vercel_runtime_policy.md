@@ -105,7 +105,7 @@ Do **not** use `unstable_after` for background email/jobs — use Vercel Cron + 
 
 - Teams must migrate any legacy `middleware.ts` examples in docs/code to `proxy.ts`.
 - Libraries assuming Edge middleware (e.g. some i18n setups) may require keeping transitional `middleware.ts` — document exception in implementation contract.
-- Instant Navigations (`cacheComponents` + `partialPrefetching`) is the **recommended** navigation model — routes without Suspense/`'use cache'` boundaries surface Instant Insights in dev until Stream/Cache/Block is applied.
+- Instant Navigations (`cacheComponents` + `partialPrefetching`) is the **recommended** navigation model — routes without Suspense/`'use cache'` boundaries surface **Instant Insights** in dev until Stream/Cache/Block is applied. Instant Insights validates **blocking navigation/prerender** only (not general QA); root canon: [`ai_loading_patterns.md` §8.1.1](../../../../../../guidelines/nextjs/ai_loading_patterns.md#811-instant-insights-dev).
 
 ---
 
@@ -142,7 +142,7 @@ Pin is **16.3.0**. Zero-code framework improvements apply automatically.
 
 | Topic | Guidance |
 |-------|----------|
-| **Instant Navigations** | **Best practice:** `cacheComponents: true` **and** `partialPrefetching: true` in `apps/web/next.config.ts`. Per route: **Stream** (`Suspense` / `loading.tsx`), **Cache** (`'use cache'` + tags), or deliberate **Block** (`export const instant = false` with a reason). See [`ai_loading_patterns.md`](../../guidelines/nextjs/ai_loading_patterns.md) §8.1 |
+| **Instant Navigations** | **Best practice:** `cacheComponents: true` **and** `partialPrefetching: true` in `apps/web/next.config.ts`. Per route: **Stream** (`Suspense` / `loading.tsx`), **Cache** (`'use cache'` + tags), or deliberate **Block** (`export const instant = false` with a reason). **Instant Insights** (dev overlay) flags blocking routes until Stream/Cache/Block — not general bug-hunting; see root [`ai_loading_patterns.md`](../../../../../../guidelines/nextjs/ai_loading_patterns.md) §8.1 / [§8.1.1](../../../../../../guidelines/nextjs/ai_loading_patterns.md#811-instant-insights-dev) |
 | **Playwright `instant()`** | **SHOULD** on critical navigations (`/trainers`, booking) once flags are on |
 | **`catchError` (`next/error`)** | Prefer stable `catchError` + `retry()` for region boundaries — §12.1 |
 | **AGENTS.md Next block** | Commit `nextjs-agent-rules` from `next dev` **or** set `agentRules: false` if monorepo `AGENTS.md` conflicts |
@@ -181,3 +181,4 @@ Pin is **16.3.0**. Zero-code framework improvements apply automatically.
 | 2026-08-10 | v1.1 — §9 Next.js 16.3 roadmap (docs only); pin unchanged |
 | 2026-08-10 | v1.2 — **pin `16.3.0`**; §9 adopt/defer for Instant Navigations; `catchError` recommended |
 | 2026-08-10 | v1.3 — Instant Navigations + `partialPrefetching` = **recommended best practice** |
+| 2026-08-11 | v1.4 — Instant Insights scope clarified (blocking routes only; link §8.1.1) |

@@ -23,7 +23,7 @@ Verify against Context7 `/vercel/next.js/v16.2.2` and [Loading UI and Streaming]
 5. [Independent regions behind Suspense](#5-independent-regions-behind-suspense)
 6. [`auth()` cost and request dedup](#6-auth-cost-and-request-dedup)
 7. [Eliminating DB waterfalls](#7-eliminating-db-waterfalls)
-8. [Query caching — React `cache()` vs `'use cache'`](#8-query-caching--react-cache-vs-use-cache) — incl. [§8.1 Instant Navigations best practice](#81-instant-navigations-nextjs-163--best-practice)
+8. [Query caching — React `cache()` vs `'use cache'`](#8-query-caching--react-cache-vs-use-cache) — incl. [§8.1 Instant Navigations](#81-instant-navigations-nextjs-163--best-practice) · [§8.1.1 Instant Insights](#811-instant-insights-dev)
 9. [Neon: cold start and connection](#9-neon-cold-start-and-connection)
 10. [`loading.tsx` as navigation insurance](#10-loadingtsx-as-navigation-insurance)
 11. [Skeletons without CLS](#11-skeletons-without-cls)
@@ -476,6 +476,54 @@ Today’s `loading.tsx` + sibling Suspense (§3–§5, §10) align with **Stream
 
 **Out of scope for MVP canon:** `experimental.useOffline`, Rust React Compiler, `import.meta.glob`, mandatory `next/root-params` (cookie-first i18n), blind Block on every route.
 
+#### 8.1.1 Instant Insights (dev)
+
+**Instant Insights** is the Next.js **dev overlay / validation** for Instant Navigations (`cacheComponents` + `partialPrefetching`). It flags routes that **block** prerender or instant navigation — **not** a general bug-finder (logic, a11y, visual QA). Do **not** confuse with **`next-dev-loop`** (opt-in dual-view runtime verification — [README](./README.md) § Agent runtime verification).
+
+**What it catches**
+
+| Class | Typical trigger | Effect |
+|-------|-----------------|--------|
+| Runtime data outside Suspense | `cookies()`, `headers()`, `params`, `searchParams` | Blocks prerender / instant navigation |
+| Uncached IO outside boundaries | `fetch()`, `connection()` without Suspense / `'use cache'` | Page waits on data before paint |
+| Auth/session on static shell | Session read without Stream/Block | Route flagged as blocking |
+| Dynamic viewport + runtime | `generateViewport` reading cookies/headers | Layout blocks navigation |
+
+**What it does not catch:** business logic bugs, accessibility, visual regressions, empty shells (`fallback={null}`) that still look “instant” but show nothing — treat empty shells as a separate anti-pattern (§17).
+
+**Fixes (same Stream / Cache / Block as §8.1)**
+
+| Overlay advice | Action |
+|----------------|--------|
+| **[stream]** | Wrap dynamic / runtime access in `<Suspense fallback={…}>` with a **meaningful** skeleton (not `null`) |
+| **[cache]** | Cache shared reads with `'use cache'` + tags — **not** for `cookies()` / `headers()` |
+| **[block]** | `export const instant = false` only with an explicit product reason |
+
+**Config (optional migration knobs)**
+
+```ts
+// apps/web/next.config.ts
+const nextConfig: NextConfig = {
+  cacheComponents: true,
+  partialPrefetching: true,
+  experimental: {
+    instantInsights: {
+      // 'warning' — validate all segments; 'manual-warning' — only segments that export `instant`
+      validationLevel: 'warning',
+    },
+  },
+}
+```
+
+Per-segment opt-out / severity: `export const instant = false` or `export const instant = { level: 'warning' }` — see [route segment `instant`](https://nextjs.org/docs/app/api-reference/file-conventions/route-segment-config/instant).
+
+**Agent checklist (route work with Instant Navigations on)**
+
+- [ ] Read Instant Insights overlay for the touched route; close each finding with Stream, Cache, or deliberate Block
+- [ ] Fallbacks are layout-shaped skeletons — never `fallback={null}` / empty Suspense around the whole page body
+- [ ] Do not treat Instant Insights as full QA; keep `typecheck` / `lint` (and Playwright `instant()` on critical paths when flags are on)
+- [ ] Incremental migration: `validationLevel: 'manual-warning'` or scoped `instant = false` — document why
+
 ### React `cache()` — per-request dedup
 
 Wrap expensive read functions so they **do not run twice** in one RSC tree:
@@ -871,6 +919,8 @@ Run before finishing any `page.tsx`, segment `layout.tsx`, or colocated `loading
 - [ ] Cross-request public reads — **`'use cache'`** + `cacheTag()` + `cacheLife()` per [`cache_revalidation_policy.md`](../../prds/05_runtime/cache_revalidation_policy.md) — **not** `unstable_cache`
 - [ ] `cacheComponents: true` **and** `partialPrefetching: true` in `next.config.ts` (Instant Navigations best practice — §8.1)
 - [ ] Dynamic regions use Stream (`Suspense`) or Cache; Block (`instant = false`) only with a documented reason
+- [ ] With Instant Navigations on: Instant Insights overlay reviewed for the route; findings closed via Stream / Cache / Block (§8.1.1)
+- [ ] No `fallback={null}` / empty Suspense around the whole page body (Insights may treat it as “instant” while UI shows nothing)
 - [ ] No `cookies()` / `headers()` inside `'use cache'` — pass values as arguments from dynamic parent
 - [ ] Mutations call matching `updateTag` — no stale catalog/bookings after write
 
@@ -912,6 +962,8 @@ Verify on **Vercel preview** when available.
 | Duplicate `<html>` in layout Suspense fallback vs content | Full document remount; DevTools noise | One `<html>/<body>`; bridge locale via `LocaleHydrationBridge` |
 | Route skeleton for mutation pending | Wrong UX layer | `useTransition` + pending UI |
 | Child async component refetches entity parent already loaded | N+1 queries; wasted latency | Pass plain DTO from parent list/detail — see **ai_data_fetching_patterns** §9 |
+| Empty Suspense (`fallback={null}`) around page body | Instant Insights may score “instant” while users see a blank shell | Meaningful region skeletons; Stream with visible fallback (§8.1.1) |
+| Ignoring Instant Insights on Instant Navigations routes | Blocking runtime/uncached IO ships unnoticed | Close overlay findings with Stream / Cache / Block (§8.1.1) |
 
 ---
 
@@ -945,12 +997,13 @@ State briefly in PR/task which exception applies:
 | [Next.js: `use cache`](https://nextjs.org/docs/app/api-reference/directives/use-cache) | Cross-request cache directive (replaces `unstable_cache`) |
 | [Next.js: Cache Components](https://nextjs.org/docs/app/getting-started/cache-components) | `cacheComponents`, PPR, static + cached + dynamic mix |
 | [Next.js 16.3: Instant Navigations](https://nextjs.org/blog/next-16-3-instant-navigations) | Best practice §8.1 — `cacheComponents` + `partialPrefetching` |
+| [Next.js: `instant` route segment config](https://nextjs.org/docs/app/api-reference/file-conventions/route-segment-config/instant) | Instant Insights validationLevel / per-segment `instant` — §8.1.1 |
 | [ADR-002](../../prds/07_governance/adr_002_next162_vercel_runtime_policy.md) | Pin 16.3.0 + §9 Instant Navigations recommended |
 | Pulse reference [`ai_page_performance_streaming.md`](../../examples/lampto/docs/guidelines/nextjs/ai_page_performance_streaming.md) | Source reference (BSFY) |
 | [`adr_010_nextjs_app_architecture_skill.md`](../../reference/adr_010_nextjs_app_architecture_skill.md) | External RSC skill — adopt/reject mapping |
 
 ---
 
-**Version:** 2.5  
+**Version:** 2.6  
 **Last updated:** August 2026  
-**Next.js:** 16.3.0 (pinned) · Instant Navigations best practice · **Hosting:** Vercel · **Cross-request cache:** `'use cache'` (not `unstable_cache`)
+**Next.js:** 16.3.0 (pinned) · Instant Navigations + Instant Insights (§8.1.1) · **Hosting:** Vercel · **Cross-request cache:** `'use cache'` (not `unstable_cache`)
