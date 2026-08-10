@@ -82,7 +82,7 @@ monorepo/
 | ФАЗА | `P{N}_phase_description.md` |
 | КОНТРАКТ | `docs/implementation/mvp/contracts/` |
 | ЗАДАЧИ | `P{N}_tasks.md` |
-| ВЕРИФИКАЦИЯ | typecheck, lint, phase DoD |
+| ВЕРИФИКАЦИЯ | **Always:** typecheck, lint, phase DoD. **On user request only:** runtime dual-view via skill `next-dev-loop` (`/_next/mcp` + `agent-browser`) — narrow scope → edit → 4 layers (compile, runtime errors, browser UX, React behavior). Do **not** auto-start after UI edits or in commit pipeline. |
 
 ### 2.3 AGENTS.md
 

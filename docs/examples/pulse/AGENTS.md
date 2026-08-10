@@ -80,15 +80,16 @@ Web AGENTS не отменяет Cursor Rules — только маршрути�
 3. Определить фазу (`docs/implementation/mvp/phases_tasks_descriptions/P{N}_*.md`)
 4. Прочитать contracts для фазы
 5. Выполнить чеклист из `docs/implementation/mvp/tasks/P{N}_tasks.md`
-6. Верифицировать по чеклисту фазы и обновить документацию при изменении behavior
+6. Верифицировать по чеклисту фазы (`typecheck` / `lint` / DoD) и обновить документацию при изменении behavior. Runtime dual-view (`next-dev-loop`) — **только если пользователь явно попросил**; не auto.
 
 ## Agent skills (`.cursor/skills/`)
 
 | Skill | When |
 |-------|------|
 | **`app-conventions`** | New features, routes, components — see [`../../.cursor/skills/app-conventions/SKILL.md`](../../.cursor/skills/app-conventions/SKILL.md) in boilerplate |
+| **`next-dev-loop`** (user skill) | **Only when the user explicitly asks** for runtime / live / browser verify — dual-view (`/_next/mcp` + `agent-browser`), 4 layers (compile → errors → UX → React). Not auto after edits or in commit pipeline. |
 
-**Do not install** external Next.js architecture skills — RSC patterns in-repo: [`../../docs/reference/adr_010_nextjs_app_architecture_skill.md`](../../docs/reference/adr_010_nextjs_app_architecture_skill.md).
+**Do not install** external Next.js **architecture** skills — RSC patterns in-repo: [`../../docs/reference/adr_010_nextjs_app_architecture_skill.md`](../../docs/reference/adr_010_nextjs_app_architecture_skill.md). Workflow verification skill `next-dev-loop` is allowed as a Cursor user skill (**opt-in by user request**).
 
 Web detail: [`apps/web/AGENTS.md`](apps/web/AGENTS.md) § Skills.
 

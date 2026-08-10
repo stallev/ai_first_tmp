@@ -151,7 +151,7 @@ AI-агент — **не поисковик и не генератор кода*
 
 **Задачи** — чеклист из `docs/implementation/mvp/tasks/P{N}_tasks.md`.
 
-**Верификация** — lint, build, smoke-тесты по чеклисту фазы.
+**Верификация** — **всегда:** lint, typecheck, phase DoD / smoke по чеклисту фазы. **Только по явному запросу пользователя:** runtime dual-view через skill `next-dev-loop` (`/_next/mcp` + `agent-browser`) — сузить scope по рантайму → править → 4 слоя (компиляция, runtime errors, UX в браузере, React-поведение). Не запускать автоматически после UI-правок или в commit pipeline. См. [`guidelines/nextjs/README.md`](../guidelines/nextjs/README.md) § Agent runtime verification.
 
 ### 2.3 Точка входа: AGENTS.md
 

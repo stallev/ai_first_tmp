@@ -59,6 +59,25 @@ Per official Next.js 16 upgrade guide (Context7 `/vercel/next.js`):
 
 ---
 
+## Agent runtime verification (on user request only)
+
+Skill **`next-dev-loop`** confirms a feature works in a live `next dev` by cross-checking **two views** of the same app:
+
+| View | Tool | Knows |
+|------|------|--------|
+| Next.js | `/_next/mcp` | routes, segments, RSC, server actions, server logs, Turbopack compile issues |
+| Browser | `agent-browser` | DOM, console, network, React fiber/props/state, vitals |
+
+**Loop (when the skill is running):** narrow scope via runtime → edit → 4 layers — (1) compilation, (2) runtime errors, (3) browser UX, (4) React behavior — then cross-check both views.
+
+**Trigger:** start **only** when the user explicitly asks (e.g. «проверь в runtime», «next-dev-loop», «verify in browser / live»). Do **not** auto-start after UI edits, before DoD, or in the commit pipeline. Default verification remains `typecheck` + `lint`.
+
+Requires Next **16.3+** Turbopack and `agent-browser` ≥ 0.31.1. Protocol details live in the user skill — do not invent a second browser protocol as a substitute.
+
+See: [`ai_first_project_methodology.md`](../../meta/ai_first_project_methodology.md) §2.2 · `agent-commit-pipeline.mdc` §1 · boilerplate [ADR-010](../../../../../reference/adr_010_nextjs_app_architecture_skill.md) (workflow vs architecture skills).
+
+---
+
 ## For AI assistants
 
 1. Read [ADR-002](../../prds/07_governance/adr_002_next162_vercel_runtime_policy.md) before routing/auth (incl. §9 Instant Navigations).

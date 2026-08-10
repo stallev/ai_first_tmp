@@ -23,10 +23,11 @@ Installing the external skill alongside project Cursor Rules creates **two compe
 
 | Policy | Value |
 |--------|-------|
-| **External skill install** | **Forbidden** — do not run `npx skills install` for nextjs-app-architecture-skill or similar third-party Next.js architecture skills |
+| **External skill install** | **Forbidden** — do not run `npx skills install` for nextjs-app-architecture-skill or similar third-party Next.js **architecture** skills |
 | **Selected patterns** | **Imported into repo** — guidelines + `.cursor/skills/app-conventions/` + this ADR |
 | **Provenance link** | External repo cited for attribution only; agents must not treat it as a loadable skill |
 | **Conflict resolution** | Cursor Rules → `app-conventions` → guidelines → ADR-010 |
+| **Workflow verification skills** | **Allowed** — Cursor user skill `next-dev-loop` (runtime dual-view: `/_next/mcp` + `agent-browser`) is **not** under this architecture-skill ban. **Opt-in by explicit user request only** — not auto after edits, DoD, or commit pipeline. Not part of `app-conventions`. |
 
 ---
 
@@ -87,6 +88,7 @@ Installing the external skill alongside project Cursor Rules creates **two compe
 
 | Date | Change |
 |------|--------|
+| 2026-08-10 | v1.4 — clarify workflow skill `next-dev-loop` allowed (opt-in by user request); architecture-skill ban unchanged |
 | 2026-06-19 | v1.1 — external skill install **forbidden**; patterns in-repo only |
 | 2026-08-10 | v1.2 — `catchError` naming + Instant Navigations roadmap pointers (no pin change) |
 | 2026-08-10 | v1.3 — Instant Navigations + `partialPrefetching` = best practice |

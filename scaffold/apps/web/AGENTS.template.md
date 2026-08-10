@@ -107,8 +107,9 @@ Full index: [`docs/guidelines/README.md`](../../docs/guidelines/README.md).
 | Skill | Focus |
 |-------|-------|
 | **`app-conventions`** | Project conventions: `data/` + `actions/` + `components/`, Design Lab, DAL, RSC streaming. Spec: [`docs/project-react-skill-requirements.md`](../../docs/project-react-skill-requirements.md) |
+| **`next-dev-loop`** (user skill) | **Only when the user explicitly asks** — runtime dual-view (`/_next/mcp` + `agent-browser`), 4 layers. Not auto after edits/commit. |
 
-**Do not install** external Next.js architecture skills (`npx skills install …`). Mapping: [`docs/reference/adr_010_nextjs_app_architecture_skill.md`](../../docs/reference/adr_010_nextjs_app_architecture_skill.md).
+**Do not install** external Next.js **architecture** skills (`npx skills install …`). Mapping: [`docs/reference/adr_010_nextjs_app_architecture_skill.md`](../../docs/reference/adr_010_nextjs_app_architecture_skill.md). Workflow skill `next-dev-loop` is allowed as a user skill (**opt-in by user request**).
 
 > Read `.cursor/skills/app-conventions/SKILL.md` when scaffolding features.
 
@@ -147,6 +148,10 @@ From `apps/web/` only (mid-task UI shortcut):
 npm run lint        # or npm run lint:web from root
 ```
 
+### Runtime dual-view (on user request only)
+
+Skill **`next-dev-loop`**: confirm the feature works in a live `next dev` by cross-checking **two views** — `/_next/mcp` (routes, RSC, server actions, compile/runtime errors) and `agent-browser` (DOM, console, network, React fiber/props/state). Loop when asked: narrow scope via runtime → edit → 4 layers (compile → runtime errors → browser UX → React). **Do not** start automatically after UI edits or before commit — only when the user explicitly asks (e.g. «проверь в runtime», «next-dev-loop»). Details: user skill `next-dev-loop`; index: [`docs/guidelines/nextjs/README.md`](../../docs/guidelines/nextjs/README.md) § Agent runtime verification.
+
 ### Manual verification checklist (web)
 
 - [ ] `next` pinned to **16.3.0** in `package.json`
@@ -157,6 +162,7 @@ npm run lint        # or npm run lint:web from root
 - [ ] Product UI uses Design Lab catalog imports (`@/components/atoms`, `@/components/ui/*`) — no `@/components/design-lab/**` in routes
 - [ ] Mutation/error codes and roles from `@{{PACKAGE_SCOPE}}/domain` — no inline magic strings (**domain-literals-and-codes**)
 - [ ] Mutations: pending UI + toast per mutation rules
+- [ ] Runtime dual-view (`next-dev-loop`) — **only if the user requested it**
 
 ## Do NOT
 
