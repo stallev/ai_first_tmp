@@ -29,7 +29,7 @@
 | ID | File | Status | Topic | Summary |
 |----|------|--------|-------|---------|
 | ADR-001 | [`adr_001_stack_and_runtime.md`](./adr_001_stack_and_runtime.md) | **ACCEPTED** | Stack & hosting | Vercel, Neon PostgreSQL 17, Prisma v7, Auth.js Credentials, Resend, Blob; jobs via Vercel Cron; monorepo `apps/*` + `packages/*` |
-| ADR-002 | [`adr_002_next162_vercel_runtime_policy.md`](./adr_002_next162_vercel_runtime_policy.md) | **ACCEPTED** | Next.js 16.2.6 runtime | Pin `next@16.2.6`; канон **`proxy.ts`** (не `middleware.ts`); Node runtime в proxy; async Request APIs; `updateTag` / `revalidateTag` / `revalidatePath` |
+| ADR-002 | [`adr_002_next162_vercel_runtime_policy.md`](./adr_002_next162_vercel_runtime_policy.md) | **ACCEPTED** | Next.js 16.3.0 runtime | Pin `next@16.3.0`; канон **`proxy.ts`**; async Request APIs; `'use cache'` / `updateTag`; **§9** Instant Navigations + `partialPrefetching` = **best practice** |
 | ADR-003 | [`adr_003_auth_credentials_jwt_rbac.md`](./adr_003_auth_credentials_jwt_rbac.md) | **ACCEPTED** | Auth & RBAC | Credentials provider, JWT session, `client` \| `trainer` \| `admin` в token; split `auth.config.ts` / `auth.ts`; four-layer defense |
 | ADR-004 | [`adr_004_timezone_scheduling_model.md`](./adr_004_timezone_scheduling_model.md) | **ACCEPTED** | Timezone | `TrainerProfile.timezone` (IANA) — source of truth; local weekly times → UTC `timestamptz` |
 | ADR-005 | [`adr_005_mvp_booking_without_payment.md`](./adr_005_mvp_booking_without_payment.md) | **ACCEPTED** | Booking MVP | Бронирование без Stripe; `pending` → trainer confirm; service snapshot |
@@ -92,7 +92,7 @@
 |----------|--------------|
 | [`decision_process.md`](./decision_process.md) | How to create/update ADRs |
 | [`adr_001_stack_and_runtime.md`](./adr_001_stack_and_runtime.md) | Stack decision |
-| [`adr_002_next162_vercel_runtime_policy.md`](./adr_002_next162_vercel_runtime_policy.md) | Next.js 16.2.6 + proxy |
+| [`adr_002_next162_vercel_runtime_policy.md`](./adr_002_next162_vercel_runtime_policy.md) | Next.js 16.3.0 + proxy |
 | [`documentation_creation_registry.md`](../../meta/documentation_creation_registry.md) | Wave W4 ADR plan |
 | [`architecture_master_index.md`](../architecture_master_index.md) | Navigation hub |
 
@@ -102,8 +102,7 @@
 
 ## Agent notes
 
-- Не создавать `middleware.ts` как канон — только `proxy.ts` ([ADR-002](./adr_002_next162_vercel_runtime_policy.md), Context7 Next.js 16.2).
-- Не копировать Netlify/AWS SAM из lampto без нового ADR.
+- Не создавать `middleware.ts` как канон — только `proxy.ts` ([ADR-002](./adr_002_next162_vercel_runtime_policy.md), Context7 Next.js 16.x).
 - Planned ADR **не** реализовать в коде до статуса ACCEPTED (кроме nullable schema fields, уже в [database_schema_v1.md](../03_data_model/database_schema_v1.md)).
 
 ---

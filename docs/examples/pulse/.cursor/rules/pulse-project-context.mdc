@@ -23,7 +23,7 @@ When Pulse docs are silent — follow lampto **architecture and methodology**, a
 
 ## Stack (baseline)
 
-- **Next.js** **16.2.6** (pinned) App Router, **TypeScript** — [ADR-002](docs/prds/07_governance/adr_002_next162_vercel_runtime_policy.md)
+- **Next.js** **16.3.0** (pinned) App Router, **TypeScript** — [ADR-002](docs/prds/07_governance/adr_002_next162_vercel_runtime_policy.md)
 - **Request interception:** **`proxy.ts`** (Next.js 16); `middleware.ts` — только временная миграция
 - **Hosting:** Vercel · **UI:** shadcn/ui + Tailwind CSS v4 (Warm Forest tokens)
 - **Database:** Neon **PostgreSQL 17** + **Prisma v7** (pooled `DATABASE_URL`, `DIRECT_URL` for migrations)

@@ -39,7 +39,7 @@ alwaysApply: false
 ## Practice
 
 - Authorization in DAL via `auth()` + `@pulse/policy-server`.
-- Next.js 16.2.6: `await cookies()`, `await headers()`, `await params`.
+- Next.js 16.3.0: `await cookies()`, `await headers()`, `await params`.
 - **Class B critical submits** (`/book/*`, onboarding, admin approve): dual transport per **ios-safari-mutation-transport** — shared DAL, `MutationResult`, no logic fork.
 
 Reference: [`docs/examples/lampto/.cursor/rules/data-server-actions-and-api.mdc`](docs/examples/lampto/.cursor/rules/data-server-actions-and-api.mdc)

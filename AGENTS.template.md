@@ -1,7 +1,7 @@
 # {{PROJECT_NAME}} — Monorepo Agent Instructions
 
 **{{PROJECT_NAME}}** — {{PRODUCT_DESCRIPTION}}  
-Monorepo: **Next.js 16.2.6** App Router + Vercel + Neon PostgreSQL.
+Monorepo: **Next.js 16.3.0** App Router + Vercel + Neon PostgreSQL.
 
 **Methodology (обязательно):** [`docs/meta/ai_first_project_methodology.md`](docs/meta/ai_first_project_methodology.md) — цикл КОНТЕКСТ → ФАЗА → КОНТРАКТ → ЗАДАЧИ → ВЕРИФИКАЦИЯ.
 
@@ -87,7 +87,7 @@ Web detail: [`apps/web/AGENTS.md`](apps/web/AGENTS.md) § Skills.
 
 ## Stack (full Pulse)
 
-Next.js 16.2.6 · Vercel · Neon PG 17 · Prisma v7 · Auth.js v5 · Resend (post-MVP) · AWS S3 · Sentry · shadcn/ui · Tailwind v4 · Sonner
+Next.js 16.3.0 · Vercel · Neon PG 17 · Prisma v7 · Auth.js v5 · Resend (post-MVP) · AWS S3 · Sentry · shadcn/ui · Tailwind v4 · Sonner
 
 ## Repository status
 

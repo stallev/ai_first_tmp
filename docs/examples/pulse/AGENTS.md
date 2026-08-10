@@ -1,7 +1,7 @@
 # Pulse — Monorepo Agent Instructions
 
 **Pulse** — онлайн-маркетплейс фитнес-тренеров (клиенты, тренеры, админы).  
-Monorepo: **Next.js 16.2.6** App Router + Vercel + Neon PostgreSQL.
+Monorepo: **Next.js 16.3.0** App Router + Vercel + Neon PostgreSQL.
 
 **Methodology (обязательно):** [`docs/meta/ai_first_project_methodology.md`](docs/meta/ai_first_project_methodology.md) — цикл КОНТЕКСТ → ФАЗА → КОНТРАКТ → ЗАДАЧИ → ВЕРИФИКАЦИЯ.
 

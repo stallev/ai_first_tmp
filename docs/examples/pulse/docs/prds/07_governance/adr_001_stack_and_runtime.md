@@ -22,7 +22,7 @@ Pulse — MVP маркetplace фитнес-тренеров. Продуктов�
 
 | Компонент | Выбор |
 |-----------|-------|
-| Framework | **Next.js 16.2.6** (pinned) App Router, TypeScript — see [ADR-002](./adr_002_next162_vercel_runtime_policy.md) |
+| Framework | **Next.js 16.3.0** (pinned) App Router, TypeScript — see [ADR-002](./adr_002_next162_vercel_runtime_policy.md) |
 | Hosting | **Vercel** (preview per PR, region fra1) |
 | Bundler | Turbopack (default) |
 | UI | shadcn/ui + Tailwind CSS v4, Warm Forest tokens |
@@ -82,7 +82,7 @@ Identical **structure** to lampto:
 ## Последствия
 
 - Guidelines ported from lampto **must be adapted** for Vercel runtime (not Netlify).
-- **Next.js 16.2.6 runtime** (proxy.ts, async APIs, cache invalidation) — [ADR-002](./adr_002_next162_vercel_runtime_policy.md). Lampto ADR-026 (Netlify) is **not applicable**; adopt Next 16 interception rules from lampto ADR-022 pattern via ADR-002.
+- **Next.js 16.3.0 runtime** (proxy.ts, async APIs, cache invalidation) — [ADR-002](./adr_002_next162_vercel_runtime_policy.md). Lampto ADR-026 (Netlify) is **not applicable**; adopt Next 16 interception rules from lampto ADR-022 pattern via ADR-002.
 - Agents reading lampto docs must check ADR-001 + ADR-002 for hosting/version differences.
 - When migrating jobs to AWS, add **ADR-00N** — mechanical extraction, not domain rewrite.
 

@@ -1,7 +1,7 @@
 ﻿# Next.js Loading & Page Performance — Pulse
 
 **Version:** 2.0 · **Project:** Pulse `apps/web`  
-**Stack:** Next.js **16.2.6** App Router, React 19, Vercel, Neon PostgreSQL 17 + Prisma v7  
+**Stack:** Next.js **16.3.0** App Router, React 19, Vercel, Neon PostgreSQL 17 + Prisma v7  
 **Methodology:** [`docs/meta/ai_first_project_methodology.md`](../../meta/ai_first_project_methodology.md)  
 **Runtime:** [ADR-002](../../prds/07_governance/adr_002_next162_vercel_runtime_policy.md)  
 **Cursor rule:** **app-router-streaming-loading**
@@ -23,11 +23,11 @@ Verify against Context7 `/vercel/next.js/v16.2.2` and [Loading UI and Streaming]
 5. [Independent regions behind Suspense](#5-independent-regions-behind-suspense)
 6. [`auth()` cost and request dedup](#6-auth-cost-and-request-dedup)
 7. [Eliminating DB waterfalls](#7-eliminating-db-waterfalls)
-8. [Query caching — React `cache()` vs `'use cache'`](#8-query-caching--react-cache-vs-use-cache)
+8. [Query caching — React `cache()` vs `'use cache'`](#8-query-caching--react-cache-vs-use-cache) — incl. [§8.1 Instant Navigations best practice](#81-instant-navigations-nextjs-163--best-practice)
 9. [Neon: cold start and connection](#9-neon-cold-start-and-connection)
 10. [`loading.tsx` as navigation insurance](#10-loadingtsx-as-navigation-insurance)
 11. [Skeletons without CLS](#11-skeletons-without-cls)
-12. [Error handling near data](#12-error-handling-near-data) — incl. [§12.1 region boundaries](#121-region-error-boundaries-unstable_catcherror--opt-in)
+12. [Error handling near data](#12-error-handling-near-data) — incl. [§12.1 region boundaries](#121-region-error-boundaries-catcherror--opt-in)
 13. [Mutation loading vs route loading](#13-mutation-loading-vs-route-loading)
 14. [Pulse route examples](#14-pulse-route-examples)
 15. [Metrics and budgets](#15-metrics-and-budgets)
@@ -446,13 +446,35 @@ const nextConfig: NextConfig = {
 export default nextConfig
 ```
 
-Verify against Context7 `/vercel/next.js/v16.2.2` — [Cache Components](https://nextjs.org/docs/app/getting-started/cache-components), [`use cache`](https://nextjs.org/docs/app/api-reference/directives/use-cache).
+Verify against Context7 `/vercel/next.js` (prefer version-matched docs under `node_modules/next/dist/docs/` when on a pin) — [Cache Components](https://nextjs.org/docs/app/getting-started/cache-components), [`use cache`](https://nextjs.org/docs/app/api-reference/directives/use-cache).
 
 | Layer | API | Scope | Use for |
 |-------|-----|-------|---------|
 | **Per-request dedup** | React `cache()` | Single HTTP request | `auth()`, repeated Prisma reads in one RSC tree |
 | **Cross-request cache** | `'use cache'` + `cacheTag()` + `cacheLife()` | Between requests / deploy-aware | Public catalog, trainer profile static slice |
 | **Fresh per request** | No cross-request cache | Always live | Bookings, slot availability, auth-gated mutable data |
+
+### 8.1 Instant Navigations (Next.js 16.3) — best practice
+
+[Instant Navigations](https://nextjs.org/blog/next-16-3-instant-navigations) are the **recommended** navigation model on pin **16.3.0** ([ADR-002](../../prds/07_governance/adr_002_next162_vercel_runtime_policy.md) §9). Enable both flags together and shape each route as Stream, Cache, or deliberate Block:
+
+```ts
+// apps/web/next.config.ts — recommended
+const nextConfig: NextConfig = {
+  cacheComponents: true,
+  partialPrefetching: true, // Instant Navigations companion — never alone
+}
+```
+
+| Choice | Mechanism | When |
+|--------|-----------|------|
+| **Stream** | `<Suspense fallback={…}>` / `loading.tsx` | Dynamic / private data; show shell immediately |
+| **Cache** | `'use cache'` + tags | Shared/public UI safe to reuse across requests |
+| **Block** | `export const instant = false` | Rare — intentional wait for server; document why |
+
+Today’s `loading.tsx` + sibling Suspense (§3–§5, §10) align with **Stream**. Do **not** enable `partialPrefetching` without `cacheComponents`. Playwright `instant()` from `@next/playwright` — **SHOULD** on critical routes (`/trainers`, booking) once flags are on.
+
+**Out of scope for MVP canon:** `experimental.useOffline`, Rust React Compiler, `import.meta.glob`, mandatory `next/root-params` (cookie-first i18n), blind Block on every route.
 
 ### React `cache()` — per-request dedup
 
@@ -714,23 +736,23 @@ export default function ClientBookingError({
 
 Independent Suspense regions **should** pair with error boundaries when partial failure is acceptable (catalog grid fails, filters still work).
 
-### 12.1 Region error boundaries (`unstable_catchError`) — opt-in
+### 12.1 Region error boundaries (`catchError`) — opt-in
 
 Segment **`error.tsx`** handles route-level failures. For **partial** UI (one Suspense region fails, siblings stay), wrap the region in a client error boundary that understands Next.js control-flow throws.
 
-Next.js 16.2+ provides [`unstable_catchError`](https://nextjs.org/docs/app/api-reference/functions/unstable_catchError) from `next/error` — re-fetches server data on retry; does not swallow `notFound()` / `redirect()`.
+Prefer stable [`catchError`](https://nextjs.org/docs/app/getting-started/error-handling#nested-error-boundaries) from `next/error` (Next.js **16.3+**) — `retry()` re-fetches Server Component children; does not swallow `notFound()` / `redirect()`.
 
 ```tsx
 // components/ui/region-error-boundary.tsx
 'use client'
 
-import { unstable_catchError as catchError, type ErrorInfo } from 'next/error'
+import { catchError, type ErrorInfo } from 'next/error'
 import { Button } from '@/components/ui/button'
 import { AlertText } from '@/components/atoms'
 
 function RegionErrorFallback(
   props: { title?: string },
-  { unstable_retry: retry }: ErrorInfo,
+  { retry }: ErrorInfo,
 ) {
   return (
     <div className="rounded-lg border border-border bg-card p-4">
@@ -847,7 +869,8 @@ Run before finishing any `page.tsx`, segment `layout.tsx`, or colocated `loading
 
 - [ ] Repeated reads in one request — React `cache()` or shared cached loader
 - [ ] Cross-request public reads — **`'use cache'`** + `cacheTag()` + `cacheLife()` per [`cache_revalidation_policy.md`](../../prds/05_runtime/cache_revalidation_policy.md) — **not** `unstable_cache`
-- [ ] `cacheComponents: true` in `next.config.ts` when adding `'use cache'` read paths
+- [ ] `cacheComponents: true` **and** `partialPrefetching: true` in `next.config.ts` (Instant Navigations best practice — §8.1)
+- [ ] Dynamic regions use Stream (`Suspense`) or Cache; Block (`instant = false`) only with a documented reason
 - [ ] No `cookies()` / `headers()` inside `'use cache'` — pass values as arguments from dynamic parent
 - [ ] Mutations call matching `updateTag` — no stale catalog/bookings after write
 
@@ -921,11 +944,13 @@ State briefly in PR/task which exception applies:
 | [Next.js: Error Handling](https://nextjs.org/docs/app/getting-started/error-handling) | `error.tsx`, `reset` |
 | [Next.js: `use cache`](https://nextjs.org/docs/app/api-reference/directives/use-cache) | Cross-request cache directive (replaces `unstable_cache`) |
 | [Next.js: Cache Components](https://nextjs.org/docs/app/getting-started/cache-components) | `cacheComponents`, PPR, static + cached + dynamic mix |
+| [Next.js 16.3: Instant Navigations](https://nextjs.org/blog/next-16-3-instant-navigations) | Best practice §8.1 — `cacheComponents` + `partialPrefetching` |
+| [ADR-002](../../prds/07_governance/adr_002_next162_vercel_runtime_policy.md) | Pin 16.3.0 + §9 Instant Navigations recommended |
 | Pulse reference [`ai_page_performance_streaming.md`](../../examples/lampto/docs/guidelines/nextjs/ai_page_performance_streaming.md) | Source reference (BSFY) |
 | [`adr_010_nextjs_app_architecture_skill.md`](../../reference/adr_010_nextjs_app_architecture_skill.md) | External RSC skill — adopt/reject mapping |
 
 ---
 
-**Version:** 2.2  
-**Last updated:** June 2026  
-**Next.js:** 16.2.6 · **Hosting:** Vercel · **Cross-request cache:** `'use cache'` (not `unstable_cache`)
+**Version:** 2.5  
+**Last updated:** August 2026  
+**Next.js:** 16.3.0 (pinned) · Instant Navigations best practice · **Hosting:** Vercel · **Cross-request cache:** `'use cache'` (not `unstable_cache`)

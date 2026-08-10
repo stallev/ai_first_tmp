@@ -14,7 +14,7 @@ Architecture Decision Records и governance Pulse.
 | ADR | Status | Topic |
 |-----|--------|-------|
 | [adr_001_stack_and_runtime.md](adr_001_stack_and_runtime.md) | ACCEPTED | Vercel, Neon, Prisma v7, Resend, monorepo |
-| [adr_002_next162_vercel_runtime_policy.md](adr_002_next162_vercel_runtime_policy.md) | ACCEPTED | **Next.js 16.2.6** pin, `proxy.ts`, cache/jobs policy |
+| [adr_002_next162_vercel_runtime_policy.md](adr_002_next162_vercel_runtime_policy.md) | ACCEPTED | **Next.js 16.3.0** pin, `proxy.ts`, cache/jobs policy |
 | [adr_003_auth_credentials_jwt_rbac.md](adr_003_auth_credentials_jwt_rbac.md) | ACCEPTED | Credentials, JWT, RBAC, split auth config |
 | [adr_004_timezone_scheduling_model.md](adr_004_timezone_scheduling_model.md) | ACCEPTED | Trainer IANA timezone, UTC instants |
 | [adr_005_mvp_booking_without_payment.md](adr_005_mvp_booking_without_payment.md) | ACCEPTED | MVP booking without Stripe |
