@@ -1,6 +1,6 @@
 # Guidelines
 
-Нормы реализации — адаптированы из lampto под Vercel, **Next.js 16.2.6** и Pulse design system (Warm Forest).
+Нормы реализации — адаптированы из lampto под Vercel, **Next.js 16.3.0** и Pulse design system (Warm Forest).
 
 **Methodology (канон):** [`docs/meta/ai_first_project_methodology.md`](../meta/ai_first_project_methodology.md) — §2.7 Guidelines, §2.4 Cursor Rules.
 
@@ -32,7 +32,7 @@
 | `ios-safari-mutation-transport.mdc` | iOS Safari `Load failed` — Class A/B dual transport |
 | `policy-packages.mdc` | `@pulse/policy-*` boundaries |
 | `auth-security.mdc` | Auth.js, defense in depth |
-| `nextjs-vercel-app-router.mdc` | Next.js **16.2.6** + Vercel + **`proxy.ts`** |
+| `nextjs-vercel-app-router.mdc` | Next.js **16.3.0** + Vercel + **`proxy.ts`** |
 | `app-router-streaming-loading.mdc` | Suspense, `loading.tsx`, page performance (§4–§18) |
 | `s3-file-asset-uploads.mdc` | FileAsset + AWS S3 |
 | `admin-forms-layout.mdc` | Admin forms layout |

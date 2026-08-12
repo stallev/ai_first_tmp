@@ -2,7 +2,7 @@
 
 > Monorepo context: [`../../AGENTS.md`](../../AGENTS.md)
 
-**Pulse Web** — Next.js **16.2.6** App Router, тонкий BFF для маркетплейса фитнес-тренеров.  
+**Pulse Web** — Next.js **16.3.0** App Router, тонкий BFF для маркетплейса фитнес-тренеров.  
 Hosting: **Vercel** · UI: **shadcn/ui + Tailwind CSS v4** (Warm Forest).
 
 <!-- BEGIN:nextjs-agent-rules -->
@@ -19,7 +19,7 @@ This is **not** the Next.js from training data. APIs, conventions, and file stru
 
 | Package | Version | Notes |
 |---------|---------|-------|
-| `next` | **16.2.6** (pinned) | No Next 15 patterns; no floating `^16` without ADR |
+| `next` | **16.3.0** (pinned) | No Next 15 patterns; no floating `^16` without ADR |
 | `react` / `react-dom` | 19.x | Server Components by default |
 | `tailwindcss` | v4 | Semantic tokens in `src/app/globals.css` |
 
@@ -106,8 +106,9 @@ Full index: [`docs/guidelines/README.md`](../../docs/guidelines/README.md).
 | Skill | Focus |
 |-------|-------|
 | **`app-conventions`** | Project layout (`data/`, `actions/`, `components/`), Design Lab, DAL, RSC streaming — see boilerplate [`.cursor/skills/app-conventions/SKILL.md`](../../../../.cursor/skills/app-conventions/SKILL.md) |
+| **`next-dev-loop`** (user skill) | **Only when the user explicitly asks** — runtime dual-view (`/_next/mcp` + `agent-browser`), 4 layers. Not auto after edits/commit. |
 
-**Do not install** external Next.js architecture skills. Provenance: [`adr_010_nextjs_app_architecture_skill.md`](../../../../docs/reference/adr_010_nextjs_app_architecture_skill.md).
+**Do not install** external Next.js **architecture** skills. Provenance: [`adr_010_nextjs_app_architecture_skill.md`](../../../../docs/reference/adr_010_nextjs_app_architecture_skill.md). Workflow skill `next-dev-loop` is allowed as a user skill (**opt-in by user request**).
 
 ## Observability (Sentry)
 
@@ -144,9 +145,13 @@ From `apps/web/` only (mid-task UI shortcut):
 npm run lint        # or npm run lint:web from root
 ```
 
+### Runtime dual-view (on user request only)
+
+Skill **`next-dev-loop`**: confirm the feature works in a live `next dev` by cross-checking **two views** — `/_next/mcp` (routes, RSC, server actions, compile/runtime errors) and `agent-browser` (DOM, console, network, React fiber/props/state). Loop when asked: narrow scope via runtime → edit → 4 layers (compile → runtime errors → browser UX → React). **Do not** start automatically after UI edits or before commit — only when the user explicitly asks. Details: user skill `next-dev-loop`; index: [`docs/guidelines/nextjs/README.md`](../../docs/guidelines/nextjs/README.md) § Agent runtime verification.
+
 ### Manual verification checklist (web)
 
-- [ ] `next` pinned to **16.2.6** in `package.json`
+- [ ] `next` pinned to **16.3.0** in `package.json`
 - [ ] New interception in **`src/proxy.ts`**, not Next 15 `middleware.ts` patterns
 - [ ] No `@pulse/policy-server` import in `proxy.ts` / `middleware.ts`
 - [ ] Routes match [`canonical_routes.md`](../../docs/design/canonical_routes.md)
@@ -154,6 +159,7 @@ npm run lint        # or npm run lint:web from root
 - [ ] Product UI uses Design Lab catalog imports (`@/components/atoms`, `@/components/ui/*`) — no `@/components/design-lab/**` in routes
 - [ ] Mutation/error codes and roles from `@pulse/domain` — no inline magic strings (**domain-literals-and-codes**)
 - [ ] Mutations: pending UI + toast per mutation rules
+- [ ] Runtime dual-view (`next-dev-loop`) — **only if the user requested it**
 
 ## Do NOT
 

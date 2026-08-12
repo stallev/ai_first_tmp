@@ -15,7 +15,7 @@
     "@aws-sdk/client-s3": "^3.830.0",
     "@aws-sdk/s3-request-presigner": "^3.830.0",
     "@base-ui/react": "^1.5.0",
-    "@next/third-parties": "16.2.6",
+    "@next/third-parties": "16.3.0",
     "@pulse/db": "*",
     "@pulse/domain": "*",
     "@pulse/policy-edge": "*",
@@ -29,7 +29,7 @@
     "embla-carousel-react": "^8.6.0",
     "input-otp": "^1.4.2",
     "lucide-react": "^1.16.0",
-    "next": "16.2.6",
+    "next": "16.3.0",
     "next-auth": "^5.0.0-beta.30",
     "next-themes": "^0.4.6",
     "radix-ui": "^1.4.3",
@@ -52,7 +52,7 @@
     "@types/react-dom": "^19",
     "babel-plugin-react-compiler": "^1.0.0",
     "eslint": "^9",
-    "eslint-config-next": "16.2.6",
+    "eslint-config-next": "16.3.0",
     "tailwindcss": "^4",
     "typescript": "^5"
   }

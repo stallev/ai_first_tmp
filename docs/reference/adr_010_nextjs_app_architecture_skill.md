@@ -23,10 +23,11 @@ Installing the external skill alongside project Cursor Rules creates **two compe
 
 | Policy | Value |
 |--------|-------|
-| **External skill install** | **Forbidden** — do not run `npx skills install` for nextjs-app-architecture-skill or similar third-party Next.js architecture skills |
+| **External skill install** | **Forbidden** — do not run `npx skills install` for nextjs-app-architecture-skill or similar third-party Next.js **architecture** skills |
 | **Selected patterns** | **Imported into repo** — guidelines + `.cursor/skills/app-conventions/` + this ADR |
 | **Provenance link** | External repo cited for attribution only; agents must not treat it as a loadable skill |
 | **Conflict resolution** | Cursor Rules → `app-conventions` → guidelines → ADR-010 |
+| **Workflow verification skills** | **Allowed** — Cursor user skill `next-dev-loop` (runtime dual-view: `/_next/mcp` + `agent-browser`) is **not** under this architecture-skill ban. **Opt-in by explicit user request only** — not auto after edits, DoD, or commit pipeline. Not part of `app-conventions`. |
 
 ---
 
@@ -40,8 +41,9 @@ Installing the external skill alongside project Cursor Rules creates **two compe
 | React `cache()` per-request dedup | `ai_data_fetching_patterns.md` §2 |
 | `'use cache'` + `cacheTag` cross-request | ADR-002, `ai_loading_patterns.md` §8 |
 | Parent passes plain values; no child refetch | `ai_data_fetching_patterns.md` §7 |
-| Region error boundary with `unstable_catchError` | `ai_loading_patterns.md` §12.1 |
+| Region error boundary with `catchError` (16.3+) / `unstable_catchError` (16.2.6) | `ai_loading_patterns.md` §12.1 |
 | Sync page + `params.then()` for static shell | `ai_loading_patterns.md` §4.1 *(opt-in)* |
+| Instant Navigations / `partialPrefetching` | ADR-002 §9 + `ai_loading_patterns.md` §8.1 — **best practice** |
 
 ---
 
@@ -78,7 +80,7 @@ Installing the external skill alongside project Cursor Rules creates **two compe
 | [`.cursor/skills/app-conventions/SKILL.md`](../../.cursor/skills/app-conventions/SKILL.md) | Agent entry — **only** project skill for architecture |
 | [`references/nextjs-rsc-streaming.md`](../../.cursor/skills/app-conventions/references/nextjs-rsc-streaming.md) | Detailed adopt/reject table |
 | [`docs/project-react-skill-requirements.md`](../project-react-skill-requirements.md) | Skill authoring rules |
-| [ADR-002](../examples/pulse/docs/prds/07_governance/adr_002_next162_vercel_runtime_policy.md) | Next 16.2.6 runtime (reference) |
+| [ADR-002](../examples/pulse/docs/prds/07_governance/adr_002_next162_vercel_runtime_policy.md) | Next **16.3.0** runtime pin; §9 Instant Navigations best practice |
 
 ---
 
@@ -86,5 +88,8 @@ Installing the external skill alongside project Cursor Rules creates **two compe
 
 | Date | Change |
 |------|--------|
+| 2026-08-10 | v1.4 — clarify workflow skill `next-dev-loop` allowed (opt-in by user request); architecture-skill ban unchanged |
 | 2026-06-19 | v1.1 — external skill install **forbidden**; patterns in-repo only |
+| 2026-08-10 | v1.2 — `catchError` naming + Instant Navigations roadmap pointers (no pin change) |
+| 2026-08-10 | v1.3 — Instant Navigations + `partialPrefetching` = best practice |
 | 2026-06-19 | v1.0 — ACCEPTED; adopt/reject table from community skill evaluation |

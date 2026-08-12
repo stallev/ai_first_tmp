@@ -37,7 +37,7 @@
 
 | Компонент | Технология | Роль |
 |-----------|-----------|------|
-| Фреймворк | **Next.js 16.2.6** (pinned) App Router | Routing, SSR, Server Actions — [ADR-002](../prds/07_governance/adr_002_next162_vercel_runtime_policy.md) |
+| Фреймворк | **Next.js 16.3.0** (pinned) App Router | Routing, SSR, Server Actions — [ADR-002](../prds/07_governance/adr_002_next162_vercel_runtime_policy.md) |
 | Хостинг | **Vercel** | Serverless deployment, preview из PR |
 | Bundler | Turbopack (default) | Сборка |
 | БД | Neon PostgreSQL 17 + Prisma v7 | Единственный источник истины |
@@ -151,7 +151,7 @@ AI-агент — **не поисковик и не генератор кода*
 
 **Задачи** — чеклист из `docs/implementation/mvp/tasks/P{N}_tasks.md`.
 
-**Верификация** — lint, build, smoke-тесты по чеклисту фазы.
+**Верификация** — **всегда:** lint, typecheck, phase DoD / smoke по чеклисту фазы. **Только по явному запросу пользователя:** runtime dual-view через skill `next-dev-loop` (`/_next/mcp` + `agent-browser`) — сузить scope по рантайму → править → 4 слоя (компиляция, runtime errors, UX в браузере, React-поведение). Не запускать автоматически после UI-правок или в commit pipeline. См. [`guidelines/nextjs/README.md`](../guidelines/nextjs/README.md) § Agent runtime verification.
 
 ### 2.3 Точка входа: AGENTS.md
 
@@ -360,7 +360,7 @@ docs/
 - [x] `docs/reference/lampto_project_reference.md` — референс lampto
 - [x] `docs/prds/architecture_master_index.md` — карта архитектуры
 - [x] `docs/prds/07_governance/adr_001_stack_and_runtime.md` — выбор стека (Vercel, Neon, …)
-- [x] `docs/prds/07_governance/adr_002_next162_vercel_runtime_policy.md` — Next.js **16.2.6** pin + `proxy.ts`
+- [x] `docs/prds/07_governance/adr_002_next162_vercel_runtime_policy.md` — Next.js **16.3.0** pin + `proxy.ts`
 - [x] `docs/design/canonical_routes.md` — все маршруты
 - [x] `docs/architecture_learning_pack/01_architecture_overview.md` — обзор для агентов
 - [x] `AGENTS.md` — точка входа monorepo

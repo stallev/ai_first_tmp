@@ -28,6 +28,8 @@ alwaysApply: true
 
 При fail — исправить, не коммитить.
 
+**Runtime dual-view (`next-dev-loop`):** только по **явному запросу пользователя** — не часть обязательной ВЕРИФИКАЦИИ перед commit и не auto на UI-diff. Модель: `/_next/mcp` + `agent-browser`, 4 слоя (compile → runtime errors → browser UX → React). См. methodology §2.2 / `guidelines/nextjs/README.md` § Agent runtime verification.
+
 ### 2. Collect git context
 
 Параллельно:

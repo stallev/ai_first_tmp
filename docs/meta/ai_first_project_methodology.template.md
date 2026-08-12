@@ -24,12 +24,12 @@
 
 ### 1.1 Двухконтурная модель
 
-**Контур A — Web (UI + BFF)** — Next.js 16.2.6 на Vercel  
+**Контур A — Web (UI + BFF)** — Next.js 16.3.0 на Vercel  
 **Контур B — Jobs** — Vercel Cron + serverless; не в request path
 
 | Компонент | Технология |
 |-----------|-----------|
-| Framework | Next.js **16.2.6** (pinned), App Router, `proxy.ts` |
+| Framework | Next.js **16.3.0** (pinned), App Router, `proxy.ts` |
 | Hosting | Vercel |
 | DB | Neon PostgreSQL 17 + Prisma v7 |
 | Auth | Auth.js v5, Credentials, JWT |
@@ -82,7 +82,7 @@ monorepo/
 | ФАЗА | `P{N}_phase_description.md` |
 | КОНТРАКТ | `docs/implementation/mvp/contracts/` |
 | ЗАДАЧИ | `P{N}_tasks.md` |
-| ВЕРИФИКАЦИЯ | typecheck, lint, phase DoD |
+| ВЕРИФИКАЦИЯ | **Always:** typecheck, lint, phase DoD. **On user request only:** runtime dual-view via skill `next-dev-loop` (`/_next/mcp` + `agent-browser`) — narrow scope → edit → 4 layers (compile, runtime errors, browser UX, React behavior). Do **not** auto-start after UI edits or in commit pipeline. |
 
 ### 2.3 AGENTS.md
 
@@ -135,6 +135,6 @@ PRD · ADR · Contract · Spec · Phase · Tasks · Guideline · Cursor Rule · 
 ## Agent notes
 
 - HTML prototype — **не** канон; при конфликте — PRD/schema
-- Context7 перед runtime docs: Next.js 16.2.6, Auth.js v5, Prisma v7
+- Context7 перед runtime docs: Next.js 16.3.0, Auth.js v5, Prisma v7
 - Одна сессия = одна doc wave или 1–3 файла внутри волны
 - DB-first: `database_schema_v1.md` до domain contracts

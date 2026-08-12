@@ -1,7 +1,7 @@
 # Next.js Loading & Page Performance — Pulse
 
 **Version:** 2.0 · **Project:** Pulse `apps/web`  
-**Stack:** Next.js **16.2.6** App Router, React 19, Vercel, Neon PostgreSQL 17 + Prisma v7  
+**Stack:** Next.js **16.3.0** App Router, React 19, Vercel, Neon PostgreSQL 17 + Prisma v7  
 **Methodology:** [`docs/meta/ai_first_project_methodology.md`](../../meta/ai_first_project_methodology.md)  
 **Runtime:** [ADR-002](../../prds/07_governance/adr_002_next162_vercel_runtime_policy.md)  
 **Cursor rule:** **app-router-streaming-loading**
@@ -407,13 +407,21 @@ const nextConfig: NextConfig = {
 export default nextConfig
 ```
 
-Verify against Context7 `/vercel/next.js/v16.2.2` — [Cache Components](https://nextjs.org/docs/app/getting-started/cache-components), [`use cache`](https://nextjs.org/docs/app/api-reference/directives/use-cache).
+Verify against Context7 `/vercel/next.js` — [Cache Components](https://nextjs.org/docs/app/getting-started/cache-components), [`use cache`](https://nextjs.org/docs/app/api-reference/directives/use-cache).
 
 | Layer | API | Scope | Use for |
 |-------|-----|-------|---------|
 | **Per-request dedup** | React `cache()` | Single HTTP request | `auth()`, repeated Prisma reads in one RSC tree |
 | **Cross-request cache** | `'use cache'` + `cacheTag()` + `cacheLife()` | Between requests / deploy-aware | Public catalog, trainer profile static slice |
 | **Fresh per request** | No cross-request cache | Always live | Bookings, slot availability, auth-gated mutable data |
+
+### 8.1 Instant Navigations (Next.js 16.3) — best practice
+
+Instant Navigations = `cacheComponents` + `partialPrefetching` (Stream / Cache / Block) — **recommended** on pin **16.3.0** ([ADR-002 §9](../../prds/07_governance/adr_002_next162_vercel_runtime_policy.md)). Canonical detail: repo root [`guidelines/nextjs/ai_loading_patterns.md`](../../../../../../guidelines/nextjs/ai_loading_patterns.md) §8.1.
+
+#### 8.1.1 Instant Insights (dev)
+
+**Instant Insights** detail lives in the repo-root canon: [`guidelines/nextjs/ai_loading_patterns.md`](../../../../../../guidelines/nextjs/ai_loading_patterns.md) §8.1.1 (blocking-route overlay only — not general QA).
 
 ### React `cache()` — per-request dedup
 
@@ -816,10 +824,11 @@ State briefly in PR/task which exception applies:
 | [Next.js: Error Handling](https://nextjs.org/docs/app/getting-started/error-handling) | `error.tsx`, `reset` |
 | [Next.js: `use cache`](https://nextjs.org/docs/app/api-reference/directives/use-cache) | Cross-request cache directive (replaces `unstable_cache`) |
 | [Next.js: Cache Components](https://nextjs.org/docs/app/getting-started/cache-components) | `cacheComponents`, PPR, static + cached + dynamic mix |
+| [ADR-002 §9](../../prds/07_governance/adr_002_next162_vercel_runtime_policy.md) | Instant Navigations best practice (pin 16.3.0) |
 | lampto [`ai_page_performance_streaming.md`](../../examples/lampto/docs/guidelines/nextjs/ai_page_performance_streaming.md) | Source reference (BSFY) |
 
 ---
 
-**Version:** 2.1  
-**Last updated:** May 2026  
-**Next.js:** 16.2.6 · **Hosting:** Vercel · **Cross-request cache:** `'use cache'` (not `unstable_cache`)
+**Version:** 2.3  
+**Last updated:** August 2026  
+**Next.js:** 16.3.0 (pin) · Instant Navigations best practice · **Hosting:** Vercel · **Cross-request cache:** `'use cache'` (not `unstable_cache`)

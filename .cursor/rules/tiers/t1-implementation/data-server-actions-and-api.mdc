@@ -40,7 +40,7 @@ alwaysApply: false
 ## Practice
 
 - Authorization in DAL via `auth()` + `@{{PACKAGE_SCOPE}}/policy-server`.
-- Next.js 16.2.6: `await cookies()`, `await headers()`, `await params`.
+- Next.js 16.3.0: `await cookies()`, `await headers()`, `await params`.
 - **Class B critical submits** (`/book/*`, onboarding, admin approve): dual transport per **ios-safari-mutation-transport** — shared DAL, `MutationResult`, no logic fork.
 
 ## Async & error handling (MUST)
