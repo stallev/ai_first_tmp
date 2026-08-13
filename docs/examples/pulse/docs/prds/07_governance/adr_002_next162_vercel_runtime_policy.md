@@ -1,14 +1,12 @@
 # ADR-002 — Next.js 16.3.0 runtime policy (Vercel)
 
 **Дата:** 2026-05-23  
+**Amend:** 2026-08-11 — pin **16.3.0** shipped; Instant Navigations / Partial Prefetching / `catchError`; Context7 `/vercel/next.js`  
 **Статус:** ACCEPTED  
 **Проект:** Pulse (fitapp)  
-**Owner:** Architecture + Runtime  
-**Last reviewed:** 2026-08-10 (pin upgraded **16.2.6 → 16.3.0**)
+**Owner:** Architecture + Runtime
 
 **Methodology:** [`docs/meta/ai_first_project_methodology.md`](../../meta/ai_first_project_methodology.md)
-
-**Filename note:** `adr_002_next162_…` is historical; **Decision §2** is the pin source of truth (**16.3.0**).
 
 ---
 
@@ -16,10 +14,11 @@
 
 Pulse hosted on **Vercel** ([ADR-001](./adr_001_stack_and_runtime.md)). Architectural patterns inherit from **lampto**, where Next.js 16.2 introduced a breaking rename of request interception: **`middleware.ts` → `proxy.ts`**.
 
+Next.js **16.3** adds **Instant Navigations** on top of Cache Components: **Partial Prefetching** (`partialPrefetching`), Instant Insights, and stable **`catchError`** / `retry` for component-level error recovery ([Next.js 16.3 blog](https://nextjs.org/blog/next-16-3)).
+
 Agents must not implement Next.js 15 `middleware.ts` patterns as the canonical approach.
 
-**Official reference (Context7 / Next.js 16.x docs):** [`proxy` file convention](https://nextjs.org/docs/app/api-reference/file-conventions/proxy), [Upgrading to v16 — middleware to proxy](https://nextjs.org/docs/app/guides/upgrading/version-16#middleware-to-proxy).  
-**Release notes:** [Next.js 16.3](https://nextjs.org/blog/next-16-3) (2026-08-03).
+**Official reference (Context7 `/vercel/next.js`):** [`proxy` file convention](https://nextjs.org/docs/app/api-reference/file-conventions/proxy), [Upgrading to v16 — middleware to proxy](https://nextjs.org/docs/app/guides/upgrading/version-16#middleware-to-proxy), [Instant navigation](https://nextjs.org/docs/app/guides/instant-navigation), [Adopting Partial Prefetching](https://nextjs.org/docs/app/guides/adopting-partial-prefetching), [`catchError`](https://nextjs.org/docs/app/api-reference/functions/catchError). Prefer bundled docs under `node_modules/next/dist/docs/`.
 
 ---
 
@@ -27,19 +26,18 @@ Agents must not implement Next.js 15 `middleware.ts` patterns as the canonical a
 
 | Policy | Value |
 |--------|-------|
-| **Next.js version** | **`16.3.0` exactly** — pin in `apps/web` `package.json` as `"next": "16.3.0"` (also `@next/third-parties`, `eslint-config-next`; no caret/range) |
+| **Next.js version** | **`16.3.0` exactly** — pin in `apps/web` `package.json` as `"next": "16.3.0"` (no caret/range in production lockfile); align `@next/third-parties` and `eslint-config-next` |
 | **React** | 19.x (peer of Next 16.3) |
 | **Hosting** | Vercel |
-| **Bundler** | Turbopack default (`next dev`, `next build`) — FS cache for build enabled by framework defaults |
+| **Bundler** | Turbopack default (`next dev`, `next build`) |
 
-**Hard rule:** do not downgrade to Next.js 15.x or use floating `^16.x` without a new ADR.  
-**Prior pin:** `16.2.6` (superseded 2026-08-10).
+**Hard rule:** do not downgrade to Next.js 15.x or use floating `^16.x` without a new ADR.
 
 ---
 
 ## 3. Decision — request interception (`proxy.ts`)
 
-Next.js 16 deprecates `middleware.ts` in favor of **`proxy.ts`** (unchanged on 16.3).
+Next.js 16 deprecates `middleware.ts` in favor of **`proxy.ts`**.
 
 | Item | Policy |
 |------|--------|
@@ -93,19 +91,58 @@ Do **not** use `unstable_after` for background email/jobs — use Vercel Cron + 
 
 ---
 
+## 5.1 Decision — Instant Navigations and Partial Prefetching (Next.js 16.3)
+
+Instant Navigations = **Cache Components** + **Partial Prefetching**. Required `next.config.ts`:
+
+```ts
+const nextConfig: NextConfig = {
+  cacheComponents: true,
+  partialPrefetching: true,
+};
+```
+
+| Item | Policy |
+|------|--------|
+| **`cacheComponents`** | **Required** |
+| **`partialPrefetching`** | **Required** — default Link warms a reusable **App Shell** per route (not full page per link) |
+| **Adoption** | Follow [Adopting Partial Prefetching](https://nextjs.org/docs/app/guides/adopting-partial-prefetching): audit `<Link prefetch={true}>` / `router.prefetch` → temporary `export const prefetch = 'partial'` if needed → enable global flag → `npx @next/codemod@latest remove-partial-prefetch` |
+| **Pulse audit** | Global flag is on. Intentional deeper `prefetch={true}` only on approved hot CTAs (landing → `/trainers`, trainer cards → `/trainers/[id]`, book CTAs → `/book/[trainerId]`). Verify Instant Insights in `next dev` on navigation-heavy routes |
+| **`<Link prefetch={true}>`** | Only for intentional **per-link deeper prefetch** (URL data / cached content behind Suspense or `'use cache'`) — not a default |
+| **`export const instant = false`** | Opt out of instant validation for a segment **only with documented reason** (blocking route) — not the default |
+| **Instant routes** | Prefer **Suspense** streaming and/or **`'use cache'`** so navigations paint the shared shell immediately |
+
+Detail: [`ai_loading_patterns.md`](../../guidelines/nextjs/ai_loading_patterns.md) (Instant Navigations / Partial Prefetching).
+
+---
+
+## 5.2 Decision — error recovery (`error.tsx` and `catchError`)
+
+| Layer | Policy |
+|-------|--------|
+| **Route segment** | Colocated **`error.tsx`** remains the canonical boundary for async segment failures (existing Pulse rule) |
+| **Component-level** | **`catchError`** from `next/error` (stable in 16.3) — use when a segment `error.tsx` is too coarse; fallback must be a Client Component; prefer **`retry()`** (re-fetch children) over **`reset()`** |
+| **Control flow** | `catchError` must not interfere with **`notFound()`** / **`redirect()`** |
+
+Do not invent ad-hoc client error boundaries that duplicate catalog/`error.tsx` patterns without need. Detail: [`ai_loading_patterns.md`](../../guidelines/nextjs/ai_loading_patterns.md) §12+.
+
+---
+
 ## 6. Consequences
 
 **Positive:**
 
-- Aligns Pulse with Next.js 16.3 defaults (Turbopack FS cache, lower dev memory, native Node SSR streams).
+- Aligns Pulse with lampto Next.js 16 patterns while keeping Vercel hosting.
 - `proxy.ts` + Node runtime simplifies Auth.js JWT gate without Edge Prisma restrictions.
 - Single runtime ADR prevents agents from mixing v15 middleware docs with v16 codebase.
+- Instant Navigations / Partial Prefetching reduce over-prefetch and enable SPA-like shells without abandoning the server model.
+- Stable `catchError` allows finer recovery than segment-only `error.tsx`.
 
 **Trade-offs:**
 
 - Teams must migrate any legacy `middleware.ts` examples in docs/code to `proxy.ts`.
 - Libraries assuming Edge middleware (e.g. some i18n setups) may require keeping transitional `middleware.ts` — document exception in implementation contract.
-- Instant Navigations (`cacheComponents` + `partialPrefetching`) is the **recommended** navigation model — routes without Suspense/`'use cache'` boundaries surface **Instant Insights** in dev until Stream/Cache/Block is applied. Instant Insights validates **blocking navigation/prerender** only (not general QA); root canon: [`ai_loading_patterns.md` §8.1.1](../../../../../../guidelines/nextjs/ai_loading_patterns.md#811-instant-insights-dev).
+- Partial Prefetching changes Link semantics — agents must not treat `prefetch={true}` as the old “full page” default without reading the adoption guide.
 
 ---
 
@@ -114,52 +151,23 @@ Do **not** use `unstable_after` for background email/jobs — use Vercel Cron + 
 | Lampto ADR | Pulse |
 |------------|-------|
 | ADR-026 (Netlify) | **Not applicable** — Pulse uses Vercel |
-| ADR-022 (Vercel + Next 16.2) | **Conceptually superseded by this ADR** for Pulse; adopt interception/cache rules; current pin **16.3.0** |
+| ADR-022 (Vercel + Next 16.2) | **Conceptually superseded by this ADR** for Pulse; adopt interception/cache rules, pin **16.3.0** |
 
 ---
 
 ## 8. Agent checklist
 
-- [ ] `package.json` pins `"next": "16.3.0"` (and matching `@next/third-parties`, `eslint-config-next`)
+- [ ] `package.json` pins `"next": "16.3.0"`
+- [ ] `cacheComponents: true` and `partialPrefetching: true` in `next.config.ts`
 - [ ] New route protection uses **`proxy.ts`**, not `middleware.ts`
 - [ ] `auth.config.ts` used in proxy; `auth.ts` only in server handlers/actions
 - [ ] No `@pulse/policy-server` in `proxy.ts` / `middleware.ts`
 - [ ] Async `cookies` / `headers` / `params` / `searchParams`
 - [ ] Mutations use `updateTag` / `revalidateTag` / `revalidatePath` per scenario
 - [ ] New cross-request cached reads use **`'use cache'`** + `cacheTag()` — not `unstable_cache`
+- [ ] Instant routes: Suspense and/or `'use cache'`; no casual `export const instant = false`
+- [ ] Segment failures → `error.tsx`; component-level → `catchError` + `retry` when needed
 - [ ] Background work → Cron/jobs, not `unstable_after`
-- [ ] Region error boundaries prefer **`catchError`** from `next/error` (§12.1)
-- [ ] `next.config` recommends **`cacheComponents: true`** + **`partialPrefetching: true`**; routes use Stream / Cache / Block (§9)
-- [ ] Do **not** enable `typescript@^7` / experimental flags without §9
-
----
-
-## 9. Next.js 16.3 features — adopt vs defer
-
-Pin is **16.3.0**. Zero-code framework improvements apply automatically.
-
-### Available now (recommended / best practice)
-
-| Topic | Guidance |
-|-------|----------|
-| **Instant Navigations** | **Best practice:** `cacheComponents: true` **and** `partialPrefetching: true` in `apps/web/next.config.ts`. Per route: **Stream** (`Suspense` / `loading.tsx`), **Cache** (`'use cache'` + tags), or deliberate **Block** (`export const instant = false` with a reason). **Instant Insights** (dev overlay) flags blocking routes until Stream/Cache/Block — not general bug-hunting; see root [`ai_loading_patterns.md`](../../../../../../guidelines/nextjs/ai_loading_patterns.md) §8.1 / [§8.1.1](../../../../../../guidelines/nextjs/ai_loading_patterns.md#811-instant-insights-dev) |
-| **Playwright `instant()`** | **SHOULD** on critical navigations (`/trainers`, booking) once flags are on |
-| **`catchError` (`next/error`)** | Prefer stable `catchError` + `retry()` for region boundaries — §12.1 |
-| **AGENTS.md Next block** | Commit `nextjs-agent-rules` from `next dev` **or** set `agentRules: false` if monorepo `AGENTS.md` conflicts |
-| **Turbopack defaults** | Keep Turbopack for `dev`/`build`; do not force `--webpack` without documented need |
-
-### Do **not** recommend / canonicalize
-
-| Topic | Reason |
-|-------|--------|
-| Blind `export const instant = false` on every route | Opt-out without product reason — defeats Instant Navigations |
-| Forcing every pixel into the instant shell | Trade-offs per region; Stream dynamic private data |
-| `typescript@^7` in monorepo | Ecosystem (Prisma, ESLint, CI) lag — optional experiment only |
-| `experimental.useOffline` / `turbopackRustReactCompiler` | Experimental |
-| `import.meta.glob` as product pattern | Niche; Pulse uses DAL + Prisma |
-| `next/root-params` as must | Cookie-first i18n ([ADR-009](./adr_009_ui_locale_strategy.md)) — useful only if root dynamic segments appear |
-| Floating `^16` / auto-latest | Violates pin policy |
-| Reverting to `middleware.ts` as canon | **`proxy.ts` remains canonical** |
 
 ---
 
@@ -172,13 +180,3 @@ Pin is **16.3.0**. Zero-code framework improvements apply automatically.
 - [`.cursor/rules/nextjs-vercel-app-router.mdc`](../../../.cursor/rules/nextjs-vercel-app-router.mdc)
 - [`cache_revalidation_policy.md`](../05_runtime/cache_revalidation_policy.md) — tag/path invalidation detail (W5)
 - Lampto reference: [`adr_022_next16_vercel_runtime_policy.md`](../../examples/lampto/docs/prds/07_governance/adr_022_next16_vercel_runtime_policy.md)
-
-## Change log
-
-| Date | Change |
-|------|--------|
-| 2026-05-23 | v1.0 — ACCEPTED; pin 16.2.6 + `proxy.ts` |
-| 2026-08-10 | v1.1 — §9 Next.js 16.3 roadmap (docs only); pin unchanged |
-| 2026-08-10 | v1.2 — **pin `16.3.0`**; §9 adopt/defer for Instant Navigations; `catchError` recommended |
-| 2026-08-10 | v1.3 — Instant Navigations + `partialPrefetching` = **recommended best practice** |
-| 2026-08-11 | v1.4 — Instant Insights scope clarified (blocking routes only; link §8.1.1) |

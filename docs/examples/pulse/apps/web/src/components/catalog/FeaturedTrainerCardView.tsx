@@ -41,6 +41,7 @@ export function FeaturedTrainerCardView({
   return (
     <Link
       href={`/trainers/${trainer.id}`}
+      prefetch={true}
       className={cn("group block h-full", className)}
     >
       <PulseCard

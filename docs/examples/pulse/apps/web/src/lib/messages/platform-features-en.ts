@@ -291,8 +291,8 @@ export const platformFeaturesEn = {
           "Book a session via wizard",
           "Open /client/bookings/[id] for detail and actions",
         ],
-        href: "/auth/login",
-        linkLabel: "Sign in",
+        href: "/auth/login?demo=client",
+        linkLabel: "Try as Client",
       },
       {
         title: "Admin moderation",
@@ -301,12 +301,12 @@ export const platformFeaturesEn = {
           "Open /admin/dashboard for KPIs",
           "Review pending trainer at /admin/trainers",
         ],
-        href: "/auth/login",
-        linkLabel: "Sign in",
+        href: "/auth/login?demo=admin",
+        linkLabel: "Try as Admin",
       },
     ],
     credentialsNote:
-      "Local demo accounts: client@pulse.dev, anna@pulse.dev (trainer), admin@pulse.dev — passwords in project seed docs.",
+      "Credentials are pre-filled on the sign-in page.",
   },
   boundaries: {
     id: "boundaries",

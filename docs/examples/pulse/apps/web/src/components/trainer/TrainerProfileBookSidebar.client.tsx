@@ -83,7 +83,9 @@ export function TrainerProfileBookSidebar({  profile,
       ) : null}
 
       <Button asChild size="lg" className="mt-4 w-full">
-        <Link href={bookHref}>{messages.trainer.profile.bookNow}</Link>
+        <Link href={bookHref} prefetch={true}>
+          {messages.trainer.profile.bookNow}
+        </Link>
       </Button>
     </PulseCard>
   );

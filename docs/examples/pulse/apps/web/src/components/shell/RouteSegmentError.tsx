@@ -11,7 +11,8 @@ export type RouteSegmentErrorProps = {
   title: string;
   description: string;
   retryLabel: string;
-  reset: () => void;
+  /** Prefer Next.js 16.3 `retry()` (re-fetch RSC) over `reset()`. */
+  retry: () => void;
 };
 
 export function RouteSegmentError({
@@ -19,7 +20,7 @@ export function RouteSegmentError({
   title,
   description,
   retryLabel,
-  reset,
+  retry,
 }: RouteSegmentErrorProps) {
   return (
     <div className="space-y-4">
@@ -29,7 +30,7 @@ export function RouteSegmentError({
         <AlertTitle>{title}</AlertTitle>
         <AlertDescription className="flex flex-col gap-3 sm:flex-row sm:items-center sm:justify-between">
           <span>{description}</span>
-          <Button type="button" variant="outline" size="sm" onClick={reset}>
+          <Button type="button" variant="outline" size="sm" onClick={retry}>
             {retryLabel}
           </Button>
         </AlertDescription>

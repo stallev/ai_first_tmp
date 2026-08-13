@@ -4,9 +4,12 @@ import { RouteSegmentError } from "@/components/shell/RouteSegmentError";
 import { useMessages } from "@/components/i18n/LocaleProvider.client";
 
 
-export default function ClientBookingDetailError({  reset,
+export default function ClientBookingDetailError({
+  retry,
 }: {
+  error: Error & { digest?: string };
   reset: () => void;
+  retry: () => void;
 }) {
   const messages = useMessages();
 
@@ -16,7 +19,7 @@ export default function ClientBookingDetailError({  reset,
       title={messages.common.segmentError.title}
       description={messages.common.segmentError.description}
       retryLabel={messages.common.segmentError.retry}
-      reset={reset}
+      retry={retry}
     />
   );
 }

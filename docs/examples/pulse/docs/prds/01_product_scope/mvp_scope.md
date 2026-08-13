@@ -50,7 +50,7 @@ Pulse — онлайн-маркетплейс, соединяющий клиен
 
 | Layer | Choice | Governance |
 |-------|--------|------------|
-| Framework | Next.js **16.2.6** App Router, TypeScript | [ADR-002](../07_governance/adr_002_next162_vercel_runtime_policy.md) |
+| Framework | Next.js **16.3.0** App Router, TypeScript | [ADR-002](../07_governance/adr_002_next162_vercel_runtime_policy.md) |
 | Hosting | Vercel | [ADR-001](../07_governance/adr_001_stack_and_runtime.md) |
 | Auth | Auth.js v5, **Credentials** (email + password), JWT | [ADR-003](../07_governance/adr_003_auth_credentials_jwt_rbac.md) |
 | ORM / DB | Prisma v7, Neon PostgreSQL 17 | [database_schema_v1.md](../03_data_model/database_schema_v1.md) |

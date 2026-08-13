@@ -225,7 +225,7 @@
 
 | Тема | Library | Что проверить |
 |------|---------|---------------|
-| Next.js 16 | `/vercel/next.js/v16.2.2` | `proxy.ts`, async `cookies`/`headers`/`params` |
+| Next.js 16 | `/vercel/next.js` | `proxy.ts`, async `cookies`/`headers`/`params`, Instant Navigations |
 | Auth.js v5 | `/websites/authjs_dev` | Credentials, JWT, role in token |
 | Prisma + Neon | `/websites/prisma_io` | `DATABASE_URL`, `DIRECT_URL`, migrate deploy |
 
@@ -560,6 +560,18 @@ READ registry → READ dependencies → DRAFT file → ADD backlinks → UPDATE 
 
 ---
 
+### Волна W25 — P22 Instant Navigations adoption (Next.js 16.3)
+
+| ID | Файл | Зависит от | Обновить backlinks |
+|----|------|------------|-------------------|
+| W25-01 | `specs/instant_navigations_adoption_spec.md` | ADR-002 §5.1–§5.2, ai_loading_patterns, cache_revalidation_policy | architecture_master_index, mvp README |
+| W25-02 | `P22_phase_description.md`, `P22_tasks.md` | P14, ADR-002, instant_navigations_adoption_spec | matrix, AGENTS, pulse-project-context |
+| W25-03 | Cross-ref sync | W25 | architecture_master_index, mvp README, ui_component_phase_matrix P22 row |
+
+*(Полные пути: `docs/implementation/mvp/`)*
+
+---
+
 ### Волна W12 — Operations + guides
 
 | ID | Файл | Зависит от | Обновить backlinks |
@@ -685,9 +697,9 @@ READ registry → READ dependencies → DRAFT file → ADD backlinks → UPDATE 
 
 **Следующий шаг:** **P01 implementation** (monorepo & data layer) — [`P01_phase_description.md`](../implementation/mvp/phases_tasks_descriptions/P01_phase_description.md) + [`P01_tasks.md`](../implementation/mvp/tasks/P01_tasks.md).
 
-**Документация MVP-complete (W0–W24).** Core MVP: P01–P14 (W16). **Post-P14:** **P16** (Public Landing v2), **P17** (UI i18n EN/RU), **P19** (Complaint Resolution v2), **P18** (Admin People Ops spec), **P21** (Email, post-MVP).
+**Документация MVP-complete (W0–W25).** Core MVP: P01–P14 (W16). **Post-P14:** **P16** (Public Landing v2), **P17** (UI i18n EN/RU), **P19** (Complaint Resolution v2), **P18** (Admin People Ops spec), **P21** (Email, post-MVP), **P22** (Instant Navigations adoption / Next.js 16.3).
 
-**После W24** имплементация post-P14: **P17 i18n complete**, P16 landing replace, P19 complaints (in progress), P18 people ops, P21 email after deferral unlock.
+**После W25** имплементация post-P14: **P17 i18n complete**, P16 landing replace, P19 complaints (in progress), **P22 Instant Navigations** (docs ready — implement per tasks), P18 people ops, P21 email after deferral unlock.
 
 ---
 
@@ -695,6 +707,7 @@ READ registry → READ dependencies → DRAFT file → ADD backlinks → UPDATE 
 
 | Date | Change |
 |------|--------|
+| 2026-08-11 | **W25 complete** — P22 Instant Navigations adoption: `instant_navigations_adoption_spec`, P22 phase/tasks, matrix + cross-ref sync (Next.js 16.3 App Shell / Suspense / catchError) |
 | 2026-05-25 | **P17 implementation complete** — cookie-first EN/RU i18n in `apps/web`; `getMessages`/`useMessages`; formatters; LocaleSwitcher; auth `user.locale` persist |
 | 2026-05-25 | **W24 complete** — P17 UI i18n (EN/RU): ADR-009, i18n_runtime_spec, P17 phase/tasks, client_profile wireframe v2, matrix + cross-ref sync |
 | 2026-05-25 | **W23 complete** — Complaint Resolution v2 P17→P19; P17 slot reallocated W24; `_migration_P17_to_P19.md`; matrix + cross-ref sync |

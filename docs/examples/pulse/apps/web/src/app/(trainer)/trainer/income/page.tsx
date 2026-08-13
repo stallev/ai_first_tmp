@@ -1,4 +1,5 @@
 import { DollarSignIcon } from "lucide-react";
+import { connection } from "next/server";
 
 import { Heading } from "@/components/atoms";
 import { TrainerIncomeSummary } from "@/components/trainer/TrainerIncomeSummary";
@@ -14,8 +15,9 @@ import {
 import { getTrainerIncomeSnapshot } from "@/data/trainer/get-trainer-income.server";
 import { getMessages } from "@/lib/messages/server";
 
-
 export default async function TrainerIncomePage() {
+  // Month window uses `new Date()` — mark request-bound before DAL.
+  await connection();
   const messages = await getMessages();
   const snapshot = await getTrainerIncomeSnapshot();
 

@@ -1,6 +1,6 @@
 # Authentication Implementation Guide — Pulse (for AI agents)
 
-**Stack:** Next.js **16.2.6** (App Router) | Auth.js v5 | Prisma v7 | Neon | Vercel  
+**Stack:** Next.js **16.3.0** (App Router) | Auth.js v5 | Prisma v7 | Neon | Vercel  
 **Methodology:** [`docs/meta/ai_first_project_methodology.md`](../../meta/ai_first_project_methodology.md)  
 **Runtime:** [ADR-002](../../prds/07_governance/adr_002_next162_vercel_runtime_policy.md) — **`proxy.ts`**, not `middleware.ts`  
 **Auth canon:** [ADR-003](../../prds/07_governance/adr_003_auth_credentials_jwt_rbac.md) — Credentials, JWT, RBAC, four-layer model  
@@ -21,7 +21,7 @@ Browser
 
 **Critical Next.js 16 difference from v15:**
 
-| v15 pattern | Pulse (v16.2.6) |
+| v15 pattern | Pulse (v16.3.0) |
 |-------------|-----------------|
 | `middleware.ts` + Edge | **`proxy.ts`** + Node runtime |
 | `export function middleware` | **`export function proxy`** |

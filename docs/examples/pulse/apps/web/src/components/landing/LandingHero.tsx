@@ -54,7 +54,13 @@ export async function LandingHero() {
             {hero.subcopy}
           </ContentText>
           <div className="mb-5 flex flex-wrap items-center gap-3.5">
-            <CustomLink as="button" href="/trainers" size="lg" className="rounded-full px-9">
+            <CustomLink
+              as="button"
+              href="/trainers"
+              size="lg"
+              className="rounded-full px-9"
+              prefetch={true}
+            >
               {hero.primaryCta}
               <ArrowRightIcon aria-hidden className="size-[18px]" />
             </CustomLink>

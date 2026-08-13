@@ -65,7 +65,7 @@ Web AGENTS не отменяет Cursor Rules — только маршрути�
 | **Implementation contracts** | [`docs/implementation/mvp/contracts/`](docs/implementation/mvp/contracts/) |
 | **Implementation specs** | [`docs/implementation/mvp/specs/`](docs/implementation/mvp/specs/) |
 | **Implementation guides** | [`docs/implementation/mvp/guides/`](docs/implementation/mvp/guides/) |
-| **Implementation phases (P01–P14 MVP; P16–P18, P19, P21 post-P14)** | [`docs/implementation/mvp/phases_tasks_descriptions/`](docs/implementation/mvp/phases_tasks_descriptions/) + [`tasks/`](docs/implementation/mvp/tasks/) + [`ui_component_phase_matrix.md`](docs/implementation/mvp/ui_component_phase_matrix.md) |
+| **Implementation phases (P01–P14 MVP; P16–P19, P21–P22 post-P14)** | [`docs/implementation/mvp/phases_tasks_descriptions/`](docs/implementation/mvp/phases_tasks_descriptions/) + [`tasks/`](docs/implementation/mvp/tasks/) + [`ui_component_phase_matrix.md`](docs/implementation/mvp/ui_component_phase_matrix.md) |
 | HTML-прототип | [`docs/prototypes/Fitness_Platform_Prototype_v1.html`](docs/prototypes/Fitness_Platform_Prototype_v1.html), landing: [`Pulse Landing Page -Standalone-.html`](docs/prototypes/Pulse Landing Page -Standalone-.html) |
 | Runtime / стек | [`docs/prds/07_governance/adr_001_stack_and_runtime.md`](docs/prds/07_governance/adr_001_stack_and_runtime.md), [ADR-002](docs/prds/07_governance/adr_002_next162_vercel_runtime_policy.md) |
 
@@ -80,22 +80,11 @@ Web AGENTS не отменяет Cursor Rules — только маршрути�
 3. Определить фазу (`docs/implementation/mvp/phases_tasks_descriptions/P{N}_*.md`)
 4. Прочитать contracts для фазы
 5. Выполнить чеклист из `docs/implementation/mvp/tasks/P{N}_tasks.md`
-6. Верифицировать по чеклисту фазы (`typecheck` / `lint` / DoD) и обновить документацию при изменении behavior. Runtime dual-view (`next-dev-loop`) — **только если пользователь явно попросил**; не auto.
-
-## Agent skills (`.cursor/skills/`)
-
-| Skill | When |
-|-------|------|
-| **`app-conventions`** | New features, routes, components — see [`../../.cursor/skills/app-conventions/SKILL.md`](../../.cursor/skills/app-conventions/SKILL.md) in boilerplate |
-| **`next-dev-loop`** (user skill) | **Only when the user explicitly asks** for runtime / live / browser verify — dual-view (`/_next/mcp` + `agent-browser`), 4 layers (compile → errors → UX → React). Not auto after edits or in commit pipeline. |
-
-**Do not install** external Next.js **architecture** skills — RSC patterns in-repo: [`../../docs/reference/adr_010_nextjs_app_architecture_skill.md`](../../docs/reference/adr_010_nextjs_app_architecture_skill.md). Workflow verification skill `next-dev-loop` is allowed as a Cursor user skill (**opt-in by user request**).
-
-Web detail: [`apps/web/AGENTS.md`](apps/web/AGENTS.md) § Skills.
+6. Верифицировать по чеклисту фазы и обновить документацию при изменении behavior
 
 ## Статус репозитория
 
-**Текущая фаза:** P14 complete (quality gate). **Post-P14 tracks:** **P16** (public landing v2), **P17** (UI i18n EN/RU — **complete**), **P19** (complaint resolution v2 — in progress), **P18** (admin people ops, spec only), **P21** (email & jobs, post-MVP deferral). См. [`_migration_P17_to_P19.md`](docs/implementation/mvp/phases_tasks_descriptions/_migration_P17_to_P19.md) (complaints renumber only).  
+**Текущая фаза:** P14 complete (quality gate). **Post-P14 tracks:** **P16** (public landing v2), **P17** (UI i18n EN/RU — **complete**), **P19** (complaint resolution v2 — in progress), **P18** (admin people ops, spec only), **P21** (email & jobs, post-MVP deferral), **P22** (Instant Navigations / Next.js 16.3 — **implementation complete**, D3 smoke on `next dev`). См. [`_migration_P17_to_P19.md`](docs/implementation/mvp/phases_tasks_descriptions/_migration_P17_to_P19.md) (complaints renumber only).  
 `apps/workers` — ещё не создан.  
 Не расширять реализацию без явной фазы и contract.
 

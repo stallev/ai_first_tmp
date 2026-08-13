@@ -1,5 +1,5 @@
 import { PulseGoogleAnalytics } from "@/components/analytics/PulseGoogleAnalytics";
-import { RootLayoutProviders } from "@/components/i18n/RootLayoutProviders";
+import { LocaleProvider } from "@/components/i18n/LocaleProvider.client";
 import { DEFAULT_LOCALE } from "@/lib/i18n/constants";
 import { getMessagesForLocale } from "@/lib/messages";
 import { cn } from "@/lib/utils";
@@ -9,6 +9,10 @@ type RootLayoutFallbackProps = {
   fontClassName: string;
 };
 
+/**
+ * Deterministic App Shell fallback — no ThemeProvider / Toaster (crypto / theme
+ * APIs must not run in Instant Navigations prerender shell).
+ */
 export function RootLayoutFallback({
   children,
   fontClassName,
@@ -22,9 +26,9 @@ export function RootLayoutFallback({
       className={cn(fontClassName, "h-full antialiased")}
     >
       <body className="min-h-full flex flex-col">
-        <RootLayoutProviders locale={DEFAULT_LOCALE} messages={messages}>
+        <LocaleProvider locale={DEFAULT_LOCALE} messages={messages}>
           {children}
-        </RootLayoutProviders>
+        </LocaleProvider>
       </body>
       <PulseGoogleAnalytics />
     </html>

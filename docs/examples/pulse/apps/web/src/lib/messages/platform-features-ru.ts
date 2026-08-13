@@ -291,8 +291,8 @@ export const platformFeaturesRu = {
           "Забронировать через wizard",
           "Открыть /client/bookings/[id]",
         ],
-        href: "/auth/login",
-        linkLabel: "Войти",
+        href: "/auth/login?demo=client",
+        linkLabel: "Попробовать как клиент",
       },
       {
         title: "Admin moderation",
@@ -301,12 +301,12 @@ export const platformFeaturesRu = {
           "Открыть /admin/dashboard",
           "Проверить тренера на /admin/trainers",
         ],
-        href: "/auth/login",
-        linkLabel: "Войти",
+        href: "/auth/login?demo=admin",
+        linkLabel: "Попробовать как админ",
       },
     ],
     credentialsNote:
-      "Локальные demo-аккаунты: client@pulse.dev, anna@pulse.dev (trainer), admin@pulse.dev — пароли в seed-документации проекта.",
+      "Учётные данные подставляются автоматически на странице входа.",
   },
   boundaries: {
     id: "boundaries",

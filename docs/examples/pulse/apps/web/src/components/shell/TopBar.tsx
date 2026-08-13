@@ -1,3 +1,5 @@
+import { connection } from "next/server";
+
 import { auth } from "@/auth";
 import { LocaleSwitcher } from "@/components/i18n/LocaleSwitcher.client";
 import { TopBarAuthActions } from "@/components/shell/TopBarAuthActions.client";
@@ -7,8 +9,8 @@ import { Container } from "@/components/ui/container";
 import { PulseLogo } from "@/components/ui/PulseLogo";
 import { getMessages } from "@/lib/messages/server";
 
-
 export async function TopBar() {
+  await connection();
   const messages = await getMessages();
   const session = await auth();
   const isAuthenticated = Boolean(session?.user);

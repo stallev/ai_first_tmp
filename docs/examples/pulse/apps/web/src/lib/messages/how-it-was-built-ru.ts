@@ -2,7 +2,7 @@ export const howItWasBuiltRu = {
   meta: {
     title: "Как создан Pulse — full-stack кейс",
     description:
-      "Один разработчик, ~24 часа от спецификации до деплоя: AI-first методология, monorepo-архитектура и production-grade MVP маркетплейса фитнес-тренеров.",
+      "Один разработчик, ~26 часов от спецификации до деплоя: AI-first методология, monorepo-архитектура и production-grade MVP маркетплейса фитнес-тренеров.",
     keywords: [
       "кейс",
       "Next.js",
@@ -24,11 +24,11 @@ export const howItWasBuiltRu = {
   hero: {
     eyebrow: "Кейс разработки",
     title: "От спецификации",
-    titleAccent: "до production за ~24 часа",
+    titleAccent: "до production за ~26 часов",
     subcopy:
       "Pulse — full-stack маркетплейс фитнес-тренеров, созданный одним разработчиком с Cursor и Claude Code по явным архитектурным контрактам, а не на no-code конструкторах.",
     kpis: [
-      { value: "~24 ч", label: "Spec → deploy" },
+      { value: "~26 ч", label: "Spec → deploy" },
       { value: "1", label: "Разработчик" },
       { value: "3", label: "Роли" },
       { value: "50+", label: "Маршрутов" },
@@ -103,7 +103,7 @@ export const howItWasBuiltRu = {
       {
         name: "apps/web",
         description:
-          "Next.js 16.2 App Router — Server Components, Server Actions, Route Handlers, proxy.ts для auth.",
+          "Next.js 16.3.0 App Router — Server Components, Server Actions, Route Handlers, proxy.ts для auth.",
       },
       {
         name: "@pulse/domain",
@@ -184,7 +184,7 @@ export const howItWasBuiltRu = {
     title: "Стек и стандарты",
     intro: "Зафиксированные версии и явное governance — не случайный набор зависимостей.",
     rows: [
-      { label: "Framework", value: "Next.js 16.2.6 App Router, React 19, TypeScript" },
+      { label: "Framework", value: "Next.js 16.3.0 App Router, React 19, TypeScript" },
       { label: "Hosting", value: "Vercel (serverless, preview deploys)" },
       { label: "Database", value: "Neon PostgreSQL 17 + Prisma v7" },
       { label: "Auth", value: "Auth.js v5 Credentials, JWT RBAC" },

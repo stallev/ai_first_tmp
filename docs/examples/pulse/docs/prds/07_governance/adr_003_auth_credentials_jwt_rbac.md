@@ -116,7 +116,7 @@ flowchart TD
 
 `proxy.ts` matcher (minimum): `/client/:path*`, `/trainer/:path*`, `/admin/:path*`.
 
-Context7 Next.js 16.2 (`/vercel/next.js/v16.2.2`): export **`function proxy`**, not `middleware`; runtime **nodejs**.
+Context7 Next.js (`/vercel/next.js`): export **`function proxy`**, not `middleware`; runtime **nodejs**.
 
 ### 5. RBAC model (MVP)
 
@@ -243,7 +243,7 @@ Dev password change: seed / admin — not email flow.
 ## Agent notes
 
 - Context7: `/websites/authjs_dev` — Credentials authorize, JWT callbacks, split auth.config.
-- Context7: `/vercel/next.js/v16.2.2` — `export function proxy`, not middleware.
+- Context7: `/vercel/next.js` — `export function proxy`, not middleware.
 - Do not implement Google provider «for later» in P01 without ADR amendment.
 - Trainer registration **MUST** create `trainer_profile` with `status = pending` in same transaction as User.
 

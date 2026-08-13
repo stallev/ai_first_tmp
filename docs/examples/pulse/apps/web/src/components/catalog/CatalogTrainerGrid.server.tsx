@@ -3,7 +3,6 @@ import type { CatalogTrainersQuery } from "@pulse/domain";
 import { ContentText } from "@/components/atoms";
 import { TrainerCard } from "@/components/catalog/TrainerCard";
 import { CatalogEmpty } from "@/components/catalog/CatalogEmpty";
-import { CatalogError } from "@/components/catalog/CatalogError";
 import { CatalogPagination } from "@/components/catalog/filters/CatalogPagination.client";
 import { CatalogSortSelect } from "@/components/catalog/filters/CatalogSortSelect.client";
 import { getCatalogTrainers } from "@/data/catalog/get-catalog-trainers.server";
@@ -19,13 +18,7 @@ const ABOVE_FOLD_IMAGE_COUNT = 2;
 export async function CatalogTrainerGrid({ query }: CatalogTrainerGridProps) {
   const locale = await getLocale();
   const messages = await getMessages();
-  let result;
-
-  try {
-    result = await getCatalogTrainers(query);
-  } catch {
-    return <CatalogError />;
-  }
+  const result = await getCatalogTrainers(query);
 
   if (result.items.length === 0) {
     return <CatalogEmpty />;

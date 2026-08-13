@@ -7,11 +7,9 @@ import { ClientDashboardCategories } from "@/components/client/ClientDashboardCa
 import { ClientDashboardFeaturedTrainers } from "@/components/client/ClientDashboardFeaturedTrainers.server";
 import { ClientDashboardFeaturedTrainersSkeleton } from "@/components/client/ClientDashboardFeaturedTrainersSkeleton";
 import { ClientDashboardGreeting } from "@/components/client/ClientDashboardGreeting";
-import {
-  ClientDashboardSearchEntry,
-  ClientNextSessionCard,
-} from "@/components/client/ClientNextSessionCard";
-import { getClientNextSession } from "@/data/client/get-client-bookings.server";
+import { ClientDashboardSearchEntry } from "@/components/client/ClientNextSessionCard";
+import { ClientNextSessionSection } from "@/components/client/ClientNextSessionSection.server";
+import { ClientNextSessionSkeleton } from "@/components/client/ClientNextSessionSkeleton";
 import { getMessages } from "@/lib/messages/server";
 
 export async function generateMetadata(): Promise<Metadata> {
@@ -24,13 +22,13 @@ export async function generateMetadata(): Promise<Metadata> {
 export default async function ClientDashboardPage() {
   const messages = await getMessages();
   const session = await auth();
-  const displayName =
-    session?.user?.name?.trim() || messages.common.guestClientName;
-  const nextSession = await getClientNextSession();
 
   if (!session?.user) {
     redirect("/auth/login");
   }
+
+  const displayName =
+    session.user.name?.trim() || messages.common.guestClientName;
 
   return (
     <div className="space-y-6 pb-6">
@@ -39,7 +37,9 @@ export default async function ClientDashboardPage() {
 
       <div className="min-w-0 space-y-6 lg:grid lg:grid-cols-3 lg:gap-6 lg:space-y-0">
         <div className="min-w-0 space-y-6 lg:col-span-2">
-          <ClientNextSessionCard session={nextSession} />
+          <Suspense fallback={<ClientNextSessionSkeleton />}>
+            <ClientNextSessionSection />
+          </Suspense>
           <Suspense fallback={<ClientDashboardFeaturedTrainersSkeleton />}>
             <ClientDashboardFeaturedTrainers />
           </Suspense>

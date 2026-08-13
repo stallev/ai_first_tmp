@@ -30,6 +30,7 @@ export async function LandingFinalCta() {
             variant="secondary"
             size="lg"
             className="rounded-full px-9"
+            prefetch={true}
           >
             {final.primaryCta}
             <ArrowRightIcon aria-hidden className="size-[18px]" />

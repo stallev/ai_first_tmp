@@ -1,3 +1,5 @@
+import { connection } from "next/server";
+
 import { auth } from "@/auth";
 import { PublicChrome } from "@/components/shell/PublicChrome";
 import { RoleAppShellGate } from "@/components/shell/RoleAppShellGate.server";
@@ -10,6 +12,8 @@ type HybridAppShellGateProps = {
 export async function HybridAppShellGate({
   children,
 }: Readonly<HybridAppShellGateProps>) {
+  // Auth.js uses sync crypto — mark request-bound before auth() for Instant Navigations.
+  await connection();
   const session = await auth();
   const role = session?.user?.role;
 

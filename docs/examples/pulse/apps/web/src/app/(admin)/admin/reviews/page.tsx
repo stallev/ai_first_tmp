@@ -1,10 +1,11 @@
 import { Suspense } from "react";
 
 import { AdminPillTabs } from "@/components/admin/AdminPillTabs.client";
+import { AdminPillTabsListSkeleton } from "@/components/admin/AdminPillTabsListSkeleton";
 import { AdminQueueGridSkeleton } from "@/components/admin/AdminQueueGridSkeleton";
+import { AdminReviewsCounts } from "@/components/admin/AdminReviewsCounts.server";
 import { ReviewsTabPanel } from "@/components/admin/ReviewsTabPanel.server";
 import { PageHeader } from "@/components/ui/PageHeader";
-import { getReviewModerationCounts } from "@/data/admin/list-reviews-for-moderation.server";
 import {
   getReviewModerationTabs,
   resolveReviewTab,
@@ -12,28 +13,21 @@ import {
 } from "@/lib/admin/review-moderation-tabs";
 import { getMessages } from "@/lib/messages/server";
 
-
 type AdminReviewsPageProps = {
   searchParams: Promise<{ tab?: string }>;
 };
 
-export default async function AdminReviewsPage({  searchParams,
+export default async function AdminReviewsPage({
+  searchParams,
 }: AdminReviewsPageProps) {
   const messages = await getMessages();
-
   const params = await searchParams;
   const activeTab = resolveReviewTab(params.tab);
-  const countsData = await getReviewModerationCounts();
-
-  const counts: Record<string, number> = {
-    visible: countsData.visible,
-    hidden: countsData.hidden,
-  };
-
   const tabs = getReviewModerationTabs(messages).map((tab) => ({
     value: tab.value,
     label: tab.label,
   }));
+  const ariaLabel = messages.admin.reviews.tabsAriaLabel;
 
   return (
     <>
@@ -41,11 +35,17 @@ export default async function AdminReviewsPage({  searchParams,
 
       <AdminPillTabs
         activeTab={activeTab}
-        tabs={tabs}
-        counts={counts}
         basePath="/admin/reviews"
         defaultTab={REVIEW_TAB_VISIBLE}
-        ariaLabel={messages.admin.reviews.tabsAriaLabel}
+        tabsList={
+          <Suspense
+            fallback={
+              <AdminPillTabsListSkeleton tabs={tabs} ariaLabel={ariaLabel} />
+            }
+          >
+            <AdminReviewsCounts tabs={tabs} ariaLabel={ariaLabel} />
+          </Suspense>
+        }
       >
         <Suspense fallback={<AdminQueueGridSkeleton count={4} />}>
           <ReviewsTabPanel tab={activeTab} />

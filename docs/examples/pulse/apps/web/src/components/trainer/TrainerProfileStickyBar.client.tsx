@@ -52,7 +52,9 @@ export function TrainerProfileStickyBar({  profile,
           </div>
         ) : null}
         <Button asChild size="lg" className="ml-auto min-w-[140px] shrink-0">
-          <Link href={bookHref}>{messages.trainer.profile.bookNow}</Link>
+          <Link href={bookHref} prefetch={true}>
+            {messages.trainer.profile.bookNow}
+          </Link>
         </Button>
       </div>
     </div>

@@ -8,9 +8,12 @@ import { Button } from "@/components/ui/button";
 import { useMessages } from "@/components/i18n/LocaleProvider.client";
 
 
-export default function TrainerProfileError({  reset,
+export default function TrainerProfileError({
+  retry,
 }: {
+  error: Error & { digest?: string };
   reset: () => void;
+  retry: () => void;
 }) {
   const messages = useMessages();
 
@@ -22,7 +25,7 @@ export default function TrainerProfileError({  reset,
         <AlertDescription className="flex flex-col gap-3 sm:flex-row sm:items-center sm:justify-between">
           <span>{messages.trainer.profile.error.description}</span>
           <div className="flex flex-wrap gap-2">
-            <Button type="button" variant="outline" size="sm" onClick={reset}>
+            <Button type="button" variant="outline" size="sm" onClick={retry}>
               {messages.trainer.profile.error.retry}
             </Button>
             <Button asChild variant="secondary" size="sm">

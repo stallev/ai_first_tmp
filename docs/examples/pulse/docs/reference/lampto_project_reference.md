@@ -57,7 +57,7 @@ Pulse **наследует подходы**, но имеет **свой доме
 | Продукт | Bible study platform | Fitness trainer marketplace |
 | Роли | Student, Leader, Editor, Admin | Client, Trainer, Admin |
 | Hosting | Netlify | **Vercel** |
-| Next.js | 16.2.6 (pinned) | **16.2.6** (App Router, `proxy.ts`) — [ADR-002](../prds/07_governance/adr_002_next162_vercel_runtime_policy.md) |
+| Next.js | 16.2.6 (pinned) | **16.3.0** (App Router, `proxy.ts`, Instant Navigations) — [ADR-002](../prds/07_governance/adr_002_next162_vercel_runtime_policy.md) |
 | Auth | Auth.js + Google OAuth | **Auth.js + Credentials** (email/password) |
 | Email | SES (AWS) | **Resend** |
 | File storage | S3 (lampto) | **AWS S3** (Pulse — same pattern) |
