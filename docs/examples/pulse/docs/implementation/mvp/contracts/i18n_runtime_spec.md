@@ -2,8 +2,9 @@
 
 **Тип:** Contract  
 **Статус:** Canonical  
-**Версия:** 1.0  
+**Версия:** 1.1  
 **Дата:** 2026-05-25  
+**Amend:** 2026-08-11 — P22 Instant Navigations: root layout locale without `auth()` (I18N-MUST-2 exception / MUST-12)  
 **Волна:** W24  
 **Зависит от:** [`adr_009_ui_locale_strategy.md`](../../../prds/07_governance/adr_009_ui_locale_strategy.md), [`adr_002_next162_vercel_runtime_policy.md`](../../../prds/07_governance/adr_002_next162_vercel_runtime_policy.md), [`database_schema_v1.md`](../../../prds/03_data_model/database_schema_v1.md) §1.2  
 **Связанные документы:** [`P17_phase_description.md`](../phases_tasks_descriptions/P17_phase_description.md), [`copy_and_messages.md`](../../../guidelines/react/copy_and_messages.md), [`content_and_microcopy_contract.md`](../../../design/content_and_microcopy_contract.md) §C8
@@ -61,6 +62,9 @@ Active locale **MUST** be resolved in this order (first match wins):
 4. **`Accept-Language`** header — per §3.4
 5. **`DEFAULT_LOCALE`** (`en`)
 
+**P22 Instant Navigations exception (root layout):** `RootLayoutContent` **MUST NOT** call `auth()` / Auth.js session for step 3. Auth.js uses sync `crypto.getRandomValues()` and triggers `blocking-prerender-crypto`, which blocks a reusable App Shell under `partialPrefetching`. Root resolve = **cookie → Accept-Language / proxy locale header → default** (`resolveLocale()` without `sessionLocale`).
+
+Session `user.locale` remains authoritative for profile/switcher mutations: login, register, and `LocaleSwitcher` **MUST** keep **cookie in sync** with `user.locale` (I18N-MUST-5), so step 3 is satisfied via cookie on subsequent requests without reading JWT in the root layout.
 ### I18N-MUST-3 — Cookie attributes
 
 | Attribute | Value |
@@ -146,10 +150,9 @@ Booking slot display **MUST** pass trainer IANA timezone to formatter; UI locale
 
 Locale resolution **MUST NOT** require `@pulse/policy-server` or Prisma in `proxy.ts`.
 
-Resolve in **Server Components** (root layout) via `cookies()`, `headers()`, `auth()`.
+Resolve in **Server Components** (root layout) via `cookies()`, `headers()`. **Do not** call `auth()` in root layout content for locale (P22 Instant Navigations — see I18N-MUST-2 exception). Session locale reaches the layout through the **cookie** after login/switcher sync.
 
 **MAY** add lightweight `Accept-Language` → cookie set in layout on first visit — not in proxy.
-
 ---
 
 ## Happy path
@@ -284,5 +287,15 @@ apps/web/src/lib/
 | [`adr_009_ui_locale_strategy.md`](../../../prds/07_governance/adr_009_ui_locale_strategy.md) | Strategic decisions |
 | [`P17_phase_description.md`](../phases_tasks_descriptions/P17_phase_description.md) | Phase scope |
 | [`canonical_routes.md`](../../../design/canonical_routes.md) | `?lang=` inventory |
+| [ADR-002](../../../prds/07_governance/adr_002_next162_vercel_runtime_policy.md) §5.1 | Instant Navigations — why root layout avoids `auth()` for locale |
 
 **Registry:** W24
+
+---
+
+## Change log
+
+| Date | Change |
+|------|--------|
+| 2026-08-11 | v1.1 — document P22 exception: root layout resolveLocale without Auth.js (cookie sync covers session locale) |
+| 2026-05-25 | v1.0 — P17 i18n runtime contract |

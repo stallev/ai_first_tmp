@@ -1,4 +1,3 @@
-import { auth } from "@/auth";
 import { PulseGoogleAnalytics } from "@/components/analytics/PulseGoogleAnalytics";
 import { RootLayoutProviders } from "@/components/i18n/RootLayoutProviders";
 import { resolveLocale } from "@/lib/i18n/resolve-locale";
@@ -10,14 +9,16 @@ type RootLayoutContentProps = {
   fontClassName: string;
 };
 
+/**
+ * Cookie/header locale only — no `auth()` here. Auth.js uses sync
+ * `crypto.getRandomValues` and blocks Instant Navigations shell prerender
+ * (blocking-prerender-crypto) when called in the root layout content.
+ */
 export async function RootLayoutContent({
   children,
   fontClassName,
 }: RootLayoutContentProps) {
-  const session = await auth();
-  const locale = await resolveLocale({
-    sessionLocale: session?.user?.locale,
-  });
+  const locale = await resolveLocale();
   const messages = await getMessages(locale);
 
   return (

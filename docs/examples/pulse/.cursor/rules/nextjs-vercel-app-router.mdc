@@ -1,5 +1,5 @@
 ---
-description: Next.js 16.3.0 App Router, Vercel, proxy.ts, async APIs — apps/web
+description: Next.js 16.3.0 App Router, Vercel, proxy.ts, Instant Navigations — apps/web
 globs: apps/web/**
 alwaysApply: false
 ---
@@ -17,12 +17,11 @@ alwaysApply: false
 "next": "16.3.0"
 ```
 
-Also pin matching `@next/third-parties` and `eslint-config-next` to **16.3.0**.  
 No Next.js 15.x patterns. No floating `^16` without ADR.
 
 ## Request interception — `proxy.ts` (NOT `middleware.ts`)
 
-Next.js 16 renames `middleware.ts` → **`proxy.ts`** (still canonical on 16.3):
+Next.js 16 renames `middleware.ts` → **`proxy.ts`** (Context7 `/vercel/next.js` / official v16 upgrade guide):
 
 | Next.js 15 (legacy) | Next.js 16.3.0 (Pulse) |
 |---------------------|-------------------------|
@@ -43,16 +42,10 @@ Next.js 16 renames `middleware.ts` → **`proxy.ts`** (still canonical on 16.3):
 - **Thin BFF:** handlers/actions → `packages/domain` + DAL `src/data/**`
 - **Cache invalidation:** `updateTag` (Server Actions, read-your-own-writes), `revalidateTag`, `revalidatePath` — see ADR-002
 - **Cross-request reads:** **`'use cache'`** + `cacheTag()` + `cacheLife()` — **not** `unstable_cache`; requires `cacheComponents: true` — see [`ai_loading_patterns.md`](docs/guidelines/nextjs/ai_loading_patterns.md) §8
-- **Instant Navigations (best practice):** `cacheComponents: true` **and** `partialPrefetching: true` in `next.config` — Stream / Cache / Block — ADR-002 §9, loading §8.1
+- **Instant Navigations (16.3):** `cacheComponents: true` + **`partialPrefetching: true`**. Default `<Link>` warms an **App Shell** per route. Use `<Link prefetch={true}>` only for intentional deeper per-link prefetch. Prefer Suspense / `'use cache'` for instant routes; `export const instant = false` only with documented reason.
+- **Errors:** segment **`error.tsx`** canon; component-level **`catchError`** (`next/error`) + prefer **`retry()`** when a segment boundary is too coarse.
 - **Background work:** Vercel Cron + jobs — **not** `unstable_after`
 - **Bundler:** Turbopack default
-- **Region errors (opt-in):** prefer **`catchError`** from `next/error` — §12.1
-
-## Next.js 16.3 — recommended vs defer (ADR-002 §9)
-
-**Recommended:** Instant Navigations config + Stream/Cache/Block; Playwright `instant()` SHOULD on critical routes when flags are on.
-
-**MUST NOT** canonicalize: blind `instant = false` everywhere; `typescript@^7`; experimental offline/Rust compiler; `partialPrefetching` without `cacheComponents`.
 
 ## Data layer
 

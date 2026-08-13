@@ -151,7 +151,7 @@ AI-агент — **не поисковик и не генератор кода*
 
 **Задачи** — чеклист из `docs/implementation/mvp/tasks/P{N}_tasks.md`.
 
-**Верификация** — **всегда:** lint, typecheck, phase DoD / smoke по чеклисту фазы. **Только по явному запросу пользователя:** runtime dual-view через skill `next-dev-loop` (`/_next/mcp` + `agent-browser`) — сузить scope по рантайму → править → 4 слоя (компиляция, runtime errors, UX в браузере, React-поведение). Не запускать автоматически после UI-правок или в commit pipeline. См. [`guidelines/nextjs/README.md`](../guidelines/nextjs/README.md) § Agent runtime verification.
+**Верификация** — lint, build, smoke-тесты по чеклисту фазы.
 
 ### 2.3 Точка входа: AGENTS.md
 
@@ -195,7 +195,7 @@ docs/implementation/mvp/
     └── P{N}_tasks.md
 ```
 
-Шаблон Phase Description: [`_phase_template.md`](../implementation/mvp/phases_tasks_descriptions/_phase_template.md). **Канон фаз:** MVP **P01–P14** (W16); post-P14 **P16–P18, P19, P21** (W22–W23); **P17** reserved. Миграции: [`_migration_P01-P07_to_P01-P15.md`](../implementation/mvp/phases_tasks_descriptions/_migration_P01-P07_to_P01-P15.md), [`_migration_P15-P20_renumbering.md`](../implementation/mvp/phases_tasks_descriptions/_migration_P15-P20_renumbering.md), [`_migration_P17_to_P19.md`](../implementation/mvp/phases_tasks_descriptions/_migration_P17_to_P19.md).
+Шаблон Phase Description: [`_phase_template.md`](../implementation/mvp/phases_tasks_descriptions/_phase_template.md). **Канон фаз:** MVP **P01–P14** (W16); post-P14 **P16–P19, P21–P22** (W22–W25). Миграции: [`_migration_P01-P07_to_P01-P15.md`](../implementation/mvp/phases_tasks_descriptions/_migration_P01-P07_to_P01-P15.md), [`_migration_P15-P20_renumbering.md`](../implementation/mvp/phases_tasks_descriptions/_migration_P15-P20_renumbering.md), [`_migration_P17_to_P19.md`](../implementation/mvp/phases_tasks_descriptions/_migration_P17_to_P19.md).
 
 **Фазы Pulse (canonical):**
 

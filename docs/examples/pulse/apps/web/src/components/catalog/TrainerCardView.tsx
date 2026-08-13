@@ -52,7 +52,11 @@ export function TrainerCardView({
         className,
       )}
     >
-      <Link href={`/trainers/${trainer.id}`} className="block h-full min-w-0">
+      <Link
+        href={`/trainers/${trainer.id}`}
+        prefetch={true}
+        className="block h-full min-w-0"
+      >
         <PulseCard variant="catalog" interactive className="h-full min-w-0">
           <div className="flex h-full min-w-0 gap-3 p-3 md:min-h-[7.5rem]">
             <PhotoSlot

@@ -1,57 +1,18 @@
-import { ComplaintAuditTimeline } from "@/components/admin/ComplaintAuditTimeline";
-import { ComplaintClosedSummary } from "@/components/admin/ComplaintClosedSummary";
-import { ComplaintContextPanel } from "@/components/admin/ComplaintContextPanel";
-import { ComplaintDetailActionsBar } from "@/components/admin/ComplaintDetailActionsBar.client";
-import { ComplaintDetailCard } from "@/components/admin/ComplaintDetailCard";
-import { ComplaintDetailHeader } from "@/components/admin/ComplaintDetailHeader";
-import { ComplaintProcessedBanner } from "@/components/admin/ComplaintProcessedBanner";
-import { requireComplaintDetail } from "@/data/admin/get-complaint-detail.server";
-import { COMPLAINT_STATUS } from "@pulse/domain";
+import { Suspense } from "react";
 
-import { cn } from "@/lib/utils";
+import { ComplaintDetail } from "@/components/admin/ComplaintDetail.server";
+import { ComplaintDetailSkeleton } from "@/components/admin/ComplaintDetailSkeleton";
 
 type AdminComplaintDetailPageProps = {
   params: Promise<{ id: string }>;
 };
 
-export default async function AdminComplaintDetailPage({
+export default function AdminComplaintDetailPage({
   params,
 }: AdminComplaintDetailPageProps) {
-  const { id } = await params;
-  const complaint = await requireComplaintDetail(id);
-  const hasActions = complaint.canStartReview || complaint.canClose;
-  const showBanner =
-    complaint.status === COMPLAINT_STATUS.CLOSED ||
-    complaint.status === COMPLAINT_STATUS.IN_REVIEW;
-  const isClosed = complaint.status === COMPLAINT_STATUS.CLOSED;
-
   return (
-    <div className={cn("space-y-6", hasActions && "pb-24 md:pb-0")}>
-      <ComplaintDetailHeader />
-
-      {showBanner ? (
-        <ComplaintProcessedBanner
-          status={complaint.status}
-          assigneeName={complaint.assigneeName}
-        />
-      ) : null}
-
-      <ComplaintContextPanel complaint={complaint} />
-
-      <ComplaintDetailCard complaint={complaint} />
-
-      <ComplaintAuditTimeline entries={complaint.auditTimeline} />
-
-      {isClosed ? <ComplaintClosedSummary complaint={complaint} /> : null}
-
-      {hasActions ? (
-        <ComplaintDetailActionsBar
-          complaintId={complaint.id}
-          status={complaint.status}
-          canStartReview={complaint.canStartReview}
-          canClose={complaint.canClose}
-        />
-      ) : null}
-    </div>
+    <Suspense fallback={<ComplaintDetailSkeleton />}>
+      <ComplaintDetail params={params} />
+    </Suspense>
   );
 }

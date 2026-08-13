@@ -1,3 +1,4 @@
+import { connection } from "next/server";
 import { redirect } from "next/navigation";
 
 import { auth } from "@/auth";
@@ -18,6 +19,7 @@ export async function RoleAppShellGate({
   expectedRole,
   children,
 }: Readonly<RoleAppShellGateProps>) {
+  await connection();
   const session = await auth();
 
   if (!session?.user?.role || session.user.role !== expectedRole) {

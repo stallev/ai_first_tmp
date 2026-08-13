@@ -14,7 +14,9 @@
 
 Политика **кэширования и инвалидации** Pulse на Next.js 16.3.0: **`'use cache'`** + `cacheTag()` / `cacheLife()` для cross-request reads; `updateTag`, `revalidateTag`, `revalidatePath` после мутаций; tag naming; drift guards ([`domain_invariants.md`](../02_domain_model/domain_invariants.md) INV-03 catalog approval).
 
-Context7 verified (`/vercel/next.js/v16.2.2`): Server Actions use `updateTag` for read-your-own-writes; `revalidatePath` for route-scoped refresh; combine with tags for cross-route consistency.
+**Instant Navigations (16.3)** опираются на те же границы: Suspense + `'use cache'` формируют reusable App Shell при `partialPrefetching: true` ([ADR-002](../07_governance/adr_002_next162_vercel_runtime_policy.md) §5.1).
+
+Context7 verified (`/vercel/next.js`): Server Actions use `updateTag` for read-your-own-writes; `revalidatePath` for route-scoped refresh; combine with tags for cross-route consistency.
 
 ---
 
@@ -39,9 +41,7 @@ Context7 verified (`/vercel/next.js/v16.2.2`): Server Actions use `updateTag` fo
 | **`revalidateTag(tag)`** | Stale-while-revalidate for tagged data | Route Handlers, background refresh |
 | **`revalidatePath(path)`** | Invalidate specific route segment | Redirect targets, layout-scoped lists |
 
-**Config:** `cacheComponents: true` in `apps/web/next.config.ts` when using `'use cache'` (see [`ai_loading_patterns.md`](../../guidelines/nextjs/ai_loading_patterns.md) §8).
-
-**Next.js 16.3 Instant Navigations:** **best practice** — enable `partialPrefetching: true` together with `cacheComponents: true` ([ADR-002](../07_governance/adr_002_next162_vercel_runtime_policy.md) §9, loading §8.1). Shape routes as Stream / Cache / Block; do not enable Partial Prefetching alone.
+**Config:** `cacheComponents: true` and **`partialPrefetching: true`** in `apps/web/next.config.ts` when using `'use cache'` / Instant Navigations (see [`ai_loading_patterns.md`](../../guidelines/nextjs/ai_loading_patterns.md) §8).
 
 **MUST NOT** use `unstable_after` for cache/email side effects ([ADR-002](../07_governance/adr_002_next162_vercel_runtime_policy.md)). **MUST NOT** add new **`unstable_cache()`** — use **`'use cache'`** instead.
 
@@ -217,5 +217,3 @@ Pair with [`ai_loading_patterns.md`](../../guidelines/nextjs/ai_loading_patterns
 |------|--------|
 | 2026-05-23 | v1.0 — MVP cache revalidation policy |
 | 2026-05-23 | v1.1 — `'use cache'` / `cacheTag()` / `cacheLife()` in scope; `unstable_cache` legacy ban |
-| 2026-08-10 | v1.2 — note Instant Navigations / `partialPrefetching` as post-pin-upgrade roadmap |
-| 2026-08-10 | v1.3 — Instant Navigations + `partialPrefetching` = recommended best practice |

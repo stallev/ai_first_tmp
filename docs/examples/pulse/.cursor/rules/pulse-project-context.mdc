@@ -77,4 +77,4 @@ Full list: [`docs/guidelines/README.md`](docs/guidelines/README.md).
 
 ## Repository status
 
-**Текущая фаза:** P14 complete (quality gate). **Post-P14:** P16 landing v2, **P17 UI i18n complete**, P19 complaints, P18 people ops (spec), P21 email (deferral). Не расширять реализацию без явной фазы и contract.
+**Текущая фаза:** P14 complete (quality gate). **Post-P14:** P16 landing v2, **P17 UI i18n complete**, P19 complaints, P18 people ops (spec), P21 email (deferral), **P22 Instant Navigations** (implementation complete). Не расширять реализацию без явной фазы и contract.

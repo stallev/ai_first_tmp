@@ -28,6 +28,7 @@ function buildS3RemotePatterns(): NonNullable<
 const nextConfig: NextConfig = {
   reactCompiler: true,
   cacheComponents: true,
+  partialPrefetching: true,
   transpilePackages: [
     "@pulse/domain",
     "@pulse/db",

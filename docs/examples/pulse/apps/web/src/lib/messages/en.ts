@@ -13,6 +13,27 @@ export const enMessages = {
       registerLink: "Create account",
       invalidCredentials: "Invalid email or password",
     },
+    demo: {
+      panelTitle: "Try a demo account",
+      panelDescription:
+        "Select a role — credentials will be filled automatically.",
+      roles: {
+        client: {
+          label: "Client",
+          description: "Book trainers, manage sessions, leave reviews.",
+        },
+        trainer: {
+          label: "Trainer",
+          description: "Manage schedule, services, and client list.",
+        },
+        admin: {
+          label: "Admin",
+          description: "Moderate trainers, reviews, and complaints.",
+        },
+      },
+      useCredentials: "Use these credentials",
+      dividerLabel: "or sign in manually",
+    },
     register: {
       title: "Create account",
       clientTileTitle: "I'm looking for a trainer",

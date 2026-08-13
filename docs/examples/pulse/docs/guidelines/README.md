@@ -32,7 +32,7 @@
 | `ios-safari-mutation-transport.mdc` | iOS Safari `Load failed` — Class A/B dual transport |
 | `policy-packages.mdc` | `@pulse/policy-*` boundaries |
 | `auth-security.mdc` | Auth.js, defense in depth |
-| `nextjs-vercel-app-router.mdc` | Next.js **16.3.0** + Vercel + **`proxy.ts`** |
+| `nextjs-vercel-app-router.mdc` | Next.js **16.3.0** + Vercel + **`proxy.ts`** + Instant Navigations |
 | `app-router-streaming-loading.mdc` | Suspense, `loading.tsx`, page performance (§4–§18) |
 | `s3-file-asset-uploads.mdc` | FileAsset + AWS S3 |
 | `admin-forms-layout.mdc` | Admin forms layout |

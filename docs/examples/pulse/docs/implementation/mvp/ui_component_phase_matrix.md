@@ -340,6 +340,21 @@
 
 ---
 
+## P22 — Instant Navigations Adoption *(Next.js 16.3)*
+
+| Component | Action | Route | Notes |
+|-----------|--------|-------|-------|
+| Route-local `*-skeleton.tsx` | CREATE (as needed) | P0/P1 product routes | Suspense fallbacks; catalog `<Skeleton />` |
+| Region error fallback (client) | CREATE (as needed) | Multi-region pages | `catchError` + `retry()`; messages from `@/lib/messages` |
+| `Skeleton`, `Container`, `Empty`, `Button` | USE | All P22 routes | Existing catalog |
+| `AppShellFallback` | USE | Role layouts | Do not regress |
+| `@/components/design-lab/**` | MUST NOT | Product routes | Showcase only |
+| Composition only | — | See `instant_navigations_adoption_spec.md` | No new product features |
+
+**Spec:** [`instant_navigations_adoption_spec.md`](specs/instant_navigations_adoption_spec.md) · **Phase:** [`P22_phase_description.md`](phases_tasks_descriptions/P22_phase_description.md)
+
+---
+
 ## Shared USE primitives (all product phases)
 
 Available from P03 onward unless phase table says **MUST NOT**:
@@ -361,4 +376,4 @@ Available from P03 onward unless phase table says **MUST NOT**:
 | [`_migration_P01-P07_to_P01-P15.md`](phases_tasks_descriptions/_migration_P01-P07_to_P01-P15.md) | Phase renumbering |
 | [`global_shell_spec.md`](specs/global_shell_spec.md) | Shell CREATE details (P03) |
 
-**Registry:** [`documentation_creation_registry.md`](../../meta/documentation_creation_registry.md) — W22
+**Registry:** [`documentation_creation_registry.md`](../../meta/documentation_creation_registry.md) — W25

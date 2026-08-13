@@ -1,6 +1,6 @@
 # React component guidelines — Pulse
 
-**Stack:** Next.js **16.2.6** App Router, React 19, shadcn/ui, Warm Forest tokens  
+**Stack:** Next.js **16.3.0** App Router, React 19, shadcn/ui, Warm Forest tokens  
 **Methodology:** [`docs/meta/ai_first_project_methodology.md`](../../meta/ai_first_project_methodology.md)  
 **Cursor rules:** **react-ui-components**, **react-one-component-per-file**, **ui-warm-forest-shadcn**
 

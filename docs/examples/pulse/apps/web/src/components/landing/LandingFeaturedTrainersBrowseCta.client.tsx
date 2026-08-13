@@ -20,6 +20,7 @@ export function LandingFeaturedTrainersBrowseCta({
         variant="outline"
         size="lg"
         className="rounded-full px-8"
+        prefetch={true}
       >
         {label}
         <ArrowRightIcon aria-hidden className="size-[18px]" />

@@ -130,7 +130,7 @@ Purpose: define **how the system executes requests and jobs**.
 | Document | Status | Purpose |
 |----------|--------|---------|
 | [`prds/07_governance/adr_001_stack_and_runtime.md`](07_governance/adr_001_stack_and_runtime.md) | **Canonical** | Stack: Vercel, Neon, Prisma v7, Resend, Blob |
-| [`prds/07_governance/adr_002_next162_vercel_runtime_policy.md`](07_governance/adr_002_next162_vercel_runtime_policy.md) | **Canonical** | **Next.js 16.2.6** pin, `proxy.ts`, cache policy |
+| [`prds/07_governance/adr_002_next162_vercel_runtime_policy.md`](07_governance/adr_002_next162_vercel_runtime_policy.md) | **Canonical** | **Next.js 16.3.0** pin, `proxy.ts`, Instant Navigations / `partialPrefetching`, `catchError`, cache policy |
 | [`07_governance/adr_003_auth_credentials_jwt_rbac.md`](07_governance/adr_003_auth_credentials_jwt_rbac.md) | **Accepted** | Credentials, JWT, RBAC |
 | [`07_governance/adr_004_timezone_scheduling_model.md`](07_governance/adr_004_timezone_scheduling_model.md) | **Accepted** | Trainer timezone model |
 | [`07_governance/adr_005_mvp_booking_without_payment.md`](07_governance/adr_005_mvp_booking_without_payment.md) | **Accepted** | MVP booking without payment |
@@ -216,7 +216,7 @@ Purpose: **layer walkthroughs** for AI onboarding — how contracts map to `apps
 
 | Path | Purpose |
 |------|---------|
-| [`implementation/mvp/phases_tasks_descriptions/`](../../implementation/mvp/phases_tasks_descriptions/) | **Canonical** — P01–P14 MVP + P16–P18, P21 post-P14 (W22) |
+| [`implementation/mvp/phases_tasks_descriptions/`](../../implementation/mvp/phases_tasks_descriptions/) | **Canonical** — P01–P14 MVP + P16–P19, P21–P22 post-P14 (W22–W25) |
 | [`implementation/mvp/tasks/`](../../implementation/mvp/tasks/) | **Canonical** — phase agent checklists |
 | [`implementation/mvp/ui_component_phase_matrix.md`](../../implementation/mvp/ui_component_phase_matrix.md) | Phase × Component × Route (W16) |
 | [`implementation/mvp/contracts/`](../../implementation/mvp/contracts/) | **Canonical** — cross-module contracts (W8) |
@@ -225,9 +225,9 @@ Purpose: **layer walkthroughs** for AI onboarding — how contracts map to `apps
 
 **W8 contracts (Canonical):** [`monorepo_boundaries_contract.md`](../../implementation/mvp/contracts/monorepo_boundaries_contract.md), [`authorization_policy_contract.md`](../../implementation/mvp/contracts/authorization_policy_contract.md), [`schedule_slots_contract.md`](../../implementation/mvp/contracts/schedule_slots_contract.md), [`booking_lifecycle_contract.md`](../../implementation/mvp/contracts/booking_lifecycle_contract.md), [`wishlist_contract.md`](../../implementation/mvp/contracts/wishlist_contract.md), [`trainer_verification_contract.md`](../../implementation/mvp/contracts/trainer_verification_contract.md), [`file_upload_contract.md`](../../implementation/mvp/contracts/file_upload_contract.md), [`review_moderation_contract.md`](../../implementation/mvp/contracts/review_moderation_contract.md), [`email_notifications_contract.md`](../../implementation/mvp/contracts/email_notifications_contract.md), [`i18n_runtime_spec.md`](../../implementation/mvp/contracts/i18n_runtime_spec.md).
 
-**W9 specs (Canonical):** [`global_shell_spec.md`](../../implementation/mvp/specs/global_shell_spec.md), [`password_reset_spec.md`](../../implementation/mvp/specs/password_reset_spec.md), [`catalog_discovery_spec.md`](../../implementation/mvp/specs/catalog_discovery_spec.md), [`trainer_onboarding_spec.md`](../../implementation/mvp/specs/trainer_onboarding_spec.md), [`booking_wizard_spec.md`](../../implementation/mvp/specs/booking_wizard_spec.md), [`trainer_schedule_spec.md`](../../implementation/mvp/specs/trainer_schedule_spec.md), [`admin_verification_spec.md`](../../implementation/mvp/specs/admin_verification_spec.md), [`complaint_refund_spec.md`](../../implementation/mvp/specs/complaint_refund_spec.md).
+**W9 specs (Canonical):** [`global_shell_spec.md`](../../implementation/mvp/specs/global_shell_spec.md), [`password_reset_spec.md`](../../implementation/mvp/specs/password_reset_spec.md), [`catalog_discovery_spec.md`](../../implementation/mvp/specs/catalog_discovery_spec.md), [`trainer_onboarding_spec.md`](../../implementation/mvp/specs/trainer_onboarding_spec.md), [`booking_wizard_spec.md`](../../implementation/mvp/specs/booking_wizard_spec.md), [`trainer_schedule_spec.md`](../../implementation/mvp/specs/trainer_schedule_spec.md), [`admin_verification_spec.md`](../../implementation/mvp/specs/admin_verification_spec.md), [`complaint_refund_spec.md`](../../implementation/mvp/specs/complaint_refund_spec.md), [`public_landing_spec.md`](../../implementation/mvp/specs/public_landing_spec.md), [`instant_navigations_adoption_spec.md`](../../implementation/mvp/specs/instant_navigations_adoption_spec.md) (W25 / P22).
 
-**W16 phases (Canonical):** [`P01_phase_description.md`](../../implementation/mvp/phases_tasks_descriptions/P01_phase_description.md) … [`P14_phase_description.md`](../../implementation/mvp/phases_tasks_descriptions/P14_phase_description.md) + matching `tasks/P0N_tasks.md`. **W22–W24 post-P14:** P16 landing, **P17** i18n, P19 complaints, P18 people ops (spec), P21 email. Migrations: [`_migration_P01-P07_to_P01-P15.md`](../../implementation/mvp/phases_tasks_descriptions/_migration_P01-P07_to_P01-P15.md), [`_migration_P15-P20_renumbering.md`](../../implementation/mvp/phases_tasks_descriptions/_migration_P15-P20_renumbering.md), [`_migration_P17_to_P19.md`](../../implementation/mvp/phases_tasks_descriptions/_migration_P17_to_P19.md).
+**W16 phases (Canonical):** [`P01_phase_description.md`](../../implementation/mvp/phases_tasks_descriptions/P01_phase_description.md) … [`P14_phase_description.md`](../../implementation/mvp/phases_tasks_descriptions/P14_phase_description.md) + matching `tasks/P0N_tasks.md`. **W22–W25 post-P14:** P16 landing, **P17** i18n, P19 complaints, P18 people ops (spec), P21 email, **P22** Instant Navigations. Migrations: [`_migration_P01-P07_to_P01-P15.md`](../../implementation/mvp/phases_tasks_descriptions/_migration_P01-P07_to_P01-P15.md), [`_migration_P15-P20_renumbering.md`](../../implementation/mvp/phases_tasks_descriptions/_migration_P15-P20_renumbering.md), [`_migration_P17_to_P19.md`](../../implementation/mvp/phases_tasks_descriptions/_migration_P17_to_P19.md).
 
 Lampto reference: [`docs/examples/lampto/docs/implementation/mvp/`](../examples/lampto/docs/implementation/mvp/).
 
@@ -266,7 +266,7 @@ For a new AI agent session on Pulse:
 fitapp/
 ├── AGENTS.md
 ├── apps/
-│   ├── web/                 — Next.js 16.2.6 (initial shell; see apps/web/AGENTS.md)
+│   ├── web/                 — Next.js 16.3.0 (initial shell; see apps/web/AGENTS.md)
 │   └── workers/               — job entrypoints (planned)
 ├── packages/
 │   ├── domain/
@@ -288,7 +288,7 @@ Package boundary rules: [`monorepo_boundaries_contract.md`](../../implementation
 | [`meta/ai_first_project_methodology.md`](../meta/ai_first_project_methodology.md) | **Canonical** | AI-first methodology, agent cycle, doc hierarchy |
 | [`meta/documentation_creation_registry.md`](../meta/documentation_creation_registry.md) | **Canonical** | Wave plan W0–W14, backlinks, UX/UI registry |
 
-**Runtime canon verified (Context7, Next.js v16.2.2):** request interception — **`proxy.ts`** + export `proxy()`; `middleware.ts` deprecated except edge-runtime edge cases — [ADR-002](07_governance/adr_002_next162_vercel_runtime_policy.md).
+**Runtime canon verified (Context7 `/vercel/next.js`):** request interception — **`proxy.ts`** + export `proxy()`; Instant Navigations — `cacheComponents` + `partialPrefetching`; `middleware.ts` deprecated except edge-runtime edge cases — [ADR-002](07_governance/adr_002_next162_vercel_runtime_policy.md).
 
 ---
 

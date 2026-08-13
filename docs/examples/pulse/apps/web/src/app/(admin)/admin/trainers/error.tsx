@@ -8,9 +8,12 @@ import { PageHeader } from "@/components/ui/PageHeader";
 import { useMessages } from "@/components/i18n/LocaleProvider.client";
 
 
-export default function AdminTrainersError({  reset,
+export default function AdminTrainersError({
+  retry,
 }: {
+  error: Error & { digest?: string };
   reset: () => void;
+  retry: () => void;
 }) {
   const messages = useMessages();
 
@@ -22,7 +25,7 @@ export default function AdminTrainersError({  reset,
         <AlertTitle>{messages.admin.moderation.loadError}</AlertTitle>
         <AlertDescription className="flex flex-col gap-3 sm:flex-row sm:items-center sm:justify-between">
           <span>{messages.admin.moderation.loadErrorDescription}</span>
-          <Button type="button" variant="outline" size="sm" onClick={reset}>
+          <Button type="button" variant="outline" size="sm" onClick={retry}>
             {messages.admin.moderation.retry}
           </Button>
         </AlertDescription>

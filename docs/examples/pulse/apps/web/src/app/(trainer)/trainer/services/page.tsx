@@ -1,9 +1,10 @@
 import type { Metadata } from "next";
+import { Suspense } from "react";
 
-import { TrainerServicesList } from "@/components/trainer/TrainerServicesList.client";
-import { getTrainerServicesForEdit } from "@/data/trainer/get-trainer-services-for-edit.server";
+import { TrainerServicesSection } from "@/components/trainer/TrainerServicesSection.server";
 import { getMessages } from "@/lib/messages/server";
 
+import TrainerServicesLoading from "./loading";
 
 export async function generateMetadata(): Promise<Metadata> {
   const messages = await getMessages();
@@ -12,9 +13,10 @@ export async function generateMetadata(): Promise<Metadata> {
   };
 }
 
-export default async function TrainerServicesPage() {
-  const messages = await getMessages();
-  const { services } = await getTrainerServicesForEdit();
-
-  return <TrainerServicesList initialServices={services} />;
+export default function TrainerServicesPage() {
+  return (
+    <Suspense fallback={<TrainerServicesLoading />}>
+      <TrainerServicesSection />
+    </Suspense>
+  );
 }

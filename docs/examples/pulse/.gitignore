@@ -1,4 +1,4 @@
-# Pulse reference snapshot — do not commit build artifacts
+# Pulse reference snapshot — do not commit build artifacts or secrets
 node_modules/
 **/node_modules/
 **/.next/
@@ -11,3 +11,6 @@ node_modules/
 packages/db/src/generated/
 apps/**/text_data/
 **/.DS_Store
+
+# Pulse's own nested references (lampto/neon) — not part of this snapshot
+/docs/examples/

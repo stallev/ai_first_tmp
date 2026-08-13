@@ -6,13 +6,12 @@ import {
 } from "lucide-react";
 
 import { PulseCardKpi } from "@/components/ui/PulseCardKpi";
-import type { AdminDashboardData } from "@/data/admin/get-admin-dashboard.server";
+import type { AdminDashboardKpiData } from "@/data/admin/get-admin-dashboard.server";
 import { formatMoney } from "@/lib/format-money";
 import { getLocale, getMessages } from "@/lib/messages/server";
 
-
 export type AdminDashboardKpiGridProps = {
-  data: AdminDashboardData;
+  data: AdminDashboardKpiData;
 };
 
 export async function AdminDashboardKpiGrid({ data }: AdminDashboardKpiGridProps) {

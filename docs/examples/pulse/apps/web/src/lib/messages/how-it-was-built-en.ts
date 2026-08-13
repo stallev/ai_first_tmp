@@ -2,7 +2,7 @@ export const howItWasBuiltEn = {
   meta: {
     title: "How Pulse was built — full-stack case study",
     description:
-      "Solo developer, ~24 hours from specification to deploy: AI-first methodology, monorepo architecture, and production-grade MVP for a fitness trainer marketplace.",
+      "Solo developer, ~26 hours from specification to deploy: AI-first methodology, monorepo architecture, and production-grade MVP for a fitness trainer marketplace.",
     keywords: [
       "case study",
       "Next.js",
@@ -24,11 +24,11 @@ export const howItWasBuiltEn = {
   hero: {
     eyebrow: "Development case study",
     title: "From specification",
-    titleAccent: "to production in ~24 hours",
+    titleAccent: "to production in ~26 hours",
     subcopy:
       "Pulse is a full-stack fitness trainer marketplace — built solo with Cursor and Claude Code under explicit architecture contracts, not no-code generators.",
     kpis: [
-      { value: "~24h", label: "Spec to deploy" },
+      { value: "~26h", label: "Spec to deploy" },
       { value: "1", label: "Solo developer" },
       { value: "3", label: "User roles" },
       { value: "50+", label: "Routes" },
@@ -105,7 +105,7 @@ export const howItWasBuiltEn = {
       {
         name: "apps/web",
         description:
-          "Next.js 16.2 App Router — Server Components, Server Actions, Route Handlers, proxy.ts for auth.",
+          "Next.js 16.3.0 App Router — Server Components, Server Actions, Route Handlers, proxy.ts for auth.",
       },
       {
         name: "@pulse/domain",
@@ -186,7 +186,7 @@ export const howItWasBuiltEn = {
     title: "Stack & standards",
     intro: "Pinned versions and explicit governance — not accidental dependencies.",
     rows: [
-      { label: "Framework", value: "Next.js 16.2.6 App Router, React 19, TypeScript" },
+      { label: "Framework", value: "Next.js 16.3.0 App Router, React 19, TypeScript" },
       { label: "Hosting", value: "Vercel (serverless, preview deploys)" },
       { label: "Database", value: "Neon PostgreSQL 17 + Prisma v7" },
       { label: "Auth", value: "Auth.js v5 Credentials, JWT RBAC" },

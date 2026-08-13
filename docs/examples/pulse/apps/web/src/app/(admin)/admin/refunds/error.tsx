@@ -4,9 +4,12 @@ import { AdminPageError } from "@/components/admin/AdminPageError";
 import { useMessages } from "@/components/i18n/LocaleProvider.client";
 
 
-export default function AdminRefundsError({  reset,
+export default function AdminRefundsError({
+  retry,
 }: {
+  error: Error & { digest?: string };
   reset: () => void;
+  retry: () => void;
 }) {
   const messages = useMessages();
 
@@ -16,7 +19,7 @@ export default function AdminRefundsError({  reset,
       title={messages.admin.shared.loadError}
       description={messages.admin.shared.loadErrorDescription}
       retryLabel={messages.admin.shared.retry}
-      reset={reset}
+      retry={retry}
     />
   );
 }

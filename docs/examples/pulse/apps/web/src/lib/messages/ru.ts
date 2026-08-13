@@ -14,6 +14,27 @@ export const ruMessages = {
       registerLink: "Зарегистрироваться",
       invalidCredentials: "Неверный email или пароль",
     },
+    demo: {
+      panelTitle: "Попробовать demo-аккаунт",
+      panelDescription:
+        "Выберите роль — учётные данные подставятся автоматически.",
+      roles: {
+        client: {
+          label: "Клиент",
+          description: "Бронируйте тренеров, управляйте занятиями и отзывами.",
+        },
+        trainer: {
+          label: "Тренер",
+          description: "Расписание, услуги и список клиентов.",
+        },
+        admin: {
+          label: "Админ",
+          description: "Модерация тренеров, отзывов и жалоб.",
+        },
+      },
+      useCredentials: "Использовать",
+      dividerLabel: "или войти вручную",
+    },
     register: {
       title: "Регистрация",
       clientTileTitle: "Я ищу тренера",

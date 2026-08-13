@@ -1,14 +1,14 @@
 # Next.js Loading & Page Performance — Pulse
 
-**Version:** 2.0 · **Project:** Pulse `apps/web`  
+**Version:** 2.2 · **Project:** Pulse `apps/web`  
 **Stack:** Next.js **16.3.0** App Router, React 19, Vercel, Neon PostgreSQL 17 + Prisma v7  
 **Methodology:** [`docs/meta/ai_first_project_methodology.md`](../../meta/ai_first_project_methodology.md)  
 **Runtime:** [ADR-002](../../prds/07_governance/adr_002_next162_vercel_runtime_policy.md)  
 **Cursor rule:** **app-router-streaming-loading**
 
-> **Scope:** `apps/web/src/app/**` — loading UX, streaming shell, and page-level performance. Cross-request data cache: **`'use cache'`** (Next.js 16) — see §8; tag invalidation — [`cache_revalidation_policy.md`](../../prds/05_runtime/cache_revalidation_policy.md).
+> **Scope:** `apps/web/src/app/**` — loading UX, streaming shell, Instant Navigations / Partial Prefetching, and page-level performance. Cross-request data cache: **`'use cache'`** (Next.js 16) — see §8; tag invalidation — [`cache_revalidation_policy.md`](../../prds/05_runtime/cache_revalidation_policy.md).
 
-Verify against Context7 `/vercel/next.js/v16.2.2` and [Loading UI and Streaming](https://nextjs.org/docs/app/building-your-application/routing/loading-ui-and-streaming).
+Verify against Context7 `/vercel/next.js` and [Loading UI and Streaming](https://nextjs.org/docs/app/building-your-application/routing/loading-ui-and-streaming). After package bump, prefer bundled `node_modules/next/dist/docs/`.
 
 **Adapted from:** lampto [`ai_loading_patterns.md`](../../examples/lampto/docs/guidelines/nextjs/ai_loading_patterns.md) + [`ai_page_performance_streaming.md`](../../examples/lampto/docs/guidelines/nextjs/ai_page_performance_streaming.md) — Netlify → Vercel, Pulse domain.
 
@@ -24,10 +24,12 @@ Verify against Context7 `/vercel/next.js/v16.2.2` and [Loading UI and Streaming]
 6. [`auth()` cost and request dedup](#6-auth-cost-and-request-dedup)
 7. [Eliminating DB waterfalls](#7-eliminating-db-waterfalls)
 8. [Query caching — React `cache()` vs `'use cache'`](#8-query-caching--react-cache-vs-use-cache)
+   - [8.1 Instant Navigations & Partial Prefetching](#81-instant-navigations--partial-prefetching)
 9. [Neon: cold start and connection](#9-neon-cold-start-and-connection)
 10. [`loading.tsx` as navigation insurance](#10-loadingtsx-as-navigation-insurance)
 11. [Skeletons without CLS](#11-skeletons-without-cls)
 12. [Error handling near data](#12-error-handling-near-data)
+   - [12.1 `catchError` (component-level)](#121-catcherror-component-level)
 13. [Mutation loading vs route loading](#13-mutation-loading-vs-route-loading)
 14. [Pulse route examples](#14-pulse-route-examples)
 15. [Metrics and budgets](#15-metrics-and-budgets)
@@ -394,7 +396,7 @@ Use `@pulse/db` / `getPrisma()` from DAL — **never** ad-hoc `@/lib/db`. Querie
 
 Next.js 16 replaces **`unstable_cache()`** with the **`'use cache'`** directive. **Do not add new `unstable_cache` calls** in Pulse — use `'use cache'` + `cacheTag()` + `cacheLife()`.
 
-Enable Cache Components when implementing cross-request cached reads:
+Enable Cache Components and Partial Prefetching when implementing cross-request cached reads / Instant Navigations:
 
 ```ts
 // apps/web/next.config.ts
@@ -402,26 +404,19 @@ import type { NextConfig } from 'next'
 
 const nextConfig: NextConfig = {
   cacheComponents: true,
+  partialPrefetching: true,
 }
 
 export default nextConfig
 ```
 
-Verify against Context7 `/vercel/next.js` — [Cache Components](https://nextjs.org/docs/app/getting-started/cache-components), [`use cache`](https://nextjs.org/docs/app/api-reference/directives/use-cache).
+Verify against Context7 `/vercel/next.js` — [Cache Components](https://nextjs.org/docs/app/getting-started/cache-components), [`use cache`](https://nextjs.org/docs/app/api-reference/directives/use-cache), [Instant navigation](https://nextjs.org/docs/app/guides/instant-navigation), [Adopting Partial Prefetching](https://nextjs.org/docs/app/guides/adopting-partial-prefetching).
 
 | Layer | API | Scope | Use for |
 |-------|-----|-------|---------|
 | **Per-request dedup** | React `cache()` | Single HTTP request | `auth()`, repeated Prisma reads in one RSC tree |
 | **Cross-request cache** | `'use cache'` + `cacheTag()` + `cacheLife()` | Between requests / deploy-aware | Public catalog, trainer profile static slice |
 | **Fresh per request** | No cross-request cache | Always live | Bookings, slot availability, auth-gated mutable data |
-
-### 8.1 Instant Navigations (Next.js 16.3) — best practice
-
-Instant Navigations = `cacheComponents` + `partialPrefetching` (Stream / Cache / Block) — **recommended** on pin **16.3.0** ([ADR-002 §9](../../prds/07_governance/adr_002_next162_vercel_runtime_policy.md)). Canonical detail: repo root [`guidelines/nextjs/ai_loading_patterns.md`](../../../../../../guidelines/nextjs/ai_loading_patterns.md) §8.1.
-
-#### 8.1.1 Instant Insights (dev)
-
-**Instant Insights** detail lives in the repo-root canon: [`guidelines/nextjs/ai_loading_patterns.md`](../../../../../../guidelines/nextjs/ai_loading_patterns.md) §8.1.1 (blocking-route overlay only — not general QA).
 
 ### React `cache()` — per-request dedup
 
@@ -545,6 +540,19 @@ For compliance-only cases where refactor is blocked, **`'use cache: private'`** 
 
 **Vercel note:** deploy invalidates Full Route Cache / Data Cache. `updateTag` / `revalidateTag` after mutations is the primary freshness mechanism; `cacheLife` TTL is a safety net.
 
+### 8.1 Instant Navigations & Partial Prefetching
+
+Next.js **16.3** Instant Navigations = **Cache Components** + **Partial Prefetching** ([guide](https://nextjs.org/docs/app/guides/instant-navigation)).
+
+| Concept | Pulse rule |
+|---------|------------|
+| **`partialPrefetching: true`** | Required after `next@16.3.0` bump (ADR-002 §5.1). Default `<Link>` warms a reusable **App Shell** per route — not a full page per link. |
+| **Adoption** | [Adopting Partial Prefetching](https://nextjs.org/docs/app/guides/adopting-partial-prefetching): audit `prefetch={true}` / `router.prefetch` → temporary `export const prefetch = 'partial'` if needed → enable flag → `npx @next/codemod@latest remove-partial-prefetch`. Pulse has no `prefetch={true}` today — global flag is on; verify Instant Insights in `next dev` when changing navigation-heavy routes. |
+| **`<Link prefetch={true}>`** | Intentional **deeper** per-link prefetch only (URL data / cached content). Requires Suspense / `'use cache'` behind URL reads. |
+| **Instant routes** | Prefer Suspense streaming and/or `'use cache'` so the shared shell paints immediately. |
+| **`export const instant = false`** | Opt out of instant validation **only with documented reason** — not the default. |
+| **Prefetch in prod** | Prefetch behavior is production-oriented; confirm shells under `next start` / Vercel preview, not only `next dev`. |
+
 ---
 
 ## 9. Neon: cold start and connection
@@ -637,7 +645,7 @@ Wireframe matrix: [`ui_states_contract.md`](../../design/ui_states_contract.md) 
 
 ## 12. Error handling near data
 
-`<Suspense>` handles **waiting**, not **errors**. Use `error.tsx` for recoverable failures.
+`<Suspense>` handles **waiting**, not **errors**. Use `error.tsx` for recoverable segment failures.
 
 ### Rule
 
@@ -667,7 +675,7 @@ export default function ClientBookingError({
       <div className="flex max-w-lg flex-col gap-4 py-8">
         <p className="text-sm text-destructive">{messages.client.bookings.loadError}</p>
         <Button type="button" onClick={() => reset()}>
-          {messages.common.retry}
+          {messages.common.segmentError.retry}
         </Button>
       </div>
     </Container>
@@ -682,6 +690,44 @@ export default function ClientBookingError({
 | Multiple Suspense regions | per-page or segment | per segment or region-specific parent |
 
 Independent Suspense regions **should** pair with error boundaries when partial failure is acceptable (catalog grid fails, filters still work).
+
+### 12.1 `catchError` (component-level)
+
+Stable in Next.js **16.3** — [`catchError`](https://nextjs.org/docs/app/api-reference/functions/catchError) from `next/error` creates a programmatic error boundary (alternative to file-convention `error.tsx` for **component** trees).
+
+| Use | Prefer |
+|-----|--------|
+| Route segment failure | Colocated **`error.tsx`** (canon) |
+| Finer recovery inside a page (one Suspense region) | **`catchError(fallback)`** — fallback must be Client Component / `'use client'` module |
+| Recover after failure | Prefer **`retry()`** (re-fetch children) over **`reset()`** |
+| `notFound()` / `redirect()` | Must not be swallowed — `catchError` is designed not to interfere |
+
+Do not invent ad-hoc client boundaries that duplicate catalog/`error.tsx` without need.
+
+```tsx
+'use client'
+
+import { catchError, type ErrorInfo } from 'next/error'
+import { Button } from '@/components/ui/button'
+import { messages } from '@/lib/messages'
+
+function RegionErrorFallback(
+  props: { title: string },
+  { error, retry }: ErrorInfo,
+) {
+  return (
+    <div className="flex flex-col gap-2 py-4">
+      <p className="text-sm text-destructive">{props.title}</p>
+      <p className="text-xs text-muted-foreground">{error.message}</p>
+      <Button type="button" size="sm" onClick={() => retry()}>
+        {messages.common.segmentError.retry}
+      </Button>
+    </div>
+  )
+}
+
+export const RegionErrorBoundary = catchError(RegionErrorFallback)
+```
 
 ---
 
@@ -755,14 +801,17 @@ Run before finishing any `page.tsx`, segment `layout.tsx`, or colocated `loading
 
 - [ ] Repeated reads in one request — React `cache()` or shared cached loader
 - [ ] Cross-request public reads — **`'use cache'`** + `cacheTag()` + `cacheLife()` per [`cache_revalidation_policy.md`](../../prds/05_runtime/cache_revalidation_policy.md) — **not** `unstable_cache`
-- [ ] `cacheComponents: true` in `next.config.ts` when adding `'use cache'` read paths
+- [ ] `cacheComponents: true` and `partialPrefetching: true` in `next.config.ts`
+- [ ] Instant routes use Suspense / `'use cache'`; no casual `export const instant = false`
 - [ ] No `cookies()` / `headers()` inside `'use cache'` — pass values as arguments from dynamic parent
 - [ ] Mutations call matching `updateTag` — no stale catalog/bookings after write
+- [ ] `<Link prefetch={true}>` only for intentional deeper prefetch (not legacy full-page habit)
 
-### D. `loading.tsx` and `error.tsx`
+### D. `loading.tsx`, `error.tsx`, and `catchError`
 
 - [ ] Data-heavy segment — colocated `loading.tsx` (or documented §18 exception)
 - [ ] Segment covered by `error.tsx` (own or parent)
+- [ ] Component-level recovery — `catchError` + prefer `retry()` when segment boundary is too coarse
 - [ ] No duplicate full-page loading UI (`loading.tsx` + identical outer Suspense)
 
 ### E. Skeletons & Neon
@@ -794,6 +843,8 @@ Verify on **Vercel preview** when available.
 | New code using `unstable_cache` | Legacy Next 15 API | `'use cache'` + `cacheTag()` + `cacheLife()` |
 | `cookies()` inside `'use cache'` | Build/runtime error or wrong cache key | Pass session/user id as argument from parent |
 | Route skeleton for mutation pending | Wrong UX layer | `useTransition` + pending UI |
+| Blind `prefetch={true}` under Partial Prefetching | Unexpected server work / wrong mental model | App Shell default; deeper prefetch only when intentional |
+| Casual `export const instant = false` | Disables Instant Insights without reason | Fix Suspense/`'use cache'` or document blocking need |
 
 ---
 
@@ -821,14 +872,16 @@ State briefly in PR/task which exception applies:
 | [`neon_prisma_migrations_guide.md`](../../implementation/mvp/guides/neon_prisma_migrations_guide.md) | Pooler vs direct URLs |
 | [`ai_vercel_runtime_compatibility.md`](./ai_vercel_runtime_compatibility.md) | Vercel streaming baseline |
 | [Next.js: Loading UI and Streaming](https://nextjs.org/docs/app/building-your-application/routing/loading-ui-and-streaming) | Official API |
-| [Next.js: Error Handling](https://nextjs.org/docs/app/getting-started/error-handling) | `error.tsx`, `reset` |
+| [Next.js: Error Handling](https://nextjs.org/docs/app/getting-started/error-handling) | `error.tsx`, `reset` / `retry` |
+| [Next.js: `catchError`](https://nextjs.org/docs/app/api-reference/functions/catchError) | Component-level error boundary |
+| [Next.js: Instant navigation](https://nextjs.org/docs/app/guides/instant-navigation) | Instant Navigations suite |
+| [Next.js: Adopting Partial Prefetching](https://nextjs.org/docs/app/guides/adopting-partial-prefetching) | `partialPrefetching`, App Shell |
 | [Next.js: `use cache`](https://nextjs.org/docs/app/api-reference/directives/use-cache) | Cross-request cache directive (replaces `unstable_cache`) |
-| [Next.js: Cache Components](https://nextjs.org/docs/app/getting-started/cache-components) | `cacheComponents`, PPR, static + cached + dynamic mix |
-| [ADR-002 §9](../../prds/07_governance/adr_002_next162_vercel_runtime_policy.md) | Instant Navigations best practice (pin 16.3.0) |
+| [Next.js: Cache Components](https://nextjs.org/docs/app/getting-started/cache-components) | `cacheComponents`, static + cached + dynamic mix |
 | lampto [`ai_page_performance_streaming.md`](../../examples/lampto/docs/guidelines/nextjs/ai_page_performance_streaming.md) | Source reference (BSFY) |
 
 ---
 
-**Version:** 2.3  
+**Version:** 2.2  
 **Last updated:** August 2026  
-**Next.js:** 16.3.0 (pin) · Instant Navigations best practice · **Hosting:** Vercel · **Cross-request cache:** `'use cache'` (not `unstable_cache`)
+**Next.js:** 16.3.0 · **Hosting:** Vercel · **Cross-request cache:** `'use cache'` · **Instant Navigations:** `partialPrefetching: true`

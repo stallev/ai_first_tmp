@@ -1,6 +1,6 @@
 # React guidelines — Pulse
 
-Patterns for **Next.js 16.2.6 App Router**, **React 19**, **TypeScript**, **Tailwind CSS v4**, **shadcn/ui**, **sonner**.
+Patterns for **Next.js 16.3.0 App Router**, **React 19**, **TypeScript**, **Tailwind CSS v4**, **shadcn/ui**, **sonner**.
 
 **Methodology:** [`docs/meta/ai_first_project_methodology.md`](../../meta/ai_first_project_methodology.md)  
 **Design system:** [`fitness-platform-design-system.md`](../../default_docs/fitness-platform-design-system.md)  
@@ -13,7 +13,7 @@ Patterns for **Next.js 16.2.6 App Router**, **React 19**, **TypeScript**, **Tail
 
 | Area | Packages |
 |------|----------|
-| Framework | `next` **16.2.6** (pinned), `react` / `react-dom` 19.x |
+| Framework | `next` **16.3.0** (pinned), `react` / `react-dom` 19.x |
 | Styling | `tailwindcss` 4.x, Warm Forest tokens |
 | UI | shadcn/ui, `lucide-react`, `next-themes`, `sonner` |
 | Dates | `date-fns`; timezone from **`TrainerProfile.timezone`** |
@@ -85,4 +85,4 @@ Patterns for **Next.js 16.2.6 App Router**, **React 19**, **TypeScript**, **Tail
 ## External references
 
 - [React](https://react.dev)
-- [Next.js 16 docs](https://nextjs.org/docs) — verify via Context7 `/vercel/next.js/v16.2.2`; runtime canon: [ADR-002](../../prds/07_governance/adr_002_next162_vercel_runtime_policy.md)
+- [Next.js 16 docs](https://nextjs.org/docs) — verify via Context7 `/vercel/next.js`; runtime canon: [ADR-002](../../prds/07_governance/adr_002_next162_vercel_runtime_policy.md)

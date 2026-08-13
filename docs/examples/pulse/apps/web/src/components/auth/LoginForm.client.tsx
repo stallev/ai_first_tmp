@@ -24,9 +24,15 @@ import { PRODUCT_TOAST_DURATION_MS } from "@/lib/ui/product-toast";
 
 type LoginFormProps = {
   callbackUrl?: string;
+  initialEmail?: string;
+  initialPassword?: string;
 };
 
-export const LoginForm = ({ callbackUrl: callbackUrlProp }: LoginFormProps) => {
+export const LoginForm = ({
+  callbackUrl: callbackUrlProp,
+  initialEmail,
+  initialPassword,
+}: LoginFormProps) => {
   const messages = useMessages();
   const searchParams = useSearchParams();
   const callbackUrl = callbackUrlProp ?? searchParams.get("callbackUrl") ?? undefined;
@@ -61,6 +67,7 @@ export const LoginForm = ({ callbackUrl: callbackUrlProp }: LoginFormProps) => {
             autoComplete="email"
             required
             disabled={pending}
+            defaultValue={initialEmail}
           />
         </Field>
 
@@ -75,6 +82,7 @@ export const LoginForm = ({ callbackUrl: callbackUrlProp }: LoginFormProps) => {
             autoComplete="current-password"
             required
             disabled={pending}
+            defaultValue={initialPassword}
           />
         </Field>
       </FieldGroup>

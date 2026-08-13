@@ -90,7 +90,7 @@ MVP lock-in (ADR-001, ADR-002) — сразу **ACCEPTED** без ожидани
 
 1. **READ** [`adr_index.md`](./adr_index.md) и зависимые ADR.
 2. **CHECK** lampto analog — [`lampto_project_reference.md`](../../reference/lampto_project_reference.md); адаптировать под Vercel/ADR-001.
-3. **Context7** (обязательно для runtime/auth/db ADR): Next.js `/vercel/next.js/v16.2.2`, Auth.js `/websites/authjs_dev`, Prisma `/websites/prisma_io` — см. registry §2.7.
+3. **Context7** (обязательно для runtime/auth/db ADR): Next.js `/vercel/next.js`, Auth.js `/websites/authjs_dev`, Prisma `/websites/prisma_io` — см. registry §2.7.
 4. **DRAFT** `adr_NNN_*.md` в `docs/prds/07_governance/`.
 5. **UPDATE** [`adr_index.md`](./adr_index.md) — строка в registry + Change log.
 6. **BACKLINKS** — `architecture_master_index.md`, затронутые PRD/contracts (planned → link).
