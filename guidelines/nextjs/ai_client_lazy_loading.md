@@ -219,7 +219,7 @@ Apply when adding or materially changing:
 
 ## 7. Audit backlog (Pulse — May 2026)
 
-Prioritized by impact. Re-run after major UI deps or new shared client primitives. Verify shared-chunk bleed with production `npm run build` output (Pulse reference: [`ai_bundle_analyze_steps.md`](../../examples/lampto/docs/guidelines/nextjs/ai_bundle_analyze_steps.md)).
+Prioritized by impact. Re-run after major UI deps or new shared client primitives. Verify shared-chunk bleed with production `npm run build` output (Pulse snapshot: [`ai_client_lazy_loading.md`](../../docs/examples/pulse/docs/guidelines/nextjs/) — `ai_bundle_analyze_steps.md` is not in this snapshot; use this guideline + `npm run build` chunk report).
 
 | Priority | Surface | Issue | Suggested approach |
 |----------|---------|-------|-------------------|

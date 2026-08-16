@@ -5,16 +5,16 @@ Monorepo: **Next.js 16.3.0** App Router + Vercel + Neon PostgreSQL.
 
 **Methodology (обязательно):** [`docs/meta/ai_first_project_methodology.md`](docs/meta/ai_first_project_methodology.md) — цикл КОНТЕКСТ → ФАЗА → КОНТРАКТ → ЗАДАЧИ → ВЕРИФИКАЦИЯ.
 
-## Референсный проект (обязательно)
+## Референсный snapshot (этот каталог)
 
-Архитектурные подходы, структура документации и паттерны разработки **наследуются** из референсного проекта **lampto** (BSFY):
+Этот каталог — **самодостаточный** эталон кода и Pulse-домена. Дерева `docs/examples/lampto/` в **этом** репозитории нет; не ходить по старым path.
 
-- Код и документация референса: [`docs/examples/lampto/`](docs/examples/lampto/)
-- Сводка для Pulse: [`docs/reference/lampto_project_reference.md`](docs/reference/lampto_project_reference.md)
+- Сводка для **нового** продукта (boilerplate): [`docs/reference/pulse_project_reference.md`](../../../docs/reference/pulse_project_reference.md)
+- Исторический stub: [`docs/reference/lampto_project_reference.md`](docs/reference/lampto_project_reference.md)
 
-**Правило:** если в Pulse-документе нет явного отличия — следовать lampto. Отличия стека и домена зафиксированы в [ADR-001](docs/prds/07_governance/adr_001_stack_and_runtime.md) и [ADR-002](docs/prds/07_governance/adr_002_next162_vercel_runtime_policy.md).
+**Правило внутри snapshot:** следовать Pulse Cursor Rules и Guidelines **этого дерева**. Отличия стека — [ADR-001](docs/prds/07_governance/adr_001_stack_and_runtime.md) и [ADR-002](docs/prds/07_governance/adr_002_next162_vercel_runtime_policy.md).
 
-**Приоритет над lampto:** Pulse Cursor Rules и Guidelines **важнее** reference-кода lampto — см. [`lampto_project_reference.md`](docs/reference/lampto_project_reference.md) §Priority.
+**Для нового продукта:** корневые Cursor Rules и Guidelines boilerplate **важнее** этого snapshot.
 
 ## Monorepo structure (целевая)
 
@@ -91,7 +91,6 @@ Web AGENTS не отменяет Cursor Rules — только маршрути�
 ### Manual verification checklist (monorepo)
 
 - [ ] Изменения согласуются с [`ai_first_project_methodology.md`](docs/meta/ai_first_project_methodology.md)
-- [ ] Отличия от lampto явно задокументированы (ADR или contract)
 - [ ] Маршруты не дублируются вне [`canonical_routes.md`](docs/design/canonical_routes.md)
 - [ ] Нет inline domain/mutation codes — константы из `@pulse/domain` (**domain-literals-and-codes**)
 - [ ] Domain invariants не нарушены (timezone, booking state machine, trainer verification)

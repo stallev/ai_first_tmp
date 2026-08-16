@@ -2,7 +2,7 @@
 
 **Audience:** AI agents generating Pulse codebase.  
 **Methodology:** [`docs/meta/ai_first_project_methodology.md`](../../meta/ai_first_project_methodology.md)  
-**Reference:** adapted from Pulse reference [`ai_typescript_monorepo_guidelines.md`](../../examples/lampto/docs/guidelines/typescript/ai_typescript_monorepo_guidelines.md)
+**Reference:** adapted from Pulse snapshot [`ai_typescript_monorepo_guidelines.md`](../../docs/examples/pulse/docs/guidelines/typescript/ai_typescript_monorepo_guidelines.md)
 
 ---
 

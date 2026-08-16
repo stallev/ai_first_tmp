@@ -70,7 +70,7 @@ apps/web/src/
 | Mutations UX | `ui-mutation-pending`, `ui-toast-mutations`, `ui-optimistic-mutations` | Sonner, aria-busy |
 | Design system | `ui-warm-forest-shadcn.mdc` | Design Lab catalog only |
 
-Full index: [`docs/guidelines/README.md`](../../../docs/guidelines/README.md).
+Full index: [`guidelines/README.md`](../../../guidelines/README.md).
 
 ---
 
@@ -85,7 +85,8 @@ Evaluated against [nextjs-app-architecture-skill](https://github.com/auroraschar
 | No parent→child refetch | `ai_data_fetching_patterns` §7 |
 | Client boundary as leaf | `react-logic-presentation`, `react-ui-components` |
 | `params.then()` static shell | Opt-in only — `ai_loading_patterns` §4.1 |
-| Region errors | `unstable_catchError` opt-in — `ai_loading_patterns` §12.1 |
+| Region errors | `catchError` (`next/error`) opt-in — `ai_loading_patterns` §12.1; fallback must be a **meaningful** skeleton (not `null`) |
+| Instant prefetch | `prefetch={true}` only per-link after a live App Shell — ADR-002 §5.1 |
 
 **Rejected (use project layout instead):**
 

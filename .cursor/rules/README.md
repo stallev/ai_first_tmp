@@ -33,7 +33,7 @@
 
 | Rule | Назначение |
 |------|------------|
-| `nextjs-vercel-app-router.mdc` | Next 16.3.0, `proxy.ts`, async APIs |
+| `nextjs-vercel-app-router.mdc` | Next 16.3.0, `proxy.ts`, Instant Navigations |
 | `auth-security.mdc` | Auth.js v5, JWT, defense in depth |
 | `security-xss-csrf.mdc` | XSS, CSRF, CSP, DOMPurify |
 | `policy-packages.mdc` | `@{{PACKAGE_SCOPE}}/policy-*` boundaries |

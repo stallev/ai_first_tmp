@@ -17,7 +17,7 @@ It defines:
 - the order in which documents should be read
 - how engineers and AI agents should use them during development
 
-**Reference project:** architectural patterns inherit from **lampto** (BSFY). See [`docs/reference/lampto_project_reference.md`](../reference/lampto_project_reference.md).
+**Reference:** this Pulse snapshot is **self-contained**. Historical provenance: [`lampto_project_reference.md`](../reference/lampto_project_reference.md) (tree `docs/examples/lampto/` is **not vendored**).
 
 **Methodology:** [`docs/meta/ai_first_project_methodology.md`](../meta/ai_first_project_methodology.md).
 
@@ -27,7 +27,7 @@ It defines:
 
 # 2. Architecture Documentation Layers
 
-The architecture is organized into **seven layers** (same model as lampto):
+The architecture is organized into **seven layers**:
 
 1. Product Scope
 2. Domain Model
@@ -78,7 +78,6 @@ Purpose: define **how the system behaves over time**.
 | [`02_domain_model/failure_modes_catalog.md`](02_domain_model/failure_modes_catalog.md) | **Canonical** | Cross-cutting failure index `FM-xxx` |
 | [`02_domain_model/domain_invariants.md`](02_domain_model/domain_invariants.md) | **Canonical** | System invariants INV-01 … + package rules |
 | [`02_domain_model/use_cases_index.md`](02_domain_model/use_cases_index.md) | **Canonical** | Named domain use-cases for `@pulse/domain` |
-| Lampto reference | Reference | [`docs/examples/lampto/docs/prds/02_domain_model/lifecycle_models.md`](../examples/lampto/docs/prds/02_domain_model/lifecycle_models.md) — pattern only |
 
 **Key domain areas for Pulse:**
 
@@ -101,7 +100,6 @@ Purpose: define **how data is stored**.
 | [`03_data_model/data_access_patterns.md`](03_data_model/data_access_patterns.md) | **Canonical** | SQL/query patterns for hot paths |
 | [`03_data_model/indexing_strategy.md`](03_data_model/indexing_strategy.md) | **Canonical** | Indexes for catalog, schedule, bookings |
 | [`03_data_model/seed_data_spec.md`](03_data_model/seed_data_spec.md) | **Canonical** | Dev/CI seed fixtures |
-| Lampto reference | Reference | [`database_schema_v3.md`](../examples/lampto/docs/prds/03_data_model/database_schema_v3.md) — layering pattern |
 
 **Invariant:** Post-MVP fields (Stripe, Daily.co) nullable from day one — see MVP doc.
 
@@ -117,7 +115,6 @@ Purpose: define **who can see and change what**.
 | [`04_authorization_privacy/authorization_matrix.md`](04_authorization_privacy/authorization_matrix.md) | **Canonical** | Role × resource matrix |
 | [`04_authorization_privacy/policy_enforcement_contract.md`](04_authorization_privacy/policy_enforcement_contract.md) | **Canonical** | Server-side enforcement layers |
 | [`04_authorization_privacy/privacy_data_handling.md`](04_authorization_privacy/privacy_data_handling.md) | **Canonical** | PII classification & visibility |
-| Lampto reference | Reference | [`authorization_matrix.md`](../examples/lampto/docs/prds/04_authorization_privacy/authorization_matrix.md) |
 
 **MVP auth:** Auth.js v5 Credentials, JWT, role in session, **`proxy.ts`** route guards — [ADR-003](07_governance/adr_003_auth_credentials_jwt_rbac.md).
 
@@ -141,7 +138,6 @@ Purpose: define **how the system executes requests and jobs**.
 | [`05_runtime/monorepo_packages.md`](05_runtime/monorepo_packages.md) | **Canonical** | Workspaces, package boundaries |
 | [`05_runtime/auth_runtime_spec.md`](05_runtime/auth_runtime_spec.md) | **Canonical** | Auth flows & proxy integration |
 | [`05_runtime/cache_revalidation_policy.md`](05_runtime/cache_revalidation_policy.md) | **Canonical** | Cache tags & invalidation |
-| Lampto reference | Reference | [`backend_stack_decision.md`](../examples/lampto/docs/prds/05_runtime/backend_stack_decision.md) |
 
 **Two-contour model:** Web (Vercel BFF) + Jobs (Vercel Cron / serverless on MVP).
 
@@ -229,7 +225,7 @@ Purpose: **layer walkthroughs** for AI onboarding — how contracts map to `apps
 
 **W16 phases (Canonical):** [`P01_phase_description.md`](../../implementation/mvp/phases_tasks_descriptions/P01_phase_description.md) … [`P14_phase_description.md`](../../implementation/mvp/phases_tasks_descriptions/P14_phase_description.md) + matching `tasks/P0N_tasks.md`. **W22–W25 post-P14:** P16 landing, **P17** i18n, P19 complaints, P18 people ops (spec), P21 email, **P22** Instant Navigations. Migrations: [`_migration_P01-P07_to_P01-P15.md`](../../implementation/mvp/phases_tasks_descriptions/_migration_P01-P07_to_P01-P15.md), [`_migration_P15-P20_renumbering.md`](../../implementation/mvp/phases_tasks_descriptions/_migration_P15-P20_renumbering.md), [`_migration_P17_to_P19.md`](../../implementation/mvp/phases_tasks_descriptions/_migration_P17_to_P19.md).
 
-Lampto reference: [`docs/examples/lampto/docs/implementation/mvp/`](../examples/lampto/docs/implementation/mvp/).
+This snapshot is self-contained. Do not follow a missing `docs/examples/lampto/` tree.
 
 ---
 
@@ -242,7 +238,7 @@ For a new AI agent session on Pulse:
 3. [`docs/meta/ai_first_project_methodology.md`](../meta/ai_first_project_methodology.md)
 4. [`docs/architecture_learning_pack/01_architecture_overview.md`](../architecture_learning_pack/01_architecture_overview.md)
 5. Architecture Learning Pack layer walkthroughs (W13): [`02_booking_lifecycle_layers.md`](../architecture_learning_pack/02_booking_lifecycle_layers.md), [`03_trainer_verification_layers.md`](../architecture_learning_pack/03_trainer_verification_layers.md), [`04_email_jobs_layers.md`](../architecture_learning_pack/04_email_jobs_layers.md)
-6. [`docs/reference/lampto_project_reference.md`](../reference/lampto_project_reference.md)
+6. [`docs/reference/lampto_project_reference.md`](../reference/lampto_project_reference.md) — historical notice only (lampto tree not vendored)
 7. [`docs/default_docs/fitness-platform-mvp.md`](../default_docs/fitness-platform-mvp.md)
 8. [`docs/design/canonical_routes.md`](../design/canonical_routes.md)
 9. Active phase: `implementation/mvp/phases_tasks_descriptions/P{N}_*.md` + contracts + tasks
@@ -251,12 +247,12 @@ For a new AI agent session on Pulse:
 
 # 14. Development Workflow Rules
 
-1. **No architectural guessing** — read contracts and lampto analogs first.
+1. **No architectural guessing** — read contracts and this snapshot first.
 2. **Thin adapters in `apps/`** — business logic in `packages/`.
 3. **One route list** — `canonical_routes.md` only.
 4. **Docs alignment** — behavior change = doc update in same task.
 5. **Phases bound scope** — one phase per agent session when possible.
-6. **Reference before invent** — [`lampto_project_reference.md`](../reference/lampto_project_reference.md).
+6. **Reference before invent** — search this Pulse snapshot; [`lampto_project_reference.md`](../reference/lampto_project_reference.md) is a missing-tree notice.
 
 ---
 
@@ -274,7 +270,7 @@ fitapp/
 │   ├── policy/server/
 │   └── db/
 ├── docs/                      — this tree
-└── docs/examples/lampto/      — read-only reference (gitignored from deploy)
+└── (lampto tree is not vendored in this repository)
 ```
 
 Package boundary rules: [`monorepo_boundaries_contract.md`](../../implementation/mvp/contracts/monorepo_boundaries_contract.md).
@@ -299,7 +295,7 @@ Package boundary rules: [`monorepo_boundaries_contract.md`](../../implementation
 | **Canonical** | Source of truth — update when behavior changes |
 | Interim | Valid content in `default_docs/` — migrate to `prds/` |
 | Planned | Directory exists; document not written yet |
-| Reference | lampto only — patterns, not Pulse product rules |
+| Reference | Historical provenance only — not a live missing tree |
 
 ---
 

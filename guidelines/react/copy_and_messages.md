@@ -84,4 +84,4 @@ Dates, times, money, relative timestamps — **`@/lib/i18n/format.ts`** with exp
 
 Prefer **`lucide-react`** — **ui-icons-lucide** rule and [React README](./README.md).
 
-**Reference:** Pulse reference [`copy_and_messages.md`](../../examples/lampto/docs/guidelines/react/copy_and_messages.md)
+**Reference:** Pulse snapshot [`copy_and_messages.md`](../../docs/examples/pulse/docs/guidelines/react/copy_and_messages.md)

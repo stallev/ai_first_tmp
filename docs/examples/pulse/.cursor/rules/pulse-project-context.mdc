@@ -1,29 +1,30 @@
 ---
-description: Pulse project context — stack, reference project lampto, document precedence
+description: Pulse snapshot context — stack, self-contained reference, document precedence
 alwaysApply: true
 ---
 
 # Pulse — project context
+
+> **Banner:** Pulse `.mdc` namesakes in this snapshot are **not** boilerplate canon. Remaining “lampto” mentions in deep snapshot files are **provenance** only. The tree `docs/examples/lampto/` is **not vendored**. For a **new** product use root Rules/Guidelines and [`docs/reference/pulse_project_reference.md`](../../../../../docs/reference/pulse_project_reference.md).
 
 ## Product
 
 **Pulse** — маркетплейс фитнес-тренеров. Роли: **client**, **trainer**, **admin**.  
 MVP: discovery, booking (без оплаты), trainer onboarding, admin moderation.
 
-## Reference project (mandatory patterns)
+## Snapshot (self-contained)
 
-Architectural and AI-first patterns inherit from **lampto** (BSFY):
+This tree is the Pulse **code and domain** reference. It does **not** inherit a missing `lampto` tree.
 
-- Reference code/docs: [`docs/examples/lampto/`](docs/examples/lampto/)
-- Pulse summary: [`docs/reference/lampto_project_reference.md`](docs/reference/lampto_project_reference.md)
-- Pulse methodology: [`docs/meta/ai_first_project_methodology.md`](docs/meta/ai_first_project_methodology.md)
+- Historical stub: [`docs/reference/lampto_project_reference.md`](docs/reference/lampto_project_reference.md)
+- Boilerplate agents: [`docs/reference/pulse_project_reference.md`](../../../../../docs/reference/pulse_project_reference.md)
 
-When Pulse docs are silent — follow lampto **architecture and methodology**, adapting domain and ADR deltas.  
-**Pulse Cursor Rules and Guidelines override lampto reference code** when they conflict — see [`lampto_project_reference.md`](docs/reference/lampto_project_reference.md) §Priority.
+When Pulse docs are silent on a **Pulse** feature — search **this snapshot**. Do not follow `docs/examples/lampto/**`.
 
 ## Stack (baseline)
 
 - **Next.js** **16.3.0** (pinned) App Router, **TypeScript** — [ADR-002](docs/prds/07_governance/adr_002_next162_vercel_runtime_policy.md)
+- **Instant Navigations:** `cacheComponents` + `partialPrefetching` (P22 complete in this snapshot)
 - **Request interception:** **`proxy.ts`** (Next.js 16); `middleware.ts` — только временная миграция
 - **Hosting:** Vercel · **UI:** shadcn/ui + Tailwind CSS v4 (Warm Forest tokens)
 - **Database:** Neon **PostgreSQL 17** + **Prisma v7** (pooled `DATABASE_URL`, `DIRECT_URL` for migrations)
@@ -41,7 +42,7 @@ Runtime policy: [ADR-001](docs/prds/07_governance/adr_001_stack_and_runtime.md),
 3. **Contracts** (`docs/implementation/mvp/contracts/`)
 4. **PRD** (`docs/prds/`) — when created; interim: [`docs/default_docs/`](docs/default_docs/)
 5. **[`docs/design/canonical_routes.md`](docs/design/canonical_routes.md)** — single route inventory
-6. **Guidelines** (`docs/guidelines/`) — adapted from lampto; index in [`README.md`](docs/guidelines/README.md)
+6. **Guidelines** (`docs/guidelines/` **in this snapshot**) — index in [`README.md`](docs/guidelines/README.md)
 7. **HTML prototype** — visual reference only, subordinate to canonical docs
 
 ## Domain invariants (do not break)
@@ -66,7 +67,8 @@ Runtime policy: [ADR-001](docs/prds/07_governance/adr_001_stack_and_runtime.md),
 | Pages spec | [`docs/default_docs/fitness-platform-pages.md`](docs/default_docs/fitness-platform-pages.md) |
 | Design system | [`docs/default_docs/fitness-platform-design-system.md`](docs/default_docs/fitness-platform-design-system.md) |
 | **UI component catalog (Design Lab)** | `/design-system` → `apps/web/src/components/atoms/`, `components/ui/` — spec: [`design_system_lab_spec.md`](docs/implementation/mvp/specs/design_system_lab_spec.md) |
-| Lampto reference | [`docs/reference/lampto_project_reference.md`](docs/reference/lampto_project_reference.md) |
+| Snapshot layout | [`README.md`](../../README.md) |
+| Historical lampto notice | [`docs/reference/lampto_project_reference.md`](docs/reference/lampto_project_reference.md) |
 
 ## Cursor rules (beyond this file)
 

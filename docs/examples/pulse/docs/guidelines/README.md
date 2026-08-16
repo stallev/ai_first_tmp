@@ -1,6 +1,6 @@
 # Guidelines
 
-Нормы реализации — адаптированы из lampto под Vercel, **Next.js 16.3.0** и Pulse design system (Warm Forest).
+Нормы реализации — **этот snapshot** под Vercel, **Next.js 16.3.0** и Pulse design system (Warm Forest).
 
 **Methodology (канон):** [`docs/meta/ai_first_project_methodology.md`](../meta/ai_first_project_methodology.md) — §2.7 Guidelines, §2.4 Cursor Rules.
 
@@ -51,8 +51,10 @@
 | `ui-messages-and-copy.mdc` | `@/lib/messages` |
 | `ui-icons-lucide.mdc` | lucide-react icons |
 
-## Reference (lampto)
+## Snapshot (self-contained)
 
-[`docs/examples/lampto/docs/guidelines/`](../examples/lampto/docs/guidelines/) — дополнительные паттерны (DnD, bundle analyze) переносятся по необходимости.
+Этот каталог `docs/guidelines/` внутри Pulse snapshot — **канон для изучения Pulse**, не указание следовать отсутствующему дереву.
 
-**Principle:** если Pulse guideline молчит — следовать lampto **architecture** с учётом ADR-001/ADR-002. **Pulse Cursor Rules override lampto reference code** — см. [`lampto_project_reference.md`](../reference/lampto_project_reference.md) §Priority.
+Оставшиеся упоминания «lampto» в глубоких файлах — provenance. **Не** ходить по `docs/examples/lampto/**`.
+
+Для **нового** продукта: корневые Cursor Rules и `guidelines/` boilerplate override этот snapshot — [`pulse_project_reference.md`](../../../../../docs/reference/pulse_project_reference.md).

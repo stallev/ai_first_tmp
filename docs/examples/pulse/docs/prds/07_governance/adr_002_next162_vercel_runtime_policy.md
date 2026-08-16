@@ -179,4 +179,3 @@ Do not invent ad-hoc client error boundaries that duplicate catalog/`error.tsx` 
 - [`docs/guidelines/nextjs/README.md`](../../guidelines/nextjs/README.md)
 - [`.cursor/rules/nextjs-vercel-app-router.mdc`](../../../.cursor/rules/nextjs-vercel-app-router.mdc)
 - [`cache_revalidation_policy.md`](../05_runtime/cache_revalidation_policy.md) — tag/path invalidation detail (W5)
-- Lampto reference: [`adr_022_next16_vercel_runtime_policy.md`](../../examples/lampto/docs/prds/07_governance/adr_022_next16_vercel_runtime_policy.md)

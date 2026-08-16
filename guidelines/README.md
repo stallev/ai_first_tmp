@@ -2,11 +2,11 @@
 
 Нормы реализации — адаптированы из Pulse reference (fitapp) под Vercel, **Next.js 16.3.0** и design system проекта ({{DESIGN_SYSTEM_NAME}}).
 
-**Methodology (канон):** [`docs/meta/ai_first_project_methodology.md`](../meta/ai_first_project_methodology.md) — §2.7 Guidelines, §2.4 Cursor Rules.
+**Methodology (канон):** [`docs/meta/ai_first_project_methodology.md`](../docs/meta/ai_first_project_methodology.md) — §2.7 Guidelines, §2.4 Cursor Rules.
 
 ## Приоритет источников (для агентов)
 
-Полный канонический список — [`.cursor/rules/project-context.mdc`](../.cursor/rules/project-context.mdc) § Source-of-truth order. Не дублировать список здесь; кратко: Cursor Rules → Guidelines (этот каталог) → General deep dives → Pulse reference (не override Rules/Guidelines).
+Полный канонический список — [`.cursor/rules/project-context.template.mdc`](../.cursor/rules/project-context.template.mdc) § Source-of-truth order (после bootstrap: `project-context.mdc`). Не дублировать список здесь; кратко: Cursor Rules → … → Guidelines (`guidelines/`) → prototype. Над Pulse snapshot всегда выигрывают корневые Rules **и** Guidelines.
 
 См. [`docs/reference/pulse_project_reference.md`](../docs/reference/pulse_project_reference.md).
 
@@ -44,7 +44,7 @@
 | `auth-security.mdc` | Auth.js, defense in depth |
 | `security-xss-csrf.mdc` | XSS, CSRF, CSP, DOMPurify, Origin checks |
 | `ui-animation-performance.mdc` | GPU animations, layout thrashing, will-change |
-| `nextjs-vercel-app-router.mdc` | Next.js **16.3.0** + Vercel + **`proxy.ts`** |
+| `nextjs-vercel-app-router.mdc` | Next.js **16.3.0** + Vercel + **`proxy.ts`** + Instant Navigations |
 | `app-router-streaming-loading.mdc` | Suspense, `loading.tsx`, page performance (§4–§18) |
 | `s3-file-asset-uploads.mdc` | FileAsset + AWS S3 |
 | `admin-forms-layout.mdc` | Admin forms layout |
@@ -66,9 +66,9 @@
 
 ## Reference (Pulse snapshot)
 
-**Референсный проект:** [`docs/examples/pulse/`](../examples/pulse/) — read-only snapshot Pulse (fitapp).
+**Референсный проект:** [`docs/examples/pulse/`](../docs/examples/pulse/) — read-only snapshot Pulse (fitapp).
 
-[`docs/examples/pulse/docs/guidelines/`](../examples/pulse/docs/guidelines/) — полный набор guides из fitapp; дополнительные паттерны переносятся по необходимости.
+[`docs/examples/pulse/docs/guidelines/`](../docs/examples/pulse/docs/guidelines/) — полный набор guides из fitapp; дополнительные паттерны переносятся по необходимости.
 
 **Principle:** если guideline {{PROJECT_NAME}} молчит — следовать Pulse reference **architecture and feature patterns** с учётом ADR-001/ADR-002. **{{PROJECT_NAME}} Cursor Rules и Guidelines имеют больший приоритет**, чем reference-код Pulse — см. [`pulse_project_reference.md`](../docs/reference/pulse_project_reference.md).
 

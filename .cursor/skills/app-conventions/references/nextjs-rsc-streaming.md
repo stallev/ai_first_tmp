@@ -30,8 +30,8 @@
 | Pattern | Project adaptation |
 |---------|-------------------|
 | Sync page + `params.then()` | Opt-in when `cacheComponents: true` — `ai_loading_patterns` §4.1. Default: `await params`. |
-| Region `ErrorBoundary` + retry | `unstable_catchError` — `ai_loading_patterns` §12.1. Keep segment `error.tsx`. |
-| `prefetch = 'allow-runtime'` | Opt-in on hot routes only; requires `cacheComponents: true`. |
+| Region `ErrorBoundary` + retry | `catchError` from `next/error` — `ai_loading_patterns` §12.1. Keep segment `error.tsx`. Fallback must be meaningful — not `null`. |
+| Per-link deeper prefetch | `<Link prefetch={true}>` only after a live App Shell; requires Cache Components then Partial Prefetching. |
 
 ---
 
