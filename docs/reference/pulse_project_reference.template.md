@@ -20,17 +20,20 @@
 
 ---
 
-## Приоритет: {{PROJECT_NAME}} Rules > Pulse reference code
+## Приоритет: {{PROJECT_NAME}} Rules и Guidelines > Pulse snapshot
 
 > **Код референса (`docs/examples/pulse/`) не является безусловным эталоном.**  
 > Pulse полезен для **архитектурных паттернов** (domain → policy → db → web, фазовая декомпозиция, contracts), но **не для копирования домена, маршрутов или UI один в один**.
 
 **При разработке {{PROJECT_NAME}}:**
 
-1. **Cursor Rules** (`.cursor/rules/*.mdc`) и **Guidelines** (`guidelines/`) — **канон** (наивысший приоритет).
-2. **General deep dives** (`docs/general/`) — теория; операционные нормы в Guidelines.
-3. **Код Pulse** — read-only **reference for structure, architecture, and feature patterns**; при конфликте — **следовать Rules/Guidelines текущего проекта**.
-4. **HTML prototype {{PROJECT_NAME}}** — visual reference; subordinate to Rules/PRD.
+Нумерованный SoT — канон: [`.cursor/rules/project-context.template.mdc`](../../.cursor/rules/project-context.template.mdc) (после bootstrap: `project-context.mdc`). **Не дублировать список здесь.**
+
+Над Pulse snapshot всегда выигрывают корневые Cursor Rules **и** корневые `guidelines/**` (даже если Guidelines в SoT ниже PRD). Не канон: `docs/examples/pulse/.cursor/rules/**`, `docs/examples/pulse/docs/guidelines/**`, любой `docs/examples/lampto/**` (дерева нет).
+
+1. **General deep dives** (`docs/general/`) — теория; операционные нормы в Guidelines.
+2. **Код Pulse** — read-only **reference for structure, architecture, and feature patterns**; при конфликте — **следовать Rules/Guidelines текущего проекта**.
+3. **HTML prototype {{PROJECT_NAME}}** — visual reference; subordinate to Rules/PRD.
 
 См. также заполненный документ: [`pulse_project_reference.md`](./pulse_project_reference.md).
 

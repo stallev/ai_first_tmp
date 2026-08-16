@@ -107,4 +107,4 @@ export const WishlistButton = ({
 - Optimistic для cancel booking / admin reject
 - `setOptimisticState` вне `startTransition`
 
-**Reference:** Pulse reference [`ai_optimistic_ui_pattern.md`](../../examples/lampto/docs/guidelines/react/ai_optimistic_ui_pattern.md)
+**Reference:** Pulse snapshot [`ai_optimistic_ui_pattern.md`](../../docs/examples/pulse/docs/guidelines/react/ai_optimistic_ui_pattern.md)

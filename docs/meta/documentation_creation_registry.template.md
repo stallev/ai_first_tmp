@@ -42,7 +42,7 @@
 | `docs/design/canonical_routes.md` | Канон |
 | `docs/architecture_learning_pack/01_architecture_overview.md` | Канон |
 | `docs/default_docs/*` | Interim archive — только читать при миграции |
-| `docs/guidelines/**` | Канон реализации — ссылаться, не дублировать |
+| `guidelines/**` | Канон реализации — ссылаться, не дублировать |
 
 ---
 
@@ -50,7 +50,7 @@
 
 ### 2.1 Иерархия источников истины
 
-Базовый порядок — канон: [`.cursor/rules/project-context.mdc`](../../.cursor/rules/project-context.mdc) § Source-of-truth order. Не дублировать список здесь.
+Базовый порядок — канон: [`.cursor/rules/project-context.template.mdc`](../../.cursor/rules/project-context.template.mdc) § Source-of-truth order (после bootstrap: `project-context.mdc`). Не дублировать список здесь.
 
 Уточнения для документации (в рамках соответствующих уровней канона):
 - **`AGENTS.md`** — включая `apps/web/AGENTS.md` для web-кода
@@ -266,7 +266,7 @@ READ registry → READ dependencies → DRAFT file → ADD backlinks → UPDATE 
 | UX-09 | `docs/design/styleguide.md` | Миграция design system в canonical (компоненты, elevation, spacing) |
 | UX-10 | `docs/design/content_and_microcopy_contract.md` | Тон, `@/lib/messages`, toast copy rules |
 
-**Guidelines не дублировать** — UX contracts ссылаются на `docs/guidelines/` как enforcement layer для кода.
+**Guidelines не дублировать** — UX contracts ссылаются на `guidelines/` как enforcement layer для кода.
 
 ---
 

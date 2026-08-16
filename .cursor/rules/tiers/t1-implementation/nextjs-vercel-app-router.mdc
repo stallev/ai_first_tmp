@@ -7,9 +7,9 @@ alwaysApply: false
 # Next.js 16.3.0 + Vercel (`apps/web`)
 
 **Methodology:** [`docs/meta/ai_first_project_methodology.md`](docs/meta/ai_first_project_methodology.md)  
-**Runtime (mandatory):** [ADR-002](docs/prds/07_governance/adr_002_next162_vercel_runtime_policy.md) — **pin `next@16.3.0`**  
-**Stack:** [ADR-001](docs/prds/07_governance/adr_001_stack_and_runtime.md)  
-**Guidelines:** [`docs/guidelines/nextjs/README.md`](docs/guidelines/nextjs/README.md)
+**Runtime (mandatory until W4):** [ADR-002 template](docs/prds/07_governance/adr_002_next162_vercel_runtime_policy.template.md) — **pin `next@16.3.0`**  
+**Stack:** [ADR-001](docs/prds/07_governance/adr_001_stack_and_runtime.md) (после W4)  
+**Guidelines:** [`guidelines/nextjs/README.md`](guidelines/nextjs/README.md)
 
 ## Version pin (hard requirement)
 
@@ -24,8 +24,8 @@ No Next.js 15.x patterns. No floating `^16` without ADR.
 
 Next.js 16 renames `middleware.ts` → **`proxy.ts`** (still canonical on 16.3):
 
-| Next.js 15 (legacy) | Next.js 16.3.0 (Pulse) |
-|---------------------|-------------------------|
+| Next.js 15 (legacy) | Next.js 16.3.0 |
+|---------------------|----------------|
 | `middleware.ts` | **`proxy.ts`** |
 | `export function middleware()` | **`export function proxy()`** |
 | Edge runtime common | **`proxy` runtime = `nodejs`** (Edge **not** supported in proxy) |
@@ -42,37 +42,36 @@ Next.js 16 renames `middleware.ts` → **`proxy.ts`** (still canonical on 16.3):
 - **Server Components by default** — `'use client'` only for hooks/browser APIs
 - **Thin BFF:** handlers/actions → `packages/domain` + DAL `src/data/**`
 - **Cache invalidation:** `updateTag` (Server Actions, read-your-own-writes), `revalidateTag`, `revalidatePath` — see ADR-002
-- **Cross-request reads:** **`'use cache'`** + `cacheTag()` + `cacheLife()` — **not** `unstable_cache`; requires `cacheComponents: true` — see [`ai_loading_patterns.md`](docs/guidelines/nextjs/ai_loading_patterns.md) §8
-- **Instant Navigations (best practice):** `cacheComponents: true` **and** `partialPrefetching: true` in `next.config` — Stream (`Suspense` / `loading.tsx`) / Cache (`'use cache'`) / Block (`export const instant = false` only with a reason) — ADR-002 §9, loading §8.1
+- **Cross-request reads:** **`'use cache'`** + `cacheTag()` + `cacheLife()` — **not** `unstable_cache`; requires `cacheComponents: true` — see [`ai_loading_patterns.md`](guidelines/nextjs/ai_loading_patterns.md) §8
+- **Instant Navigations (required):** adopt **Cache Components first**, then **`partialPrefetching: true`**. Stream (`Suspense` / `loading.tsx`) / Cache (`'use cache'`) / Block (`export const instant = false` only with a reason). `'use cache: private'` is **browser** cache, not static shell / CDN. `<Link prefetch={true}>` only **per-link** after a live App Shell. ADR-002 template **§5.1**, loading **§8.1**
 - **Background work:** Vercel Cron + jobs — **not** `unstable_after`
 - **Bundler:** Turbopack default
 - **Region errors (opt-in):** prefer **`catchError`** from `next/error` + `retry()` — §12.1
 
-## Next.js 16.3 — recommended vs defer (ADR-002 §9)
+## Next.js 16.3 — required vs defer (ADR-002 §5.1)
 
-**Recommended:**
+**Required / recommended:**
 
 - Instant Navigations config + Stream/Cache/Block on product routes
-- Playwright `instant()` **SHOULD** on critical navigations (`/trainers`, booking) when flags are on
+- Instant Insights in **dev** = **warning**; production **build** = `blocking-prerender-*` (do not mix with `blocking-route`)
+- Playwright `instant()` **SHOULD** on critical product navigations when flags are on (do not copy Pulse `/trainers` as mandatory routes; Playwright package is **not** in this scaffold)
 - Commit Next `AGENTS.md` agent-rules block **or** set `agentRules: false` if monorepo `AGENTS.md` conflicts
 
 **MUST NOT** canonicalize:
 
 - Blind `export const instant = false` on every route
+- `partialPrefetching` **before** / **without** `cacheComponents`
 - `typescript@^7`, `experimental.useOffline`, `experimental.turbopackRustReactCompiler`
 - `import.meta.glob` / `next/root-params` as default product patterns
-- `partialPrefetching` **without** `cacheComponents`
 
 ## Data layer
 
-- [ai_nextjs_db_data_handle.md](docs/guidelines/nextjs/ai_nextjs_db_data_handle.md)
-- [ai_client_lazy_loading.md](docs/guidelines/nextjs/ai_client_lazy_loading.md) — heavy client deps, `next/dynamic`
+- [ai_nextjs_db_data_handle.md](guidelines/nextjs/ai_nextjs_db_data_handle.md)
+- [ai_client_lazy_loading.md](guidelines/nextjs/ai_client_lazy_loading.md) — heavy client deps, `next/dynamic`
 - [data-server-actions-and-api.mdc](data-server-actions-and-api.mdc)
 
 ## Domain invariants
 
-- `TrainerProfile.timezone` for schedule/slots
-- Booking transitions via domain use-cases only
-- Public trainers only when `status = approved`
+Fill from `project-context` after W3/W4 — do not invent Pulse domain literals here.
 
-Reference: Pulse (docs/examples/pulse) `nextjs-vercel-app-router.mdc` — Pulse uses **Vercel + 16.3.0** per ADR-002.
+Reference: Pulse snapshot `nextjs-vercel-app-router.mdc` — **Vercel + 16.3.0** per ADR-002. Root Rules/Guidelines override the snapshot.

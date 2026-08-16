@@ -78,7 +78,7 @@ monorepo/
 
 | Шаг | Действие |
 |-----|----------|
-| КОНТЕКСТ | `AGENTS.md` + `project-context.mdc` |
+| КОНТЕКСТ | `AGENTS.md` + `project-context.template.mdc` (после bootstrap: `project-context.mdc`) |
 | ФАЗА | `P{N}_phase_description.md` |
 | КОНТРАКТ | `docs/implementation/mvp/contracts/` |
 | ЗАДАЧИ | `P{N}_tasks.md` |
@@ -112,7 +112,7 @@ docs/implementation/mvp/
 
 ### 2.7 Guidelines
 
-`docs/guidelines/` — 27 guides (included in boilerplate). Индекс: [`README.md`](../../guidelines/README.md)
+`guidelines/` — 27 guides (included in boilerplate). Индекс: [`README.md`](../../guidelines/README.md)
 
 ---
 
@@ -120,7 +120,7 @@ docs/implementation/mvp/
 
 См. §3.1 в `documentation_creation_registry.template.md` и полный образец Pulse registry.
 
-**Иерархия истины:** канон — [`.cursor/rules/project-context.mdc`](../../.cursor/rules/project-context.mdc) § Source-of-truth order.
+**Иерархия истины:** канон — [`.cursor/rules/project-context.template.mdc`](../../.cursor/rules/project-context.template.mdc) § Source-of-truth order (после bootstrap: `project-context.mdc`).
 
 ---
 

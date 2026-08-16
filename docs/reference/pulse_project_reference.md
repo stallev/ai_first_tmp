@@ -20,16 +20,16 @@
 
 ---
 
-## Приоритет: Guidelines + Cursor Rules > Pulse reference
+## Приоритет: корневые Rules и Guidelines > Pulse snapshot
 
 > **Код референса (`docs/examples/pulse/`) не является безусловным эталоном.**  
 > Pulse полезен для **архитектурных паттернов** (domain → policy → db → web, фазовая декомпозиция, contracts, Design Lab), но **не для слепого копирования** домена, маршрутов или UI.
 
 **При разработке:**
 
-Базовый порядок — канон: [`.cursor/rules/project-context.mdc`](../../.cursor/rules/project-context.mdc) § Source-of-truth order (Cursor Rules и Guidelines — наивысший приоритет для агентов).
+Нумерованный SoT — канон: [`.cursor/rules/project-context.template.mdc`](../../.cursor/rules/project-context.template.mdc) § Source-of-truth order (после bootstrap: `project-context.mdc`). **Не дублировать список здесь.**
 
-Применительно к Pulse:
+Над **Pulse snapshot** всегда выигрывают корневые Cursor Rules **и** корневые Guidelines (даже если Guidelines в SoT ниже PRD). Snapshot namesakes в `docs/examples/pulse/.cursor/rules/**` и `docs/examples/pulse/docs/guidelines/**` **не канон**. Дерева `docs/examples/lampto/` в этом репозитории **нет**.
 
 1. **Код и docs Pulse** — read-only **reference for structure and flows**; при конфликте — **следовать Rules/Guidelines текущего проекта**.
 2. **HTML prototype** целевого продукта — visual reference; subordinate to Rules/PRD.

@@ -143,4 +143,4 @@ Cursor rules: **react-ui-components**, **app-router-streaming-loading**.
 - `aria-invalid` + `FieldError` on forms; `aria-busy` on mutations (**ui-mutation-pending**)
 - Contrast AA in light and dark; touch targets ≥ 44px (**ui-mobile-first**)
 
-**Reference:** Pulse reference [`ai_component_guidelines.md`](../../examples/lampto/docs/guidelines/react/ai_component_guidelines.md) §8
+**Reference:** Pulse snapshot [`ai_component_guidelines.md`](../../docs/examples/pulse/docs/guidelines/react/ai_component_guidelines.md) §8

@@ -3,7 +3,7 @@
 **Дата:** 2026-05-23  
 **Стек MVP:** Next.js **16.2.6** (Vercel) + Neon PostgreSQL + Prisma v7 + Resend + **AWS S3**  
 **Runtime:** [ADR-002](../prds/07_governance/adr_002_next162_vercel_runtime_policy.md) — `proxy.ts`, async APIs
-**Референс архитектуры:** [`docs/examples/lampto/`](../examples/lampto/) — см. [`lampto_project_reference.md`](../reference/lampto_project_reference.md)
+**Референс:** этот snapshot самодостаточен. Исторический notice: [`lampto_project_reference.md`](../reference/lampto_project_reference.md) (дерева `docs/examples/lampto/` нет).
 
 ---
 
@@ -27,7 +27,7 @@
 
 ## 2) Почему двухконтурный MVP (Web + Jobs)
 
-Модель **наследуется из lampto** — см. [`lampto/.../01_architecture_overview.md`](../examples/lampto/docs/architecture_learning_pack/01_architecture_overview.md).
+Модель **двухконтурная** (Web + Jobs) — деталь в этом overview. Не следовать отсутствующему дереву `docs/examples/lampto/`.
 
 ### Контур A — Web (Vercel)
 
@@ -59,7 +59,7 @@ Post-MVP поля (Stripe Connect, Daily.co room IDs) — **nullable с перв
 
 ---
 
-## 4) Monorepo — слои (как lampto)
+## 4) Monorepo — слои
 
 ```
 apps/web          → HTTP/UI адаптер (тонкий)
@@ -71,7 +71,7 @@ packages/db       → Prisma, repositories
 
 **Запрещено:** `packages/domain` → `packages/db`; **`proxy.ts` / `middleware.ts`** → `policy/server`.
 
-Эталон реализации слоёв в lampto: account deletion flow — [`15_reference_account_deletion_layers_ru.md`](../examples/lampto/docs/architecture_learning_pack/15_reference_account_deletion_layers_ru.md).
+Эталон реализации слоёв **в этом snapshot:** booking / verification / email jobs — learning pack ниже. Не открывать `docs/examples/lampto/**`.
 
 **Для Pulse:** layer walkthroughs — learning pack W13:
 
@@ -171,7 +171,7 @@ MVP строится так, чтобы шаг был **механическим
 | Методология | [`ai_first_project_methodology.md`](../meta/ai_first_project_methodology.md) |
 | Карта архитектуры | [`architecture_master_index.md`](../prds/architecture_master_index.md) |
 | Agent entry | [`AGENTS.md`](../../AGENTS.md) |
-| Lampto reference | [`lampto_project_reference.md`](../reference/lampto_project_reference.md) |
+| Historical notice | [`lampto_project_reference.md`](../reference/lampto_project_reference.md) |
 | [`authorization_matrix.md`](../prds/04_authorization_privacy/authorization_matrix.md) | Access control |
 | [`backend_requirements.md`](../prds/05_runtime/backend_requirements.md) | Runtime detail |
 | [`02_booking_lifecycle_layers.md`](./02_booking_lifecycle_layers.md) | Booking layer map |

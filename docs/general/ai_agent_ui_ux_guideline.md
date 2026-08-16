@@ -54,7 +54,7 @@ UI-специфичные уточнения к канону:
 
 | Источник | Что заимствовано |
 |----------|------------------|
-| lampto `ux_ui_faang_principles_for_agents.md` | 10 cross-cutting principles, screen states table |
+| Pulse `ux_ui_faang_best_practices_for_agents.md` | 10 cross-cutting principles, screen states table |
 | [ux-audit](https://github.com/narenkatakam/ux-audit) skill | Task-first UX, overlay checklists, non-negotiables |
 | [anthropics/claude-code frontend-design](https://github.com/anthropics/claude-code/tree/main/plugins/frontend-design/skills/frontend-design) | Design thinking: purpose → constraints → intentional aesthetic |
 | Pulse `design_system_lab_spec.md` | FX-1–FX-10 contract, Design Lab catalog |

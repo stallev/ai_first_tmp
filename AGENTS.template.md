@@ -12,9 +12,11 @@ Monorepo: **Next.js 16.3.0** App Router + Vercel + Neon PostgreSQL.
 - Код и документация референса: [`docs/examples/pulse/`](docs/examples/pulse/)
 - Сводка: [`docs/reference/pulse_project_reference.md`](docs/reference/pulse_project_reference.md)
 
+**Instant Navigations:** `cacheComponents` + `partialPrefetching`; динамика за Suspense / `'use cache'`.
+
 **Правило:** если в документе {{PROJECT_NAME}} нет явного отличия — следовать Pulse reference architecture. Отличия стека и домена — ADR-001, ADR-002.
 
-**Приоритет над Pulse reference:** Cursor Rules и Guidelines **текущего проекта** важнее reference-кода Pulse.
+**Приоритет над Pulse:** Cursor Rules и Guidelines **текущего проекта** важнее snapshot Pulse.
 
 ## Monorepo structure (целевая)
 
@@ -37,7 +39,7 @@ Monorepo: **Next.js 16.3.0** App Router + Vercel + Neon PostgreSQL.
 
 ## Иерархия источников истины
 
-Полный канонический список — [`.cursor/rules/project-context.mdc`](.cursor/rules/project-context.mdc) § Source-of-truth order. Не дублировать список здесь.
+Полный канонический список — [`.cursor/rules/project-context.template.mdc`](.cursor/rules/project-context.template.mdc) § Source-of-truth order (после bootstrap: `project-context.mdc`). Не дублировать список здесь.
 
 ## Документация — точки входа
 
@@ -48,7 +50,7 @@ Monorepo: **Next.js 16.3.0** App Router + Vercel + Neon PostgreSQL.
 | Карта архитектуры | [`docs/prds/architecture_master_index.md`](docs/prds/architecture_master_index.md) |
 | MVP scope | [`docs/prds/01_product_scope/mvp_scope.md`](docs/prds/01_product_scope/mvp_scope.md) |
 | Database schema | [`docs/prds/03_data_model/database_schema_v1.md`](docs/prds/03_data_model/database_schema_v1.md) |
-| Guidelines + Rules | [`docs/guidelines/README.md`](docs/guidelines/README.md) |
+| Guidelines + Rules | [`guidelines/README.md`](guidelines/README.md) |
 | Prompt orchestration | [`prompts/00-orchestration.md`](prompts/00-orchestration.md) |
 | Pulse reference | [`docs/examples/pulse/`](docs/examples/pulse/) |
 
