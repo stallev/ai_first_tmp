@@ -64,9 +64,9 @@ Spec: [`design_system_lab_spec.md`](../../implementation/mvp/specs/design_system
 ## 3. Styling
 
 - **`cn()`** + **cva** for variants
-- Semantic tokens from [`fitness-platform-design-system.md`](../../default_docs/fitness-platform-design-system.md)
+- Semantic tokens from [`{{INTERIM_DESIGN_SYSTEM_DOC}}`](../../default_docs/{{INTERIM_DESIGN_SYSTEM_DOC}}) (until UX-03)
 - **Mobile-first** — base = mobile; `md:` / `lg:` expand (see **ui-mobile-first**, design system §2)
-- **Prototype fidelity** — fonts, sizes, weights, colors from [`Fitness_Platform_Prototype_v1.html`](../../prototypes/Fitness_Platform_Prototype_v1.html) + design system (**ui-prototype-fidelity**)
+- **Prototype fidelity** — fonts, sizes, weights, colors from [`{{MAIN_PROTOTYPE_HTML}}`](../../prototypes/{{MAIN_PROTOTYPE_HTML}}) + design system (**ui-prototype-fidelity**)
 
 ---
 

@@ -6,7 +6,7 @@ Frontend Architect.
 ## Preconditions (Gate G4)
 - [ ] P5 scaffold complete, build passes
 - [ ] UX-03 `visual_identity_contract.md` exists
-- [ ] HTML prototype in `docs/prototypes/`
+- [ ] HTML prototype in `docs/prototypes/{{MAIN_PROTOTYPE_HTML}}`
 
 ## Inputs
 - [`specs/design_system_lab_spec.template.md`](../specs/design_system_lab_spec.template.md)

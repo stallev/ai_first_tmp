@@ -24,7 +24,8 @@
 | ID | Файл | Когда | Deliverable |
 |----|------|-------|-------------|
 | **P0** | [`P0-bootstrap.md`](P0-bootstrap.md) | День 0 | Структура каталогов, AGENTS, T0 rules |
-| **P1** | [`P1-html-prototype.md`](P1-html-prototype.md) | После interim PRD brief | `docs/prototypes/*.html` |
+| **P1-desktop** | [`P1-html-prototype-claude-desktop.md`](P1-html-prototype-claude-desktop.md) | До P1 (рекомендуется) | Seed: один HTML в `docs/prototypes/` (Claude Desktop + spec + URL DS) |
+| **P1** | [`P1-html-prototype.md`](P1-html-prototype.md) | После P0 + brief | `docs/prototypes/{{MAIN_PROTOTYPE_HTML}}` — ingest или create |
 | **P2** | [`P2-doc-registry.md`](P2-doc-registry.md) | После P1 | `documentation_creation_registry.md` |
 | **P3** | [`P3-wave-executor.md`](P3-wave-executor.md) | Каждая волна W{N} | Файлы волны + backlinks |
 | **P4** | [`P4-rules-guidelines.md`](P4-rules-guidelines.md) | После W1 | T1 rules активны, guidelines проверены |
@@ -37,15 +38,16 @@
 ## Gates (обязательные проверки)
 
 ```
-P0 ──▶ P1 ──▶ P2 ──▶ P3 (W1…W14) ──▶ P4 ──▶ P5 ──▶ P6 ──▶ P7 (P01+)
-         │              │
-         │              └── Gate: database_schema_v1 canonical до W8 contracts
-         └── Gate: interim docs / product brief exists
+Visual seed (реком.) ──▶ P0 ──▶ P1 (ingest/create) ──▶ P2 ──▶ P3 (W1…W14) ──▶ P4 ──▶ P5 ──▶ P6 ──▶ P7 (P01+)
+                              │                         │
+                              │                         └── Gate: database_schema_v1 canonical до W8 contracts
+                              └── Gate: interim docs / product brief exists
 ```
 
 | Gate | Условие |
 |------|---------|
 | G1 → P2 | Есть product brief или `docs/default_docs/` |
+| G1b → W2 UX-03 | Рекомендуется `docs/prototypes/{{MAIN_PROTOTYPE_HTML}}` (token dump) |
 | G2 → P3-W3 | P2 registry утверждён пользователем |
 | G3 → P5 | W1–W2 + W3 schema + минимум W5 auth + W8 boundaries contract |
 | G4 → P6 | Next.js build pass, `globals.css` scaffold |
@@ -127,6 +129,7 @@ Manifest: [`.cursor/rules/README.md`](../.cursor/rules/README.md)
 | Тема | Library ID |
 |------|------------|
 | Next.js 16.3 | `/vercel/next.js` |
+| Tailwind CSS v4 | `/websites/tailwindcss` (Play CDN, `@theme`) |
 | Auth.js v5 | `/websites/authjs_dev` |
 | Prisma v7 | `/websites/prisma_io` |
 | shadcn/ui | via shadcn MCP |
@@ -138,6 +141,7 @@ Manifest: [`.cursor/rules/README.md`](../.cursor/rules/README.md)
 ```
 1. READ prompts/00-orchestration.md (this file)
 2. READ PLACEHOLDERS.md — verify all {{}} replaced
-3. EXECUTE P0 → verify → P1 → … 
-4. Never skip gates
+3. Visual seed → docs/prototypes/ (Claude Desktop prompt) — recommended before P1
+4. EXECUTE P0 → verify → P1 (ingest/create) → …
+5. Never skip gates
 ```

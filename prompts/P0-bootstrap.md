@@ -6,6 +6,7 @@ Software Architect (AI-first monorepo).
 ## Preconditions
 - [ ] Репозиторий создан (пустой или с boilerplate)
 - [ ] [`PLACEHOLDERS.md`](../PLACEHOLDERS.md) заполнен
+- [ ] (Рекомендуется) visual seed в `docs/prototypes/{{MAIN_PROTOTYPE_HTML}}` — см. [`P1-html-prototype-claude-desktop.md`](P1-html-prototype-claude-desktop.md)
 
 ## Inputs (READ FIRST)
 - [`BOOTSTRAP.md`](../BOOTSTRAP.md) — полная инструкция bootstrap
@@ -20,20 +21,22 @@ Software Architect (AI-first monorepo).
 3. Переименовать:
    - `AGENTS.template.md` → `AGENTS.md`
    - `project-context.template.mdc` → `.cursor/rules/project-context.mdc`
-4. Создать пустую структуру `docs/`:
+4. Создать пустую структуру `docs/` **без удаления существующих файлов**:
    ```
    docs/{default_docs,prototypes,reference,examples/pulse,meta,prds,design,guidelines,implementation/mvp/{contracts,specs,phases_tasks_descriptions,tasks,guides},architecture_learning_pack,incidents}
    ```
+   Канон прототипов: **`docs/prototypes/`**. Не создавать `docs/prototype/`. **MUST NOT** overwrite `docs/prototypes/*.html`.
 5. Скопировать `guidelines/` из boilerplate → `docs/guidelines/`
 6. Активировать **T0 cursor rules** (скопировать `tiers/t0-always/*.mdc` кроме `*.template.mdc`) → `.cursor/rules/`
 7. Создать `docs/guidelines/README.md` index (из boilerplate)
-8. Добавить `.gitkeep` в пустые scaffold dirs
+8. Добавить `.gitkeep` в пустые scaffold dirs (не в `docs/prototypes/`, если там уже HTML)
 9. `npm run rules:sync` (или `node scripts/sync-claude-rules.mjs`). Не править `.claude/rules/` руками.
 
 ## Forbidden
 - Implementation code (кроме config skeleton в P5)
 - Domain-specific PRD content
 - Активация T1/T2 rules
+- Удаление / перезапись HTML-прототипа
 
 ## Verification
 - [ ] `AGENTS.md` exists, ссылается на methodology
@@ -43,6 +46,7 @@ Software Architect (AI-first monorepo).
 - [ ] `npm run rules:check` pass; `.claude/rules/` stem-match активных T0 `.mdc`
 - [ ] `docs/meta/` готов для P2
 - [ ] Guidelines скопированы (27 files)
+- [ ] Если seed был — `docs/prototypes/{{MAIN_PROTOTYPE_HTML}}` на месте
 
 ## Next
-→ [`P1-html-prototype.md`](P1-html-prototype.md) или interim `docs/default_docs/` если prototype позже
+→ [`P1-html-prototype.md`](P1-html-prototype.md) (ingest, если seed есть) или interim `docs/default_docs/` если prototype позже

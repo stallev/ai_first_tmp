@@ -11,7 +11,7 @@
 - Карта архитектуры: [`architecture_master_index.md`](../prds/architecture_master_index.md)
 - Точка входа monorepo: [`AGENTS.md`](../../AGENTS.md)
 - Референс Pulse reference: [`pulse_project_reference.md`](../reference/pulse_project_reference.md)
-- Прототип (визуальный эталон): [`Fitness_Platform_Prototype_v1.html`](../prototypes/Fitness_Platform_Prototype_v1.html)
+- Прототип (визуальный эталон): [`{{MAIN_PROTOTYPE_HTML}}`](../prototypes/{{MAIN_PROTOTYPE_HTML}})
 - Interim PRD (источник миграции): [`default_docs/`](../default_docs/)
 
 > **Правило для агентов:** этот файл — **единственный источник порядка** создания документов.  
@@ -248,8 +248,8 @@ READ registry → READ dependencies → DRAFT file → ADD backlinks → UPDATE 
 
 Документы регламентируют UX/UI на основе:
 
-- HTML-прототип [`Fitness_Platform_Prototype_v1.html`](../prototypes/Fitness_Platform_Prototype_v1.html)
-- Interim design system [`fitness-platform-design-system.md`](../default_docs/fitness-platform-design-system.md)
+- HTML-прототип [`{{MAIN_PROTOTYPE_HTML}}`](../prototypes/{{MAIN_PROTOTYPE_HTML}})
+- Interim design system [`{{INTERIM_DESIGN_SYSTEM_DOC}}`](../default_docs/{{INTERIM_DESIGN_SYSTEM_DOC}})
 - UX-прinciples из [`fitness-platform-pages.md`](../default_docs/fitness-platform-pages.md) § UX-прinciples
 - Cursor Rules: `ui-warm-forest-shadcn`, `ui-mobile-first`, `ui-prototype-fidelity`, `ui-semantics-a11y`, `ui-toast-mutations`, `ui-mutation-pending`, `ui-optimistic-mutations`
 - Guidelines: [`typography_text_guidelines.md`](../guidelines/typography_text_guidelines.md), [`ai_semantics_a11y_guidelines.md`](../guidelines/react/ai_semantics_a11y_guidelines.md)

@@ -70,7 +70,7 @@ Visual and interaction canon — **do not invent** ad-hoc styles:
 |-------|--------|
 | **UI component catalog** | `/design-system` (local dev) — import `@/components/atoms`, `@/components/ui/*`; spec: [`design_system_lab_spec.md`](../../docs/implementation/mvp/specs/design_system_lab_spec.md) |
 | Design tokens, typography | [`fitness-platform-design-system.md`](../../docs/default_docs/fitness-platform-design-system.md), [`typography_text_guidelines.md`](../../docs/guidelines/typography_text_guidelines.md) |
-| Page layout reference | [`Fitness_Platform_Prototype_v1.html`](../../docs/prototypes/Fitness_Platform_Prototype_v1.html); landing `/`: [`{{PROJECT_NAME}} Landing Page -Standalone-.html`](../../docs/prototypes/{{PROJECT_NAME}} Landing Page -Standalone-.html) + [`public_landing_spec.md`](../../docs/implementation/mvp/specs/public_landing_spec.md) (P16) |
+| Page layout reference | [`{{MAIN_PROTOTYPE_HTML}}`](../../docs/prototypes/{{MAIN_PROTOTYPE_HTML}}) |
 | User-visible copy | `@/lib/messages` (when wired) — rule: `ui-messages-and-copy.mdc` |
 | Toast after mutations | Sonner — rule: `ui-toast-mutations.mdc` |
 | Pending controls | rule: `ui-mutation-pending.mdc` |

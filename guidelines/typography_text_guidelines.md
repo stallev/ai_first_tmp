@@ -58,7 +58,7 @@ From design system — **mobile-first** (base = mobile, `md:`/`lg:` = desktop):
 | Body | `text-base` | `text-base` |
 | Caption / meta | `text-sm text-muted-foreground` | same |
 
-**Prototype parity:** match font family, weight, and size from [`Fitness_Platform_Prototype_v1.html`](../../prototypes/Fitness_Platform_Prototype_v1.html) — Cursor rule **ui-prototype-fidelity**.
+**Prototype parity:** match font family, weight, and size from [`{{MAIN_PROTOTYPE_HTML}}`](../../prototypes/{{MAIN_PROTOTYPE_HTML}}) — Cursor rule **ui-prototype-fidelity**.
 
 ---
 

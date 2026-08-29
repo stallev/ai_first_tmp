@@ -52,6 +52,7 @@ Monorepo: **Next.js 16.3.3** App Router + Vercel + Neon PostgreSQL.
 | Database schema | [`docs/prds/03_data_model/database_schema_v1.md`](docs/prds/03_data_model/database_schema_v1.md) |
 | Guidelines + Rules | [`guidelines/README.md`](guidelines/README.md) |
 | Prompt orchestration | [`prompts/00-orchestration.md`](prompts/00-orchestration.md) |
+| HTML-прототип (visual) | [`docs/prototypes/{{MAIN_PROTOTYPE_HTML}}`](docs/prototypes/{{MAIN_PROTOTYPE_HTML}}) |
 | Pulse reference | [`docs/examples/pulse/`](docs/examples/pulse/) |
 
 ## Цикл работы агента

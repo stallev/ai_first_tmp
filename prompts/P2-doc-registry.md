@@ -5,6 +5,7 @@ Technical Writer для AI agents.
 
 ## Preconditions
 - [ ] P1 prototype OR sufficient `docs/default_docs/`
+- [ ] Рекомендуется: `docs/prototypes/{{MAIN_PROTOTYPE_HTML}}` (seed) до волны W2 UX-03
 - [ ] Pulse snapshot в `docs/examples/pulse/` (для образца полного W0–W14)
 
 ## Inputs

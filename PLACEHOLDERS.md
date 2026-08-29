@@ -11,7 +11,7 @@
 | `{{USER_ROLES}}` | client, vendor, admin | project-context, schema |
 | `{{DESIGN_SYSTEM_NAME}}` | Warm Forest | project-context, design_system_lab_spec, UI rules |
 | `{{DESIGN_SYSTEM_SLUG}}` | warm-forest | `ui-{{DESIGN_SYSTEM_SLUG}}-shadcn.mdc` Cursor Rule file name |
-| `{{MAIN_PROTOTYPE_HTML}}` | Acme_Prototype_v1.html | основной HTML-прототип в `docs/prototypes/` |
+| `{{MAIN_PROTOTYPE_HTML}}` | Acme_Prototype_v1.html | **единственный** канонический HTML-прототип: `docs/prototypes/{{MAIN_PROTOTYPE_HTML}}` (не `docs/prototype/`). Процесс: [`BOOTSTRAP.md`](BOOTSTRAP.md) §3.5; Claude Desktop: [`prompts/P1-html-prototype-claude-desktop.md`](prompts/P1-html-prototype-claude-desktop.md) |
 | `{{INTERIM_DESIGN_SYSTEM_DOC}}` | acme-design-system.md | interim DS в `docs/default_docs/` (detail when contract silent) |
 | `{{REFERENCE_EXAMPLE_COMPONENTS_REL_PATH}}` | examples/pulse/docs/example_components/ | optional pattern library relative to `docs/` — **не** default copy source |
 | `{{DOMAIN_COMPONENT_FOLDER}}` | catalog | primary domain molecules folder under `components/` (adjust per project) |
@@ -23,6 +23,8 @@
 | `{{CURRENT_PHASE}}` | P01 — Monorepo scaffold | project-context §Repository status |
 | `{{INTERIM_DOCS_GLOB}}` | docs/default_docs/ | interim PRD archive path |
 | `{{S3_KEY_PREFIX}}` | acme/ | AWS S3 object key prefix (`FILE_UPLOAD_OBJECT_KEY_PREFIX`) |
+
+**Прототип — не процесс в этой таблице.** Имя файла — `{{MAIN_PROTOTYPE_HTML}}`. Требование seed, ingest P1 и Claude Desktop — [`BOOTSTRAP.md`](BOOTSTRAP.md) §3.5 и [`prompts/P1-html-prototype-claude-desktop.md`](prompts/P1-html-prototype-claude-desktop.md). Опциональный второй файл (standalone landing) кладите рядом в `docs/prototypes/`; отдельный placeholder не обязателен.
 
 ## npm scopes
 

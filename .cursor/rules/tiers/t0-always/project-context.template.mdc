@@ -47,7 +47,7 @@ Runtime policy: [ADR-001](docs/prds/07_governance/adr_001_stack_and_runtime.md) 
 4. **PRD** (`docs/prds/`) — when created; interim: [`{{INTERIM_DOCS_GLOB}}`]({{INTERIM_DOCS_GLOB}})
 5. **[`docs/design/canonical_routes.md`](docs/design/canonical_routes.md)** — single route inventory
 6. **Guidelines** (`guidelines/`) — index in [`guidelines/README.md`](guidelines/README.md)
-7. **HTML prototype** — visual reference only, subordinate to canonical docs
+7. **HTML prototype** — visual reference only (`docs/prototypes/{{MAIN_PROTOTYPE_HTML}}`), subordinate to canonical docs
 
 **Vs Pulse snapshot:** root Cursor Rules **and** root Guidelines always win over [`docs/examples/pulse/`](docs/examples/pulse/) (even though Guidelines are #6 in this list). **Enforceable paths:** `.cursor/rules/*.mdc` at the repo root and `guidelines/**`. **Not canon:** `docs/examples/pulse/.cursor/rules/**`, `docs/examples/pulse/docs/guidelines/**`, any `docs/examples/lampto/**` (that tree is **not vendored**).
 

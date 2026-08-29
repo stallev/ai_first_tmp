@@ -9,14 +9,15 @@
 ## Обзор
 
 ```
-Экспорт boilerplate → Snapshot Pulse → Placeholders → P0…P6 → AWS/Neon/Vercel → P7+ фазы
+Экспорт boilerplate → Snapshot Pulse → Placeholders → Visual seed → P0…P6 → AWS/Neon/Vercel → P7+ фазы
 ```
 
 | Этап | Промпт / действие | Результат |
 |------|-------------------|-----------|
 | 0 | Ручная подготовка | Repo + snapshot + infra |
+| 0.5 | [`P1-html-prototype-claude-desktop.md`](prompts/P1-html-prototype-claude-desktop.md) | Seed HTML в `docs/prototypes/` (рекомендуется) |
 | P0 | [`P0-bootstrap.md`](prompts/P0-bootstrap.md) | AGENTS, T0 rules, структура `docs/` |
-| P1 | [`P1-html-prototype.md`](prompts/P1-html-prototype.md) | HTML prototype |
+| P1 | [`P1-html-prototype.md`](prompts/P1-html-prototype.md) | HTML prototype (ingest или create) |
 | P2 | [`P2-doc-registry.md`](prompts/P2-doc-registry.md) | Doc registry + methodology |
 | P3 | [`P3-wave-executor.md`](prompts/P3-wave-executor.md) | PRD, schema, contracts (W1–W14) |
 | P4 | [`P4-rules-guidelines.md`](prompts/P4-rules-guidelines.md) | T1 rules активны |
@@ -33,6 +34,7 @@
 - Аккаунты: **GitHub**, **Vercel**, **Neon**, **AWS** (S3 + IAM)
 - **Cursor** с доступом к Context7 (`/vercel/next.js` 16.3.x, Auth.js, Prisma)
 - Исходные материалы продукта: brief, roles, MVP scope (или `docs/default_docs/`)
+- **Рекомендуется до P1:** visual seed — один HTML в **`docs/prototypes/`** (не `docs/prototype/`). Генерация: [`prompts/P1-html-prototype-claude-desktop.md`](prompts/P1-html-prototype-claude-desktop.md) (Claude Desktop)
 
 ---
 
@@ -126,6 +128,29 @@ rg '\{\{' --glob '!node_modules' .
 | `docs/meta/*.template.md` | убрать `.template` (после P2) |
 
 **Claude Code:** корневой [`CLAUDE.md`](CLAUDE.md) — `@AGENTS.md` плюс указатель на generated `.claude/rules/*.md`. SoT MUST — только `.cursor/rules/*.mdc`; после копирования/правки `.mdc` — `npm run rules:sync` (или `node scripts/sync-claude-rules.mjs`). Не `@`-импортировать `.mdc`. Не править `.claude/rules/` руками. Playbook: [`docs/claude-code-cursor-rules-sync.md`](docs/claude-code-cursor-rules-sync.md). `scaffold/apps/web/CLAUDE.md` на P5 остаётся тонким `@AGENTS.md` (зеркало правил только в корне).
+
+---
+
+## Шаг 3.5 — Visual seed (рекомендуется до P1)
+
+Канонический каталог: **`docs/prototypes/`** (множественное число). Не использовать `docs/prototype/`.
+
+**Зачем:** зафиксировать токены и оболочку UI до того, как агент подставит эталон Pulse/Warm Forest. Прототип — visual reference (пункт 7 source-of-truth); PRD/contracts/rules остаются выше.
+
+**Минимум seed:** home/shell, 390px + `md`, семантические CSS-переменные в `:root` / `.dark` + `@theme`, стили разметки только утилитами Tailwind v4. Полный набор MVP-экранов не обязателен — их добирает P1.
+
+**Как сгенерировать:** в Claude Desktop вставьте [`prompts/P1-html-prototype-claude-desktop.md`](prompts/P1-html-prototype-claude-desktop.md), прикрепите спецификацию продукта и URL референса дизайн-системы. Сохраните результат как `docs/prototypes/{{MAIN_PROTOTYPE_HTML}}`.
+
+**Tailwind v4 без сборки** ([Play CDN](https://tailwindcss.com/docs/installation/play-cdn)):
+
+```html
+<script src="https://cdn.jsdelivr.net/npm/@tailwindcss/browser@4"></script>
+<style type="text/tailwindcss">
+     @theme inline { /* map --color-* → var(--token) */ }
+</style>
+```
+
+Локальный просмотр HTML требует сеть (CDN). P0 **не удаляет и не перезаписывает** существующие `docs/prototypes/*.html`.
 
 ---
 
@@ -259,6 +284,7 @@ Env `RESEND_API_KEY` — когда фаза email (P21 analog).
 - [ ] `npm run rules:check` pass
 - [ ] `docs/` tree created
 - [ ] Guidelines in `docs/guidelines/` (copy from boilerplate `guidelines/`)
+- [ ] Existing `docs/prototypes/*.html` preserved (if seed existed)
 
 ### После P2
 
@@ -316,6 +342,7 @@ my-new-project/
 | Ошибка | Решение |
 |--------|---------|
 | Прототип как единственный источник истины | Канон: Rules → AGENTS → Contracts → PRD; prototype = visual only |
+| Каталог `docs/prototype/` (ед. ч.) | Канон: **`docs/prototypes/`** + `{{MAIN_PROTOTYPE_HTML}}` |
 | T2 rules до Design Lab | Активировать только в P6 |
 | `@vercel/blob` для uploads | Только AWS S3 — ADR-007 |
 | Client-supplied S3 keys | `buildFileUploadObjectKey()` server-side |

@@ -134,7 +134,7 @@ PRD · ADR · Contract · Spec · Phase · Tasks · Guideline · Cursor Rule · 
 
 ## Agent notes
 
-- HTML prototype — **не** канон; при конфликте — PRD/schema
-- Context7 перед runtime docs: Next.js 16.3.3, Auth.js v5, Prisma v7
+- HTML prototype — **не** канон; путь `docs/prototypes/{{MAIN_PROTOTYPE_HTML}}`; при конфликте — PRD/schema
+- Context7 перед runtime docs: Next.js 16.3.3, Auth.js v5, Prisma v7; прототип: Tailwind v4 Play CDN (`/websites/tailwindcss`)
 - Одна сессия = одна doc wave или 1–3 файла внутри волны
 - DB-first: `database_schema_v1.md` до domain contracts

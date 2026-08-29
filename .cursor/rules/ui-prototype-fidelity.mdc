@@ -8,9 +8,9 @@ alwaysApply: false
 
 # Prototype & design-system fidelity
 
-**Visual source (subordinate to Cursor Rules / PRD):** [`Fitness_Platform_Prototype_v1.html`](docs/prototypes/Fitness_Platform_Prototype_v1.html)  
-**Landing `/` (P16):** [`Pulse Landing Page -Standalone-.html`](docs/prototypes/Pulse Landing Page -Standalone-.html) + [`public_landing_spec.md`](docs/implementation/mvp/specs/public_landing_spec.md)  
-**Token canon:** [`fitness-platform-design-system.md`](docs/default_docs/fitness-platform-design-system.md)  
+**Visual source (subordinate to Cursor Rules / PRD):** [`docs/prototypes/{{MAIN_PROTOTYPE_HTML}}`](docs/prototypes/{{MAIN_PROTOTYPE_HTML}})  
+**Optional landing HTML:** additional file in `docs/prototypes/` if product has a standalone marketing page (map in `prototype_route_mapping.md`)  
+**Token canon:** [`docs/default_docs/{{INTERIM_DESIGN_SYSTEM_DOC}}`](docs/default_docs/{{INTERIM_DESIGN_SYSTEM_DOC}}) (until UX-03 `visual_identity_contract.md`)  
 **Typography:** [`typography_text_guidelines.md`](docs/guidelines/typography_text_guidelines.md)
 
 ## Контракт
@@ -39,11 +39,11 @@ alwaysApply: false
 ## Исключения
 
 - Прототип противоречит **Cursor Rules**, **PRD** или **canonical routes** — побеждает более высокий источник истины (см. **project-context** §Source-of-truth).
-- **Runtime fonts (post-P17):** HTML prototype still names DM Serif Display + DM Sans; product uses **Source Serif 4 + Manrope** — match **type scale and tokens**, not prototype font-family strings.
+- **Runtime fonts:** if the HTML prototype names different families than the product design system, match **type scale and tokens**, not prototype `font-family` strings.
 - Третьи стороны (rich text, maps) — documented exception в PR/commit.
 
 ## Связанные правила
 
 - **ui-warm-forest-shadcn**, **react-one-component-per-file**, **ui-icons-lucide**
 
-Reference: Pulse (docs/examples/pulse) AGENTS.md «Static UX prototypes» — Pulse uses `Fitness_Platform_Prototype_v1.html`.
+Reference: Pulse snapshot `docs/examples/pulse/docs/prototypes/` — pattern only. This project: `docs/prototypes/{{MAIN_PROTOTYPE_HTML}}`.

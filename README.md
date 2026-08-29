@@ -29,8 +29,9 @@
 1. Скопируйте boilerplate в корень нового репозитория
 2. Заполните placeholders (см. [`PLACEHOLDERS.md`](PLACEHOLDERS.md))
 3. Поместите snapshot Pulse в `docs/examples/pulse/` (код + docs из fitapp)
-4. Запустите промпты по порядку: **P0 → P1 → P2 → P3-W* → P4 → P5 → P6 → P7+**
-5. Активируйте cursor rules по tier manifest: [`.cursor/rules/README.md`](.cursor/rules/README.md), затем `npm run rules:sync`
+4. **Рекомендуется:** visual seed в `docs/prototypes/` ([`prompts/P1-html-prototype-claude-desktop.md`](prompts/P1-html-prototype-claude-desktop.md))
+5. Запустите промпты по порядку: **P0 → P1 → P2 → P3-W* → P4 → P5 → P6 → P7+**
+6. Активируйте cursor rules по tier manifest: [`.cursor/rules/README.md`](.cursor/rules/README.md), затем `npm run rules:sync`
 
 ---
 
@@ -58,7 +59,7 @@
 │   ├── reference/                    → pulse_project_reference.md, stack patterns
 │   ├── claude-code-cursor-rules-sync.md
 │   └── examples/pulse/               → snapshot референса (заполнить вручную)
-├── prompts/                          → P0–P6 + orchestration
+├── prompts/                          → P0–P6 + Claude Desktop seed + orchestration
 ├── specs/                            → design_system_lab_spec.template.md
 └── scaffold/                         → пустой monorepo skeleton
 ```
