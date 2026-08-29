@@ -24,7 +24,7 @@ When {{PROJECT_NAME}} docs are silent — follow Pulse reference **architecture,
 
 ## Stack (baseline — full Pulse stack)
 
-- **Next.js** **16.3.0** (pinned) App Router, **TypeScript** — [ADR-002](docs/prds/07_governance/adr_002_next162_vercel_runtime_policy.template.md) (после W4: скопировать в `adr_002_….md`)
+- **Next.js** **16.3.x** (exact current patch — baseline **16.3.3**) App Router, **TypeScript** — [ADR-002](docs/prds/07_governance/adr_002_next162_vercel_runtime_policy.template.md) (после W4: скопировать в `adr_002_….md`)
 - **Instant Navigations:** `cacheComponents: true` + `partialPrefetching: true`; динамика за `<Suspense>` / `'use cache'`; `export const instant = false` только с задокументированной причиной
 - **Request interception:** **`proxy.ts`** (Next.js 16); `middleware.ts` — только временная миграция
 - **Hosting:** Vercel · **UI:** shadcn/ui + Tailwind CSS v4 ({{DESIGN_SYSTEM_NAME}} tokens)

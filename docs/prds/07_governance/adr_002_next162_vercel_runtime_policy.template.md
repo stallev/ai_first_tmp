@@ -1,4 +1,4 @@
-# ADR-002 — Next.js 16.3.0 runtime policy (Vercel) — template
+# ADR-002 — Next.js 16.3.x runtime policy (Vercel) — template
 
 **Статус:** TEMPLATE — после W4 скопировать в `adr_002_next162_vercel_runtime_policy.md` и заполнить проект.  
 **До W4:** Rules и Guidelines могут ссылаться на этот файл.
@@ -26,12 +26,12 @@ Agents must not treat Next.js 15 `middleware.ts` as the canonical interception f
 
 | Policy | Value |
 |--------|-------|
-| **Next.js version** | **`16.3.0` exactly** in `apps/web` `package.json` (`"next": "16.3.0"`); align `@next/third-parties` and `eslint-config-next` |
+| **Next.js version** | **Current 16.3.x patch, exact pin** — boilerplate/docs baseline **`16.3.3`**. In `apps/web` `package.json`: `"next": "16.3.3"` (no caret). Align `@next/third-parties` and `eslint-config-next` to the **same** patch. At **P5 scaffold:** `npm view next version` + Context7 `/vercel/next.js`; if latest is still 16.3.x and newer than this pin, use **that** patch. Bump 16.3 security/patch pins in the **same task**. **16.4+** requires an ADR amend. |
 | **React** | 19.x (peer of Next 16.3) |
 | **Hosting** | Vercel |
 | **Bundler** | Turbopack default (`next dev`, `next build`) |
 
-**Hard rule:** do not downgrade to Next.js 15.x or use floating `^16.x` without a new ADR.
+**Hard rule:** do not downgrade to Next.js 15.x or use floating `^16` / `^16.x` without a new ADR.
 
 ---
 
@@ -129,7 +129,7 @@ Detail: [`guidelines/nextjs/ai_loading_patterns.md`](../../../guidelines/nextjs/
 
 ## 7. Agent checklist
 
-- [ ] `package.json` pins `"next": "16.3.0"`
+- [ ] `package.json` pins `"next"` to the current **16.3.x** patch (baseline **`16.3.3`**; verify with `npm view next version` at P5)
 - [ ] `cacheComponents: true` then `partialPrefetching: true`
 - [ ] New route protection uses **`proxy.ts`**
 - [ ] `auth.config.ts` in proxy; `auth.ts` only in server handlers/actions

@@ -25,9 +25,10 @@ Software Architect (AI-first monorepo).
    docs/{default_docs,prototypes,reference,examples/pulse,meta,prds,design,guidelines,implementation/mvp/{contracts,specs,phases_tasks_descriptions,tasks,guides},architecture_learning_pack,incidents}
    ```
 5. Скопировать `guidelines/` из boilerplate → `docs/guidelines/`
-6. Активировать **T0 cursor rules** (5 files) → `.cursor/rules/`
+6. Активировать **T0 cursor rules** (скопировать `tiers/t0-always/*.mdc` кроме `*.template.mdc`) → `.cursor/rules/`
 7. Создать `docs/guidelines/README.md` index (из boilerplate)
 8. Добавить `.gitkeep` в пустые scaffold dirs
+9. `npm run rules:sync` (или `node scripts/sync-claude-rules.mjs`). Не править `.claude/rules/` руками.
 
 ## Forbidden
 - Implementation code (кроме config skeleton в P5)
@@ -36,9 +37,10 @@ Software Architect (AI-first monorepo).
 
 ## Verification
 - [ ] `AGENTS.md` exists, ссылается на methodology
-- [ ] `CLAUDE.md` exists at root, содержит `@AGENTS.md`
+- [ ] `CLAUDE.md` exists at root, содержит `@AGENTS.md` и указание не править `.claude/rules/` / не `@` на `.mdc`
 - [ ] `.cursor/rules/project-context.mdc` — no unreplaced `{{`
-- [ ] T0 rules (5) в `.cursor/rules/`
+- [ ] T0 rules в `.cursor/rules/` (без `*.template.mdc`)
+- [ ] `npm run rules:check` pass; `.claude/rules/` stem-match активных T0 `.mdc`
 - [ ] `docs/meta/` готов для P2
 - [ ] Guidelines скопированы (27 files)
 

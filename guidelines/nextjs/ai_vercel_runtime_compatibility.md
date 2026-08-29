@@ -1,7 +1,7 @@
-﻿# Vercel runtime compatibility for Next.js 16.3.0
+﻿# Vercel runtime compatibility for Next.js 16.3.3
 
 **Project:** Pulse — `apps/web`  
-**Technologies:** Next.js **16.3.0**, React 19, TypeScript, **Vercel**, Neon PostgreSQL  
+**Technologies:** Next.js **16.3.3**, React 19, TypeScript, **Vercel**, Neon PostgreSQL  
 **Canonical policy:** [ADR-002 template](../../docs/prds/07_governance/adr_002_next162_vercel_runtime_policy.template.md), [ADR-001](../../docs/prds/07_governance/adr_001_stack_and_runtime.md) (после W4)
 
 ---
@@ -12,7 +12,7 @@ The web app deploys on **Vercel**. Framework and hosting choices must align with
 
 **Project standard:**
 
-- **Next.js:** `16.3.0` (pinned in `apps/web/package.json`)
+- **Next.js:** `16.3.3` (pinned in `apps/web/package.json`)
 - **Hosting:** Vercel
 - **Bundler:** Turbopack (default)
 - **Request interception:** **`proxy.ts`** canonical; `middleware.ts` temporary migration only
@@ -43,7 +43,7 @@ The web app deploys on **Vercel**. Framework and hosting choices must align with
 
 ## 4. Practical guidance for AI agents
 
-- Assume **Vercel + Next.js 16.3.0** per ADR-002
+- Assume **Vercel + Next.js 16.3.3** per ADR-002
 - New interception → **`proxy.ts`** with `@{{PACKAGE_SCOPE}}/policy-edge` + `auth.config.ts` only
 - Use **Suspense** / **`loading.tsx`** for UX (Instant Navigations Stream — ADR-002 §9)
 - Do **not** apply Netlify-only or AWS Amplify SSR caveats to this codebase
@@ -56,7 +56,7 @@ The web app deploys on **Vercel**. Framework and hosting choices must align with
 | Area | Choice |
 |------|--------|
 | Hosting | **Vercel** |
-| Framework | Next.js **16.3.0** |
+| Framework | Next.js **16.3.3** |
 | Interception | **`proxy.ts`** |
 | Database | Neon PostgreSQL 17 |
 | Async / heavy work | Cron + jobs, not `unstable_after` |

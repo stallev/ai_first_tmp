@@ -1,7 +1,7 @@
 # {{PROJECT_NAME}} — Monorepo Agent Instructions
 
 **{{PROJECT_NAME}}** — {{PRODUCT_DESCRIPTION}}  
-Monorepo: **Next.js 16.3.0** App Router + Vercel + Neon PostgreSQL.
+Monorepo: **Next.js 16.3.3** App Router + Vercel + Neon PostgreSQL.
 
 **Methodology (обязательно):** [`docs/meta/ai_first_project_methodology.md`](docs/meta/ai_first_project_methodology.md) — цикл КОНТЕКСТ → ФАЗА → КОНТРАКТ → ЗАДАЧИ → ВЕРИФИКАЦИЯ.
 
@@ -63,8 +63,14 @@ Monorepo: **Next.js 16.3.0** App Router + Vercel + Neon PostgreSQL.
 1. Прочитать этот файл + `project-context.mdc`
 2. Определить фазу (`docs/implementation/mvp/phases_tasks_descriptions/P{N}_*.md`)
 3. Прочитать contracts для фазы
-4. **Перед написанием/правкой кода** — прочитать применимые `.cursor/rules/*.mdc` для затрагиваемой области (индекс: [`.cursor/rules/README.md`](.cursor/rules/README.md) или таблица в `app-conventions` skill). Эти файлы — enforceable и имеют приоритет над `docs/examples/pulse/**` при конфликте (Pulse — донор/референс, не источник истины).
-   Индекс в `.cursor/skills/app-conventions` может быть не виден Claude Code (в репозитории нет `.claude/skills/`) — при сомнении читать `.cursor/rules/` напрямую, не полагаясь только на skill.
+## Cursor vs Claude Code rules
+
+**SoT MUST:** `.cursor/rules/*.mdc` only (not `tiers/` until copied to the rules root). After any `.mdc` edit in this task: `npm run rules:sync`. Before commit: `npm run rules:check`. Mirror: `.claude/rules/*.md` — generated, in git, never hand-edit. Playbook: [`docs/claude-code-cursor-rules-sync.md`](docs/claude-code-cursor-rules-sync.md).
+
+Cursor `alwaysApply: false` without `globs` (e.g. `agent-code-review-subagent.mdc`) is requestable in Cursor; Claude Code treats a missing `paths` as always-on — do not “fix” the Claude file by hand.
+
+4. **Перед написанием/правкой кода** — прочитать применимые `.cursor/rules/*.mdc` для затрагиваемой области (индекс: [`.cursor/rules/README.md`](.cursor/rules/README.md) или таблица в `app-conventions` skill). Эти файлы — enforceable и имеют приоритет над `docs/examples/pulse/**` при конфликте (Pulse — донор/референс, не источник истины). Claude Code грузит зеркало `.claude/rules/*.md`, не `.mdc`.
+   Индекс в `.cursor/skills/app-conventions` может быть не виден Claude Code — при сомнении читать `.cursor/rules/` (или `.claude/rules/`) напрямую, не полагаясь только на skill.
 5. Выполнить чеклист `docs/implementation/mvp/tasks/P{N}_tasks.md`
 6. `npm run typecheck` + `npm run lint` перед DoD (обязательная ВЕРИФИКАЦИЯ). Runtime dual-view (`next-dev-loop`) — **только если пользователь явно попросил**; не auto.
 
@@ -90,7 +96,7 @@ Web detail: [`apps/web/AGENTS.md`](apps/web/AGENTS.md) § Skills.
 
 ## Stack (full Pulse)
 
-Next.js 16.3.0 · Vercel · Neon PG 17 · Prisma v7 · Auth.js v5 · Resend (post-MVP) · AWS S3 · Sentry · shadcn/ui · Tailwind v4 · Sonner
+Next.js 16.3.3 · Vercel · Neon PG 17 · Prisma v7 · Auth.js v5 · Resend (post-MVP) · AWS S3 · Sentry · shadcn/ui · Tailwind v4 · Sonner
 
 ## Repository status
 

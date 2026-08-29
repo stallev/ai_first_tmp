@@ -1,6 +1,6 @@
 # AI-First Monorepo Boilerplate
 
-Шаблон для создания новых проектов на стеке **Next.js 16.3.0 + Vercel + Neon PostgreSQL + Prisma v7 + Auth.js v5 + shadcn/ui + Tailwind v4**.
+Шаблон для создания новых проектов на стеке **Next.js 16.3.3 + Vercel + Neon PostgreSQL + Prisma v7 + Auth.js v5 + shadcn/ui + Tailwind v4**.
 
 **Методология:** [`docs/meta/ai_first_project_methodology.template.md`](docs/meta/ai_first_project_methodology.template.md)  
 **Bootstrap (пошагово):** [`BOOTSTRAP.md`](BOOTSTRAP.md)  
@@ -30,7 +30,7 @@
 2. Заполните placeholders (см. [`PLACEHOLDERS.md`](PLACEHOLDERS.md))
 3. Поместите snapshot Pulse в `docs/examples/pulse/` (код + docs из fitapp)
 4. Запустите промпты по порядку: **P0 → P1 → P2 → P3-W* → P4 → P5 → P6 → P7+**
-5. Активируйте cursor rules по tier manifest: [`.cursor/rules/README.md`](.cursor/rules/README.md)
+5. Активируйте cursor rules по tier manifest: [`.cursor/rules/README.md`](.cursor/rules/README.md), затем `npm run rules:sync`
 
 ---
 
@@ -39,7 +39,10 @@
 ```
 ├── BOOTSTRAP.md                      → пошаговый bootstrap нового проекта
 ├── AGENTS.template.md                → AGENTS.md после bootstrap
-├── CLAUDE.md                         → @AGENTS.md import (Claude Code entry point)
+├── CLAUDE.md                         → @AGENTS.md + Claude rules pointer
+├── package.json                      → rules:sync / rules:check
+├── scripts/sync-claude-rules.mjs
+├── .claude/rules/                    → generated from .mdc (git)
 ├── PLACEHOLDERS.md                   → список {{PLACEHOLDER}} для замены
 ├── .cursor/rules/                    → 29 rules (Pulse stack, parameterized)
 │   ├── tiers/                        → t0 / t1 / t2 — порядок активации
@@ -53,6 +56,7 @@
 │   ├── guidelines/README.md          → alias к guidelines/ (путь Pulse)
 │   ├── meta/                         → methodology + registry templates
 │   ├── reference/                    → pulse_project_reference.md, stack patterns
+│   ├── claude-code-cursor-rules-sync.md
 │   └── examples/pulse/               → snapshot референса (заполнить вручную)
 ├── prompts/                          → P0–P6 + orchestration
 ├── specs/                            → design_system_lab_spec.template.md
@@ -70,7 +74,8 @@
 | [`docs/general/`](docs/general/README.md) | Senior deep dives; нормы синтезированы в guidelines/rules |
 | [`docs/general/ai_agent_ui_ux_guideline.md`](docs/general/ai_agent_ui_ux_guideline.md) | FX-1–FX-10, overlay tree, pre-merge UI checklist |
 | [`docs/examples/pulse/`](docs/examples/pulse/) | Reference: architecture, contracts, phases, code patterns |
-| [`CLAUDE.md`](CLAUDE.md) | Claude Code entry point — `@AGENTS.md` import, не дублировать правила |
+| [`CLAUDE.md`](CLAUDE.md) | Claude Code: `@AGENTS.md` + generated `.claude/rules/` (не править зеркало) |
+| [`docs/claude-code-cursor-rules-sync.md`](docs/claude-code-cursor-rules-sync.md) | Playbook Cursor `.mdc` → Claude `.md` (`rules:sync` / `rules:check`) |
 
 ### Practices из `docs/general/` → guidelines
 
@@ -100,7 +105,7 @@
 
 | Компонент | Технология |
 |-----------|-----------|
-| Framework | Next.js **16.3.0** (pinned), App Router, `proxy.ts` |
+| Framework | Next.js **16.3.x** (exact current patch, baseline **16.3.3**), App Router, `proxy.ts` |
 | Hosting | Vercel |
 | DB | Neon PostgreSQL 17 + Prisma v7 |
 | Auth | Auth.js v5, Credentials, JWT |

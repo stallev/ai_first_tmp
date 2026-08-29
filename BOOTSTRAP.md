@@ -31,7 +31,7 @@
 - **Node.js** 20+ (LTS)
 - **npm** 10+ (workspaces)
 - Аккаунты: **GitHub**, **Vercel**, **Neon**, **AWS** (S3 + IAM)
-- **Cursor** с доступом к Context7 (Next.js 16.2, Auth.js, Prisma)
+- **Cursor** с доступом к Context7 (`/vercel/next.js` 16.3.x, Auth.js, Prisma)
 - Исходные материалы продукта: brief, roles, MVP scope (или `docs/default_docs/`)
 
 ---
@@ -125,7 +125,7 @@ rg '\{\{' --glob '!node_modules' .
 | `project-context.template.mdc` | `.cursor/rules/project-context.mdc` |
 | `docs/meta/*.template.md` | убрать `.template` (после P2) |
 
-**Claude Code (`CLAUDE.md`):** не создавать вручную — статичный `@AGENTS.md`-импорт уже в boilerplate (`CLAUDE.md` в корне, `scaffold/apps/web/CLAUDE.md` для `apps/web/` на P5). Не редактировать и не дублировать туда содержимое Cursor Rules — единственный источник истины остаётся Cursor Rules → AGENTS.md.
+**Claude Code:** корневой [`CLAUDE.md`](CLAUDE.md) — `@AGENTS.md` плюс указатель на generated `.claude/rules/*.md`. SoT MUST — только `.cursor/rules/*.mdc`; после копирования/правки `.mdc` — `npm run rules:sync` (или `node scripts/sync-claude-rules.mjs`). Не `@`-импортировать `.mdc`. Не править `.claude/rules/` руками. Playbook: [`docs/claude-code-cursor-rules-sync.md`](docs/claude-code-cursor-rules-sync.md). `scaffold/apps/web/CLAUDE.md` на P5 остаётся тонким `@AGENTS.md` (зеркало правил только в корне).
 
 ---
 
@@ -135,9 +135,9 @@ rg '\{\{' --glob '!node_modules' .
 
 | Когда | Действие |
 |-------|----------|
-| **P0** | Скопировать `tiers/t0-always/*.mdc` → `.cursor/rules/` + `project-context.mdc` |
-| **P4** | + `tiers/t1-implementation/*.mdc` (7 rules) |
-| **P6** | + `tiers/t2-ui/*.mdc` (15 rules) |
+| **P0** | Скопировать `tiers/t0-always/*.mdc` → `.cursor/rules/` + `project-context.mdc` (не копировать `*.template.mdc`), затем `npm run rules:sync` |
+| **P4** | + `tiers/t1-implementation/*.mdc`, затем `npm run rules:sync` |
+| **P6** | + `tiers/t2-ui/*.mdc`, затем `npm run rules:sync` |
 
 Итого: **5 → 12 → 27** active rules (+ `project-context` = 27 total rule files active).
 
@@ -254,8 +254,9 @@ Env `RESEND_API_KEY` — когда фаза email (P21 analog).
 ### После P0
 
 - [ ] `AGENTS.md` exists
-- [ ] `CLAUDE.md` exists at root (`@AGENTS.md` import)
-- [ ] T0 rules (5) in `.cursor/rules/`
+- [ ] `CLAUDE.md` exists at root (`@AGENTS.md` + Claude rules pointer)
+- [ ] T0 rules in `.cursor/rules/`
+- [ ] `npm run rules:check` pass
 - [ ] `docs/` tree created
 - [ ] Guidelines in `docs/guidelines/` (copy from boilerplate `guidelines/`)
 
@@ -268,14 +269,17 @@ Env `RESEND_API_KEY` — когда фаза email (P21 analog).
 
 - [ ] `npm run typecheck` (root)
 - [ ] `npm run lint` (root)
+- [ ] `npm run rules:check`
 - [ ] `cd apps/web && npm run build`
 - [ ] `proxy.ts` present, not legacy middleware patterns
 - [ ] `apps/web/CLAUDE.md` exists (`@AGENTS.md` import)
+- [ ] `next` pinned to current 16.3.x patch (no `^16`)
 
 ### После P6
 
 - [ ] `/design-system` renders 390px + md
 - [ ] T2 rules active (27 total)
+- [ ] `npm run rules:check` pass
 - [ ] Product routes don't import `design-lab/`
 
 ---
@@ -285,8 +289,9 @@ Env `RESEND_API_KEY` — когда фаза email (P21 analog).
 ```
 my-new-project/
 ├── AGENTS.md
-├── CLAUDE.md                 # @AGENTS.md import (Claude Code entry point)
-├── apps/web/                 # Next.js 16.2.6
+├── CLAUDE.md                 # @AGENTS.md + pointer to generated .claude/rules
+├── scripts/sync-claude-rules.mjs
+├── apps/web/                 # Next.js 16.3.x (pin 16.3.3 baseline)
 │   ├── AGENTS.md
 │   └── CLAUDE.md             # @AGENTS.md import
 ├── packages/{domain,policy,db}/
@@ -297,8 +302,10 @@ my-new-project/
 │   ├── prototypes/
 │   ├── guidelines/
 │   ├── implementation/mvp/
+│   ├── claude-code-cursor-rules-sync.md
 │   └── examples/pulse/       # read-only reference
-├── .cursor/rules/            # 27 rules when complete
+├── .cursor/rules/            # 27 rules when complete (SoT)
+├── .claude/rules/            # generated mirror — do not edit
 └── prompts/                  # keep for onboarding new agents
 ```
 

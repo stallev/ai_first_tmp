@@ -3,13 +3,13 @@
 ## Document Version: 1.0 (Pulse)
 **Created:** 28 May 2026  
 **Project:** Pulse — `apps/web`  
-**Stack:** Next.js **16.2.6** App Router, React 19, **Vercel**
+**Stack:** Next.js **16.3.3** App Router, React 19, **Vercel**
 
 > **Scope:** lazy loading of **Client Components** and heavy **client-only** dependencies. Complements server-side streaming in [`ai_loading_patterns.md`](./ai_loading_patterns.md) and RSC boundaries in [`ai_component_guidelines.md`](../react/ai_component_guidelines.md).
 
 **Deep dive:** [`docs/general/04-code-splitting.md`](../../docs/general/04-code-splitting.md) — bundle theory, tree shaking, preload/prefetch.
 
-**Official API (verify via Context7 `/vercel/next.js/v16.2.2`):** [Next.js: Lazy loading](https://nextjs.org/docs/app/building-your-application/optimizing/lazy-loading)
+**Official API (verify via Context7 `/vercel/next.js`):** [Next.js: Lazy loading](https://nextjs.org/docs/app/building-your-application/optimizing/lazy-loading)
 
 ---
 
@@ -266,4 +266,4 @@ Prioritized by impact. Re-run after major UI deps or new shared client primitive
 
 ---
 
-**Next.js Version:** 16.2.6 · **Hosting:** Vercel · **Reference adapted from:** Pulse reference BSFY `ai_client_lazy_loading.md`
+**Next.js Version:** 16.3.3 · **Hosting:** Vercel · **Reference adapted from:** Pulse reference BSFY `ai_client_lazy_loading.md`

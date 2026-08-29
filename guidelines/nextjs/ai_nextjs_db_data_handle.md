@@ -1,6 +1,6 @@
 ﻿# Next.js Data Access: Server Actions vs Route Handlers (Pulse)
 
-**Version:** 1.2 · **Stack:** Next.js **16.2.6** App Router, React 19, Prisma v7, Neon, Vercel  
+**Version:** 1.2 · **Stack:** Next.js **16.3.3** App Router, React 19, Prisma v7, Neon, Vercel  
 **Methodology:** [`docs/meta/ai_first_project_methodology.md`](../../docs/meta/ai_first_project_methodology.md)  
 **Runtime:** [ADR-002 template](../../docs/prds/07_governance/adr_002_next162_vercel_runtime_policy.template.md)  
 **Reference:** Pulse snapshot [`ai_nextjs_db_data_handle.md`](../../docs/examples/pulse/docs/guidelines/nextjs/ai_nextjs_db_data_handle.md)  
@@ -36,7 +36,7 @@ AI agents **MUST** follow this when implementing data access or mutations.
 
 ---
 
-## 4. Async Request APIs (Next.js 16.2.6)
+## 4. Async Request APIs (Next.js 16.3.3)
 
 ```ts
 const cookieStore = await cookies();

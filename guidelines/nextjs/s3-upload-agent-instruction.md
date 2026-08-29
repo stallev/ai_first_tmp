@@ -311,4 +311,4 @@ Orphan: S3 object or `pending` row where client dropped after PUT but before con
 
 ---
 
-**Last updated:** May 2026 · **Pulse** · Next.js 16.2.6 / Vercel · S3 presigned URLs
+**Last updated:** May 2026 · **Pulse** · Next.js 16.3.3 / Vercel · S3 presigned URLs

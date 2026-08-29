@@ -41,7 +41,7 @@ UI-специфичные уточнения к канону:
 | Sheet / Dialog / Field | `/websites/ui_shadcn` | `Sheet` bottom vs `Dialog` centered; `Field`, `FieldLabel`, `FieldError`; `aria-invalid`; focus trap |
 | Forms + validation | `/websites/ui_shadcn` | `FieldGroup`, submit/cancel footer, react-hook-form + Field |
 | React optimistic / transitions | `/reactjs/react.dev` | `useTransition`, `useOptimistic`, Rules of Hooks |
-| Next.js App Router | `/vercel/next.js/v16.2.2` | RSC boundary, `'use client'`, streaming |
+| Next.js App Router | `/vercel/next.js` | RSC boundary, `'use client'`, streaming |
 | Time / date pickers (M3) | `/websites/m3_material_io` | Time picker modality, 48dp targets, docked vs modal input |
 | Toast | `/emilkowalski/sonner` | `Toaster`, `duration`, `position` |
 

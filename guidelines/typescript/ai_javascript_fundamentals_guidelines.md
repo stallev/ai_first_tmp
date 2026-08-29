@@ -1,6 +1,6 @@
 # JavaScript/TypeScript fundamentals — Pulse
 
-**Stack:** Node.js (Next.js **16.2.6** runtime), TypeScript strict mode, npm workspaces monorepo  
+**Stack:** Node.js (Next.js **16.3.3** runtime), TypeScript strict mode, npm workspaces monorepo  
 **Related:** [ai_typescript_monorepo_guidelines.md](./ai_typescript_monorepo_guidelines.md) (package boundaries, mutation ADT — this doc does not repeat those)
 
 Scope: general JS/TS language mechanics that TypeScript's type system does **not** catch at compile time, filtered to patterns that plausibly prevent a real bug in this stack. Not a JS tutorial — skip anything a strict-TS/React-hooks codebase already makes moot (e.g. classic `this`-binding confusion, which does not occur in hooks-only React code; see [ai_react_hooks_guidelines.md](../react/ai_react_hooks_guidelines.md)).

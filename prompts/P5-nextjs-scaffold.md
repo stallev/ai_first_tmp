@@ -13,22 +13,22 @@ Senior Fullstack Developer (Next.js 16 + PostgreSQL + monorepo).
 - `docs/examples/pulse/` — apps/web, packages/ structure
 - [`scaffold/`](../scaffold/) boilerplate dirs
 - `apps/web/AGENTS.template.md`
-- Context7: `/vercel/next.js/v16.2.2`, `/websites/prisma_io`, `/websites/authjs_dev`
+- Context7: `/vercel/next.js`, `/websites/prisma_io`, `/websites/authjs_dev`
 
 ## Task
-1. **Monorepo root:** package.json workspaces, `npm run typecheck`, `npm run lint`
-2. **Git commit tooling:** скопировать из [`scaffold/`](../scaffold/) → `commitlint.config.mjs`, `.husky/`; установить devDeps и scripts по **`.cursor/rules/agent-commit-pipeline.mdc` § Git tooling setup**
+1. **Monorepo root:** package.json workspaces, `npm run typecheck`, `npm run lint`. **Keep** existing `rules:sync` / `rules:check` (do not drop them when adding workspaces).
+2. **Git commit tooling:** скопировать из [`scaffold/`](../scaffold/) → `commitlint.config.mjs`, `.husky/`; установить devDeps и scripts по **`.cursor/rules/agent-commit-pipeline.mdc` § Git tooling setup**. Optional: husky pre-commit also runs `npm run rules:check`.
 3. **packages/db:** Prisma schema from `database_schema_v1.md`, Neon URLs
 4. **packages/domain:** mutation codes scaffold, ports
 5. **packages/policy/edge + server:** empty policy stubs
 6. **apps/web:**
-   - Next.js **16.2.6** pinned
+   - Next.js **current 16.3.x patch** — baseline **16.3.3**. Confirm with `npm view next version` + Context7 `/vercel/next.js`; if latest is still 16.3.x, pin **that** exact version. Align `@next/third-parties` and `eslint-config-next`. No `^16`.
    - `src/proxy.ts` (NOT middleware.ts for new code)
    - `src/data/`, `src/lib/`, `src/components/{atoms,ui,design-lab}/`
    - Auth.js v5 Credentials scaffold
    - Sentry stub (`@sentry/nextjs`)
    - `globals.css` with token placeholders
-7. Rename `AGENTS.template.md` → root `AGENTS.md` и `apps/web/AGENTS.template.md` → `apps/web/AGENTS.md`; скопировать `scaffold/apps/web/CLAUDE.md` → `apps/web/CLAUDE.md` (статичный `@AGENTS.md`-импорт, без изменений)
+7. Rename `AGENTS.template.md` → root `AGENTS.md` и `apps/web/AGENTS.template.md` → `apps/web/AGENTS.md`; скопировать `scaffold/apps/web/CLAUDE.md` → `apps/web/CLAUDE.md` (статичный `@AGENTS.md`-импорт, без изменений). Корневой `CLAUDE.md` не дублировать MUST — зеркало `.claude/rules/`.
 8. Env example: `DATABASE_URL`, `DIRECT_URL`, `AUTH_SECRET`, S3 (`AWS_IAM_*`, `S3_BUCKET_*`), Sentry vars — см. [`BOOTSTRAP.md`](../BOOTSTRAP.md) §6–§10, [`ai_s3_file_upload_guidelines.md`](../guidelines/nextjs/ai_s3_file_upload_guidelines.md)
 9. Создать `.cursor/skills/app-conventions/SKILL.md` — **проектный скилл поверх cursor rules**:
    - Frontmatter: `name: app-conventions`; description без слов `performance`/`optimization`/`bundle`
@@ -39,7 +39,7 @@ Senior Fullstack Developer (Next.js 16 + PostgreSQL + monorepo).
    - Spec: [`docs/project-react-skill-requirements.md`](../docs/project-react-skill-requirements.md)
 
 ## Stack (full Pulse — all required)
-Next.js 16.2.6 · Vercel · Neon · Prisma v7 · Auth.js v5 · AWS S3 · Resend (schema-only MVP) · Sentry · shadcn · Tailwind v4 · Sonner
+Next.js 16.3.3 · Vercel · Neon · Prisma v7 · Auth.js v5 · AWS S3 · Resend (schema-only MVP) · Sentry · shadcn · Tailwind v4 · Sonner
 
 ## Forbidden
 - Business feature screens (→ P01+ phases)
@@ -47,6 +47,8 @@ Next.js 16.2.6 · Vercel · Neon · Prisma v7 · Auth.js v5 · AWS S3 · Resend 
 - `@{{PACKAGE_SCOPE}}/policy-server` in proxy.ts
 
 ## Verification
+- [ ] `next` in `apps/web/package.json` is exact current 16.3.x (baseline 16.3.3; verified via `npm view next version`)
+- [ ] root `package.json` still has `rules:sync` / `rules:check`
 - [ ] `npm run typecheck` pass
 - [ ] `npm run lint` pass
 - [ ] `next build` pass (minimal pages OK)
@@ -56,6 +58,7 @@ Next.js 16.2.6 · Vercel · Neon · Prisma v7 · Auth.js v5 · AWS S3 · Resend 
 - [ ] Скилл ссылается на `.cursor/rules/*.mdc`, не дублирует их содержимое
 - [ ] `apps/web/AGENTS.md` содержит секцию `## Skills` со ссылкой на `app-conventions`
 - [ ] `apps/web/CLAUDE.md` exists, содержит `@AGENTS.md`
+- [ ] `npm run rules:check` pass
 - [ ] commitlint + husky: `echo "main: chore: test" | npx commitlint` pass; `.husky/commit-msg` в репо
 
 ## Next

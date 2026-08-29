@@ -9,7 +9,7 @@
 **Зависит от:** [`visual_identity_contract.md`](../../../design/visual_identity_contract.md), [`styleguide.md`](../../../design/styleguide.md), [`typography_text_guidelines.md`](../../../guidelines/typography_text_guidelines.md)  
 **Связанные документы:** [`global_shell_spec.md`](./global_shell_spec.md), [`prototype_route_mapping.md`](../../../design/prototype_route_mapping.md), [`ux_ui_principles.md`](../../../design/ux_ui_principles.md), [`accessibility_requirements.md`](../../../design/accessibility_requirements.md)
 
-**Context7 verified:** Next.js 16.2 — route groups `(folder)` не попадают в URL; nested `layout.tsx` через `children` (`/vercel/next.js/v16.2.2`).
+**Context7 verified:** Next.js 16 — route groups `(folder)` не попадают в URL; nested `layout.tsx` через `children` (`/vercel/next.js`).
 
 ---
 
@@ -88,7 +88,7 @@ Implementation-spec для AI-агента: реализация **shared UI pri
 
 | Rule file | Что проверять при реализации |
 |-----------|------------------------------|
-| [`project-context.mdc`](../../../../.cursor/rules/project-context.mdc) | Next.js **16.2.6**, {{DESIGN_SYSTEM_NAME}}, не расширять beyond P01 без фазы |
+| [`project-context.mdc`](../../../../.cursor/rules/project-context.mdc) | Next.js **16.3.3**, {{DESIGN_SYSTEM_NAME}}, не расширять beyond P01 без фазы |
 | [`product-docs-alignment.mdc`](../../../../.cursor/rules/product-docs-alignment.mdc) | Обновить `canonical_routes.md` при добавлении `/design-system` |
 | [`typescript-monorepo-types.mdc`](../../../../.cursor/rules/typescript-monorepo-types.mdc) | `npm run typecheck` после scaffold packages; no ad-hoc types in atoms |
 | [`ai-dry-deduplication.mdc`](../../../../.cursor/rules/ai-dry-deduplication.mdc) | Один CVA source (`buttonVariants`, `contentTextVariants`); matrix in `lib/design-lab/` |
@@ -111,7 +111,7 @@ Implementation-spec для AI-агента: реализация **shared UI pri
 
 | Rule file | Что проверять |
 |-----------|---------------|
-| [`nextjs-vercel-app-router.mdc`](../../../../.cursor/rules/nextjs-vercel-app-router.mdc) | `next@16.2.6`; async `params`/`searchParams` if used; no Next 15 patterns |
+| [`nextjs-vercel-app-router.mdc`](../../../../.cursor/rules/nextjs-vercel-app-router.mdc) | `next@16.3.3`; async `params`/`searchParams` if used; no Next 15 patterns |
 | [`app-router-streaming-loading.mdc`](../../../../.cursor/rules/app-router-streaming-loading.mdc) | Design Lab — static page; `loading.tsx` optional (simple skeleton) |
 
 ### Не применяются к Design Lab (но применяются к Button в product forms)
@@ -244,7 +244,7 @@ Implementation-spec для AI-агента: реализация **shared UI pri
 
 **Enforcement:** Cursor Rules **ui-{{DESIGN_SYSTEM_SLUG}}-shadcn** §Design Lab catalog, **react-logic-presentation**, **react-ui-components**, **ui-prototype-fidelity**.
 
-**Context7 verified:** route group `(dev)` не попадает в URL — `/design-system` maps to `app/(dev)/design-system/page.tsx` ([Next.js v16.2 route groups](https://github.com/vercel/next.js/blob/v16.2.2/docs/01-app/03-api-reference/03-file-conventions/route-groups.mdx)).
+**Context7 verified:** route group `(dev)` не попадает в URL — `/design-system` maps to `app/(dev)/design-system/page.tsx` ([Next.js route groups](https://nextjs.org/docs/app/api-reference/file-conventions/route-groups)).
 
 ### Adaptation map (reference kit → apps/web)
 
@@ -399,7 +399,7 @@ Tokenize shadcn primitives to **{{DESIGN_SYSTEM_NAME}}** / prototype parity. Com
 | Задача | Context7 library (приоритет) | Query focus |
 |--------|------------------------------|-------------|
 | shadcn/Radix primitives | `/websites/ui_shadcn` | Component API, `Field`/`aria-invalid`, Dialog/Sheet focus trap, Tabs |
-| Next.js App Router / RSC | `/vercel/next.js/v16.2.2` | `'use client'` boundary, route groups, Server Components |
+| Next.js App Router / RSC | `/vercel/next.js` | `'use client'` boundary, route groups, Server Components |
 | Forms + a11y | `/websites/ui_shadcn` + [`ai_semantics_a11y_guidelines.md`](../../../guidelines/react/ai_semantics_a11y_guidelines.md) | labels, `aria-describedby`, keyboard |
 | Calendar / date UI | `/websites/ui_shadcn` | `Calendar`, selection, disabled dates |
 
@@ -582,7 +582,7 @@ apps/web/src/app/
 | Property | Value |
 |----------|-------|
 | **URL** | `/design-system` |
-| **Route group** | `(dev)` — не в URL ([Next.js route groups](https://github.com/vercel/next.js/blob/v16.2.2/docs/01-app/03-api-reference/03-file-conventions/route-groups.md)) |
+| **Route group** | `(dev)` — не в URL ([Next.js route groups](https://nextjs.org/docs/app/api-reference/file-conventions/route-groups)) |
 | **Auth** | Public locally; **blocked in production** |
 | **App shell** | **MUST NOT** wrap in `(client)`/`(admin)` AppShell — standalone minimal layout |
 
@@ -724,7 +724,7 @@ Populate from [`prototype_route_mapping.md`](../../../design/prototype_route_map
 - [ ] Read § **Component catalog placement & Phase 2–3 inventory** for target paths + FAANG contract
 - [ ] Open prototype screens listed in § Prototype anchors + inventory Prototype column
 - [ ] **Context7:** resolve + query docs for components in scope (§ Agent prerequisites — Context7)
-- [ ] Confirm `apps/web` on Next **16.2.6** per `package.json`
+- [ ] Confirm `apps/web` on Next **16.3.3** per `package.json`
 
 ### Step 1 — Tokens
 

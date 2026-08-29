@@ -2,7 +2,7 @@
 
 > Monorepo context: [`../../AGENTS.md`](../../AGENTS.md)
 
-**{{PROJECT_NAME}} Web** — Next.js **16.3.0** App Router, тонкий BFF для маркетплейса фитнес-тренеров.  
+**{{PROJECT_NAME}} Web** — Next.js **16.3.3** App Router, тонкий BFF для маркетплейса фитнес-тренеров.  
 Hosting: **Vercel** · UI: **shadcn/ui + Tailwind CSS v4** (Warm Forest).
 
 <!-- BEGIN:nextjs-agent-rules -->
@@ -19,7 +19,7 @@ This is **not** the Next.js from training data. APIs, conventions, and file stru
 
 | Package | Version | Notes |
 |---------|---------|-------|
-| `next` | **16.3.0** (pinned) | No Next 15 patterns; no floating `^16` without ADR |
+| `next` | **16.3.3** (pinned) | No Next 15 patterns; no floating `^16` without ADR |
 | `react` / `react-dom` | 19.x | Server Components by default |
 | `tailwindcss` | v4 | Semantic tokens in `src/app/globals.css` |
 
@@ -154,7 +154,7 @@ Skill **`next-dev-loop`**: confirm the feature works in a live `next dev` by cro
 
 ### Manual verification checklist (web)
 
-- [ ] `next` pinned to **16.3.0** in `package.json`
+- [ ] `next` pinned to **16.3.3** in `package.json`
 - [ ] New interception in **`src/proxy.ts`**, not Next 15 `middleware.ts` patterns
 - [ ] No `@{{PACKAGE_SCOPE}}/policy-server` import in `proxy.ts` / `middleware.ts`
 - [ ] Routes match [`canonical_routes.md`](../../docs/design/canonical_routes.md)

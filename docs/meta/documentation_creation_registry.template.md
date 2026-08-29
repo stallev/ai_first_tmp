@@ -43,6 +43,7 @@
 | `docs/architecture_learning_pack/01_architecture_overview.md` | Канон |
 | `docs/default_docs/*` | Interim archive — только читать при миграции |
 | `guidelines/**` | Канон реализации — ссылаться, не дублировать |
+| `docs/claude-code-cursor-rules-sync.md` | Канон механизма Cursor `.mdc` → Claude `.md` (`npm run rules:sync`) — **не пересоздавать в P2** |
 
 ---
 
@@ -221,7 +222,7 @@
 
 | Тема | Library | Что проверить |
 |------|---------|---------------|
-| Next.js 16 | `/vercel/next.js/v16.2.2` | `proxy.ts`, async `cookies`/`headers`/`params` |
+| Next.js 16 | `/vercel/next.js` | `proxy.ts`, async `cookies`/`headers`/`params` |
 | Auth.js v5 | `/websites/authjs_dev` | Credentials, JWT, role in token |
 | Prisma + Neon | `/websites/prisma_io` | `DATABASE_URL`, `DIRECT_URL`, migrate deploy |
 

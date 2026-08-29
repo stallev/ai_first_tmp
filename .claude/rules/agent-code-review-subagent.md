@@ -1,0 +1,125 @@
+---
+description: Run readonly generalPurpose subagent on local diff; structured Blockers/Suggestions. Standalone review or pre-commit (via agent-commit-pipeline). Do NOT use bugbot.
+---
+# Code review subagent
+
+**Commit orchestration:** [`agent-commit-pipeline.mdc`](agent-commit-pipeline.mdc) — вызывает этот rule в **pre-commit** mode перед `git commit`.
+
+## Запрещено: bugbot
+
+**Не вызывать** `subagent_type: "bugbot"` — платная функция Cursor.
+
+Review выполнять через **`generalPurpose`** subagent (`readonly: true`). Skills `review-bugbot` / `review-security` **не использовать**.
+
+## Triggers
+
+| Mode | Когда | Threshold |
+|------|-------|-----------|
+| **standalone** | Пользователь просит review («review diff», «проверь изменения», `@agent-code-review-subagent`) | **Игнорировать** — всегда выполнять review |
+| **pre-commit** | Шаг 3 commit pipeline (`agent-commit-pipeline.mdc`) | Применять threshold § Pre-commit threshold |
+
+Standalone review **не** ведёт к commit. Subagent **не правит код** — только находки; исправления — основной агент (или по запросу пользователя).
+
+## Pre-commit threshold
+
+Review **можно пропустить** (только pre-commit mode), если **оба** условия:
+
+- Diff ≤ 10 строк (added + removed, `git diff --staged --shortstat`)
+- Diff **не** затрагивает sensitive zones (§ ниже)
+
+Sensitive zone → review **обязателен** независимо от размера.
+
+| Diff | Review? |
+|------|---------|
+| Опечатка в комментарии, 1 строка | Нет |
+| Текст кнопки UI, 3 строки | Нет |
+| 1 строка в `lib/auth/session.ts` | **Да** |
+| Новый компонент, 80 строк | Да |
+
+## Sensitive zones
+
+| Zone |
+|------|
+| `**/auth/**`, `**/api/**` |
+| `packages/db/**`, `packages/policy/**`, `**/migrations/**` |
+| `proxy.ts`, `middleware.ts` |
+| env/security config (CSP, cookies, `.env*`) |
+
+## Diff scope
+
+| Mode | Default scope | Override |
+|------|---------------|----------|
+| pre-commit | staged diff (`git diff --staged`) | — |
+| standalone | uncommitted / working tree | full branch — если пользователь просит review ветки / PR scope |
+
+## Subagent invocation
+
+- Cursor `Task` tool: `subagent_type: "generalPurpose"`, `readonly: true`, `run_in_background: false`
+- **Не** `bugbot`; **не** Background Agent; **не** «новый чат вручную»
+
+Prompt для Task:
+
+```text
+Review the local diff in <absolute repo root> before commit.
+
+Scope: <staged only | uncommitted | branch vs main — по режиму>
+
+Return structured markdown:
+## Review Result
+### Blockers — [file:line] issue — rule reference
+### Suggestions — [file:line] optional improvement
+
+Checklist:
+1. Logical bugs, edge cases, diff vs task intent
+2. AGENTS.md + .cursor/rules violations (cite rule name)
+3. Next.js 16 / React 19 anti-patterns ('use client', useEffect, useOptimistic, barrel imports)
+4. <If sensitive zone: secrets, API validation, XSS, cookie httpOnly/secure>
+
+Do NOT edit files. If no issues: "No blockers or suggestions found."
+```
+
+Sensitive zone → добавить в prompt пункт 4 (security checklist); **отдельный bugbot/security-review subagent не вызывать**.
+
+## Checklist (structured — не «оцени код»)
+
+1. **Логические баги** — неверные условия, off-by-one, diff ≠ описание задачи
+2. **Конвенции** — AGENTS.md + `.cursor/rules/*.mdc` (находка **со ссылкой на правило**)
+3. **Next.js 16 / React 19** — лишний `'use client'`; `useEffect` vs derived state; `useOptimistic` / `'use cache'`; barrel imports
+4. **Security** *(sensitive zones)* — секреты; нет валидации API; XSS; cookies без `httpOnly`/`secure`
+
+LLM review **не заменяет** `npm run typecheck`, ESLint, тесты.
+
+## Output format
+
+```markdown
+## Review Result
+
+### Blockers
+- [файл:строка] Описание — ссылка на правило/причина
+
+### Suggestions
+- [файл:строка] Описание — необязательно
+```
+
+Если находок нет: `No blockers or suggestions found.`
+
+| Severity | Критерий |
+|----------|----------|
+| `blocker` | Баг, явное нарушение правила, security red flag |
+| `suggestion` | Стиль, опциональные улучшения |
+
+После standalone review — краткая таблица для пользователя: Severity · Location · Finding.
+
+## Disposition
+
+| Result | pre-commit | standalone |
+|--------|------------|------------|
+| Blocker | Исправить до commit; re-review если правка нетривиальна | Доложить пользователю; fix **только по запросу** |
+| Suggestions only | Можно commit; принять / отложить / отклонить | Доложить; fix по запросу |
+| No findings | Продолжить commit pipeline | Статус «review found no issues» |
+
+Не запускать commit после standalone review, если пользователь явно не просил commit.
+
+## Related
+
+- **agent-commit-pipeline** — pre-commit orchestration

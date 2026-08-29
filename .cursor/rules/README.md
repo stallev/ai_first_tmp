@@ -11,6 +11,10 @@
 2. Переименовать `project-context.template.mdc` → `project-context.mdc` после заполнения placeholders
 3. T2 rules **не включать** до завершения P6 (Design System Lab)
 
+## Claude Code mirror
+
+После любой правки или копирования `.mdc` в **корень** `.cursor/rules/` (не `tiers/`): `npm run rules:sync`. Зеркало: [`.claude/rules/*.md`](../../.claude/rules/) — **не править руками**. Не синкать `*.template.mdc`. Playbook: [`docs/claude-code-cursor-rules-sync.md`](../../docs/claude-code-cursor-rules-sync.md). CI: `npm run rules:check`.
+
 ---
 
 ## T0 — Always applied (bootstrap, день 0)
@@ -33,7 +37,7 @@
 
 | Rule | Назначение |
 |------|------------|
-| `nextjs-vercel-app-router.mdc` | Next 16.3.0, `proxy.ts`, Instant Navigations |
+| `nextjs-vercel-app-router.mdc` | Next 16.3.x (pin 16.3.3), `proxy.ts`, Instant Navigations |
 | `auth-security.mdc` | Auth.js v5, JWT, defense in depth |
 | `security-xss-csrf.mdc` | XSS, CSRF, CSP, DOMPurify |
 | `policy-packages.mdc` | `@{{PACKAGE_SCOPE}}/policy-*` boundaries |

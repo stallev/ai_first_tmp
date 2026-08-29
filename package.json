@@ -1,0 +1,8 @@
+{
+  "name": "ai-first-monorepo-boilerplate",
+  "private": true,
+  "scripts": {
+    "rules:sync": "node scripts/sync-claude-rules.mjs",
+    "rules:check": "node scripts/sync-claude-rules.mjs --check"
+  }
+}

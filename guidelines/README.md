@@ -1,6 +1,6 @@
 ﻿# Guidelines
 
-Нормы реализации — адаптированы из Pulse reference (fitapp) под Vercel, **Next.js 16.3.0** и design system проекта ({{DESIGN_SYSTEM_NAME}}).
+Нормы реализации — адаптированы из Pulse reference (fitapp) под Vercel, **Next.js 16.3.3** и design system проекта ({{DESIGN_SYSTEM_NAME}}).
 
 **Methodology (канон):** [`docs/meta/ai_first_project_methodology.md`](../docs/meta/ai_first_project_methodology.md) — §2.7 Guidelines, §2.4 Cursor Rules.
 
@@ -44,7 +44,7 @@
 | `auth-security.mdc` | Auth.js, defense in depth |
 | `security-xss-csrf.mdc` | XSS, CSRF, CSP, DOMPurify, Origin checks |
 | `ui-animation-performance.mdc` | GPU animations, layout thrashing, will-change |
-| `nextjs-vercel-app-router.mdc` | Next.js **16.3.0** + Vercel + **`proxy.ts`** + Instant Navigations |
+| `nextjs-vercel-app-router.mdc` | Next.js **16.3.3** + Vercel + **`proxy.ts`** + Instant Navigations |
 | `app-router-streaming-loading.mdc` | Suspense, `loading.tsx`, page performance (§4–§18) |
 | `s3-file-asset-uploads.mdc` | FileAsset + AWS S3 |
 | `admin-forms-layout.mdc` | Admin forms layout |

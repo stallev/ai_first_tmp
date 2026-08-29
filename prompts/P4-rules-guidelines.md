@@ -15,14 +15,15 @@ Platform Architect.
 - `docs/meta/ai_first_project_methodology.md`
 
 ## Task
-1. Copy **T1 rules** (7) → `.cursor/rules/`
-2. Verify all rules link to methodology + correct `@{{PACKAGE_SCOPE}}/`
-3. Update `docs/guidelines/README.md`:
+1. Copy **T1 rules** → `.cursor/rules/`
+2. `npm run rules:sync` / `npm run rules:check`
+3. Verify all rules link to methodology + correct `@{{PACKAGE_SCOPE}}/`
+4. Update `docs/guidelines/README.md`:
    - Replace remaining `{{PLACEHOLDERS}}`
    - Map rules ↔ guidelines
-4. Update `AGENTS.md` — cursor rules section
-5. Create `docs/reference/pulse_project_reference.md` from template
-6. **Do NOT** activate T2 UI rules yet
+5. Update `AGENTS.md` — cursor rules section
+6. Create `docs/reference/pulse_project_reference.md` from template
+7. **Do NOT** activate T2 UI rules yet
 
 ## Forbidden
 - T2 rules before P6
@@ -30,6 +31,7 @@ Platform Architect.
 
 ## Verification
 - [ ] 12 rules total active (T0 + T1)
+- [ ] `npm run rules:check` pass
 - [ ] guidelines/README indexes all 27 guides
 - [ ] Each T1 rule references Context7 where applicable
 - [ ] pulse_project_reference.md complete

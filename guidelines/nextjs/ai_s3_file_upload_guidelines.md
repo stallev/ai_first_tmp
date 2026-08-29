@@ -1,7 +1,7 @@
 # AWS S3 File Upload — AI Agent Guidelines
 
 **Тип:** Guideline  
-**Стек:** Next.js 16.2.6 · Vercel · AWS S3 · Prisma `FileAsset`  
+**Стек:** Next.js 16.3.3 · Vercel · AWS S3 · Prisma `FileAsset`  
 **Methodology:** [`docs/meta/ai_first_project_methodology.md`](../../meta/ai_first_project_methodology.md)  
 **Cursor rule:** `s3-file-asset-uploads.mdc`  
 **Детальная имплементация:** [`s3-upload-agent-instruction.md`](./s3-upload-agent-instruction.md)  

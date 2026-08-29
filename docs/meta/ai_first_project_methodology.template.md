@@ -24,12 +24,12 @@
 
 ### 1.1 Двухконтурная модель
 
-**Контур A — Web (UI + BFF)** — Next.js 16.3.0 на Vercel  
+**Контур A — Web (UI + BFF)** — Next.js 16.3.3 на Vercel  
 **Контур B — Jobs** — Vercel Cron + serverless; не в request path
 
 | Компонент | Технология |
 |-----------|-----------|
-| Framework | Next.js **16.3.0** (pinned), App Router, `proxy.ts` |
+| Framework | Next.js **16.3.3** (pinned), App Router, `proxy.ts` |
 | Hosting | Vercel |
 | DB | Neon PostgreSQL 17 + Prisma v7 |
 | Auth | Auth.js v5, Credentials, JWT |
@@ -135,6 +135,6 @@ PRD · ADR · Contract · Spec · Phase · Tasks · Guideline · Cursor Rule · 
 ## Agent notes
 
 - HTML prototype — **не** канон; при конфликте — PRD/schema
-- Context7 перед runtime docs: Next.js 16.3.0, Auth.js v5, Prisma v7
+- Context7 перед runtime docs: Next.js 16.3.3, Auth.js v5, Prisma v7
 - Одна сессия = одна doc wave или 1–3 файла внутри волны
 - DB-first: `database_schema_v1.md` до domain contracts

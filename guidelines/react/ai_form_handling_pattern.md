@@ -3,7 +3,7 @@
 Client forms: **`Field`** / **`Label`** / **`Input`** from `@/components/ui`, **`sonner`** for feedback, **Server Actions** for mutations. Prefer **`useActionState`** when server returns validation state; otherwise **`useTransition`** + toast. **Busy UI** while in flight — §4.
 
 **Methodology:** [`docs/meta/ai_first_project_methodology.md`](../../meta/ai_first_project_methodology.md)  
-**Stack:** Next.js **16.2.6**, React 19, `@{{PACKAGE_SCOPE}}/domain` `MutationResult`  
+**Stack:** Next.js **16.3.3**, React 19, `@{{PACKAGE_SCOPE}}/domain` `MutationResult`  
 **Cursor rules:** **ui-mutation-pending**, **ui-toast-mutations**, **ios-safari-mutation-transport** (Class B critical forms)
 
 ```mermaid

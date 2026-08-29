@@ -1,6 +1,6 @@
 ﻿# React hooks guidelines — Pulse
 
-**Stack:** React 19, Next.js **16.2.6** App Router  
+**Stack:** React 19, Next.js **16.3.3** App Router  
 **Related:** [ai_form_handling_pattern.md](./ai_form_handling_pattern.md), [ai_optimistic_ui_pattern.md](./ai_optimistic_ui_pattern.md), [ai_react_state_management_guidelines.md](./ai_react_state_management_guidelines.md)
 
 ---

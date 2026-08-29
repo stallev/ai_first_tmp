@@ -1,6 +1,6 @@
 ﻿# Next.js Guidelines — {{PROJECT_NAME}}
 
-**Baseline:** Next.js **16.3.0** (pinned) App Router · **Vercel** · Turbopack · Neon + Prisma v7  
+**Baseline:** Next.js **16.3.3** (pinned) App Router · **Vercel** · Turbopack · Neon + Prisma v7  
 **Upstream:** [Next.js 16.3](https://nextjs.org/blog/next-16-3) — Instant Navigations **required** ([ADR-002 template §5.1](../../docs/prds/07_governance/adr_002_next162_vercel_runtime_policy.template.md))  
 **Methodology:** [`docs/meta/ai_first_project_methodology.md`](../../docs/meta/ai_first_project_methodology.md)  
 **Runtime policy (mandatory):** [ADR-002 template](../../docs/prds/07_governance/adr_002_next162_vercel_runtime_policy.template.md)  
@@ -12,18 +12,18 @@
 ## Version pin
 
 ```json
-"next": "16.3.0"
+"next": "16.3.3"
 ```
 
-Agents must not use Next.js 15 docs/patterns for request interception or runtime policy. Do not float `^16`. Instant Navigations: Cache Components **then** `partialPrefetching`; Stream/Cache/Block (§8.1); `'use cache: private'` is browser-only; Instant Insights in dev — §8.1.1. Playwright `instant()` **SHOULD** on critical product navigations when flags are on.
+Baseline is the **current 16.3.x patch** (exact pin, no `^16`). At P5 confirm with `npm view next version` + Context7 `/vercel/next.js`; if latest is still 16.3.x, pin that patch and align `@next/third-parties` / `eslint-config-next`. 16.4+ needs an ADR amend.
 
 ---
 
 ## Next.js 16: `proxy.ts` vs `middleware.ts`
 
-Per official Next.js 16 upgrade guide (Context7 `/vercel/next.js/v16.2.2`):
+Per official Next.js 16 upgrade guide (Context7 `/vercel/next.js`):
 
-| Legacy (v15) | Canonical (v16.3.0) |
+| Legacy (v15) | Canonical (v16.3.3) |
 |--------------|---------------------------|
 | `middleware.ts` | **`proxy.ts`** |
 | `export function middleware()` | **`export function proxy()`** |
@@ -53,7 +53,7 @@ Per official Next.js 16 upgrade guide (Context7 `/vercel/next.js/v16.2.2`):
 
 ## Key principles
 
-1. **Next.js 16.3.0 + Vercel** per ADR-001/ADR-002; async Request APIs.
+1. **Next.js 16.3.3 + Vercel** per ADR-001/ADR-002; async Request APIs.
 2. **`proxy.ts`** for request interception; split Auth.js config.
 3. **Cache reads:** **`'use cache'`** + `cacheTag()` / `cacheLife()` for cross-request data — not `unstable_cache`; **`cacheComponents: true`** when enabled.
 4. **Cache invalidation:** `updateTag` (Server Actions) / `revalidateTag` / `revalidatePath`.
@@ -96,4 +96,4 @@ See: methodology §2.2 · `agent-commit-pipeline.mdc` §1 · [ADR-010](../../doc
 
 ---
 
-**Last updated:** August 2026 · **Next.js:** 16.3.0 (pinned) · **Hosting:** Vercel
+**Last updated:** August 2026 · **Next.js:** 16.3.3 (pinned) · **Hosting:** Vercel
