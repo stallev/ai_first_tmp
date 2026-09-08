@@ -41,16 +41,17 @@
 ├── BOOTSTRAP.md                      → пошаговый bootstrap нового проекта
 ├── AGENTS.template.md                → AGENTS.md после bootstrap
 ├── CLAUDE.md                         → @AGENTS.md + Claude rules pointer
-├── package.json                      → rules:sync / rules:check
+├── package.json                      → rules:sync / rules:check / psi:lab
 ├── scripts/sync-claude-rules.mjs
+├── scripts/psi-lab/                  → lab PageSpeed Insights (REST, deployed origin)
 ├── .claude/rules/                    → generated from .mdc (git)
 ├── PLACEHOLDERS.md                   → список {{PLACEHOLDER}} для замены
-├── .cursor/rules/                    → 29 rules (Pulse stack, parameterized)
+├── .cursor/rules/                    → T0–T2 rules (Pulse stack + psi-lab-testing)
 │   ├── tiers/                        → t0 / t1 / t2 — порядок активации
 │   └── README.md                     → manifest
 ├── guidelines/                       → канон реализации (индекс: README.md)
 │   ├── security/                     → XSS, CSRF, CSP
-│   ├── nextjs/                       → data, loading, lazy load, S3
+│   ├── nextjs/                       → data, loading, lazy load, S3, lab PSI
 │   └── react/                        → components, a11y, rendering perf
 ├── docs/
 │   ├── general/                      → Senior deep dives (теория → guidelines)
@@ -95,7 +96,7 @@
 | Tier | Когда активировать | Кол-во |
 |------|-------------------|--------|
 | **T0** | Bootstrap (день 0) | 5 rules — alwaysApply |
-| **T1** | Docs phase + scaffold | 9 rules — implementation (+ security-xss-csrf, javascript-fundamentals) |
+| **T1** | Docs phase + scaffold | 10 rules — implementation (+ security-xss-csrf, javascript-fundamentals, psi-lab-testing) |
 | **T2** | Design System Lab (P6) | 17 rules — UI/React (+ ui-animation-performance, react-state-management) |
 
 Полный список: [`.cursor/rules/README.md`](.cursor/rules/README.md)

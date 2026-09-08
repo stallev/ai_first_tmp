@@ -74,6 +74,7 @@ Runtime policy: [ADR-001](docs/prds/07_governance/adr_001_stack_and_runtime.md) 
 | **UI component catalog (Design Lab)** | `/design-system` — spec: [`design_system_lab_spec.md`](docs/implementation/mvp/specs/design_system_lab_spec.md) |
 | Pulse reference | [`docs/reference/pulse_project_reference.md`](docs/reference/pulse_project_reference.md) |
 | Prompt orchestration | [`prompts/00-orchestration.md`](prompts/00-orchestration.md) |
+| **Lab PSI (deployed)** | [`guidelines/nextjs/ai_psi_lab_testing.md`](guidelines/nextjs/ai_psi_lab_testing.md) · portable [`guidelines/psi-lab-testing.md`](guidelines/psi-lab-testing.md) |
 
 ## Cursor rules tiers
 

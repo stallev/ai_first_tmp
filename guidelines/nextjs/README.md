@@ -48,6 +48,7 @@ Per official Next.js 16 upgrade guide (Context7 `/vercel/next.js`):
 | [ai_s3_file_upload_guidelines.md](./ai_s3_file_upload_guidelines.md) | **AWS S3** — bucket/IAM/CORS, presigned PUT/GET, FileAsset lifecycle |
 | [s3-upload-agent-instruction.md](./s3-upload-agent-instruction.md) | S3 implementation detail + code samples |
 | [blob-upload-agent-instruction.md](./blob-upload-agent-instruction.md) | **Deprecated** — Vercel Blob; use S3 guides above |
+| [ai_psi_lab_testing.md](./ai_psi_lab_testing.md) | Lab PSI on **deployed** origin (`npm run psi:lab`); portable canon [`psi-lab-testing.md`](../psi-lab-testing.md) |
 
 ---
 
@@ -84,6 +85,12 @@ Requires Next **16.3+** Turbopack and `agent-browser` ≥ 0.31.1. Protocol detai
 
 See: methodology §2.2 · `agent-commit-pipeline.mdc` §1 · [ADR-010](../../docs/reference/adr_010_nextjs_app_architecture_skill.md) (workflow vs architecture skills).
 
+### Lab PageSpeed Insights (on user request only)
+
+**Orthogonal** to `next-dev-loop`. Dual-view measures **live `next dev`**. Lab PSI measures a **public deployed** origin via REST `runPagespeed` (`npm run psi:lab`, key `PAGE_SPEED_API_KEY`). Do **not** use MCP PageSpeed as the primary channel. Do **not** treat `localhost` as green zone.
+
+Trigger: only when the user asks (PSI, PageSpeed, «прогони прод»). Not auto, not commit pipeline. Rule: **`psi-lab-testing.mdc`**. HOW: [`ai_psi_lab_testing.md`](./ai_psi_lab_testing.md).
+
 ---
 
 ## For AI assistants
@@ -92,7 +99,7 @@ See: methodology §2.2 · `agent-commit-pipeline.mdc` §1 · [ADR-010](../../doc
 2. Use MCP **Context7** (`/vercel/next.js`) for API wording after ADR-002; prefer version-matched docs under `node_modules/next/dist/docs/` when available.
 3. React: [React guidelines](../react/README.md).
 
-**Cursor rules:** `nextjs-vercel-app-router.mdc`, `data-server-actions-and-api.mdc`, `ios-safari-mutation-transport.mdc`, `app-router-streaming-loading.mdc`, `react-ui-components.mdc`, `s3-file-asset-uploads.mdc`, `admin-forms-layout.mdc`
+**Cursor rules:** `nextjs-vercel-app-router.mdc`, `data-server-actions-and-api.mdc`, `ios-safari-mutation-transport.mdc`, `app-router-streaming-loading.mdc`, `react-ui-components.mdc`, `s3-file-asset-uploads.mdc`, `admin-forms-layout.mdc`, `psi-lab-testing.mdc` (requestable)
 
 ---
 

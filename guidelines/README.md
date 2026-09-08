@@ -15,7 +15,8 @@
 | Area | Index |
 |------|--------|
 | TypeScript | [`typescript/README.md`](typescript/README.md) |
-| Next.js | [`nextjs/README.md`](nextjs/README.md) — incl. [`ai_s3_file_upload_guidelines.md`](nextjs/ai_s3_file_upload_guidelines.md) |
+| Next.js | [`nextjs/README.md`](nextjs/README.md) — incl. [`ai_s3_file_upload_guidelines.md`](nextjs/ai_s3_file_upload_guidelines.md), lab PSI [`ai_psi_lab_testing.md`](nextjs/ai_psi_lab_testing.md) |
+| **Lab PSI (portable)** | [`psi-lab-testing.md`](psi-lab-testing.md) — deployed origin via REST `runPagespeed`; not `next-dev-loop` |
 | React | [`react/README.md`](react/README.md) |
 | Auth | [`auth/ai_auth_implementation_guide.md`](auth/ai_auth_implementation_guide.md) |
 | Typography | [`typography_text_guidelines.md`](typography_text_guidelines.md) |
@@ -63,6 +64,7 @@
 | `ui-optimistic-mutations.mdc` | `useOptimistic` toggles |
 | `ui-messages-and-copy.mdc` | `@/lib/messages` |
 | `ui-icons-lucide.mdc` | lucide-react icons |
+| `psi-lab-testing.mdc` | Requestable — lab PSI on deployed origin (`npm run psi:lab`) |
 
 ## Reference (Pulse snapshot)
 

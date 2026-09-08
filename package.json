@@ -3,6 +3,7 @@
   "private": true,
   "scripts": {
     "rules:sync": "node scripts/sync-claude-rules.mjs",
-    "rules:check": "node scripts/sync-claude-rules.mjs --check"
+    "rules:check": "node scripts/sync-claude-rules.mjs --check",
+    "psi:lab": "node scripts/psi-lab/run-pagespeed.mjs"
   }
 }

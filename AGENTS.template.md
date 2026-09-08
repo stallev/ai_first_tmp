@@ -73,7 +73,7 @@ Cursor `alwaysApply: false` without `globs` (e.g. `agent-code-review-subagent.md
 4. **Перед написанием/правкой кода** — прочитать применимые `.cursor/rules/*.mdc` для затрагиваемой области (индекс: [`.cursor/rules/README.md`](.cursor/rules/README.md) или таблица в `app-conventions` skill). Эти файлы — enforceable и имеют приоритет над `docs/examples/pulse/**` при конфликте (Pulse — донор/референс, не источник истины). Claude Code грузит зеркало `.claude/rules/*.md`, не `.mdc`.
    Индекс в `.cursor/skills/app-conventions` может быть не виден Claude Code — при сомнении читать `.cursor/rules/` (или `.claude/rules/`) напрямую, не полагаясь только на skill.
 5. Выполнить чеклист `docs/implementation/mvp/tasks/P{N}_tasks.md`
-6. `npm run typecheck` + `npm run lint` перед DoD (обязательная ВЕРИФИКАЦИЯ). Runtime dual-view (`next-dev-loop`) — **только если пользователь явно попросил**; не auto.
+6. `npm run typecheck` + `npm run lint` перед DoD (обязательная ВЕРИФИКАЦИЯ). Runtime dual-view (`next-dev-loop`) и lab PSI (`npm run psi:lab`) — **только если пользователь явно попросил**; не auto.
 
 ## Commit & review
 
@@ -90,6 +90,7 @@ Cursor `alwaysApply: false` without `globs` (e.g. `agent-code-review-subagent.md
 |-------|------|
 | **`app-conventions`** | New features, routes, components — project layout + RSC patterns (single project skill) |
 | **`next-dev-loop`** (user skill) | **Only when the user explicitly asks** for runtime / live / browser verify — dual-view (`/_next/mcp` + `agent-browser`), 4 layers (compile → errors → UX → React). Not auto after edits or in commit pipeline. |
+| **Lab PSI** (`psi-lab-testing.mdc`) | **Only when the user explicitly asks** to score a **deployed** origin (`npm run psi:lab`, `PAGE_SPEED_API_KEY`). Not localhost; not MCP as primary; not commit pipeline. |
 
 **Do not install** external Next.js **architecture** skills (`npx skills install …`). Patterns from [nextjs-app-architecture-skill](https://github.com/aurorascharff/nextjs-app-architecture-skill) are in-repo only: [`docs/reference/adr_010_nextjs_app_architecture_skill.md`](docs/reference/adr_010_nextjs_app_architecture_skill.md) · spec: [`docs/project-react-skill-requirements.md`](docs/project-react-skill-requirements.md). Workflow verification skill `next-dev-loop` is allowed as a Cursor user skill (**opt-in by user request**); it is not an architecture-skill install and does not replace `app-conventions`.
 

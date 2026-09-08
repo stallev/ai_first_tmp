@@ -274,6 +274,19 @@ Env `RESEND_API_KEY` — когда фаза email (P21 analog).
 
 ---
 
+## Шаг 11b — Lab PageSpeed Insights (optional, local)
+
+Ключ **не** в Vercel runtime и **не** `NEXT_PUBLIC_*`. В корневом `.env.local` (см. [`.env.example`](.env.example)):
+
+```env
+PAGE_SPEED_API_KEY=
+PSI_ORIGIN=https://your-production-domain.com
+```
+
+GCP: включить **PageSpeed Insights API**. Прогон: `npm run psi:lab -- --url https://…` или `--suite`. Канон: [`guidelines/psi-lab-testing.md`](guidelines/psi-lab-testing.md).
+
+---
+
 ## Шаг 12 — Верификация bootstrap
 
 ### После P0

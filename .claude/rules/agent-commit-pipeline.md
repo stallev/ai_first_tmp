@@ -31,6 +31,8 @@ description: Commit pipeline: verify → subagent review → branch-prefixed con
 
 **Runtime dual-view (`next-dev-loop`):** только по **явному запросу пользователя** — не часть обязательной ВЕРИФИКАЦИИ перед commit и не auto на UI-diff. Модель: `/_next/mcp` + `agent-browser`, 4 слоя (compile → runtime errors → browser UX → React). См. methodology §2.2 / `guidelines/nextjs/README.md` § Agent runtime verification.
 
+**Lab PSI (`psi-lab-testing`):** только по **явному запросу** на задеплоенный origin (`npm run psi:lab`). Не часть обязательной ВЕРИФИКАЦИИ перед commit. Не смешивать с `next-dev-loop` и не мерить `localhost`.
+
 ### 2. Collect git context
 
 Параллельно:

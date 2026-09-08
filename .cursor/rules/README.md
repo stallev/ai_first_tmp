@@ -1,6 +1,6 @@
 # Cursor Rules — Tier Manifest
 
-31 rule из Pulse stack, parameterized для новых проектов.  
+32 rule из Pulse stack + lab PSI, parameterized для новых проектов.  
 **Methodology:** [`docs/meta/ai_first_project_methodology.md`](../../docs/meta/ai_first_project_methodology.md) §2.4
 
 **Референс:** [`docs/examples/pulse/`](../../docs/examples/pulse/) — Pulse snapshot. **Guidelines + Rules boilerplate override Pulse code** — [`pulse_project_reference.md`](../../docs/reference/pulse_project_reference.md).
@@ -46,6 +46,7 @@
 | `ios-safari-mutation-transport.mdc` | iOS Safari dual transport |
 | `s3-file-asset-uploads.mdc` | FileAsset + AWS S3 presigned |
 | `javascript-fundamentals.mdc` | Closures, map/filter/reduce, generators, ESM modules, TS generics |
+| `psi-lab-testing.mdc` | Requestable — lab PSI on deployed origin (REST, not MCP / localhost) |
 
 Файлы: [`tiers/t1-implementation/`](tiers/t1-implementation/)
 
@@ -86,6 +87,7 @@ General deep dives: [`docs/general/README.md`](../../docs/general/README.md)
 |--------------|------------|
 | Security (XSS/CSRF) | `guidelines/security/ai_security_xss_csrf_guidelines.md` |
 | Next.js / Vercel | `guidelines/nextjs/*` |
+| Lab PSI (deployed) | `guidelines/psi-lab-testing.md` + `guidelines/nextjs/ai_psi_lab_testing.md` |
 | React / forms / optimistic / rendering | `guidelines/react/*` |
 | Auth | `guidelines/auth/ai_auth_implementation_guide.md` |
 | TypeScript monorepo | `guidelines/typescript/ai_typescript_monorepo_guidelines.md` |

@@ -108,6 +108,7 @@ Full index: [`docs/guidelines/README.md`](../../docs/guidelines/README.md).
 |-------|-------|
 | **`app-conventions`** | Project conventions: `data/` + `actions/` + `components/`, Design Lab, DAL, RSC streaming. Spec: [`docs/project-react-skill-requirements.md`](../../docs/project-react-skill-requirements.md) |
 | **`next-dev-loop`** (user skill) | **Only when the user explicitly asks** — runtime dual-view (`/_next/mcp` + `agent-browser`), 4 layers. Not auto after edits/commit. |
+| **Lab PSI** | **Only when the user explicitly asks** — deployed origin via `npm run psi:lab` (`PAGE_SPEED_API_KEY`). Not localhost. |
 
 **Do not install** external Next.js **architecture** skills (`npx skills install …`). Mapping: [`docs/reference/adr_010_nextjs_app_architecture_skill.md`](../../docs/reference/adr_010_nextjs_app_architecture_skill.md). Workflow skill `next-dev-loop` is allowed as a user skill (**opt-in by user request**).
 
@@ -152,6 +153,8 @@ npm run lint        # or npm run lint:web from root
 
 Skill **`next-dev-loop`**: confirm the feature works in a live `next dev` by cross-checking **two views** — `/_next/mcp` (routes, RSC, server actions, compile/runtime errors) and `agent-browser` (DOM, console, network, React fiber/props/state). Loop when asked: narrow scope via runtime → edit → 4 layers (compile → runtime errors → browser UX → React). **Do not** start automatically after UI edits or before commit — only when the user explicitly asks (e.g. «проверь в runtime», «next-dev-loop»). Details: user skill `next-dev-loop`; index: [`docs/guidelines/nextjs/README.md`](../../docs/guidelines/nextjs/README.md) § Agent runtime verification.
 
+Lab PSI is **orthogonal**: `npm run psi:lab` against a **deployed** origin when the user asks. Not localhost. Not MCP as primary. See [`ai_psi_lab_testing.md`](../../guidelines/nextjs/ai_psi_lab_testing.md).
+
 ### Manual verification checklist (web)
 
 - [ ] `next` pinned to **16.3.3** in `package.json`
@@ -163,6 +166,7 @@ Skill **`next-dev-loop`**: confirm the feature works in a live `next dev` by cro
 - [ ] Mutation/error codes and roles from `@{{PACKAGE_SCOPE}}/domain` — no inline magic strings (**domain-literals-and-codes**)
 - [ ] Mutations: pending UI + toast per mutation rules
 - [ ] Runtime dual-view (`next-dev-loop`) — **only if the user requested it**
+- [ ] Lab PSI (`npm run psi:lab`) — **only if the user requested a deployed-origin score**
 
 ## Do NOT
 
