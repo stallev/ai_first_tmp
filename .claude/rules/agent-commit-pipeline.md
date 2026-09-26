@@ -1,5 +1,5 @@
 ---
-description: Commit pipeline: verify → subagent review → branch-prefixed conventional commit + git tooling setup
+description: Commit pipeline: verify → review (problem → expected shape → diff; subagent for sensitive zones) → branch-prefixed conventional commit + git tooling setup
 ---
 # Agent commit pipeline
 
@@ -13,7 +13,7 @@ description: Commit pipeline: verify → subagent review → branch-prefixed con
 ## Pipeline (порядок обязателен)
 
 ```
-ВЕРИФИКАЦИЯ → stage → review (если нужен) → compose message → git commit → commitlint (hook)
+ВЕРИФИКАЦИЯ → stage → review (уровень по diff) → compose message → git commit → commitlint (hook)
 ```
 
 ### 1. Deterministic verification
@@ -45,12 +45,14 @@ Stage только релевантные файлы (`git add`). Не комм�
 
 ### 3. Pre-commit review
 
-Выполнить **[`agent-code-review-subagent.mdc`](agent-code-review-subagent.mdc)** в режиме **pre-commit**:
+Выполнить **[`agent-code-review-subagent.mdc`](agent-code-review-subagent.mdc)** в режиме **pre-commit** (уровни и бюджет — там; таблицы и prompt — [`guidelines/ai_code_review_protocol.md`](guidelines/ai_code_review_protocol.md), читать на `self-full` / `subagent`):
 
-1. Проверить threshold — можно ли пропустить review
-2. Если review нужен — **[`agent-code-review-subagent.mdc`](agent-code-review-subagent.mdc)** → Task `generalPurpose` (`readonly: true`). **Не** `bugbot` (платный)
-3. **Blocker** → исправить diff → re-review если правка нетривиальна → только потом commit
-4. **Suggestions only / no findings** → продолжить §4
+1. **Уровень** — § Depth: `skip` → `diff-only` → `self-full` → `subagent`. Определяют **зоны и содержимое staged diff** (§ Sensitive zones — единственный список), а не type из будущего commit message
+2. **Три прохода** (`self-full`, `subagent`): проблема → ожидаемая форма → diff. Проблема — из просьбы пользователя и `P{N}_tasks.md`, не из diff и не из собственного message; неясна → спросить до review
+3. **`subagent`** — fresh-context `generalPurpose` (`readonly: true`), получает только проблему, не summary автора. **Не** `bugbot` (платный)
+4. **Trace-блок** (`Review: …`) в ответе — всегда, включая `skip`
+5. **Blocker** → исправить → re-review **только delta**, не более одного раза (§ Budget); blocker остался → не коммитить, доложить пользователю
+6. **Suggestions only / no findings** → продолжить §4
 
 ### 4. Compose commit message
 
@@ -167,6 +169,6 @@ echo "feature/P6-auth: chore: test setup" | npx commitlint  # pass
 
 ## Related
 
-- **agent-code-review-subagent** — standalone или pre-commit review
+- **agent-code-review-subagent** — review protocol: standalone или pre-commit
 - User rule: git safety (no force push, no skip hooks, commit only when asked)
 - **typescript-monorepo-types** · **product-docs-alignment**

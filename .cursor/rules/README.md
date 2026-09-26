@@ -26,8 +26,8 @@
 | `typescript-monorepo-types.mdc` | ✅ | typecheck, package boundaries |
 | `domain-literals-and-codes.mdc` | ✅ | Mutation codes, no magic strings |
 | `ai-dry-deduplication.mdc` | ✅ | DRY / SOLID for agents |
-| `agent-commit-pipeline.mdc` | ✅ | Verify → review → conventional commit |
-| `agent-code-review-subagent.mdc` | — | Standalone / pre-commit subagent review (requestable) |
+| `agent-commit-pipeline.mdc` | ✅ | Verify → review (уровень по diff) → conventional commit |
+| `agent-code-review-subagent.mdc` | — | Review protocol: проблема → ожидаемая форма → diff; fresh-context subagent для sensitive zones / по запросу (requestable) |
 
 Файлы: [`tiers/t0-always/`](tiers/t0-always/)
 
@@ -88,6 +88,7 @@ General deep dives: [`docs/general/README.md`](../../docs/general/README.md)
 | Security (XSS/CSRF) | `guidelines/security/ai_security_xss_csrf_guidelines.md` |
 | Next.js / Vercel | `guidelines/nextjs/*` |
 | Lab PSI (deployed) | `guidelines/psi-lab-testing.md` + `guidelines/nextjs/ai_psi_lab_testing.md` |
+| Code review (protocol, subagent prompt) | `guidelines/ai_code_review_protocol.md` |
 | React / forms / optimistic / rendering | `guidelines/react/*` |
 | Auth | `guidelines/auth/ai_auth_implementation_guide.md` |
 | TypeScript monorepo | `guidelines/typescript/ai_typescript_monorepo_guidelines.md` |

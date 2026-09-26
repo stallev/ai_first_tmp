@@ -80,9 +80,11 @@ Cursor `alwaysApply: false` without `globs` (e.g. `agent-code-review-subagent.md
 | Задача | Rule |
 |--------|------|
 | Commit (verify → review → message → hook) | **`.cursor/rules/agent-commit-pipeline.mdc`** (always) |
-| Standalone review («review diff», проверка перед PR) | **`.cursor/rules/agent-code-review-subagent.mdc`** (requestable) |
+| Review: протокол, уровни, sensitive zones; standalone («review diff», проверка перед PR) | **`.cursor/rules/agent-code-review-subagent.mdc`** (requestable) |
 
 Кратко: prefix = `git branch --show-current`; формат `<branch-name>: type(scope): subject`.
+
+Review: проблема → ожидаемая форма → diff; уровень (`skip` / `diff-only` / `self-full` / `subagent`) задают зоны и содержимое diff, не type коммита. Fresh-context subagent — runtime-код в sensitive zone или явный запрос пользователя; не более одного на commit, re-review только delta. В ответе всегда trace-блок `Review: …`. Таблицы и prompt — [`guidelines/ai_code_review_protocol.md`](guidelines/ai_code_review_protocol.md) (читать на `self-full` / `subagent`).
 
 ## Agent skills (`.cursor/skills/`)
 
