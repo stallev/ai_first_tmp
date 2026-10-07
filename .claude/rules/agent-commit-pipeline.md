@@ -47,12 +47,13 @@ Stage только релевантные файлы (`git add`). Не комм�
 
 Выполнить **[`agent-code-review-subagent.mdc`](agent-code-review-subagent.mdc)** в режиме **pre-commit** (уровни и бюджет — там; таблицы и prompt — [`guidelines/ai_code_review_protocol.md`](guidelines/ai_code_review_protocol.md), читать на `self-full` / `subagent`):
 
-1. **Уровень** — § Depth: `skip` → `diff-only` → `self-full` → `subagent`. Определяют **зоны и содержимое staged diff** (§ Sensitive zones — единственный список), а не type из будущего commit message
-2. **Три прохода** (`self-full`, `subagent`): проблема → ожидаемая форма → diff. Проблема — из просьбы пользователя и `P{N}_tasks.md`, не из diff и не из собственного message; неясна → спросить до review
-3. **`subagent`** — fresh-context `generalPurpose` (`readonly: true`), получает только проблему, не summary автора. **Не** `bugbot` (платный)
-4. **Trace-блок** (`Review: …`) в ответе — всегда, включая `skip`
-5. **Blocker** → исправить → re-review **только delta**, не более одного раза (§ Budget); blocker остался → не коммитить, доложить пользователю
-6. **Suggestions only / no findings** → продолжить §4
+1. **T3 gate** — если задача была task tier T3: до commit в сессии должен быть trace прогона **`reviewer`** на этом diff; иначе не коммитить ([`model-routing.mdc`](model-routing.mdc)). Если `reviewer` уже был — в `agent-code-review-subagent` § T3 reviewer gate уровень pre-commit только `diff-only`, без `generalPurpose`.
+2. **Уровень** — § Depth: `skip` → `diff-only` → `self-full` → `subagent`. Определяют **зоны и содержимое staged diff** (§ Sensitive zones — единственный список), а не type из будущего commit message
+3. **Три прохода** (`self-full`, `subagent`): проблема → ожидаемая форма → diff. Проблема — из просьбы пользователя и `P{N}_tasks.md`, не из diff и не из собственного message; неясна → спросить до review
+4. **`subagent`** — fresh-context `generalPurpose` (`readonly: true`), получает только проблему, не summary автора. **Не** `bugbot` (платный). **Не** после `reviewer` на том же diff (см. § T3 reviewer gate в `agent-code-review-subagent`).
+5. **Trace-блок** (`Review: …`) в ответе — всегда, включая `skip`
+6. **Blocker** → исправить → re-review **только delta**, не более одного раза (§ Budget); blocker остался → не коммитить, доложить пользователю
+7. **Suggestions only / no findings** → продолжить §4
 
 ### 4. Compose commit message
 

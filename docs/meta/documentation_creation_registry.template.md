@@ -286,6 +286,7 @@ READ registry → READ dependencies → DRAFT file → ADD backlinks → UPDATE 
 | ID | Файл | Статус |
 |----|------|--------|
 | W0-01 | `docs/meta/documentation_creation_registry.md` | ✅ Этот файл |
+| W0-02 | `docs/meta/ai_agent_model_routing.md` | Канон маршрутизации моделей (task tier T0–T3). Runtime: `.cursor/rules/model-routing.mdc`. Вне волн PRD. |
 
 **Обновить backlinks после W0:** [`ai_first_project_methodology.md`](./ai_first_project_methodology.md) §3 — добавить ссылку на реестр.
 

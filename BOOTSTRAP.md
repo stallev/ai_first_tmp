@@ -32,7 +32,7 @@
 - **Node.js** 20+ (LTS)
 - **npm** 10+ (workspaces)
 - Аккаунты: **GitHub**, **Vercel**, **Neon**, **AWS** (S3 + IAM)
-- **Cursor** с доступом к Context7 (`/vercel/next.js` 16.3.x, Auth.js, Prisma)
+- **Cursor** с доступом к Context7 (`/vercel/next.js` 16.4.x, Auth.js, Prisma)
 - Исходные материалы продукта: brief, roles, MVP scope (или `docs/default_docs/`)
 - **Рекомендуется до P1:** visual seed — один HTML в **`docs/prototypes/`** (не `docs/prototype/`). Генерация: [`prompts/P1-html-prototype-claude-desktop.md`](prompts/P1-html-prototype-claude-desktop.md) (Claude Desktop)
 
@@ -312,7 +312,7 @@ GCP: включить **PageSpeed Insights API**. Прогон: `npm run psi:lab
 - [ ] `cd apps/web && npm run build`
 - [ ] `proxy.ts` present, not legacy middleware patterns
 - [ ] `apps/web/CLAUDE.md` exists (`@AGENTS.md` import)
-- [ ] `next` pinned to current 16.3.x patch (no `^16`)
+- [ ] `next` pinned to current 16.4.x patch (no `^16`)
 
 ### После P6
 
@@ -330,7 +330,7 @@ my-new-project/
 ├── AGENTS.md
 ├── CLAUDE.md                 # @AGENTS.md + pointer to generated .claude/rules
 ├── scripts/sync-claude-rules.mjs
-├── apps/web/                 # Next.js 16.3.x (pin 16.3.3 baseline)
+├── apps/web/                 # Next.js 16.4.x (pin 16.4 baseline)
 │   ├── AGENTS.md
 │   └── CLAUDE.md             # @AGENTS.md import
 ├── packages/{domain,policy,db}/

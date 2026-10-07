@@ -1,6 +1,6 @@
 ﻿# Guidelines
 
-Нормы реализации — адаптированы из Pulse reference (fitapp) под Vercel, **Next.js 16.3.3** и design system проекта ({{DESIGN_SYSTEM_NAME}}).
+Нормы реализации — адаптированы из Pulse reference (fitapp) под Vercel, **Next.js 16.4** и design system проекта ({{DESIGN_SYSTEM_NAME}}).
 
 **Methodology (канон):** [`docs/meta/ai_first_project_methodology.md`](../docs/meta/ai_first_project_methodology.md) — §2.7 Guidelines, §2.4 Cursor Rules.
 
@@ -17,7 +17,8 @@
 | TypeScript | [`typescript/README.md`](typescript/README.md) |
 | Next.js | [`nextjs/README.md`](nextjs/README.md) — incl. [`ai_s3_file_upload_guidelines.md`](nextjs/ai_s3_file_upload_guidelines.md), lab PSI [`ai_psi_lab_testing.md`](nextjs/ai_psi_lab_testing.md) |
 | **Lab PSI (portable)** | [`psi-lab-testing.md`](psi-lab-testing.md) — deployed origin via REST `runPagespeed`; not `next-dev-loop` |
-| **Code review protocol** | [`ai_code_review_protocol.md`](ai_code_review_protocol.md) — problem → expected shape → diff; subagent prompt. WHEN/levels/budget: rule `agent-code-review-subagent.mdc` |
+| **Code review protocol** | [`ai_code_review_protocol.md`](ai_code_review_protocol.md) — problem → expected shape → diff; subagent prompt. WHEN/levels/budget: rule `agent-code-review-subagent.mdc`. Не Bugbot. Не заменяет T3-субагента `reviewer`. |
+| **Маршрутизация моделей** | [`../docs/meta/ai_agent_model_routing.md`](../docs/meta/ai_agent_model_routing.md) — task tier T0–T3, субагенты, гигиена токенов; runtime: `model-routing.mdc` |
 | React | [`react/README.md`](react/README.md) |
 | Auth | [`auth/ai_auth_implementation_guide.md`](auth/ai_auth_implementation_guide.md) |
 | Typography | [`typography_text_guidelines.md`](typography_text_guidelines.md) |
@@ -35,6 +36,7 @@
 | Rule | Scope |
 |------|--------|
 | `project-context.mdc` | Always applied — stack, invariants |
+| `model-routing.mdc` | Always applied — task tier T0–T3, субагенты, гигиена токенов; канон: [`../docs/meta/ai_agent_model_routing.md`](../docs/meta/ai_agent_model_routing.md) |
 | `product-docs-alignment.mdc` | Always applied — doc sync on behavior change |
 | `typescript-monorepo-types.mdc` | Always applied — monorepo types |
 | `domain-literals-and-codes.mdc` | Always applied — mutation codes, domain literals |
@@ -46,7 +48,7 @@
 | `auth-security.mdc` | Auth.js, defense in depth |
 | `security-xss-csrf.mdc` | XSS, CSRF, CSP, DOMPurify, Origin checks |
 | `ui-animation-performance.mdc` | GPU animations, layout thrashing, will-change |
-| `nextjs-vercel-app-router.mdc` | Next.js **16.3.3** + Vercel + **`proxy.ts`** + Instant Navigations |
+| `nextjs-vercel-app-router.mdc` | Next.js **16.4** + Vercel + **`proxy.ts`** + Instant Navigations |
 | `app-router-streaming-loading.mdc` | Suspense, `loading.tsx`, page performance (§4–§18) |
 | `s3-file-asset-uploads.mdc` | FileAsset + AWS S3 |
 | `admin-forms-layout.mdc` | Admin forms layout |

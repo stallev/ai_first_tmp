@@ -1,6 +1,6 @@
 # Data fetching patterns — Next.js 16 / React 19
 
-**Stack:** Next.js **16.3.3**, React 19, Prisma v7  
+**Stack:** Next.js **16.4**, React 19, Prisma v7  
 **Methodology:** [`docs/meta/ai_first_project_methodology.md`](../../docs/meta/ai_first_project_methodology.md)  
 **Deep dive:** [`docs/general/02-data-fetching.md`](../../docs/general/02-data-fetching.md)  
 **DAL canon:** [`ai_nextjs_db_data_handle.md`](./ai_nextjs_db_data_handle.md)  

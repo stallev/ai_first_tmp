@@ -1,9 +1,9 @@
 # {{PROJECT_NAME}} — Monorepo Agent Instructions
 
 **{{PROJECT_NAME}}** — {{PRODUCT_DESCRIPTION}}  
-Monorepo: **Next.js 16.3.3** App Router + Vercel + Neon PostgreSQL.
+Monorepo: **Next.js 16.4** App Router + Vercel + Neon PostgreSQL.
 
-**Methodology (обязательно):** [`docs/meta/ai_first_project_methodology.md`](docs/meta/ai_first_project_methodology.md) — цикл КОНТЕКСТ → ФАЗА → КОНТРАКТ → ЗАДАЧИ → ВЕРИФИКАЦИЯ.
+**Methodology (обязательно):** [`docs/meta/ai_first_project_methodology.template.md`](docs/meta/ai_first_project_methodology.template.md) (после bootstrap: `ai_first_project_methodology.md`) — цикл КОНТЕКСТ → TIER → ФАЗА → КОНТРАКТ → ЗАДАЧИ → ВЕРИФИКАЦИЯ. **Маршрутизация моделей:** [`docs/meta/ai_agent_model_routing.md`](docs/meta/ai_agent_model_routing.md) + `model-routing.mdc`.
 
 ## Референсный проект (обязательно)
 
@@ -45,7 +45,8 @@ Monorepo: **Next.js 16.3.3** App Router + Vercel + Neon PostgreSQL.
 
 | Область | Документ |
 |---------|----------|
-| Методология | [`docs/meta/ai_first_project_methodology.md`](docs/meta/ai_first_project_methodology.md) |
+| Методология | [`docs/meta/ai_first_project_methodology.template.md`](docs/meta/ai_first_project_methodology.template.md) |
+| **Маршрутизация моделей** | [`docs/meta/ai_agent_model_routing.md`](docs/meta/ai_agent_model_routing.md) — task tier T0–T3; runtime: `model-routing.mdc` |
 | **Реестр создания docs** | [`docs/meta/documentation_creation_registry.md`](docs/meta/documentation_creation_registry.md) |
 | Карта архитектуры | [`docs/prds/architecture_master_index.md`](docs/prds/architecture_master_index.md) |
 | MVP scope | [`docs/prds/01_product_scope/mvp_scope.md`](docs/prds/01_product_scope/mvp_scope.md) |
@@ -58,10 +59,10 @@ Monorepo: **Next.js 16.3.3** App Router + Vercel + Neon PostgreSQL.
 ## Цикл работы агента
 
 ```
-КОНТЕКСТ → ФАЗА → КОНТРАКТ → ЗАДАЧИ → ВЕРИФИКАЦИЯ
+КОНТЕКСТ → TIER → ФАЗА → КОНТРАКТ → ЗАДАЧИ → ВЕРИФИКАЦИЯ
 ```
 
-1. Прочитать этот файл + `project-context.mdc`
+1. Прочитать этот файл + `project-context.mdc`. Классифицировать задачу (`Tier: T0|T1|T2|T3`) по [`ai_agent_model_routing.md`](docs/meta/ai_agent_model_routing.md) до правок.
 2. Определить фазу (`docs/implementation/mvp/phases_tasks_descriptions/P{N}_*.md`)
 3. Прочитать contracts для фазы
 ## Cursor vs Claude Code rules
@@ -100,7 +101,7 @@ Web detail: [`apps/web/AGENTS.md`](apps/web/AGENTS.md) § Skills.
 
 ## Stack (full Pulse)
 
-Next.js 16.3.3 · Vercel · Neon PG 17 · Prisma v7 · Auth.js v5 · Resend (post-MVP) · AWS S3 · Sentry · shadcn/ui · Tailwind v4 · Sonner
+Next.js 16.4 · Vercel · Neon PG 17 · Prisma v7 · Auth.js v5 · Resend (post-MVP) · AWS S3 · Sentry · shadcn/ui · Tailwind v4 · Sonner
 
 ## Repository status
 

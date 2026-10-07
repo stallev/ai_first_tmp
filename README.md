@@ -1,6 +1,6 @@
 # AI-First Monorepo Boilerplate
 
-Шаблон для создания новых проектов на стеке **Next.js 16.3.3 + Vercel + Neon PostgreSQL + Prisma v7 + Auth.js v5 + shadcn/ui + Tailwind v4**.
+Шаблон для создания новых проектов на стеке **Next.js 16.4 + Vercel + Neon PostgreSQL + Prisma v7 + Auth.js v5 + shadcn/ui + Tailwind v4**.
 
 **Методология:** [`docs/meta/ai_first_project_methodology.template.md`](docs/meta/ai_first_project_methodology.template.md)  
 **Bootstrap (пошагово):** [`BOOTSTRAP.md`](BOOTSTRAP.md)  
@@ -107,7 +107,7 @@
 
 | Компонент | Технология |
 |-----------|-----------|
-| Framework | Next.js **16.3.x** (exact current patch, baseline **16.3.3**), App Router, `proxy.ts` |
+| Framework | Next.js **16.4.x** (exact current patch, baseline **16.4**), App Router, `proxy.ts` |
 | Hosting | Vercel |
 | DB | Neon PostgreSQL 17 + Prisma v7 |
 | Auth | Auth.js v5, Credentials, JWT |

@@ -10,6 +10,8 @@ alwaysApply: false
 
 **Принцип:** глубина review ∝ риск × размер. Дорогой fresh-context review — только где цена пропущенного бага высока; остальное — дёшево, в контексте автора. Лимиты — § Budget.
 
+**Не путать с task-tier `reviewer`:** T3-гейт до отчёта «готово» — субагент [`.cursor/agents/reviewer.md`](../agents/reviewer.md) по [`model-routing.mdc`](model-routing.mdc) и [`docs/meta/ai_agent_model_routing.md`](docs/meta/ai_agent_model_routing.md). Этот rule — commit pipeline и явный «проверь diff». **Не** вызывать `generalPurpose` subagent и `reviewer` на **одном и том же** diff в одной сессии.
+
 ## Запрещено: bugbot
 
 **Не вызывать** `subagent_type: "bugbot"` — платная функция Cursor. Fresh-context review — **`generalPurpose`** subagent (`readonly: true`). Skills `review-bugbot` / `review-security` **не использовать**.
@@ -19,9 +21,9 @@ alwaysApply: false
 | Mode | Когда | Уровень |
 |------|-------|---------|
 | **standalone** | Пользователь просит review («review diff», «проверь изменения», `@agent-code-review-subagent`) | Всегда `subagent` (явный запрос); threshold **игнорировать** |
-| **pre-commit** | Шаг 3 commit pipeline | Уровень по § Depth |
+| **pre-commit** | Шаг 3 commit pipeline | Уровень по § Depth и § T3 reviewer gate |
 
-Standalone review **не** ведёт к commit. Reviewer **не правит код** — только находки; исправления — основной агент (или по запросу пользователя).
+Standalone review **не** ведёт к commit. Субагент review (pipeline или `reviewer`) **не правит код** — только находки; исправления — основной агент (или по запросу пользователя).
 
 ## Sensitive zones
 
@@ -54,6 +56,16 @@ Standalone review **не** ведёт к commit. Reviewer **не правит к
 | Правка docs, 40 строк | `diff-only` |
 | Новый компонент, 80 строк | `self-full` |
 | Server Action + миграция | `subagent` |
+
+## T3 reviewer gate (pre-commit)
+
+Перед выбором уровня по § Depth:
+
+1. Если в **этой сессии** для **того же staged diff** (те же пути файлов) уже был прогон субагента **`reviewer`** (task tier T3, [`model-routing.mdc`](model-routing.mdc)) с trace в чате — уровень pre-commit **MUST** быть `diff-only` (только 2c: docs drift / явные расхождения с постановкой). **MUST NOT** запускать fresh-context `generalPurpose` subagent повторно.
+2. Если задача была T3, а `reviewer` **не** запускался до commit — **MUST NOT** коммитить как «готово» по model-routing; сначала `reviewer`, затем pipeline.
+3. Standalone («проверь diff») по-прежнему всегда `subagent` (§ Triggers), даже если `reviewer` уже был — только если пользователь **явно** просит второе ревью; иначе напомнить, что T3 уже закрыт `reviewer`.
+
+`reviewer` не выполняет протокол 2a→2b→2c этого rule; вход — план + шагы ([`ai_agent_model_routing.md`](docs/meta/ai_agent_model_routing.md)).
 
 ## Protocol (кратко)
 

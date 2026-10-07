@@ -1,9 +1,9 @@
-ï»¿# Authentication Implementation Guide â€” Pulse (for AI agents)
+# Authentication Implementation Guide — Pulse (for AI agents)
 
-**Stack:** Next.js **16.3.3** (App Router) | Auth.js v5 | Prisma v7 | Neon | Vercel  
+**Stack:** Next.js **16.4** (App Router) | Auth.js v5 | Prisma v7 | Neon | Vercel  
 **Methodology:** [`docs/meta/ai_first_project_methodology.md`](../../meta/ai_first_project_methodology.md)  
-**Runtime:** [ADR-002](../../prds/07_governance/adr_002_next162_vercel_runtime_policy.md) â€” **`proxy.ts`**, not `middleware.ts`  
-**Auth canon:** [ADR-003](../../prds/07_governance/adr_003_auth_credentials_jwt_rbac.md) â€” Credentials, JWT, RBAC, four-layer model  
+**Runtime:** [ADR-002](../../prds/07_governance/adr_002_next162_vercel_runtime_policy.md) — **`proxy.ts`**, not `middleware.ts`  
+**Auth canon:** [ADR-003](../../prds/07_governance/adr_003_auth_credentials_jwt_rbac.md) — Credentials, JWT, RBAC, four-layer model  
 **Schema:** [`database_schema_v1.md`](../../prds/03_data_model/database_schema_v1.md)
 
 ---
@@ -12,37 +12,37 @@
 
 ```
 Browser
-  â†’ proxy.ts (Layer 1 â€” JWT gate via auth.config.ts, NO Prisma)
-  â†’ layout guards (Layer 2 â€” optional UX redirect)
-  â†’ Route Handlers / Server Actions (Layer 3 â€” auth())
-  â†’ @{{PACKAGE_SCOPE}}/policy-server (Layer 4)
-  â†’ @{{PACKAGE_SCOPE}}/domain â†’ @{{PACKAGE_SCOPE}}/db â†’ Neon
+  ? proxy.ts (Layer 1 — JWT gate via auth.config.ts, NO Prisma)
+  ? layout guards (Layer 2 — optional UX redirect)
+  ? Route Handlers / Server Actions (Layer 3 — auth())
+  ? @{{PACKAGE_SCOPE}}/policy-server (Layer 4)
+  ? @{{PACKAGE_SCOPE}}/domain ? @{{PACKAGE_SCOPE}}/db ? Neon
 ```
 
 **Critical Next.js 16 difference from v15:**
 
-| v15 pattern | Pulse (v16.3.3) |
+| v15 pattern | Pulse (v16.4) |
 |-------------|-----------------|
 | `middleware.ts` + Edge | **`proxy.ts`** + Node runtime |
 | `export function middleware` | **`export function proxy`** |
 | Single auth file in middleware | **Split:** `auth.config.ts` (proxy) + `auth.ts` (server) |
 
-`middleware.ts` may exist **only** during controlled migration â€” do not treat it as canonical.
+`middleware.ts` may exist **only** during controlled migration — do not treat it as canonical.
 
 ---
 
 ## 2. Split Auth.js config (mandatory)
 
 ```typescript
-// auth.config.ts â€” imported by proxy.ts AND auth.ts
+// auth.config.ts — imported by proxy.ts AND auth.ts
 // NO Prisma, NO bcrypt, edge-safe providers/callbacks for JWT
 
-// auth.ts â€” server only
+// auth.ts — server only
 // getPrisma() + bcrypt in Credentials authorize()
-// Used by Route Handlers, Server Actions, RSC â€” NOT by proxy via full import
+// Used by Route Handlers, Server Actions, RSC — NOT by proxy via full import
 ```
 
-Per Auth.js v5 (Context7): JWT `session: { strategy: "jwt" }` â€” **no** `@auth/prisma-adapter` on MVP (see ADR-003, `database_schema_v1.md` Â§0.D).
+Per Auth.js v5 (Context7): JWT `session: { strategy: "jwt" }` — **no** `@auth/prisma-adapter` on MVP (see ADR-003, `database_schema_v1.md` §0.D).
 
 ---
 
@@ -60,7 +60,7 @@ const { auth } = NextAuth(authConfig);
 export async function proxy(request: NextRequest) {
   const session = await auth();
   const path = request.nextUrl.pathname;
-  // Role-based redirects â€” JWT only, no Prisma
+  // Role-based redirects — JWT only, no Prisma
   // ...
   return NextResponse.next();
 }
@@ -82,8 +82,8 @@ See [`canonical_routes.md`](../../design/canonical_routes.md) and [`authorizatio
 
 ## 5. MVP flows
 
-- Registration â†’ `user.role` from tile; trainer â†’ `trainer_profile.status = pending`
-- Forgot password â†’ **post-MVP** (`password_reset_token` + Resend per ADR-003); not MVP UI
+- Registration ? `user.role` from tile; trainer ? `trainer_profile.status = pending`
+- Forgot password ? **post-MVP** (`password_reset_token` + Resend per ADR-003); not MVP UI
 - Credentials + bcrypt on `User.passwordHash`
 
 ---
@@ -104,7 +104,7 @@ Update docs and imports to match ADR-002.
 
 - [ADR-002](../../prds/07_governance/adr_002_next162_vercel_runtime_policy.md)
 - [ADR-003](../../prds/07_governance/adr_003_auth_credentials_jwt_rbac.md)
-- [`auth_runtime_spec.md`](../../prds/05_runtime/auth_runtime_spec.md) â€” auth flows spec (W5)
+- [`auth_runtime_spec.md`](../../prds/05_runtime/auth_runtime_spec.md) — auth flows spec (W5)
 - [`authorization_matrix.md`](../../prds/04_authorization_privacy/authorization_matrix.md)
 - Cursor: [`auth-security.mdc`](../../../.cursor/rules/auth-security.mdc), [`security-xss-csrf.mdc`](../../../.cursor/rules/security-xss-csrf.mdc), [`policy-packages.mdc`](../../../.cursor/rules/policy-packages.mdc)
 - Security guide: [`ai_security_xss_csrf_guidelines.md`](../security/ai_security_xss_csrf_guidelines.md)

@@ -22,7 +22,7 @@ Senior Fullstack Developer (Next.js 16 + PostgreSQL + monorepo).
 4. **packages/domain:** mutation codes scaffold, ports
 5. **packages/policy/edge + server:** empty policy stubs
 6. **apps/web:**
-   - Next.js **current 16.3.x patch** — baseline **16.3.3**. Confirm with `npm view next version` + Context7 `/vercel/next.js`; if latest is still 16.3.x, pin **that** exact version. Align `@next/third-parties` and `eslint-config-next`. No `^16`.
+   - Next.js **current 16.4.x patch** — baseline **16.4**. Confirm with `npm view next version` + Context7 `/vercel/next.js`; if latest is still 16.4.x, pin **that** exact version. Align `@next/third-parties` and `eslint-config-next`. No `^16`.
    - `src/proxy.ts` (NOT middleware.ts for new code)
    - `src/data/`, `src/lib/`, `src/components/{atoms,ui,design-lab}/`
    - Auth.js v5 Credentials scaffold
@@ -39,7 +39,7 @@ Senior Fullstack Developer (Next.js 16 + PostgreSQL + monorepo).
    - Spec: [`docs/project-react-skill-requirements.md`](../docs/project-react-skill-requirements.md)
 
 ## Stack (full Pulse — all required)
-Next.js 16.3.3 · Vercel · Neon · Prisma v7 · Auth.js v5 · AWS S3 · Resend (schema-only MVP) · Sentry · shadcn · Tailwind v4 · Sonner
+Next.js 16.4 · Vercel · Neon · Prisma v7 · Auth.js v5 · AWS S3 · Resend (schema-only MVP) · Sentry · shadcn · Tailwind v4 · Sonner
 
 ## Forbidden
 - Business feature screens (→ P01+ phases)
@@ -47,7 +47,7 @@ Next.js 16.3.3 · Vercel · Neon · Prisma v7 · Auth.js v5 · AWS S3 · Resend 
 - `@{{PACKAGE_SCOPE}}/policy-server` in proxy.ts
 
 ## Verification
-- [ ] `next` in `apps/web/package.json` is exact current 16.3.x (baseline 16.3.3; verified via `npm view next version`)
+- [ ] `next` in `apps/web/package.json` is exact current 16.4.x (baseline 16.4; verified via `npm view next version`)
 - [ ] root `package.json` still has `rules:sync` / `rules:check`
 - [ ] `npm run typecheck` pass
 - [ ] `npm run lint` pass

@@ -1,51 +1,51 @@
-Ôªø# Client lazy loading (`next/dynamic`) ‚Äî Pulse
+# Client lazy loading (`next/dynamic`) ó Pulse
 
 ## Document Version: 1.0 (Pulse)
 **Created:** 28 May 2026  
-**Project:** Pulse ‚Äî `apps/web`  
-**Stack:** Next.js **16.3.3** App Router, React 19, **Vercel**
+**Project:** Pulse ó `apps/web`  
+**Stack:** Next.js **16.4** App Router, React 19, **Vercel**
 
 > **Scope:** lazy loading of **Client Components** and heavy **client-only** dependencies. Complements server-side streaming in [`ai_loading_patterns.md`](./ai_loading_patterns.md) and RSC boundaries in [`ai_component_guidelines.md`](../react/ai_component_guidelines.md).
 
-**Deep dive:** [`docs/general/04-code-splitting.md`](../../docs/general/04-code-splitting.md) ‚Äî bundle theory, tree shaking, preload/prefetch.
+**Deep dive:** [`docs/general/04-code-splitting.md`](../../docs/general/04-code-splitting.md) ó bundle theory, tree shaking, preload/prefetch.
 
 **Official API (verify via Context7 `/vercel/next.js`):** [Next.js: Lazy loading](https://nextjs.org/docs/app/building-your-application/optimizing/lazy-loading)
 
 ---
 
-## 1. Two layers of ‚Äúfast page‚Äù
+## 1. Two layers of ìfast pageî
 
 | Layer | Mechanism | What it optimizes |
 |-------|-----------|-------------------|
 | **Server / RSC** | `loading.tsx`, `<Suspense>`, light `page.tsx` | Time to first useful **route shell** and streamed **data** |
 | **Client JS** | `next/dynamic`, conditional render, route-level splits | **Download / parse / execute** of heavy client bundles |
 
-These layers are **orthogonal**. Suspense does **not** defer `react-day-picker`, `recharts`, rich editors, or media players ‚Äî they still ship in a client chunk unless you lazy-load them.
+These layers are **orthogonal**. Suspense does **not** defer `react-day-picker`, `recharts`, rich editors, or media players ó they still ship in a client chunk unless you lazy-load them.
 
-**Normative server contract:** [`ai_loading_patterns.md`](./ai_loading_patterns.md) ‚Äî Cursor rule **app-router-streaming-loading**.  
-**Normative client lazy contract:** **¬ß5** below ‚Äî Cursor rules **react-ui-components**, **react-logic-presentation**.
+**Normative server contract:** [`ai_loading_patterns.md`](./ai_loading_patterns.md) ó Cursor rule **app-router-streaming-loading**.  
+**Normative client lazy contract:** **ß5** below ó Cursor rules **react-ui-components**, **react-logic-presentation**.
 
 ---
 
 ## 2. Route splitting vs `dynamic`
 
-- **App Router** automatically code-splits **per route segment** for client code reachable only from that route‚Äôs import graph.
+- **App Router** automatically code-splits **per route segment** for client code reachable only from that routeís import graph.
 - **`next/dynamic`** adds a **separate async chunk** and optional **deferred execution** (especially with `ssr: false` or conditional `{open && <LazyPanel />}`).
 
 Use route splitting by default (do not import heavy widgets from shared layouts or `components/shell/`). Use `dynamic` when:
 
-1. **Within-route deferral** ‚Äî heavy UI on one URL should not block initial client JS (charts, calendar panel, file preview).
-2. **Shared parent imports** ‚Äî a component in `components/ui/*` or a shared form would otherwise land in a **shared chunk** across many routes.
-3. **Interaction-gated UI** ‚Äî calendar popover, modal editor, complaint dialog content opens only on user action.
-4. **`ssr: false`** ‚Äî library breaks or is meaningless on the server (`window`, some media players, browser-only APIs).
+1. **Within-route deferral** ó heavy UI on one URL should not block initial client JS (charts, calendar panel, file preview).
+2. **Shared parent imports** ó a component in `components/ui/*` or a shared form would otherwise land in a **shared chunk** across many routes.
+3. **Interaction-gated UI** ó calendar popover, modal editor, complaint dialog content opens only on user action.
+4. **`ssr: false`** ó library breaks or is meaningless on the server (`window`, some media players, browser-only APIs).
 
-Per Next.js 16 docs (Context7): load immediately in a separate bundle, **on demand when a condition is met**, or **client-only** with `ssr: false` ‚Äî pick explicitly per scenario.
+Per Next.js 16 docs (Context7): load immediately in a separate bundle, **on demand when a condition is met**, or **client-only** with `ssr: false` ó pick explicitly per scenario.
 
 ---
 
 ## 3. `'use client'` and `ssr: false`
 
-**`'use client'` does not mean ‚Äúserver never renders this‚Äù.**  
+**`'use client'` does not mean ìserver never renders thisî.**  
 By default, Client Components still participate in **SSR** for the initial HTML snapshot, then **hydrate**.
 
 | Option | Server | Client |
@@ -53,9 +53,9 @@ By default, Client Components still participate in **SSR** for the initial HTML 
 | `dynamic(() => import('./X'))` (default) | Renders `X` in HTML when parent renders on server | Hydrates + may load async chunk |
 | `dynamic(..., { ssr: false })` | **No** render of `X`; `loading` placeholder only | Mounts `X` after chunk loads |
 
-Use **`ssr: false`** only when SSR is harmful or unnecessary ‚Äî not on every `dynamic` import.
+Use **`ssr: false`** only when SSR is harmful or unnecessary ó not on every `dynamic` import.
 
-**Do not** call `next/dynamic` from **async Server Component modules** (`*.server.tsx`) ‚Äî Turbopack dev can throw streaming errors (`transformAlgorithm is not a function`). Prefer static imports in RSC; use `dynamic` from **sync** `page.tsx` / **client** parents (¬ß4.4), or rely on route-level code splitting.
+**Do not** call `next/dynamic` from **async Server Component modules** (`*.server.tsx`) ó Turbopack dev can throw streaming errors (`transformAlgorithm is not a function`). Prefer static imports in RSC; use `dynamic` from **sync** `page.tsx` / **client** parents (ß4.4), or rely on route-level code splitting.
 
 **Pulse naming:** client entry modules use **`.client.tsx`** suffix per **react-naming-conventions** (`DatePickerField.client.tsx`, `SchedulePicker.client.tsx`).
 
@@ -68,8 +68,8 @@ Use **`ssr: false`** only when SSR is harmful or unnecessary ‚Äî not on every `d
 **When:** reusable lazy entry used from server or client parents; heavy lib isolated from shared import graph.
 
 ```
-CalendarPanelLazy.client.tsx   ‚Üí dynamic(import heavy module), re-export props
-calendar.tsx                   ‚Üí normal 'use client' implementation (react-day-picker)
+CalendarPanelLazy.client.tsx   ? dynamic(import heavy module), re-export props
+calendar.tsx                   ? normal 'use client' implementation (react-day-picker)
 ```
 
 ```tsx
@@ -99,16 +99,16 @@ export function CalendarPanelLazy(props: CalendarPanelProps) {
 Split:
 
 ```
-DatePickerField.client.tsx           ‚Üí Field, trigger, Popover chrome, hidden input
-DatePickerCalendarPanel.client.tsx   ‚Üí Calendar + react-day-picker (or lazy import)
+DatePickerField.client.tsx           ? Field, trigger, Popover chrome, hidden input
+DatePickerCalendarPanel.client.tsx   ? Calendar + react-day-picker (or lazy import)
 ```
 
 - `dynamic` import in the **field** file (or dedicated `CalendarPanelLazy.client.tsx`).
 - Render lazy child only when `open === true`.
-- `loading` skeleton must match **panel** size (limit CLS) ‚Äî not the whole page skeleton.
+- `loading` skeleton must match **panel** size (limit CLS) ó not the whole page skeleton.
 - Keep `aria-expanded` on trigger; panel region gets focus management via Radix Popover.
 
-**Current state:** [`DatePickerField.client.tsx`](../../../apps/web/src/components/ui/DatePickerField.client.tsx) lazy-loads [`DatePickerCalendarPanel.client.tsx`](../../../apps/web/src/components/ui/DatePickerCalendarPanel.client.tsx) when popover is open (¬ß4.2).
+**Current state:** [`DatePickerField.client.tsx`](../../../apps/web/src/components/ui/DatePickerField.client.tsx) lazy-loads [`DatePickerCalendarPanel.client.tsx`](../../../apps/web/src/components/ui/DatePickerCalendarPanel.client.tsx) when popover is open (ß4.2).
 
 ### 4.3. Inline `dynamic` in a single client file
 
@@ -121,7 +121,7 @@ Same rules: `'use client'` file, `dynamic` at module top, `loading` + conditiona
 **When:** heavy form or editor inside Radix Dialog/Sheet.
 
 - Keep Dialog/Sheet shell in parent; lazy-load **content body** when `open === true` (or on first open with `hasOpened` flag).
-- Mobile: Sheet from bottom (**ui-mobile-first**); skeleton height ‚âà final sheet content.
+- Mobile: Sheet from bottom (**ui-mobile-first**); skeleton height ò final sheet content.
 
 Pulse examples (candidates): admin complaint resolution panels, multi-step upload previews.
 
@@ -138,31 +138,31 @@ Pulse examples (candidates): admin complaint resolution panels, multi-step uploa
 **Allowed and common:**
 
 ```
-loading.tsx / Suspense     ‚Üí server data regions
-  ‚îî‚îÄ Server content
-       ‚îî‚îÄ Client shell
-            ‚îî‚îÄ dynamic(panel) when open   ‚Üí client JS chunk
+loading.tsx / Suspense     ? server data regions
+  +- Server content
+       +- Client shell
+            +- dynamic(panel) when open   ? client JS chunk
 ```
 
-Do **not** duplicate the **same** full-region skeleton on both Suspense and `dynamic.loading` for identical layout. Route navigation ‚Üí **ai_loading_patterns**; button pending ‚Üí **ui-mutation-pending** (¬ß13 there).
+Do **not** duplicate the **same** full-region skeleton on both Suspense and `dynamic.loading` for identical layout. Route navigation ? **ai_loading_patterns**; button pending ? **ui-mutation-pending** (ß13 there).
 
 ---
 
 ## 5. Tree shaking & bundle hygiene (from docs/general/04)
 
-**Server Components first** ‚Äî –ª—É—á—à–∏–π code split: –∫–æ–¥ –Ω–µ –ø–æ–ø–∞–¥–∞–µ—Ç –≤ client bundle –≤–æ–æ–±—â–µ.
+**Server Components first** ó ?????? code split: ??? ?? ???????? ? client bundle ??????.
 
 ### MUST (icons & utilities)
 
 ```tsx
-// ‚ùå Entire icon pack
+// ? Entire icon pack
 import * as Icons from "lucide-react";
 
-// ‚úÖ Per-icon imports (+ optimizePackageImports in next.config.ts)
+// ? Per-icon imports (+ optimizePackageImports in next.config.ts)
 import { Search, User } from "lucide-react";
 ```
 
-### SHOULD ‚Äî next.config.ts
+### SHOULD ó next.config.ts
 
 ```typescript
 experimental: {
@@ -172,19 +172,19 @@ experimental: {
 
 ### Bundle analysis (before adding heavy deps)
 
-1. Check [bundlephobia.com](https://bundlephobia.com) ‚Äî gzipped size, tree-shakeable flag
+1. Check [bundlephobia.com](https://bundlephobia.com) ó gzipped size, tree-shakeable flag
 2. `ANALYZE=true npm run build` with `@next/bundle-analyzer`
-3. DevTools CPU **4x slowdown** ‚Äî parse cost on mobile
+3. DevTools CPU **4x slowdown** ó parse cost on mobile
 
 ### Preload / prefetch
 
-- `Link` prefetches routes in viewport ‚Äî `prefetch={false}` for rare heavy admin pages
+- `Link` prefetches routes in viewport ó `prefetch={false}` for rare heavy admin pages
 - `dynamic().preload()` on hover for interaction-gated modals
-- `rel="preload"` only for LCP fonts/images ‚Äî unused preload wastes bandwidth
+- `rel="preload"` only for LCP fonts/images ó unused preload wastes bandwidth
 
 ### Error boundaries for lazy chunks
 
-Wrap `Suspense` + lazy components in Error Boundary ‚Äî chunk load failure (offline) needs retry UX.
+Wrap `Suspense` + lazy components in Error Boundary ó chunk load failure (offline) needs retry UX.
 
 ---
 
@@ -198,12 +198,12 @@ Apply when adding or materially changing:
 ### 6.1 Rules
 
 1. **Prefer Server Components** for data; keep client islands small ([`ai_component_guidelines.md`](../react/ai_component_guidelines.md)).
-2. **Do not** statically import heavy libs in **shared** client modules used by unrelated routes ‚Äî split + `dynamic` or interaction-gated import.
-3. **`dynamic` placement:** as **low** in the tree as possible (page / form / field), not root layout ‚Äî unless the widget is truly global (exception: global `Toaster` / `sonner` is lightweight).
+2. **Do not** statically import heavy libs in **shared** client modules used by unrelated routes ó split + `dynamic` or interaction-gated import.
+3. **`dynamic` placement:** as **low** in the tree as possible (page / form / field), not root layout ó unless the widget is truly global (exception: global `Toaster` / `sonner` is lightweight).
 4. **`ssr: false`:** document in code comment **why** (browser API, library SSR break, intentional client-only).
 5. **`loading`:** provide a sized placeholder for `dynamic`; use `aria-hidden` when decorative during chunk load; match Warm Forest skeletons (`@/components/ui/skeleton`).
 6. **One primary component per file** ([`react-one-component-per-file.mdc`](../../.cursor/rules/react-one-component-per-file.mdc)); lazy **wrapper** may be a thin second file named `*-lazy.client.tsx` or colocated `dynamic` in the parent client file.
-7. **Design Lab catalog:** new heavy primitive ‚Üí implement lazy pattern in catalog section **before** product routes import it ([`design_system_lab_spec.md`](../../implementation/mvp/specs/design_system_lab_spec.md)).
+7. **Design Lab catalog:** new heavy primitive ? implement lazy pattern in catalog section **before** product routes import it ([`design_system_lab_spec.md`](../../implementation/mvp/specs/design_system_lab_spec.md)).
 
 ### 6.2 Checklist
 
@@ -211,26 +211,26 @@ Apply when adding or materially changing:
 - [ ] `dynamic` + conditional mount if interaction-gated.
 - [ ] `ssr: false` only with a reason (comment).
 - [ ] Skeleton / `loading` matches final control dimensions (CLS < 0.1).
-- [ ] Server route still follows **ai_loading_patterns** checklist (¬ß16) if the page fetches data.
-- [ ] lucide-react ‚Äî per-icon import; no namespace import
-- [ ] User-visible strings from `@/lib/messages` ‚Äî not in lazy wrapper only.
+- [ ] Server route still follows **ai_loading_patterns** checklist (ß16) if the page fetches data.
+- [ ] lucide-react ó per-icon import; no namespace import
+- [ ] User-visible strings from `@/lib/messages` ó not in lazy wrapper only.
 
 ---
 
-## 7. Audit backlog (Pulse ‚Äî May 2026)
+## 7. Audit backlog (Pulse ó May 2026)
 
-Prioritized by impact. Re-run after major UI deps or new shared client primitives. Verify shared-chunk bleed with production `npm run build` output (Pulse snapshot: [`ai_client_lazy_loading.md`](../../docs/examples/pulse/docs/guidelines/nextjs/) ‚Äî `ai_bundle_analyze_steps.md` is not in this snapshot; use this guideline + `npm run build` chunk report).
+Prioritized by impact. Re-run after major UI deps or new shared client primitives. Verify shared-chunk bleed with production `npm run build` output (Pulse snapshot: [`ai_client_lazy_loading.md`](../../docs/examples/pulse/docs/guidelines/nextjs/) ó `ai_bundle_analyze_steps.md` is not in this snapshot; use this guideline + `npm run build` chunk report).
 
 | Priority | Surface | Issue | Suggested approach |
 |----------|---------|-------|-------------------|
-| **High** | `DatePickerField.client.tsx` | static `Calendar` ‚Üí `react-day-picker` in shared UI | **Done:** ¬ß4.2 lazy panel when `open`; [`DatePickerCalendarPanel.client.tsx`](../../../apps/web/src/components/ui/DatePickerCalendarPanel.client.tsx) |
+| **High** | `DatePickerField.client.tsx` | static `Calendar` ? `react-day-picker` in shared UI | **Done:** ß4.2 lazy panel when `open`; [`DatePickerCalendarPanel.client.tsx`](../../../apps/web/src/components/ui/DatePickerCalendarPanel.client.tsx) |
 | **High** | `components/ui/calendar.tsx` | heavy primitive in Design Lab + product import graph | keep implementation; consumers use lazy panel wrapper |
 | **Medium** | `TrainerScheduleExceptionsTab.client.tsx` | static `Calendar` on trainer schedule route | route split limits blast radius; optional lazy if tab is not default active |
 | **Medium** | `components/ui/chart.tsx` | `recharts` in shared UI | lazy-wrap before any product dashboard chart ships |
-| **Low** | `@dnd-kit/*` (post-MVP) | schedule ordering DnD | route-local `dynamic` on editor mount ‚Äî **patterns-tables-dnd** |
+| **Low** | `@dnd-kit/*` (post-MVP) | schedule ordering DnD | route-local `dynamic` on editor mount ó **patterns-tables-dnd** |
 | **Low** | `FileUploadZone.client.tsx` | client upload UX | already route/form scoped; monitor if moved to shared layout |
 
-**Baseline:** Pulse uses `next/dynamic` for `DatePickerField` calendar panel (May 2026) ‚Äî extend ¬ß4 patterns for other heavy shared primitives.
+**Baseline:** Pulse uses `next/dynamic` for `DatePickerField` calendar panel (May 2026) ó extend ß4 patterns for other heavy shared primitives.
 
 ---
 
@@ -239,11 +239,11 @@ Prioritized by impact. Re-run after major UI deps or new shared client primitive
 | Route / surface | Server loading | Client lazy candidate |
 |-----------------|----------------|------------------------|
 | `/book/[trainerId]` | Suspense per wizard step | `SchedulePicker` is light (no day-picker); keep route-local |
-| `/trainer/schedule` | Suspense slot grid | Calendar on exceptions tab ‚Äî ¬ß6 |
-| `/trainer/onboarding/*` | Step shells | `DatePickerField` on personal step ‚Äî benefits from ¬ß4.2 |
-| `/admin/*` dialogs | N/A | Dialog content on open ‚Äî ¬ß4.4 |
+| `/trainer/schedule` | Suspense slot grid | Calendar on exceptions tab ó ß6 |
+| `/trainer/onboarding/*` | Step shells | `DatePickerField` on personal step ó benefits from ß4.2 |
+| `/admin/*` dialogs | N/A | Dialog content on open ó ß4.4 |
 | `/design-system` | Dev-only | May static-import for showcase; documents lazy variant in Lab |
-| `/` (landing) | Suspense above/below fold ‚Äî [`ai_loading_patterns.md`](./ai_loading_patterns.md) ¬ß14.1 | **No** `dynamic()` in `LandingPageRest.server.tsx`; static client imports |
+| `/` (landing) | Suspense above/below fold ó [`ai_loading_patterns.md`](./ai_loading_patterns.md) ß14.1 | **No** `dynamic()` in `LandingPageRest.server.tsx`; static client imports |
 
 ---
 
@@ -257,7 +257,7 @@ Prioritized by impact. Re-run after major UI deps or new shared client primitive
 | [`design_system_lab_spec.md`](../../implementation/mvp/specs/design_system_lab_spec.md) | Catalog before product import |
 | [`docs/general/04-code-splitting.md`](../../docs/general/04-code-splitting.md) | Full bundle theory |
 | [`ai_browser_rendering_performance.md`](../react/ai_browser_rendering_performance.md) | TBT, animations |
-| Pulse reference | `docs/examples/pulse/docs/guidelines/nextjs/` ‚Äî bundle patterns |
+| Pulse reference | `docs/examples/pulse/docs/guidelines/nextjs/` ó bundle patterns |
 | [Next.js: Lazy loading](https://nextjs.org/docs/app/building-your-application/optimizing/lazy-loading) | Official API |
 | [Next.js: Loading UI and Streaming](https://nextjs.org/docs/app/building-your-application/routing/loading-ui-and-streaming) | Suspense (server layer) |
 | Index: [`README.md`](./README.md) | Next.js guidelines |
@@ -266,4 +266,4 @@ Prioritized by impact. Re-run after major UI deps or new shared client primitive
 
 ---
 
-**Next.js Version:** 16.3.3 ¬∑ **Hosting:** Vercel ¬∑ **Reference adapted from:** Pulse reference BSFY `ai_client_lazy_loading.md`
+**Next.js Version:** 16.4 ∑ **Hosting:** Vercel ∑ **Reference adapted from:** Pulse reference BSFY `ai_client_lazy_loading.md`

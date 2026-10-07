@@ -1,5 +1,5 @@
-﻿---
-description: Auth — defense-in-depth, auth() in handlers; align with ADR-002
+---
+description: Auth â€” defense-in-depth, auth() in handlers; align with ADR-002
 globs:
   - apps/web/**/auth/**
   - apps/web/src/app/api/auth/**
@@ -10,17 +10,17 @@ globs:
 alwaysApply: false
 ---
 
-# Authentication and security — Pulse
+# Authentication and security â€” Pulse
 
 **Methodology:** [`docs/meta/ai_first_project_methodology.md`](docs/meta/ai_first_project_methodology.md)  
 **Guide:** [`docs/guidelines/auth/ai_auth_implementation_guide.md`](docs/guidelines/auth/ai_auth_implementation_guide.md)  
 **Schema:** [`docs/prds/03_data_model/database_schema_v1.md`](docs/prds/03_data_model/database_schema_v1.md)  
-**Runtime:** [ADR-002](docs/prds/07_governance/adr_002_next162_vercel_runtime_policy.md) — Next.js **16.3.x** (pin **16.3.3**), **`proxy.ts`**
+**Runtime:** [ADR-002](docs/prds/07_governance/adr_002_next162_vercel_runtime_policy.md) â€” Next.js **16.4** (exact patch pin), **`proxy.ts`**
 
 ## Next.js 16 interception (not middleware-first)
 
-- **Layer 1:** **`proxy.ts`** — JWT role gate via **`auth.config.ts`** (no Prisma, no full `auth.ts`)
-- **`middleware.ts`:** legacy/transitional only — do not implement new auth gates here
+- **Layer 1:** **`proxy.ts`** â€” JWT role gate via **`auth.config.ts`** (no Prisma, no full `auth.ts`)
+- **`middleware.ts`:** legacy/transitional only â€” do not implement new auth gates here
 - **Layer 2:** optional layout UX redirects
 - **Layer 3:** mandatory `auth()` in Route Handlers and Server Actions
 - **Layer 4:** `@{{PACKAGE_SCOPE}}/policy-server` object-level authorization
@@ -35,8 +35,8 @@ Split Auth.js config is **mandatory**: `auth.config.ts` for proxy; `auth.ts` (+ 
 
 ## Session typing
 
-- Auth.js module augmentation — **only in `apps/web`**
-- Map session → `PolicySessionContext` before policy-server
+- Auth.js module augmentation â€” **only in `apps/web`**
+- Map session â†’ `PolicySessionContext` before policy-server
 - See [typescript-monorepo-types.mdc](typescript-monorepo-types.mdc)
 
 ## Checklist
@@ -44,6 +44,6 @@ Split Auth.js config is **mandatory**: `auth.config.ts` for proxy; `auth.ts` (+ 
 - [ ] Route protection in **`proxy.ts`**, not new `middleware.ts` logic
 - [ ] Session verified on every mutation and protected read
 - [ ] No `@{{PACKAGE_SCOPE}}/policy-server` in proxy/middleware
-- [ ] XSS/CSRF/CSP — **security-xss-csrf** + [`ai_security_xss_csrf_guidelines.md`](guidelines/security/ai_security_xss_csrf_guidelines.md)
+- [ ] XSS/CSRF/CSP â€” **security-xss-csrf** + [`ai_security_xss_csrf_guidelines.md`](guidelines/security/ai_security_xss_csrf_guidelines.md)
 
-Reference: Pulse (docs/examples/pulse) `auth-security.mdc` — **Guidelines override Pulse reference code**.
+Reference: Pulse (docs/examples/pulse) `auth-security.mdc` â€” **Guidelines override Pulse reference code**.

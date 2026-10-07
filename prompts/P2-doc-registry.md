@@ -28,7 +28,7 @@ Technical Writer для AI agents.
 **Только registry + methodology.** Не создавать PRD/contracts/code.
 
 ## Context7
-Verify pinned versions in §2.7: Next.js 16.3.x (Context7 `/vercel/next.js`), Auth.js v5, Prisma v7.
+Verify pinned versions in §2.7: Next.js 16.4.x (Context7 `/vercel/next.js`), Auth.js v5, Prisma v7.
 
 ## Verification
 - [ ] Registry — единственный source of doc order

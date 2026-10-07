@@ -1,6 +1,6 @@
 # React state management guidelines — Pulse
 
-**Stack:** React 19, Next.js **16.3.3** App Router  
+**Stack:** React 19, Next.js **16.4** App Router  
 **Related:** [ai_react_hooks_guidelines.md](./ai_react_hooks_guidelines.md) §11 Memoization, §14 `useSyncExternalStore`
 
 ---

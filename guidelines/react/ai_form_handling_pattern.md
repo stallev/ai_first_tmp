@@ -1,9 +1,9 @@
-ï»¿# Form handling pattern â€” Pulse
+# Form handling pattern — Pulse
 
-Client forms: **`Field`** / **`Label`** / **`Input`** from `@/components/ui`, **`sonner`** for feedback, **Server Actions** for mutations. Prefer **`useActionState`** when server returns validation state; otherwise **`useTransition`** + toast. **Busy UI** while in flight â€” Â§4.
+Client forms: **`Field`** / **`Label`** / **`Input`** from `@/components/ui`, **`sonner`** for feedback, **Server Actions** for mutations. Prefer **`useActionState`** when server returns validation state; otherwise **`useTransition`** + toast. **Busy UI** while in flight — §4.
 
 **Methodology:** [`docs/meta/ai_first_project_methodology.md`](../../meta/ai_first_project_methodology.md)  
-**Stack:** Next.js **16.3.3**, React 19, `@{{PACKAGE_SCOPE}}/domain` `MutationResult`  
+**Stack:** Next.js **16.4**, React 19, `@{{PACKAGE_SCOPE}}/domain` `MutationResult`  
 **Cursor rules:** **ui-mutation-pending**, **ui-toast-mutations**, **ios-safari-mutation-transport** (Class B critical forms)
 
 ```mermaid
@@ -28,9 +28,9 @@ export async function createBooking(
   formData: FormData
 ): Promise<MutationResult<{ id: string }>> {
   const slotId = String(formData.get('slotId') ?? '').trim()
-  if (!slotId) return { ok: false, code: 'VALIDATION', message: 'â€¦' } // from @/lib/messages in product code
-  // â€¦ DAL + policy
-  redirect('/client/bookings/â€¦')
+  if (!slotId) return { ok: false, code: 'VALIDATION', message: '…' } // from @/lib/messages in product code
+  // … DAL + policy
+  redirect('/client/bookings/…')
 }
 ```
 
@@ -78,14 +78,14 @@ Use when calling imperative APIs or Route Handlers without `ActionState`.
 
 ## 4. Mutation pending (busy) UI
 
-Applies to **any server mutation**. Distinct from route **`loading.tsx`** â€” see [ai_loading_patterns.md](../nextjs/ai_loading_patterns.md).
+Applies to **any server mutation**. Distinct from route **`loading.tsx`** — see [ai_loading_patterns.md](../nextjs/ai_loading_patterns.md).
 
 ### Required
 
 1. **`pending`** from `useActionState`, `useFormStatus`, or `useTransition`
 2. **`disabled={pending}`** on submit (and inputs if form locked)
 3. **`aria-busy={pending}`** on submit or `<form>`
-4. **Label change** â€” gerund from **`@/lib/messages`**
+4. **Label change** — gerund from **`@/lib/messages`**
 
 ### Recommended
 
@@ -99,23 +99,23 @@ Applies to **any server mutation**. Distinct from route **`loading.tsx`** â€” se
 
 ## 5. Optimistic actions (not forms)
 
-Wishlist toggle, service active â€” **`useOptimistic`** â€” see [`ai_optimistic_ui_pattern.md`](./ai_optimistic_ui_pattern.md) and Â§7 in Pulse reference.
+Wishlist toggle, service active — **`useOptimistic`** — see [`ai_optimistic_ui_pattern.md`](./ai_optimistic_ui_pattern.md) and §7 in Pulse reference.
 
 ---
 
 ## 6. Dates and timezone
 
-- Display/booking times use **`TrainerProfile.timezone`** â€” never server default alone.
+- Display/booking times use **`TrainerProfile.timezone`** — never server default alone.
 - Store UTC in DB; format with **`date-fns`** + explicit locale.
 - See user flows and [database_schema_v1.md](../../prds/03_data_model/database_schema_v1.md).
 
 ---
 
-## 7. iOS Safari â€” critical submit transport (Class B)
+## 7. iOS Safari — critical submit transport (Class B)
 
 Mobile Safari can throw **`TypeError: Load failed`** on Server Action POST without a server error. **Mandatory** for conversion-critical forms on canonical routes.
 
-**Docs:** [`ios-safari-mutation-transport-pattern.md`](../../incidents/ios-safari-mutation-transport-pattern.md) Â· [`ai_nextjs_db_data_handle.md`](../nextjs/ai_nextjs_db_data_handle.md) Â§7
+**Docs:** [`ios-safari-mutation-transport-pattern.md`](../../incidents/ios-safari-mutation-transport-pattern.md) · [`ai_nextjs_db_data_handle.md`](../nextjs/ai_nextjs_db_data_handle.md) §7
 
 ### When required
 
@@ -126,19 +126,19 @@ Mobile Safari can throw **`TypeError: Load failed`** on Server Action POST witho
 | Admin approve/reject | `/admin/trainers` | B |
 | Profile save (single submit) | `/trainer/profile`, `/client/profile` | B |
 
-Toggles / wishlist â†’ **Class A** (Route Handler primary) â€” [`ai_optimistic_ui_pattern.md`](./ai_optimistic_ui_pattern.md), not this section.
+Toggles / wishlist ? **Class A** (Route Handler primary) — [`ai_optimistic_ui_pattern.md`](./ai_optimistic_ui_pattern.md), not this section.
 
 ### Rules
 
-1. **`useActionState`** / `<form action={â€¦}>` stays the default UX on non-iOS browsers.
+1. **`useActionState`** / `<form action={…}>` stays the default UX on non-iOS browsers.
 2. On **`isIosSafari()`** (or after `Load failed` retry): call **`POST /api/...`** with **`resilientPostFetch`**, same **`MutationResult`** shape.
-3. **Pending UI unchanged** â€” `disabled`, `aria-busy`, gerund from `@/lib/messages` on both paths.
+3. **Pending UI unchanged** — `disabled`, `aria-busy`, gerund from `@/lib/messages` on both paths.
 4. **Toasts / redirect:** Action path uses `redirect` + query toast (I2); fallback path uses `router.push('/client/bookings/[id]?booked=1')` + client toast component.
-5. **Do not** fork validation â€” single DAL in `src/data/**`.
+5. **Do not** fork validation — single DAL in `src/data/**`.
 
 ### Hook sketch (transport selection)
 
-Wrap submit in `useTransition`; branch on `isIosSafari()` before calling Action vs `/api/...`. See full example in pattern doc Â§ Â«Client fallbackÂ».
+Wrap submit in `useTransition`; branch on `isIosSafari()` before calling Action vs `/api/...`. See full example in pattern doc § «Client fallback».
 
 ### Checklist (Class B forms)
 
@@ -156,6 +156,6 @@ Wrap submit in `useTransition`; branch on `isIosSafari()` before calling Action 
 3. **Pending:** `disabled` + `aria-busy` + messages
 4. **Toasts** after completion (**ui-toast-mutations**)
 5. **Cache:** `updateTag` / `revalidatePath` in action after mutation (ADR-002)
-6. **Class B critical form:** iOS Safari fallback per Â§7 and **ios-safari-mutation-transport**
+6. **Class B critical form:** iOS Safari fallback per §7 and **ios-safari-mutation-transport**
 
 **Reference:** Pulse snapshot [`ai_form_handling_pattern.md`](../../docs/examples/pulse/docs/guidelines/react/ai_form_handling_pattern.md)

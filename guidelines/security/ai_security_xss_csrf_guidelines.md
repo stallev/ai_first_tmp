@@ -1,6 +1,6 @@
 # Security: XSS, CSRF, CSP — agent guidelines
 
-**Stack:** Next.js **16.3.3** App Router, React 19, Auth.js v5  
+**Stack:** Next.js **16.4** App Router, React 19, Auth.js v5  
 **Methodology:** [`docs/meta/ai_first_project_methodology.md`](../../docs/meta/ai_first_project_methodology.md)  
 **Deep dive:** [`docs/general/01-security-xss-csrf.md`](../../docs/general/01-security-xss-csrf.md)  
 **Cursor rule:** **security-xss-csrf** · **auth-security** (auth layers)  

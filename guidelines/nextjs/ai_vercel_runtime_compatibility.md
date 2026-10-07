@@ -1,8 +1,8 @@
-Ôªø# Vercel runtime compatibility for Next.js 16.3.3
+# Vercel runtime compatibility for Next.js 16.4
 
-**Project:** Pulse ‚Äî `apps/web`  
-**Technologies:** Next.js **16.3.3**, React 19, TypeScript, **Vercel**, Neon PostgreSQL  
-**Canonical policy:** [ADR-002 template](../../docs/prds/07_governance/adr_002_next162_vercel_runtime_policy.template.md), [ADR-001](../../docs/prds/07_governance/adr_001_stack_and_runtime.md) (–ø–æ—Å–ª–µ W4)
+**Project:** Pulse ó `apps/web`  
+**Technologies:** Next.js **16.4**, React 19, TypeScript, **Vercel**, Neon PostgreSQL  
+**Canonical policy:** [ADR-002 template](../../docs/prds/07_governance/adr_002_next162_vercel_runtime_policy.template.md), [ADR-001](../../docs/prds/07_governance/adr_001_stack_and_runtime.md) (????? W4)
 
 ---
 
@@ -12,11 +12,11 @@ The web app deploys on **Vercel**. Framework and hosting choices must align with
 
 **Project standard:**
 
-- **Next.js:** `16.3.3` (pinned in `apps/web/package.json`)
+- **Next.js:** `16.4` (pinned in `apps/web/package.json`)
 - **Hosting:** Vercel
 - **Bundler:** Turbopack (default)
 - **Request interception:** **`proxy.ts`** canonical; `middleware.ts` temporary migration only
-- **Jobs:** Vercel Cron + serverless ‚Äî not `unstable_after`
+- **Jobs:** Vercel Cron + serverless ó not `unstable_after`
 
 ---
 
@@ -24,30 +24,30 @@ The web app deploys on **Vercel**. Framework and hosting choices must align with
 
 - Server Components, Client Components, Route Handlers
 - Static, dynamic, and incremental caching (Next.js 16 cache APIs)
-- **Streaming** with Suspense ‚Äî first-class on Vercel
+- **Streaming** with Suspense ó first-class on Vercel
 - **`next/image`** via Vercel Image Optimization
-- Cache invalidation: **`revalidatePath`**, **`revalidateTag`**, **`updateTag`** (Server Actions only for `updateTag` ‚Äî Context7 `/vercel/next.js`)
+- Cache invalidation: **`revalidatePath`**, **`revalidateTag`**, **`updateTag`** (Server Actions only for `updateTag` ó Context7 `/vercel/next.js`)
 
 ---
 
 ## 3. Policies (from ADR-002)
 
-1. **Async Request APIs** ‚Äî `await cookies()`, `await headers()`, `await params`, `await searchParams`
-2. **Read-your-own-writes** ‚Äî `updateTag` in Server Actions after mutations
-3. **Stale-while-revalidate** ‚Äî `revalidateTag` in Actions or Route Handlers
-4. **Background work** ‚Äî Vercel Cron + `delivery_log` + `idempotency_key` ‚Äî not request path
-5. **Webpack** ‚Äî only when explicitly documented (`next build --webpack`)
-6. **Instant Navigations (best practice)** ‚Äî `cacheComponents: true` and `partialPrefetching: true`; Stream / Cache / Block ‚Äî ADR-002 ¬ß9
+1. **Async Request APIs** ó `await cookies()`, `await headers()`, `await params`, `await searchParams`
+2. **Read-your-own-writes** ó `updateTag` in Server Actions after mutations
+3. **Stale-while-revalidate** ó `revalidateTag` in Actions or Route Handlers
+4. **Background work** ó Vercel Cron + `delivery_log` + `idempotency_key` ó not request path
+5. **Webpack** ó only when explicitly documented (`next build --webpack`)
+6. **Instant Navigations (best practice)** ó `cacheComponents: true` and `partialPrefetching: true`; Stream / Cache / Block ó ADR-002 ß9
 
 ---
 
 ## 4. Practical guidance for AI agents
 
-- Assume **Vercel + Next.js 16.3.3** per ADR-002
-- New interception ‚Üí **`proxy.ts`** with `@{{PACKAGE_SCOPE}}/policy-edge` + `auth.config.ts` only
-- Use **Suspense** / **`loading.tsx`** for UX (Instant Navigations Stream ‚Äî ADR-002 ¬ß9)
+- Assume **Vercel + Next.js 16.4** per ADR-002
+- New interception ? **`proxy.ts`** with `@{{PACKAGE_SCOPE}}/policy-edge` + `auth.config.ts` only
+- Use **Suspense** / **`loading.tsx`** for UX (Instant Navigations Stream ó ADR-002 ß9)
 - Do **not** apply Netlify-only or AWS Amplify SSR caveats to this codebase
-- Hosting limits ‚Üí [Vercel docs](https://vercel.com/docs), not legacy Amplify limits
+- Hosting limits ? [Vercel docs](https://vercel.com/docs), not legacy Amplify limits
 
 ---
 
@@ -56,11 +56,11 @@ The web app deploys on **Vercel**. Framework and hosting choices must align with
 | Area | Choice |
 |------|--------|
 | Hosting | **Vercel** |
-| Framework | Next.js **16.3.3** |
+| Framework | Next.js **16.4** |
 | Interception | **`proxy.ts`** |
 | Database | Neon PostgreSQL 17 |
 | Async / heavy work | Cron + jobs, not `unstable_after` |
 | Storage | AWS S3 |
 | Email | Resend |
 
-**Reference:** Pulse snapshot [`ai_vercel_runtime_compatibility.md`](../../docs/examples/pulse/docs/guidelines/nextjs/ai_vercel_runtime_compatibility.md) ‚Äî Netlify baseline replaced per ADR-001.
+**Reference:** Pulse snapshot [`ai_vercel_runtime_compatibility.md`](../../docs/examples/pulse/docs/guidelines/nextjs/ai_vercel_runtime_compatibility.md) ó Netlify baseline replaced per ADR-001.

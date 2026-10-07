@@ -1,6 +1,8 @@
 # Code review protocol: проблема → ожидаемая форма → diff
 
-Project HOW для review. **WHEN** — уровни, sensitive zones, бюджет, trace — в rule [`.cursor/rules/agent-code-review-subagent.mdc`](../.cursor/rules/agent-code-review-subagent.mdc). Оркестрация commit — `agent-commit-pipeline.mdc` §3. Методология: [`docs/meta/ai_first_project_methodology.md`](../docs/meta/ai_first_project_methodology.md) §2.2 ВЕРИФИКАЦИЯ.
+Project HOW для **commit / standalone review pipeline** (`agent-code-review-subagent.mdc`). **WHEN** — уровни, sensitive zones, бюджет, trace, § T3 reviewer gate — в том же rule. Оркестрация commit — `agent-commit-pipeline.mdc` §3. Методология: [`docs/meta/ai_first_project_methodology.template.md`](../docs/meta/ai_first_project_methodology.template.md) §2.2 ВЕРИФИКАЦИЯ.
+
+**Task tier T3** до «готово» — субагент **`reviewer`** ([`docs/meta/ai_agent_model_routing.md`](../docs/meta/ai_agent_model_routing.md)); §5 prompt ниже — для pipeline `generalPurpose`, не для `reviewer`.
 
 **Читать на уровнях `self-full` и `subagent`.** Для `skip` / `diff-only` не нужен.
 

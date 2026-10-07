@@ -26,8 +26,9 @@
 | `typescript-monorepo-types.mdc` | ✅ | typecheck, package boundaries |
 | `domain-literals-and-codes.mdc` | ✅ | Mutation codes, no magic strings |
 | `ai-dry-deduplication.mdc` | ✅ | DRY / SOLID for agents |
+| `model-routing.mdc` | ✅ | Task tier T0–T3, субагенты, гигиена токенов. Канон: [`docs/meta/ai_agent_model_routing.md`](../../docs/meta/ai_agent_model_routing.md). Не путать с rule-tier этой таблицы. |
 | `agent-commit-pipeline.mdc` | ✅ | Verify → review (уровень по diff) → conventional commit |
-| `agent-code-review-subagent.mdc` | — | Review protocol: проблема → ожидаемая форма → diff; fresh-context subagent для sensitive zones / по запросу (requestable) |
+| `agent-code-review-subagent.mdc` | — | Review protocol: проблема → ожидаемая форма → diff; fresh-context subagent для sensitive zones / по запросу (requestable). Не Bugbot. Не заменяет T3 `reviewer`. |
 
 Файлы: [`tiers/t0-always/`](tiers/t0-always/)
 
@@ -37,7 +38,7 @@
 
 | Rule | Назначение |
 |------|------------|
-| `nextjs-vercel-app-router.mdc` | Next 16.3.x (pin 16.3.3), `proxy.ts`, Instant Navigations |
+| `nextjs-vercel-app-router.mdc` | Next.js 16.4 (exact patch, no caret), `proxy.ts`, Instant Navigations |
 | `auth-security.mdc` | Auth.js v5, JWT, defense in depth |
 | `security-xss-csrf.mdc` | XSS, CSRF, CSP, DOMPurify |
 | `policy-packages.mdc` | `@{{PACKAGE_SCOPE}}/policy-*` boundaries |

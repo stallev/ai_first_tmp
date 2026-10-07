@@ -19,7 +19,7 @@
 
 ---
 
-## Request path (Next.js 16.3.3)
+## Request path (Next.js 16.4)
 
 ```
 Request → proxy.ts (nodejs, auth.config only)
@@ -122,7 +122,7 @@ Cursor rule: **ui-animation-performance**
 
 | Package | Version |
 |---------|---------|
-| next | 16.3.3 |
+| next | 16.4 |
 | react | 19.x |
 | prisma | 7.x |
 | tailwindcss | 4.x |

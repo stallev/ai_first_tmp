@@ -24,7 +24,7 @@ When {{PROJECT_NAME}} docs are silent — follow Pulse reference **architecture,
 
 ## Stack (baseline — full Pulse stack)
 
-- **Next.js** **16.3.x** (exact current patch — baseline **16.3.3**) App Router, **TypeScript** — [ADR-002](docs/prds/07_governance/adr_002_next162_vercel_runtime_policy.template.md) (после W4: скопировать в `adr_002_….md`)
+- **Next.js** **16.4** (exact patch pin, no caret) App Router, **TypeScript** — [ADR-002](docs/prds/07_governance/adr_002_next162_vercel_runtime_policy.template.md) (после W4: скопировать в `adr_002_….md`)
 - **Instant Navigations:** `cacheComponents: true` + `partialPrefetching: true`; динамика за `<Suspense>` / `'use cache'`; `export const instant = false` только с задокументированной причиной
 - **Request interception:** **`proxy.ts`** (Next.js 16); `middleware.ts` — только временная миграция
 - **Hosting:** Vercel · **UI:** shadcn/ui + Tailwind CSS v4 ({{DESIGN_SYSTEM_NAME}} tokens)
@@ -74,6 +74,7 @@ Runtime policy: [ADR-001](docs/prds/07_governance/adr_001_stack_and_runtime.md) 
 | **UI component catalog (Design Lab)** | `/design-system` — spec: [`design_system_lab_spec.md`](docs/implementation/mvp/specs/design_system_lab_spec.md) |
 | Pulse reference | [`docs/reference/pulse_project_reference.md`](docs/reference/pulse_project_reference.md) |
 | Prompt orchestration | [`prompts/00-orchestration.md`](prompts/00-orchestration.md) |
+| **Model routing (task tier T0–T3)** | [`docs/meta/ai_agent_model_routing.md`](docs/meta/ai_agent_model_routing.md) · runtime `model-routing.mdc` |
 | **Lab PSI (deployed)** | [`guidelines/nextjs/ai_psi_lab_testing.md`](guidelines/nextjs/ai_psi_lab_testing.md) · portable [`guidelines/psi-lab-testing.md`](guidelines/psi-lab-testing.md) |
 
 ## Cursor rules tiers
@@ -83,6 +84,8 @@ Runtime policy: [ADR-001](docs/prds/07_governance/adr_001_stack_and_runtime.md) 
 | T0 | Bootstrap | [`.cursor/rules/README.md`](.cursor/rules/README.md) §T0 |
 | T1 | After docs W1–W2 | §T1 |
 | T2 | After Design Lab (P6) | §T2 |
+
+Task classification T0–T3 (orchestrator) is a different axis from this table: [`ai_agent_model_routing.md`](docs/meta/ai_agent_model_routing.md).
 
 ## Repository status
 

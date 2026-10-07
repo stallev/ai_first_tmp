@@ -1,32 +1,32 @@
-﻿---
-description: Next.js 16.3.x App Router, Vercel, proxy.ts, async APIs — apps/web
+---
+description: Next.js 16.4 App Router, Vercel, proxy.ts, async APIs — apps/web
 globs: apps/web/**
 alwaysApply: false
 ---
 
-# Next.js 16.3.x + Vercel (`apps/web`)
+# Next.js 16.4 + Vercel (`apps/web`)
 
 **Methodology:** [`docs/meta/ai_first_project_methodology.md`](docs/meta/ai_first_project_methodology.md)  
-**Runtime (mandatory until W4):** [ADR-002 template](docs/prds/07_governance/adr_002_next162_vercel_runtime_policy.template.md) — **pin current 16.3.x patch (`next@16.3.3` baseline)**  
+**Runtime (mandatory until W4):** [ADR-002 template](docs/prds/07_governance/adr_002_next162_vercel_runtime_policy.template.md) — **pin the current 16.4.x patch (no caret)**  
 **Stack:** [ADR-001](docs/prds/07_governance/adr_001_stack_and_runtime.md) (после W4)  
 **Guidelines:** [`guidelines/nextjs/README.md`](guidelines/nextjs/README.md)
 
 ## Version pin (hard requirement)
 
-Current 16.3.x patch (baseline **16.3.3**). At P5 verify with `npm view next version` + Context7 `/vercel/next.js`; if latest is still 16.3.x, pin **that** exact patch.
+Current 16.4.x patch (no caret). At P5 verify with `npm view next version` + Context7 `/vercel/next.js`; if latest is still 16.4.x, pin **that** exact patch.
 
 ```json
-"next": "16.3.3"
+"next": "16.4.<patch>"
 ```
 
 Also pin matching `@next/third-parties` and `eslint-config-next` to the **same** patch.  
-No Next.js 15.x patterns. No floating `^16` without ADR. New minor (16.4+) — ADR amend.
+No Next.js 15.x patterns. No floating `^16` without ADR. New minor (16.5+) — ADR amend.
 
 ## Request interception — `proxy.ts` (NOT `middleware.ts`)
 
 Next.js 16 renames `middleware.ts` → **`proxy.ts`** (still canonical on 16.3):
 
-| Next.js 15 (legacy) | Next.js 16.3.x |
+| Next.js 15 (legacy) | Next.js 16.4 |
 |---------------------|----------------|
 | `middleware.ts` | **`proxy.ts`** |
 | `export function middleware()` | **`export function proxy()`** |
@@ -50,7 +50,7 @@ Next.js 16 renames `middleware.ts` → **`proxy.ts`** (still canonical on 16.3):
 - **Bundler:** Turbopack default
 - **Region errors (opt-in):** prefer **`catchError`** from `next/error` + `retry()` — §12.1
 
-## Next.js 16.3 — required vs defer (ADR-002 §5.1)
+## Next.js 16.4 — required vs defer (ADR-002 §5.1)
 
 **Required / recommended:**
 
@@ -76,4 +76,4 @@ Next.js 16 renames `middleware.ts` → **`proxy.ts`** (still canonical on 16.3):
 
 Fill from `project-context` after W3/W4 — do not invent Pulse domain literals here.
 
-Reference: Pulse snapshot `nextjs-vercel-app-router.mdc` — **Vercel + 16.3.x** per ADR-002 (snapshot may lag the current patch). Root Rules/Guidelines override the snapshot.
+Reference: Pulse snapshot `nextjs-vercel-app-router.mdc` — **Vercel + 16.4.x** per ADR-002 (snapshot may lag the current patch). Root Rules/Guidelines override the snapshot.
