@@ -24,7 +24,7 @@ Patterns for **Next.js 16.4 App Router**, **React 19**, **TypeScript**, **Tailwi
 
 | Document | Topic |
 |----------|--------|
-| [copy_and_messages.md](./copy_and_messages.md) | `@/lib/messages`, i18n-ready copy |
+| [copy_and_messages.md](./copy_and_messages.md) | `@/lib/messages`, i18n-ready copy, dictionary slices |
 | [ai_form_handling_pattern.md](./ai_form_handling_pattern.md) | Forms, Server Actions, busy UI §4, iOS Safari §7 |
 | [ai_optimistic_ui_pattern.md](./ai_optimistic_ui_pattern.md) | Wishlist, service toggle |
 | [ai_react_hooks_guidelines.md](./ai_react_hooks_guidelines.md) | Hooks for mutations/data, memoization, concurrent/advanced hooks |
@@ -83,6 +83,7 @@ Patterns for **Next.js 16.4 App Router**, **React 19**, **TypeScript**, **Tailwi
 | `ui-optimistic-mutations.mdc` | `useOptimistic` |
 | `ios-safari-mutation-transport.mdc` | iOS Safari `Load failed` — critical forms |
 | `ui-messages-and-copy.mdc` | Centralized copy |
+| `ui-messages-bundle-splitting.mdc` | Page-type dictionary slices in the client bundle |
 | `ui-icons-lucide.mdc` | Icons |
 
 ---

@@ -33,7 +33,7 @@ Monorepo: **Next.js 16.4** App Router + Vercel + Neon PostgreSQL.
 
 - `apps/*` handlers = тонкие адаптеры. Логика в `packages/`
 - **Запрещено** импортировать `packages/policy/server` из `proxy.ts` / `middleware.ts`
-- Domain literals — `@{{PACKAGE_SCOPE}}/domain`; user-visible текст — `@/lib/messages`
+- Domain literals — `@{{PACKAGE_SCOPE}}/domain`; user-visible текст — `@/lib/messages`. Клиентский бандл получает срез словаря своей группы маршрутов и текущей локали, не полный словарь — **ui-messages-bundle-splitting** и [`guidelines/react/copy_and_messages.md`](guidelines/react/copy_and_messages.md) §Срезы словаря
 - Долгие операции — **не в request path** → workers/cron
 - Post-MVP поля — nullable в схеме с первого дня
 

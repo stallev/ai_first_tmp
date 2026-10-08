@@ -1,6 +1,6 @@
 # Cursor Rules — Tier Manifest
 
-32 rule из Pulse stack + lab PSI, parameterized для новых проектов.  
+33 rule из Pulse stack + lab PSI, parameterized для новых проектов.  
 **Methodology:** [`docs/meta/ai_first_project_methodology.md`](../../docs/meta/ai_first_project_methodology.md) §2.4
 
 **Референс:** [`docs/examples/pulse/`](../../docs/examples/pulse/) — Pulse snapshot. **Guidelines + Rules boilerplate override Pulse code** — [`pulse_project_reference.md`](../../docs/reference/pulse_project_reference.md).
@@ -71,6 +71,7 @@
 | `ui-mutation-pending.mdc` | `aria-busy`, pending UI |
 | `ui-optimistic-mutations.mdc` | `useOptimistic` toggles |
 | `ui-messages-and-copy.mdc` | `@/lib/messages` |
+| `ui-messages-bundle-splitting.mdc` | Срезы словаря по типу страницы и локали; полный словарь не в клиентском бандле |
 | `ui-icons-lucide.mdc` | lucide-react |
 | `admin-forms-layout.mdc` | Admin forms layout |
 | `patterns-tables-dnd.mdc` | Responsive tables |

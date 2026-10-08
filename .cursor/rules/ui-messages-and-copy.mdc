@@ -33,8 +33,8 @@ alwaysApply: false
 
 ## Locales (P17)
 
-- Server: `getMessages()` from `@/lib/messages`
-- Client: `useMessages()` via `LocaleProvider` (P17)
+- Server: `getMessages()` from `@/lib/messages`, then `pick<Тип>Messages` for the route-group slice
+- Client: `use<Тип>Messages()` from that group's provider — not a root `LocaleProvider` with the full dictionary (**ui-messages-bundle-splitting**)
 - **MUST** add keys to both `en.ts` and `ru.ts`
 - Cookie-first locale — **no** `/[lang]/` URL prefix (ADR-009)
 - Formatters: `@/lib/i18n/format.ts` — not hardcoded `ru-RU`

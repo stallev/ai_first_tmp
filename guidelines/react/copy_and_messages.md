@@ -3,7 +3,7 @@
 All user-visible product copy for **`apps/web`** lives in **`apps/web/src/lib/messages`**. Keys use **English identifiers**; values are localized per active **`AppLocale`** (`en` | `ru`).
 
 **Methodology:** [`docs/meta/ai_first_project_methodology.md`](../../meta/ai_first_project_methodology.md)  
-**Cursor rule:** **ui-messages-and-copy** (`.cursor/rules/ui-messages-and-copy.mdc`)  
+**Cursor rules:** **ui-messages-and-copy** (`.cursor/rules/ui-messages-and-copy.mdc`) · **ui-messages-bundle-splitting** (`.cursor/rules/ui-messages-bundle-splitting.mdc`)  
 **Locale strategy:** [`adr_009_ui_locale_strategy.md`](../../prds/07_governance/adr_009_ui_locale_strategy.md) · **Runtime:** [`i18n_runtime_spec.md`](../../implementation/mvp/contracts/i18n_runtime_spec.md)
 
 ---
@@ -54,13 +54,25 @@ Nested objects by domain:
 
 | Context | Import |
 |---------|--------|
-| Server Component / Action / DAL | `import { getMessages } from "@/lib/messages"` → `const messages = await getMessages()` |
-| Client Component | `import { useMessages } from "@/components/i18n/LocaleProvider.client"` (after P17) |
+| Server Component / Action / DAL | `import { getMessages } from "@/lib/messages"` → `const messages = await getMessages()`, then `pick<Тип>Messages(messages)` for the route-group slice |
+| Client Component | `use<Тип>Messages()` from that group's provider, or props from a Server parent. The provider does not import dictionaries |
 | Types only | `import type { Messages } from "@/lib/messages/types"` |
 
-**Legacy:** bare `MESSAGES` export from `ru.ts` — **deprecated** in P17; migrate to `getMessages()` / `useMessages()`.
+**Legacy:** bare `MESSAGES` export from `ru.ts` — **deprecated** in P17; migrate to `getMessages()` on the server and a typed slice hook on the client. A single root `useMessages()` / `LocaleProvider` that holds every namespace is not the client API — see §Срезы словаря.
 
 **MUST** add new keys to **both** `en.ts` and `ru.ts` in the same change.
+
+---
+
+## Срезы словаря и клиентский бандл
+
+Клиентский JS страницы содержит только строки **этого типа страницы** и **текущей локали**. Полный словарь (все разделы × все локали) в клиентский бандл не попадает.
+
+Серверный layout группы маршрутов выбирает локаль, берёт словарь и вызывает `pick<Тип>Messages`. Результат уходит в провайдер группы как props. Клиент читает его через `use<Тип>Messages()` или получает нужный подраздел пропсами. Смена языка — `router.refresh()`, повторный серверный рендер.
+
+Чеклист, запреты импорта (`"use client"`, barrel, `no-restricted-imports`) и антипаттерны — правило **ui-messages-bundle-splitting**.
+
+Pulse [`i18n_runtime_spec.md`](../../docs/examples/pulse/docs/implementation/mvp/contracts/i18n_runtime_spec.md) I18N-MUST-8 (один корневой `LocaleProvider` и `useMessages()`) этим правилом перекрыт.
 
 ---
 

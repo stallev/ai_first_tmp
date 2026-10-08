@@ -66,6 +66,7 @@
 | `ui-mutation-pending.mdc` | Busy/pending controls |
 | `ui-optimistic-mutations.mdc` | `useOptimistic` toggles |
 | `ui-messages-and-copy.mdc` | `@/lib/messages` |
+| `ui-messages-bundle-splitting.mdc` | Срезы словаря по типу страницы и локали |
 | `ui-icons-lucide.mdc` | lucide-react icons |
 | `psi-lab-testing.mdc` | Requestable — lab PSI on deployed origin (`npm run psi:lab`) |
 
