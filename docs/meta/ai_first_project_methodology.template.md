@@ -73,17 +73,21 @@ monorepo/
 ### 2.2 Цикл агента
 
 ```
-КОНТЕКСТ → TIER → ФАЗА → КОНТРАКТ → ЗАДАЧИ → ВЕРИФИКАЦИЯ
+КОНТЕКСТ → TIER/DoR → ФАЗА → КОНТРАКТ → ЗАДАЧИ (CU) → [SPEC-GAP] → РЕАЛИЗАЦИЯ → ВЕРИФИКАЦИЯ → REVIEW (CU) → COMMIT
 ```
 
 | Шаг | Действие |
 |-----|----------|
 | КОНТЕКСТ | `AGENTS.md` + `project-context.template.mdc` (после bootstrap: `project-context.mdc`) |
-| TIER | Task tier T0–T3 и делегирование: [`ai_agent_model_routing.md`](./ai_agent_model_routing.md), runtime `model-routing.mdc`. Это не rule-tier T0–T2 из `.cursor/rules/README.md`. |
+| TIER/DoR | Task tier T0–T3, Definition of Ready и делегирование: [`ai_agent_model_routing.md`](./ai_agent_model_routing.md), runtime `model-routing.mdc`. Это не rule-tier T0–T2 из `.cursor/rules/README.md`. |
 | ФАЗА | `P{N}_phase_description.md` |
 | КОНТРАКТ | `docs/implementation/mvp/contracts/` |
-| ЗАДАЧИ | `P{N}_tasks.md` |
-| ВЕРИФИКАЦИЯ | **Always:** typecheck, lint, phase DoD. На task tier **T3** — субагент `reviewer` до отчёта «готово» (не Bugbot, не замена lint). **On user request only:** (1) runtime dual-view via skill `next-dev-loop` (`/_next/mcp` + `agent-browser`) — live `next dev`, 4 layers; (2) lab PSI on a **deployed** origin via `npm run psi:lab` (`psi-lab-testing.mdc`) — not localhost, not MCP as primary. Do **not** auto-start either after UI edits or in commit pipeline. |
+| ЗАДАЧИ (CU) | `P{N}_tasks.md` по [`phase_tasks.template.md`](./phase_tasks.template.md): commit units, `Tier`, ссылки `§N.M`, `Paths` H/N/S |
+| [SPEC-GAP] | DoR не пройден → `architect` (Grok 4.7) правит spec / contract / ADR / PRD до кода; до старта фазы — Phase DoR audit одним вызовом |
+| РЕАЛИЗАЦИЯ | Оркестратор; `implementer` — только для изоляции контекста / параллельных шагов |
+| ВЕРИФИКАЦИЯ | **Always:** typecheck, lint, CU DoD / phase DoD. **On user request only:** (1) runtime dual-view via skill `next-dev-loop` (`/_next/mcp` + `agent-browser`) — live `next dev`, 4 layers; (2) lab PSI on a **deployed** origin via `npm run psi:lab` (`psi-lab-testing.mdc`) — not localhost, not MCP as primary. Do **not** auto-start either after UI edits or in commit pipeline. |
+| REVIEW (CU) | Runtime-код в CU → субагент `reviewer` (не Bugbot, не замена lint); docs-only CU → `diff-only` ([`agent-code-review-subagent.mdc`](../../.cursor/rules/agent-code-review-subagent.mdc)) |
+| COMMIT | На границе CU — автоматически после зелёной ВЕРИФИКАЦИИ и review без blockers ([`agent-commit-pipeline.mdc`](../../.cursor/rules/agent-commit-pipeline.mdc)) |
 
 ### 2.3 AGENTS.md
 
@@ -106,6 +110,8 @@ docs/implementation/mvp/
 ```
 
 Образец фаз P01–P14: `docs/examples/pulse/docs/implementation/mvp/phases_tasks_descriptions/`
+
+Задачи фазы — по шаблону [`phase_tasks.template.md`](./phase_tasks.template.md): Commit plan (commit units) задаётся **при планировании фазы**, а не в момент коммита. Перед первой задачей фазы — **Phase DoR audit** ([`ai_agent_model_routing.md`](./ai_agent_model_routing.md) § DoR). Задачи пишутся только по документам, прошедшим registry §2.3.6.
 
 ### 2.6 Contracts
 

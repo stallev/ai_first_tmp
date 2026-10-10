@@ -1,31 +1,30 @@
 ---
-description: Review protocol: problem → expected shape → diff, depth by risk and budget. Self-review by default; fresh-context readonly subagent for sensitive zones / on request. Standalone or pre-commit (via agent-commit-pipeline). Do NOT use bugbot.
+description: Review protocol: problem → expected shape → diff. One gate per commit unit: pinned readonly `reviewer` for runtime code, diff-only for docs/tooling. Standalone or pre-commit (via agent-commit-pipeline). Do NOT use bugbot.
 ---
 # Code review
 
-**Commit orchestration:** [`agent-commit-pipeline.mdc`](agent-commit-pipeline.mdc) — вызывает этот rule в **pre-commit** mode.
-**HOW (таблицы, вердикты, prompt для subagent):** [`guidelines/ai_code_review_protocol.md`](guidelines/ai_code_review_protocol.md) — **читать перед** `self-full` / `subagent`; для `skip` / `diff-only` не нужен.
+**Commit orchestration:** [`agent-commit-pipeline.mdc`](agent-commit-pipeline.mdc) — вызывает этот rule в **pre-commit** mode на границе commit unit (CU).
+**HOW (таблицы, вердикты, prompt для `reviewer`):** [`guidelines/ai_code_review_protocol.md`](guidelines/ai_code_review_protocol.md) — **читать перед** уровнем `reviewer`; для `skip` / `diff-only` не нужен.
+**Routing:** [`model-routing.mdc`](model-routing.mdc) §3a / §6 — commit units и единый review-гейт.
 
-**Принцип:** глубина review ∝ риск × размер. Дорогой fresh-context review — только где цена пропущенного бага высока; остальное — дёшево, в контексте автора. Лимиты — § Budget.
-
-**Не путать с task-tier `reviewer`:** T3-гейт до отчёта «готово» — субагент [`.cursor/agents/reviewer.md`](../agents/reviewer.md) по [`model-routing.mdc`](model-routing.mdc) и [`docs/meta/ai_agent_model_routing.md`](docs/meta/ai_agent_model_routing.md). Этот rule — commit pipeline и явный «проверь diff». **Не** вызывать `generalPurpose` subagent и `reviewer` на **одном и том же** diff в одной сессии.
+**Принцип:** один review-гейт на CU. Дорогой независимый review (`reviewer`, Grok 4.7) — на каждый CU с runtime-кодом; батчинг задач в CU делает каждый прогон оправданным. Docs / tooling — дёшево, в контексте автора. Лимиты — § Budget.
 
 ## Запрещено: bugbot
 
-**Не вызывать** `subagent_type: "bugbot"` — платная функция Cursor. Fresh-context review — **`generalPurpose`** subagent (`readonly: true`). Skills `review-bugbot` / `review-security` **не использовать**.
+**Не вызывать** `subagent_type: "bugbot"` — платная функция Cursor. Независимый review — только субагент **`reviewer`** ([`.cursor/agents/reviewer.md`](../agents/reviewer.md), `readonly: true`). Skills `review-bugbot` / `review-security` **не использовать**; `generalPurpose` для review **не** вызывать.
 
 ## Triggers
 
 | Mode | Когда | Уровень |
 |------|-------|---------|
-| **standalone** | Пользователь просит review («review diff», «проверь изменения», `@agent-code-review-subagent`) | Всегда `subagent` (явный запрос); threshold **игнорировать** |
-| **pre-commit** | Шаг 3 commit pipeline | Уровень по § Depth и § T3 reviewer gate |
+| **standalone** | Пользователь просит review («review diff», «проверь изменения», `@agent-code-review-subagent`) | Всегда `reviewer` (явный запрос); threshold **игнорировать** |
+| **pre-commit** | Шаг 3 commit pipeline: граница CU или явный запрос коммита | Уровень по § Depth |
 
-Standalone review **не** ведёт к commit. Субагент review (pipeline или `reviewer`) **не правит код** — только находки; исправления — основной агент (или по запросу пользователя).
+Standalone review **не** ведёт к commit. `reviewer` **не правит код** — только находки; исправления — оркестратор (или по запросу пользователя).
 
 ## Sensitive zones
 
-**Единственный список** — pipeline ссылается сюда. Глобы с `**/`: `apps/web/src/lib/auth/**` тоже zone.
+**Единственный список** — pipeline, `model-routing.mdc` и registry §2.3.2a (признак S) ссылаются сюда. Глобы с `**/`: `apps/web/src/lib/auth/**` тоже zone.
 
 | Zone |
 |------|
@@ -36,74 +35,63 @@ Standalone review **не** ведёт к commit. Субагент review (pipeli
 
 ## Depth (уровень review)
 
-Уровень определяет **содержимое diff**, не type коммита (его выбирает автор): `chore`, меняющий CSP или `.env*`, — sensitive zone. **Размер** = hand-written строки (added + removed); lockfiles, generated (`**/generated/**`), snapshots и зеркало `.claude/rules/**` не считаются и не читаются — их ловят `typecheck` / `rules:check`.
+Уровень определяет **содержимое staged diff**, не type коммита: `chore`, меняющий CSP или `.env*`, — runtime-конфиг в sensitive zone. **Размер** = hand-written строки (added + removed); lockfiles, generated (`**/generated/**`), snapshots и зеркало `.claude/rules/**` не считаются и не читаются — их ловят `typecheck` / `rules:check`.
 
 | Уровень | Когда (pre-commit) | Кто | Проходы |
 |---------|--------------------|-----|---------|
-| `skip` | ≤ 10 строк **и** вне zones | — | — |
-| `diff-only` | Нет изменений runtime-кода: docs, `.mdc`, tests, tooling, комментарии, форматирование — **в том числе внутри zones** | автор | только 2c |
-| `self-full` | Runtime-код вне zones: feat / fix / refactor / perf / новый компонент | автор | 2a → 2b → 2c |
-| `subagent` | Любое из: (1) runtime-код в sensitive zone; (2) явный запрос пользователя; (3) runtime-код вне zones, > ~150 строк | fresh-context subagent | 2a → 2b → 2c |
+| `skip` | ≤ 10 строк, вне zones, без runtime-логики (коммит вне CU по явному запросу) | — | — |
+| `diff-only` | Нет runtime-кода: docs, `.mdc`, tests, tooling, комментарии, форматирование — **в том числе внутри zones** | оркестратор | только 2c |
+| `reviewer` | Любой runtime-код в CU (в т.ч. T3 / `Paths: S`); явный запрос пользователя | субагент `reviewer` | 2a → 2b → 2c |
 
-Старший уровень побеждает; сомнение — брать старший. Пороги 10 и ~150 — стартовые; подстраивать по статистике trace.
+Старший уровень побеждает; сомнение — брать старший.
 
 | Diff | Уровень |
 |------|---------|
-| Опечатка в комментарии / текст кнопки, 1–3 строки | `skip` |
-| 1 строка логики в `lib/auth/session.ts` | `subagent` |
-| Правка docs, 40 строк | `diff-only` |
-| Новый компонент, 80 строк | `self-full` |
-| Server Action + миграция | `subagent` |
-
-## T3 reviewer gate (pre-commit)
-
-Перед выбором уровня по § Depth:
-
-1. Если в **этой сессии** для **того же staged diff** (те же пути файлов) уже был прогон субагента **`reviewer`** (task tier T3, [`model-routing.mdc`](model-routing.mdc)) с trace в чате — уровень pre-commit **MUST** быть `diff-only` (только 2c: docs drift / явные расхождения с постановкой). **MUST NOT** запускать fresh-context `generalPurpose` subagent повторно.
-2. Если задача была T3, а `reviewer` **не** запускался до commit — **MUST NOT** коммитить как «готово» по model-routing; сначала `reviewer`, затем pipeline.
-3. Standalone («проверь diff») по-прежнему всегда `subagent` (§ Triggers), даже если `reviewer` уже был — только если пользователь **явно** просит второе ревью; иначе напомнить, что T3 уже закрыт `reviewer`.
-
-`reviewer` не выполняет протокол 2a→2b→2c этого rule; вход — план + шагы ([`ai_agent_model_routing.md`](docs/meta/ai_agent_model_routing.md)).
+| Опечатка в комментарии / текст кнопки, 1–3 строки, вне CU | `skip` |
+| CU из трёх T1-задач UI, 180 строк | `reviewer` |
+| 1 строка логики в `lib/auth/session.ts` (отдельный T3-CU) | `reviewer` |
+| Docs-CU фазы, 40 строк | `diff-only` |
+| Server Action + миграция | `reviewer` |
 
 ## Protocol (кратко)
 
 Три прохода в порядке — **не** «прочитать diff и оценить». Таблицы и формулировки — в guideline.
 
-1. **2a Проблема** — 3–5 строк из просьбы пользователя и `P{N}_tasks.md`, **не** из diff и **не** из своего commit message. Неясно → спросить до review; неинтерактивно — допущение в trace.
-2. **2b Ожидаемая форма** — до hunks только `git status --short`; применимые строки таблицы из guideline (≤ 5 пунктов), не из памяти. В `self-full` это чеклист по контракту, а не независимое мнение; независимость даёт только `subagent`. Diff размером с фазу — по каждой задаче `P{N}_tasks.md`.
-3. **2c Diff** — находка **только** по таблице вердиктов (guideline § 3): конкретный дефект (вход/состояние → неверный результат) или ссылка на канон. «Я бы сделал иначе» — **не находка**.
+1. **2a Проблема** — 3–5 строк из задач CU в `P{N}_tasks.md` (Goal, Acceptance, `§`-ссылки, `Paths`) и просьбы пользователя, **не** из diff и **не** из commit message. Неясно → спросить до review; неинтерактивно — допущение в trace.
+2. **2b Ожидаемая форма** — до hunks только `git status --short`; применимые строки таблицы из guideline (≤ 5 пунктов на задачу) **+ каждый путь H / N / S** из `Paths` задачи.
+3. **2c Diff** — находка **только** по таблице вердиктов (guideline § 3): конкретный дефект (вход/состояние → неверный результат) или ссылка на канон. Требуемый путь H / N / S не реализован — blocker. «Я бы сделал иначе» — **не находка**.
 
 ## Budget (качество ↔ стоимость)
 
-Стоимость: `skip` ≈ 0 · `diff-only` ≈ одно чтение diff · `self-full` ≈ чеклист в контексте автора, без нового агента · `subagent` ≈ холодный старт + чтение diff, блокирует commit — самый дорогой.
+Стоимость: `skip` ≈ 0 · `diff-only` ≈ одно чтение diff · `reviewer` ≈ холодный старт + чтение diff, блокирует commit — самый дорогой.
 
 1. **Порядок:** review — только после зелёной ВЕРИФИКАЦИИ (`typecheck` / `lint` / `rules:check`). Не тратить review на то, что ловят инструменты, и на код, который ещё перепишут.
-2. **Потолок:** один `subagent` на commit. После fix — **re-review только delta** (diff правки + прежние blockers), **максимум один раз**. Blocker остался → остановиться и доложить пользователю, не крутить цикл.
+2. **Потолок:** один `reviewer` на CU (не на задачу). После fix — **re-review только delta** (diff правки + прежние blockers), **максимум один раз**. Blocker остался → остановиться и доложить пользователю, не крутить цикл.
 3. **Suggestions** повторный review не запускают.
-4. **Неизменное не пересматривать:** файлы, не менявшиеся с последнего review в этой сессии (серия коммитов по одной задаче), не перечитывать.
-5. **Subagent ограничен:** staged diff + rules из таблицы 2b (guideline § 2); репозиторий не исследует; ≤ 10 находок, только high-confidence (шум = стоимость triage).
+4. **Неизменное не пересматривать:** файлы, не менявшиеся с последнего review в этой сессии, не перечитывать.
+5. **`reviewer` ограничен:** staged diff + задачи CU + rules из таблицы 2b (guideline § 2) + связанные `§` docs; репозиторий не исследует; ≤ 10 находок, только high-confidence.
 6. **Docs drift** (`diff-only`): grep изменённого термина/пути по `docs/`, не аудит всех доков.
 
-## Fresh-context subagent
+## Вызов `reviewer`
 
-Получает **только** проблему (2a) и сам строит 2b до чтения hunks. **Не** передавать: summary автора, черновик commit message, свою «ожидаемую форму». Prompt-шаблон — guideline § 5.
+Получает **только** проблему (2a) и scope; сам строит 2b до чтения hunks. **Не** передавать: summary автора, черновик commit message, свою «ожидаемую форму». Prompt-шаблон — guideline § 5.
 
-- Cursor `Task`: `subagent_type: "generalPurpose"`, `readonly: true`, `run_in_background: false`
-- **Не** `bugbot`; **не** Background Agent; **не** «новый чат вручную»; отдельный security-review subagent для zones **не** вызывать (security-пункт — в том же prompt)
+- Cursor `Task`: субагент `reviewer` (модель из frontmatter), `run_in_background: false`
+- **Не** `bugbot`; **не** `generalPurpose`; **не** Background Agent; **не** «новый чат вручную»; отдельный security-review subagent **не** вызывать (T3-чеклист — в `reviewer`)
 
 ## Trace и disposition
 
-Trace в ответе — **всегда** (иначе проверить, что review был, нельзя); первая строка начинается с `Review:`. Для `skip` / `diff-only` — одна строка: `Review: skip — 3 строки, вне zones`. Для `self-full` / `subagent` — ≤ 4 строк (`Review` · `Проблема` · `Ожидаемая форма` · `Находки`; пример — guideline § 6).
+Trace в ответе — **всегда**; первая строка начинается с `Review:`. Для `skip` / `diff-only` — одна строка: `Review: diff-only — docs-CU P03-CU4, 40 строк`. Для `reviewer` — ≤ 4 строк (`Review` · `Проблема` · `Ожидаемая форма` · `Находки`; пример — guideline § 6).
 
 | Severity | Критерий |
 |----------|----------|
-| `blocker` | Баг, явное нарушение правила, security red flag, пропуск по таблице вердиктов |
+| `blocker` | Баг, явное нарушение правила, security red flag, пропуск по таблице вердиктов, нереализованный путь H / N / S |
 | `suggestion` | Стиль, опциональные улучшения |
 
 | Result | pre-commit | standalone |
 |--------|------------|------------|
 | Blocker | Исправить → re-review delta ≤ 1 раза (§ Budget) → commit | Доложить; fix **только по запросу** |
-| Suggestions only | Можно commit; принять / отложить / отклонить | Доложить (таблица Severity · Location · Finding); fix по запросу |
+| Suggestions only | Commit; suggestions — в отчёт (принять / отложить / отклонить) | Доложить (таблица Severity · Location · Finding); fix по запросу |
 | No findings | Продолжить pipeline | «review found no issues» |
 
 Не запускать commit после standalone review, если пользователь явно не просил commit.
@@ -117,4 +105,4 @@ Trace в ответе — **всегда** (иначе проверить, чт�
 
 ## Related
 
-**agent-commit-pipeline** · **product-docs-alignment** · **domain-literals-and-codes** · **ai-dry-deduplication**
+**agent-commit-pipeline** · **model-routing** · **product-docs-alignment** · **domain-literals-and-codes** · **ai-dry-deduplication**

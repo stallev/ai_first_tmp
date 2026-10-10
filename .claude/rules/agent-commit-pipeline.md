@@ -1,5 +1,5 @@
 ---
-description: Commit pipeline: verify → review (problem → expected shape → diff; subagent for sensitive zones) → branch-prefixed conventional commit + git tooling setup
+description: Commit pipeline: auto-commit at a commit-unit boundary or on explicit request → verify → review (problem → expected shape → diff; pinned reviewer for runtime code) → branch-prefixed conventional commit + git tooling setup
 ---
 # Agent commit pipeline
 
@@ -8,12 +8,25 @@ description: Commit pipeline: verify → review (problem → expected shape → 
 
 ## Trigger
 
-Коммит **только по явному запросу пользователя**. Не коммитить проактивно.
+Коммит выполняется в двух случаях:
+
+1. **Граница commit unit (auto):** завершена последняя задача CU, объявленного в `P{N}_tasks.md` § Commit plan ([`model-routing.mdc`](model-routing.mdc) §3a). Пользователь заранее разрешил такие коммиты, когда утвердил Commit plan; отдельный вопрос не нужен.
+2. **Явный запрос пользователя.**
+
+Во всех остальных случаях не коммитить. Задача вне CU (мелкая ad-hoc правка) отдельно **не** коммитится: она ждёт границы CU или явного запроса.
+
+**Ограничители auto-commit** — все обязательны, иначе коммита нет и агент докладывает пользователю:
+
+- ВЕРИФИКАЦИЯ (§1) зелёная, CU DoD выполнен;
+- review (§3) без blockers (допускается ≤ 1 re-review delta);
+- в stage только файлы задач CU; нет `.env*`, credentials, секретов;
+- commit subject = заголовок CU (`type(scope): subject`) с branch prefix (§4);
+- **никогда:** `git push`, `--amend`, `--no-verify`, force-операции, правка git config.
 
 ## Pipeline (порядок обязателен)
 
 ```
-ВЕРИФИКАЦИЯ → stage → review (уровень по diff) → compose message → git commit → commitlint (hook)
+граница CU | запрос → ВЕРИФИКАЦИЯ → stage → review (уровень по diff) → compose message → git commit → commitlint (hook)
 ```
 
 ### 1. Deterministic verification
@@ -23,7 +36,7 @@ description: Commit pipeline: verify → review (problem → expected shape → 
 - `npm run typecheck` (root monorepo) — когда workspaces уже есть (после P5)
 - `npm run lint` — когда скрипт есть
 - `npm run rules:check` — если есть `.claude/rules/` (после `rules:sync`)
-- Phase DoD из `P{N}_tasks.md`, если задача привязана к фазе
+- CU DoD из `P{N}_tasks.md` (и Phase DoD — на последнем CU фазы)
 
 Если в задаче правили `.cursor/rules/*.mdc` — в **той же задаче** `npm run rules:sync` и закоммитить `.claude/rules/`. Не править зеркало руками.
 
@@ -45,15 +58,14 @@ Stage только релевантные файлы (`git add`). Не комм�
 
 ### 3. Pre-commit review
 
-Выполнить **[`agent-code-review-subagent.mdc`](agent-code-review-subagent.mdc)** в режиме **pre-commit** (уровни и бюджет — там; таблицы и prompt — [`guidelines/ai_code_review_protocol.md`](guidelines/ai_code_review_protocol.md), читать на `self-full` / `subagent`):
+Выполнить **[`agent-code-review-subagent.mdc`](agent-code-review-subagent.mdc)** в режиме **pre-commit** (уровни и бюджет — там; таблицы и prompt — [`guidelines/ai_code_review_protocol.md`](guidelines/ai_code_review_protocol.md), читать на уровне `reviewer`):
 
-1. **T3 gate** — если задача была task tier T3: до commit в сессии должен быть trace прогона **`reviewer`** на этом diff; иначе не коммитить ([`model-routing.mdc`](model-routing.mdc)). Если `reviewer` уже был — в `agent-code-review-subagent` § T3 reviewer gate уровень pre-commit только `diff-only`, без `generalPurpose`.
-2. **Уровень** — § Depth: `skip` → `diff-only` → `self-full` → `subagent`. Определяют **зоны и содержимое staged diff** (§ Sensitive zones — единственный список), а не type из будущего commit message
-3. **Три прохода** (`self-full`, `subagent`): проблема → ожидаемая форма → diff. Проблема — из просьбы пользователя и `P{N}_tasks.md`, не из diff и не из собственного message; неясна → спросить до review
-4. **`subagent`** — fresh-context `generalPurpose` (`readonly: true`), получает только проблему, не summary автора. **Не** `bugbot` (платный). **Не** после `reviewer` на том же diff (см. § T3 reviewer gate в `agent-code-review-subagent`).
-5. **Trace-блок** (`Review: …`) в ответе — всегда, включая `skip`
-6. **Blocker** → исправить → re-review **только delta**, не более одного раза (§ Budget); blocker остался → не коммитить, доложить пользователю
-7. **Suggestions only / no findings** → продолжить §4
+1. **Уровень** — § Depth: `skip` → `diff-only` → `reviewer`. Определяет **содержимое staged diff** (§ Sensitive zones — единственный список), а не type из будущего commit message. Runtime-код в CU (включая T3) → `reviewer`.
+2. **Три прохода** (`reviewer`): проблема → ожидаемая форма → diff. Проблема — из задач CU в `P{N}_tasks.md` и просьбы пользователя, не из diff и не из собственного message; неясна → спросить до review
+3. **`reviewer`** — pinned субагент ([`.cursor/agents/reviewer.md`](../agents/reviewer.md), readonly), получает только проблему и scope, не summary автора. **Не** `bugbot` (платный), **не** `generalPurpose`. Один на CU.
+4. **Trace-блок** (`Review: …`) в ответе — всегда, включая `skip`
+5. **Blocker** → исправить → re-review **только delta**, не более одного раза (§ Budget); blocker остался → не коммитить, доложить пользователю
+6. **Suggestions only / no findings** → продолжить §4
 
 ### 4. Compose commit message
 
@@ -171,5 +183,5 @@ echo "feature/P6-auth: chore: test setup" | npx commitlint  # pass
 ## Related
 
 - **agent-code-review-subagent** — review protocol: standalone или pre-commit
-- User rule: git safety (no force push, no skip hooks, commit only when asked)
+- User rule: git safety (no force push, no skip hooks); commit only at a declared CU boundary or when asked (§ Trigger)
 - **typescript-monorepo-types** · **product-docs-alignment**

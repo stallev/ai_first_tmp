@@ -3,7 +3,7 @@
 **{{PROJECT_NAME}}** — {{PRODUCT_DESCRIPTION}}  
 Monorepo: **Next.js 16.4** App Router + Vercel + Neon PostgreSQL.
 
-**Methodology (обязательно):** [`docs/meta/ai_first_project_methodology.template.md`](docs/meta/ai_first_project_methodology.template.md) (после bootstrap: `ai_first_project_methodology.md`) — цикл КОНТЕКСТ → TIER → ФАЗА → КОНТРАКТ → ЗАДАЧИ → ВЕРИФИКАЦИЯ. **Маршрутизация моделей:** [`docs/meta/ai_agent_model_routing.md`](docs/meta/ai_agent_model_routing.md) + `model-routing.mdc`.
+**Methodology (обязательно):** [`docs/meta/ai_first_project_methodology.template.md`](docs/meta/ai_first_project_methodology.template.md) (после bootstrap: `ai_first_project_methodology.md`) — цикл КОНТЕКСТ → TIER/DoR → ФАЗА → КОНТРАКТ → ЗАДАЧИ (CU) → [SPEC-GAP] → РЕАЛИЗАЦИЯ → ВЕРИФИКАЦИЯ → REVIEW (CU) → COMMIT. **Маршрутизация моделей:** [`docs/meta/ai_agent_model_routing.md`](docs/meta/ai_agent_model_routing.md) + `model-routing.mdc`.
 
 ## Референсный проект (обязательно)
 
@@ -59,10 +59,10 @@ Monorepo: **Next.js 16.4** App Router + Vercel + Neon PostgreSQL.
 ## Цикл работы агента
 
 ```
-КОНТЕКСТ → TIER → ФАЗА → КОНТРАКТ → ЗАДАЧИ → ВЕРИФИКАЦИЯ
+КОНТЕКСТ → TIER/DoR → ФАЗА → КОНТРАКТ → ЗАДАЧИ (CU) → [SPEC-GAP] → РЕАЛИЗАЦИЯ → ВЕРИФИКАЦИЯ → REVIEW (CU) → COMMIT
 ```
 
-1. Прочитать этот файл + `project-context.mdc`. Классифицировать задачу (`Tier: T0|T1|T2|T3`) по [`ai_agent_model_routing.md`](docs/meta/ai_agent_model_routing.md) до правок.
+1. Прочитать этот файл + `project-context.mdc`. Классифицировать задачу (`Tier: T0|T1|T2|T3 — … · CU: P{N}-CU{k}`) и проверить Definition of Ready по [`ai_agent_model_routing.md`](docs/meta/ai_agent_model_routing.md) до правок. DoR пройден — код пишет оркестратор; не пройден — `architect` spec-gap правит документы.
 2. Определить фазу (`docs/implementation/mvp/phases_tasks_descriptions/P{N}_*.md`)
 3. Прочитать contracts для фазы
 ## Cursor vs Claude Code rules
@@ -73,19 +73,19 @@ Cursor `alwaysApply: false` without `globs` (e.g. `agent-code-review-subagent.md
 
 4. **Перед написанием/правкой кода** — прочитать применимые `.cursor/rules/*.mdc` для затрагиваемой области (индекс: [`.cursor/rules/README.md`](.cursor/rules/README.md) или таблица в `app-conventions` skill). Эти файлы — enforceable и имеют приоритет над `docs/examples/pulse/**` при конфликте (Pulse — донор/референс, не источник истины). Claude Code грузит зеркало `.claude/rules/*.md`, не `.mdc`.
    Индекс в `.cursor/skills/app-conventions` может быть не виден Claude Code — при сомнении читать `.cursor/rules/` (или `.claude/rules/`) напрямую, не полагаясь только на skill.
-5. Выполнить чеклист `docs/implementation/mvp/tasks/P{N}_tasks.md`
+5. Выполнить задачи `docs/implementation/mvp/tasks/P{N}_tasks.md` по commit units (§ Commit plan)
 6. `npm run typecheck` + `npm run lint` перед DoD (обязательная ВЕРИФИКАЦИЯ). Runtime dual-view (`next-dev-loop`) и lab PSI (`npm run psi:lab`) — **только если пользователь явно попросил**; не auto.
 
 ## Commit & review
 
 | Задача | Rule |
 |--------|------|
-| Commit (verify → review → message → hook) | **`.cursor/rules/agent-commit-pipeline.mdc`** (always) |
+| Commit на границе commit unit или по запросу (verify → review → message → hook) | **`.cursor/rules/agent-commit-pipeline.mdc`** (always) |
 | Review: протокол, уровни, sensitive zones; standalone («review diff», проверка перед PR) | **`.cursor/rules/agent-code-review-subagent.mdc`** (requestable) |
 
 Кратко: prefix = `git branch --show-current`; формат `<branch-name>: type(scope): subject`.
 
-Review: проблема → ожидаемая форма → diff; уровень (`skip` / `diff-only` / `self-full` / `subagent`) задают зоны и содержимое diff, не type коммита. Fresh-context subagent — runtime-код в sensitive zone или явный запрос пользователя; не более одного на commit, re-review только delta. В ответе всегда trace-блок `Review: …`. Таблицы и prompt — [`guidelines/ai_code_review_protocol.md`](guidelines/ai_code_review_protocol.md) (читать на `self-full` / `subagent`).
+Review: проблема → ожидаемая форма → diff; уровень (`skip` / `diff-only` / `reviewer`) задаёт содержимое diff, не type коммита. Runtime-код в CU — субагент `reviewer` (pinned, readonly), один на commit, re-review только delta. Коммит на границе CU — автоматически после зелёной ВЕРИФИКАЦИИ и review без blockers; задача вне CU не коммитится. В ответе всегда trace-блок `Review: …`. Таблицы и prompt — [`guidelines/ai_code_review_protocol.md`](guidelines/ai_code_review_protocol.md).
 
 ## Agent skills (`.cursor/skills/`)
 

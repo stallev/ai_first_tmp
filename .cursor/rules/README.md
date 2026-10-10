@@ -26,9 +26,9 @@
 | `typescript-monorepo-types.mdc` | ✅ | typecheck, package boundaries |
 | `domain-literals-and-codes.mdc` | ✅ | Mutation codes, no magic strings |
 | `ai-dry-deduplication.mdc` | ✅ | DRY / SOLID for agents |
-| `model-routing.mdc` | ✅ | Task tier T0–T3, субагенты, гигиена токенов. Канон: [`docs/meta/ai_agent_model_routing.md`](../../docs/meta/ai_agent_model_routing.md). Не путать с rule-tier этой таблицы. |
-| `agent-commit-pipeline.mdc` | ✅ | Verify → review (уровень по diff) → conventional commit |
-| `agent-code-review-subagent.mdc` | — | Review protocol: проблема → ожидаемая форма → diff; fresh-context subagent для sensitive zones / по запросу (requestable). Не Bugbot. Не заменяет T3 `reviewer`. |
+| `model-routing.mdc` | ✅ | Task tier T0–T3, Definition of Ready, spec-gap, commit units, субагенты, гигиена токенов. Канон: [`docs/meta/ai_agent_model_routing.md`](../../docs/meta/ai_agent_model_routing.md). Не путать с rule-tier этой таблицы. |
+| `agent-commit-pipeline.mdc` | ✅ | Auto-commit на границе CU / по запросу: verify → review (уровень по diff) → conventional commit |
+| `agent-code-review-subagent.mdc` | — | Review protocol: проблема → ожидаемая форма → diff; единый гейт CU — субагент `reviewer` для runtime-кода, `diff-only` для docs (requestable). Не Bugbot. |
 
 Файлы: [`tiers/t0-always/`](tiers/t0-always/)
 
