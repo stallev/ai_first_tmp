@@ -12,7 +12,8 @@
 | `.cursor/rules/tiers/` | **SoT всех правил** (T0 / T1 / T2). Манифест: [`.cursor/rules/README.md`](.cursor/rules/README.md) |
 | `.cursor/rules/*.mdc` | Активированные копии — в шаблоне только T0 |
 | `.claude/rules/` | Generated mirror (`npm run rules:sync`) — не править руками |
-| `.cursor/agents/` | Субагенты `architect` / `implementer` / `reviewer` |
+| `.cursor/agents/` | Субагенты `architect` / `implementer` / `reviewer` (SoT) |
+| `.claude/agents/` | Generated для Claude Code (`npm run rules:sync`) — не править руками |
 | `docs/meta/` | Методология, registry, routing, шаблон задач фазы (статус «Template») |
 | `docs/guidelines/` | Канон реализации (HOW) |
 | `prompts/` | P0–P6 bootstrap; карта — [`prompts/00-orchestration.md`](prompts/00-orchestration.md) |

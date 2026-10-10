@@ -1,6 +1,7 @@
 #!/usr/bin/env node
 /**
  * Cursor `.cursor/rules/*.mdc` (SoT) → Claude Code `.claude/rules/*.md`
+ * Cursor `.cursor/agents/*.md` (SoT) → Claude Code `.claude/agents/*.md`
  * Playbook: docs/claude-code-cursor-rules-sync.md
  */
 import fs from "node:fs";
@@ -10,7 +11,16 @@ import { fileURLToPath } from "node:url";
 const rootDir = path.resolve(path.dirname(fileURLToPath(import.meta.url)), "..");
 const cursorRulesDir = path.join(rootDir, ".cursor", "rules");
 const claudeRulesDir = path.join(rootDir, ".claude", "rules");
+const cursorAgentsDir = path.join(rootDir, ".cursor", "agents");
+const claudeAgentsDir = path.join(rootDir, ".claude", "agents");
 const isCheck = process.argv.includes("--check");
+
+// Cursor pins models from its own pool; Claude Code takes an alias. Prefix of the Cursor model id → alias.
+const CLAUDE_MODEL_BY_CURSOR_PREFIX = [
+  ["grok", "opus"],
+  ["composer", "sonnet"],
+];
+const READONLY_AGENT_TOOLS = "Read, Grep, Glob, Bash";
 
 function detectNewline(text) {
   return text.includes("\r\n") ? "\r\n" : "\n";
@@ -119,11 +129,39 @@ function expectedClaudeFiles() {
   return expected;
 }
 
-function listClaudeMdFiles() {
-  if (!fs.existsSync(claudeRulesDir)) {
+function mapCursorModelToClaude(cursorModel = "") {
+  const match = CLAUDE_MODEL_BY_CURSOR_PREFIX.find(([prefix]) => cursorModel.startsWith(prefix));
+  return match ? match[1] : "inherit";
+}
+
+function buildClaudeAgent(fields, body, newline, sourceName) {
+  const lines = ["---", `name: ${fields.name}`, `description: ${fields.description}`];
+  if (fields.readonly === "true") {
+    lines.push(`tools: ${READONLY_AGENT_TOOLS}`);
+  }
+  lines.push(`model: ${mapCursorModelToClaude(fields.model)}`, "---");
+  const notice = `<!-- Generated from .cursor/agents/${sourceName} by \`npm run rules:sync\` — do not edit. -->`;
+  return `${lines.join(newline)}${newline}${notice}${newline}${newline}${body.replace(/^\r?\n/, "")}`;
+}
+
+function expectedClaudeAgents() {
+  const expected = new Map();
+  if (!fs.existsSync(cursorAgentsDir)) {
+    return expected;
+  }
+  for (const name of fs.readdirSync(cursorAgentsDir).filter((file) => file.endsWith(".md")).sort()) {
+    const sourcePath = path.join(cursorAgentsDir, name);
+    const { fields, body, newline } = splitMdc(fs.readFileSync(sourcePath, "utf8"), sourcePath);
+    expected.set(name, buildClaudeAgent(fields, body, newline, name));
+  }
+  return expected;
+}
+
+function listMdFiles(dir) {
+  if (!fs.existsSync(dir)) {
     return [];
   }
-  return fs.readdirSync(claudeRulesDir).filter((name) => name.endsWith(".md"));
+  return fs.readdirSync(dir).filter((name) => name.endsWith(".md"));
 }
 
 // tiers/** is the source of truth for every rule; the root holds activated copies only.
@@ -170,51 +208,61 @@ function exitOnTierProblems() {
   }
 }
 
-function runCheck() {
-  exitOnTierProblems();
-  const expected = expectedClaudeFiles();
-  const actualNames = new Set(listClaudeMdFiles());
-  const expectedNames = new Set(expected.keys());
-  const extra = [...actualNames].filter((name) => !expectedNames.has(name));
-  const missing = [...expectedNames].filter((name) => !actualNames.has(name));
-  const drift = [];
+function mirrorTargets() {
+  return [
+    { label: ".claude/rules", dir: claudeRulesDir, expected: expectedClaudeFiles() },
+    { label: ".claude/agents", dir: claudeAgentsDir, expected: expectedClaudeAgents() },
+  ];
+}
+
+function findMirrorProblems({ label, dir, expected }) {
+  const actualNames = new Set(listMdFiles(dir));
+  const problems = [];
+  for (const name of actualNames) {
+    if (!expected.has(name)) {
+      problems.push(`extra: ${label}/${name}`);
+    }
+  }
   for (const [name, text] of expected) {
-    const dest = path.join(claudeRulesDir, name);
+    const dest = path.join(dir, name);
     if (!fs.existsSync(dest)) {
+      problems.push(`missing: ${label}/${name}`);
       continue;
     }
     // core.autocrlf rewrites line endings on checkout; only content drift matters.
     const current = fs.readFileSync(dest, "utf8").replace(/\r\n/g, "\n");
     if (current !== text.replace(/\r\n/g, "\n")) {
-      drift.push(name);
+      problems.push(`drift: ${label}/${name}`);
     }
   }
-  if (extra.length || missing.length || drift.length) {
-    if (extra.length) {
-      console.error("extra:", extra.join(", "));
-    }
-    if (missing.length) {
-      console.error("missing:", missing.join(", "));
-    }
-    if (drift.length) {
-      console.error("drift:", drift.join(", "));
-    }
+  return problems;
+}
+
+function runCheck() {
+  exitOnTierProblems();
+  const problems = mirrorTargets().flatMap(findMirrorProblems);
+  if (problems.length) {
+    console.error(problems.join("\n"));
+    console.error("Run `npm run rules:sync`.");
     process.exit(1);
+  }
+}
+
+function writeMirror({ dir, expected }) {
+  fs.mkdirSync(dir, { recursive: true });
+  for (const [name, text] of expected) {
+    fs.writeFileSync(path.join(dir, name), text);
+  }
+  for (const name of listMdFiles(dir)) {
+    if (!expected.has(name)) {
+      fs.unlinkSync(path.join(dir, name));
+    }
   }
 }
 
 function runSync() {
   exitOnTierProblems();
-  const expected = expectedClaudeFiles();
-  fs.mkdirSync(claudeRulesDir, { recursive: true });
-  for (const [name, text] of expected) {
-    fs.writeFileSync(path.join(claudeRulesDir, name), text);
-  }
-  for (const name of listClaudeMdFiles()) {
-    if (!expected.has(name)) {
-      fs.unlinkSync(path.join(claudeRulesDir, name));
-    }
-  }
+  mirrorTargets().forEach(writeMirror);
 }
 
 if (isCheck) {

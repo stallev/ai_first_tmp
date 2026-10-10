@@ -77,6 +77,7 @@ Standalone review **не** ведёт к commit. `reviewer` **не правит 
 Получает **только** проблему (2a) и scope; сам строит 2b до чтения hunks. **Не** передавать: summary автора, черновик commit message, свою «ожидаемую форму». Prompt-шаблон — guideline § 5.
 
 - Cursor `Task`: субагент `reviewer` (модель из frontmatter), `run_in_background: false`
+- Claude Code `Agent`: `subagent_type: "reviewer"` (`.claude/agents/reviewer.md`, генерируется `npm run rules:sync`), `run_in_background: false`
 - **Не** `bugbot`; **не** `generalPurpose`; **не** Background Agent; **не** «новый чат вручную»; отдельный security-review subagent **не** вызывать (T3-чеклист — в `reviewer`)
 
 ## Trace и disposition
