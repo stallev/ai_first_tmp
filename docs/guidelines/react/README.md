@@ -91,4 +91,4 @@ Patterns for **Next.js 16.4 App Router**, **React 19**, **TypeScript**, **Tailwi
 ## External references
 
 - [React](https://react.dev)
-- [Next.js 16 docs](https://nextjs.org/docs) — verify via Context7 `/vercel/next.js`; runtime canon: [ADR-002](../../prds/07_governance/adr_002_next162_vercel_runtime_policy.md)
+- [Next.js 16 docs](https://nextjs.org/docs) — verify via Context7 `/vercel/next.js`; runtime canon: [ADR-002](../../prds/07_governance/adr_002_nextjs_vercel_runtime_policy.md)

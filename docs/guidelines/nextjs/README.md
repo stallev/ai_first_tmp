@@ -1,9 +1,9 @@
 # Next.js Guidelines — {{PROJECT_NAME}}
 
 **Baseline:** Next.js **16.4** (pinned) App Router · **Vercel** · Turbopack · Neon + Prisma v7  
-**Upstream:** [Next.js 16.4](https://nextjs.org/blog/next-16-3) — Instant Navigations **required** ([ADR-002 template §5.1](../../prds/07_governance/adr_002_next162_vercel_runtime_policy.template.md))  
+**Upstream:** [Next.js 16.4](https://nextjs.org/blog/next-16-3) — Instant Navigations **required** ([ADR-002 template §5.1](../../prds/07_governance/adr_002_nextjs_vercel_runtime_policy.template.md))  
 **Methodology:** [`docs/meta/ai_first_project_methodology.md`](../../meta/ai_first_project_methodology.md)  
-**Runtime policy (mandatory):** [ADR-002 template](../../prds/07_governance/adr_002_next162_vercel_runtime_policy.template.md)  
+**Runtime policy (mandatory):** [ADR-002 template](../../prds/07_governance/adr_002_nextjs_vercel_runtime_policy.template.md)  
 **Stack:** [ADR-001](../../prds/07_governance/adr_001_stack_and_runtime.md) (после W4)  
 **Reference:** Pulse [`docs/examples/pulse/docs/guidelines/nextjs/`](../../examples/pulse/docs/guidelines/nextjs/)
 
@@ -95,7 +95,7 @@ Trigger: only when the user asks (PSI, PageSpeed, «прогони прод»). 
 
 ## For AI assistants
 
-1. Read [ADR-002 template](../../prds/07_governance/adr_002_next162_vercel_runtime_policy.template.md) before routing/auth (incl. §5.1 Instant Navigations).
+1. Read [ADR-002 template](../../prds/07_governance/adr_002_nextjs_vercel_runtime_policy.template.md) before routing/auth (incl. §5.1 Instant Navigations).
 2. Use MCP **Context7** (`/vercel/next.js`) for API wording after ADR-002; prefer version-matched docs under `node_modules/next/dist/docs/` when available.
 3. React: [React guidelines](../react/README.md).
 

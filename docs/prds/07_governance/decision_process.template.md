@@ -149,7 +149,7 @@ MVP lock-in (ADR-001, ADR-002) — сразу **ACCEPTED** без ожидани
 | [`adr_index.md`](./adr_index.md) | ADR registry |
 | [`ai_first_project_methodology.md`](../../meta/ai_first_project_methodology.md) | AI-first cycle; doc hierarchy |
 | [`documentation_creation_registry.md`](../../meta/documentation_creation_registry.md) | Planned ADR waves (W1, W4) |
-| [`adr_002_next162_vercel_runtime_policy.template.md`](./adr_002_next162_vercel_runtime_policy.template.md) | Boilerplate ACCEPTED-ready ADR example |
+| [`adr_002_nextjs_vercel_runtime_policy.template.md`](./adr_002_nextjs_vercel_runtime_policy.template.md) | Boilerplate ACCEPTED-ready ADR example |
 | Pulse snapshot (illustration only, not canon): [`decision_process.md`](../../examples/pulse/docs/prds/07_governance/decision_process.md) | Worked example on the same default stack |
 
 **Registry:** [`documentation_creation_registry.md`](../../meta/documentation_creation_registry.md) — wave W1-02

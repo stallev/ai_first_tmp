@@ -13,7 +13,7 @@ alwaysApply: false
 # Policy packages (`@{{PACKAGE_SCOPE}}/policy-server`, `@{{PACKAGE_SCOPE}}/policy-edge`)
 
 **Methodology:** [`docs/meta/ai_first_project_methodology.md`](docs/meta/ai_first_project_methodology.md)  
-**Runtime:** [ADR-002](docs/prds/07_governance/adr_002_next162_vercel_runtime_policy.md) — **`proxy.ts`** is canonical interception file
+**Runtime:** [ADR-002](docs/prds/07_governance/adr_002_nextjs_vercel_runtime_policy.md) — **`proxy.ts`** is canonical interception file
 
 ## `@{{PACKAGE_SCOPE}}/policy-server`
 

@@ -39,7 +39,6 @@
 
 | Template | Target |
 |----------|--------|
-| `AGENTS.template.md` | `AGENTS.md` |
-| `docs/meta/*.template.md` | убрать `.template` |
+| `AGENTS.template.md` | `AGENTS.md` (заменяет AGENTS.md сопровождения шаблона) |
 | `.cursor/rules/tiers/t0-always/project-context.template.mdc` | `.cursor/rules/project-context.mdc` |
 | `specs/design_system_lab_spec.template.md` | `docs/implementation/mvp/specs/design_system_lab_spec.md` (после P2) |

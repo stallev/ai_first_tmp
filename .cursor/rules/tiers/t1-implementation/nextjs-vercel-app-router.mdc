@@ -7,7 +7,7 @@ alwaysApply: false
 # Next.js 16.4 + Vercel (`apps/web`)
 
 **Methodology:** [`docs/meta/ai_first_project_methodology.md`](docs/meta/ai_first_project_methodology.md)  
-**Runtime (mandatory until W4):** [ADR-002 template](docs/prds/07_governance/adr_002_next162_vercel_runtime_policy.template.md) — **pin the current 16.4.x patch (no caret)**  
+**Runtime (mandatory until W4):** [ADR-002 template](docs/prds/07_governance/adr_002_nextjs_vercel_runtime_policy.template.md) — **pin the current 16.4.x patch (no caret)**  
 **Stack:** [ADR-001](docs/prds/07_governance/adr_001_stack_and_runtime.md) (после W4)  
 **Guidelines:** [`docs/guidelines/nextjs/README.md`](docs/guidelines/nextjs/README.md)
 

@@ -9,20 +9,20 @@ Technical Writer для AI agents.
 - [ ] Pulse snapshot в `docs/examples/pulse/` (для образца полного W0–W14)
 
 ## Inputs
-- [`documentation_creation_registry.template.md`](../docs/meta/documentation_creation_registry.template.md)
-- [`ai_first_project_methodology.template.md`](../docs/meta/ai_first_project_methodology.template.md)
+- [`documentation_creation_registry.md`](../docs/meta/documentation_creation_registry.md)
+- [`ai_first_project_methodology.md`](../docs/meta/ai_first_project_methodology.md)
 - Pulse full registry: `docs/examples/pulse/docs/meta/documentation_creation_registry.md`
 - Interim docs + prototype
 
 ## Task
-1. Создай `docs/meta/documentation_creation_registry.md` из template
+1. Адаптируй `docs/meta/documentation_creation_registry.md` **на месте** (статус Template → Canonical)
 2. **Адаптируй волны** под домен {{PROJECT_NAME}}:
    - Сохрани структуру §2 (requirements, matrices, contract/spec templates), **включая** §2.3.2a (критерии путей H/N/S) и §2.3.6 (DoR-ready checklist) — не ослаблять до «if applicable»
    - §6.7 и gate phase tasks — ссылка на [`phase_tasks.template.md`](../docs/meta/phase_tasks.template.md) (commit units, Paths)
    - **DB-first:** W3 data model (`database_schema_v1.md`) до W8 contracts
    - UX block UX-01..UX-10 в W2/W7
    - Замени Pulse-specific файлы на domain-specific paths
-3. Создай `docs/meta/ai_first_project_methodology.md` из template
+3. Адаптируй `docs/meta/ai_first_project_methodology.md` на месте (статус Template → Canonical)
 4. Выведи в чат **список файлов W1** — **не создавай их** (unless user asks)
 
 ## Context budget

@@ -4,7 +4,7 @@
 **Methodology:** [`docs/meta/ai_first_project_methodology.md`](../../meta/ai_first_project_methodology.md)  
 **Deep dive:** [`docs/general/01-security-xss-csrf.md`](../../general/01-security-xss-csrf.md)  
 **Cursor rule:** **security-xss-csrf** · **auth-security** (auth layers)  
-**Runtime:** [ADR-002](../../prds/07_governance/adr_002_next162_vercel_runtime_policy.md) — CSP in **`proxy.ts`**
+**Runtime:** [ADR-002](../../prds/07_governance/adr_002_nextjs_vercel_runtime_policy.md) — CSP in **`proxy.ts`**
 
 AI agents **MUST** apply defense in depth — несколько слоёв, не одна мера.
 

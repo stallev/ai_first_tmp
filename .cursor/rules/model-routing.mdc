@@ -32,7 +32,7 @@ Output: `Tier: T0|T1|T2|T3 — reason (≤10 words) · CU: P{N}-CU{k}|none`
 3. Files / area are named.
 4. No `TBD` / open questions in the linked sections (`Open questions` empty or not blocking).
 5. Library APIs match the pinned version (`Проверено по` in the doc).
-6. Paths H / N / S are described where triggers require them — canon: [`documentation_creation_registry` §2.3.2a](docs/meta/documentation_creation_registry.template.md). Short form: **H** — any observable behavior change; **N** — external input, mutation / state transition, fallible I/O, possibly-missing data; **S** — sensitive zone, user/role-scoped data, user-data mutation / PII / secrets / session, new public endpoint / upload / redirect / webhook. Exempt: copy/CSS, docs-only, tooling, behavior-preserving refactor, presentational component.
+6. Paths H / N / S are described where triggers require them — canon: [`documentation_creation_registry` §2.3.2a](docs/meta/documentation_creation_registry.md). Short form: **H** — any observable behavior change; **N** — external input, mutation / state transition, fallible I/O, possibly-missing data; **S** — sensitive zone, user/role-scoped data, user-data mutation / PII / secrets / session, new public endpoint / upload / redirect / webhook. Exempt: copy/CSS, docs-only, tooling, behavior-preserving refactor, presentational component.
 
 | Tier | Signal | Who writes code | Subagent |
 |---|---|---|---|

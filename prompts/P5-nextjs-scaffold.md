@@ -28,7 +28,7 @@ Senior Fullstack Developer (Next.js 16 + PostgreSQL + monorepo).
    - Auth.js v5 Credentials scaffold
    - Sentry stub (`@sentry/nextjs`)
    - `globals.css` with token placeholders
-7. Rename `AGENTS.template.md` → root `AGENTS.md` и `apps/web/AGENTS.template.md` → `apps/web/AGENTS.md`; скопировать `scaffold/apps/web/CLAUDE.md` → `apps/web/CLAUDE.md` (статичный `@AGENTS.md`-импорт, без изменений). Корневой `CLAUDE.md` не дублировать MUST — зеркало `.claude/rules/`.
+7. Root `AGENTS.md` уже создан в P0. Скопировать `scaffold/apps/web/AGENTS.template.md` → `apps/web/AGENTS.md` (заменить placeholders); скопировать `scaffold/apps/web/CLAUDE.md` → `apps/web/CLAUDE.md` (статичный `@AGENTS.md`-импорт, без изменений). Корневой `CLAUDE.md` не дублировать MUST — зеркало `.claude/rules/`.
 8. Env example: `DATABASE_URL`, `DIRECT_URL`, `AUTH_SECRET`, S3 (`AWS_IAM_*`, `S3_BUCKET_*`), Sentry vars — см. [`BOOTSTRAP.md`](../BOOTSTRAP.md) §6–§10, [`ai_s3_file_upload_guidelines.md`](../docs/guidelines/nextjs/ai_s3_file_upload_guidelines.md)
 9. Создать `.cursor/skills/app-conventions/SKILL.md` — **проектный скилл поверх cursor rules**:
    - Frontmatter: `name: app-conventions`; description без слов `performance`/`optimization`/`bundle`

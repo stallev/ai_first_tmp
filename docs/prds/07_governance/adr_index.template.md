@@ -30,7 +30,7 @@
 | ID | File | Status | Topic | Summary |
 |----|------|--------|-------|---------|
 | ADR-001 | `adr_001_stack_and_runtime.md` | **PLANNED** — создать в волне W1 | Stack & hosting | Зафиксировать дефолтный стек методологии (см. [`ai_first_project_methodology.md`](../../meta/ai_first_project_methodology.md) §1.1): Vercel, Neon PostgreSQL + Prisma, Auth.js Credentials JWT, S3, Sentry; monorepo `apps/*` + `packages/*` |
-| ADR-002 | [`adr_002_next162_vercel_runtime_policy.template.md`](./adr_002_next162_vercel_runtime_policy.template.md) | **TEMPLATE ready** — скопировать в `adr_002_next162_vercel_runtime_policy.md` | Next.js runtime | Pin Next.js 16.4.x; канон `proxy.ts`; `cacheComponents` + `partialPrefetching` (Instant Navigations); `catchError`; async Request APIs |
+| ADR-002 | [`adr_002_nextjs_vercel_runtime_policy.template.md`](./adr_002_nextjs_vercel_runtime_policy.template.md) | **TEMPLATE ready** — скопировать в `adr_002_nextjs_vercel_runtime_policy.md` | Next.js runtime | Pin Next.js 16.4.x; канон `proxy.ts`; `cacheComponents` + `partialPrefetching` (Instant Navigations); `catchError`; async Request APIs |
 | ADR-003+ | `adr_{NNN}_*.md` | **PLANNED** — домен-специфичные, волна W4 | Domain decisions | Auth-модель, timezone/scheduling, MVP scope boundaries, jobs idempotency, file storage lifecycle — конкретные темы зависят от домена {{PROJECT_NAME}} |
 
 ### Pulse reference (иллюстрация диапазона, не канон)
@@ -85,7 +85,7 @@
 | Document | Relationship |
 |----------|--------------|
 | [`decision_process.md`](./decision_process.md) | How to create/update ADRs |
-| [`adr_002_next162_vercel_runtime_policy.template.md`](./adr_002_next162_vercel_runtime_policy.template.md) | Boilerplate ADR-002 |
+| [`adr_002_nextjs_vercel_runtime_policy.template.md`](./adr_002_nextjs_vercel_runtime_policy.template.md) | Boilerplate ADR-002 |
 | [`documentation_creation_registry.md`](../../meta/documentation_creation_registry.md) | Wave W1/W4 ADR plan |
 | [`architecture_master_index.md`](../architecture_master_index.md) | Navigation hub (после создания) |
 

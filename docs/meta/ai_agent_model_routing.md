@@ -4,7 +4,7 @@
 **Статус:** Canonical  
 **Версия:** 2.0  
 **Дата:** 2026-10-10  
-**Зависит от:** [`ai_first_project_methodology.template.md`](./ai_first_project_methodology.template.md) §2.2–§2.5 (после bootstrap — `ai_first_project_methodology.md`), [`.cursor/rules/model-routing.mdc`](../../.cursor/rules/model-routing.mdc), [`documentation_creation_registry.template.md`](./documentation_creation_registry.template.md) §2.3.2a / §2.3.6  
+**Зависит от:** [`ai_first_project_methodology.md`](./ai_first_project_methodology.md) §2.2–§2.5, [`.cursor/rules/model-routing.mdc`](../../.cursor/rules/model-routing.mdc), [`documentation_creation_registry.md`](./documentation_creation_registry.md) §2.3.2a / §2.3.6  
 **Связанные документы:** [`AGENTS.md`](../../AGENTS.md) (после bootstrap; до него — [`AGENTS.template.md`](../../AGENTS.template.md)), [`phase_tasks.template.md`](./phase_tasks.template.md), [`docs/guidelines/ai_code_review_protocol.md`](../guidelines/ai_code_review_protocol.md)
 
 ---
@@ -94,7 +94,7 @@ Sensitive zones — единый список в [`agent-code-review-subagent.md
 3. **Files / area:** названы пути или globs.
 4. **Нет неопределённости:** в связанных разделах нет `TBD`; `Open questions` пуст или не блокирует эту задачу.
 5. **Версии:** API библиотек сверено с пином — поле `Проверено по` в документе совпадает с `package.json`.
-6. **Пути H / N / S** описаны там, где их требуют признаки. **Канон признаков** — [`documentation_creation_registry.template.md` §2.3.2a](./documentation_creation_registry.template.md#232a-критерии-применимости-путей-h--n--s-канон); здесь не копировать. Задача пишет `Paths: H [§] · N [§] · S [§]` или `Paths: n/a — <причина из списка освобождений>`.
+6. **Пути H / N / S** описаны там, где их требуют признаки. **Канон признаков** — [`documentation_creation_registry.md` §2.3.2a](./documentation_creation_registry.md#232a-критерии-применимости-путей-h--n--s-канон); здесь не копировать. Задача пишет `Paths: H [§] · N [§] · S [§]` или `Paths: n/a — <причина из списка освобождений>`.
 
 Документы, созданные по registry §2.3.6 (DoR-ready checklist), дают DoR без spec-gap. DoR — приёмка задачи, §2.3.6 — приёмка документа; это одни и те же критерии с двух сторон.
 
@@ -193,9 +193,9 @@ Lint не заменяет `reviewer`. `reviewer` не заменяет `npm run
 | Документ | Роль |
 |----------|------|
 | [`.cursor/rules/model-routing.mdc`](../../.cursor/rules/model-routing.mdc) | Runtime-копия, always applied |
-| [`documentation_creation_registry.template.md`](./documentation_creation_registry.template.md) | §2.3.2a признаки H / N / S, §2.3.6 DoR-ready документы, §6.7 phase tasks |
+| [`documentation_creation_registry.md`](./documentation_creation_registry.md) | §2.3.2a признаки H / N / S, §2.3.6 DoR-ready документы, §6.7 phase tasks |
 | [`phase_tasks.template.md`](./phase_tasks.template.md) | Формат CU, задач, Phase DoR audit |
-| [`ai_first_project_methodology.template.md`](./ai_first_project_methodology.template.md) | Цикл КОНТЕКСТ → TIER/DoR → … → COMMIT |
+| [`ai_first_project_methodology.md`](./ai_first_project_methodology.md) | Цикл КОНТЕКСТ → TIER/DoR → … → COMMIT |
 | [`agent-code-review-subagent.mdc`](../../.cursor/rules/agent-code-review-subagent.mdc) | Review-гейт CU, sensitive zones |
 | [`agent-commit-pipeline.mdc`](../../.cursor/rules/agent-commit-pipeline.mdc) | Auto-commit на границе CU |
 | [`ai_code_review_protocol.md`](../guidelines/ai_code_review_protocol.md) | HOW трёх проходов и prompt `reviewer` |

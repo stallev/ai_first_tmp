@@ -5,7 +5,7 @@
 **Тип:** Architecture / agent tooling  
 **Promote to:** `docs/prds/07_governance/adr_010_nextjs_app_architecture_skill.md` (wave W4 governance)
 
-**Methodology:** [`docs/meta/ai_first_project_methodology.template.md`](../meta/ai_first_project_methodology.template.md)
+**Methodology:** [`docs/meta/ai_first_project_methodology.md`](../meta/ai_first_project_methodology.md)
 
 **Provenance (read-only, not installed):** [aurorascharff/nextjs-app-architecture-skill](https://github.com/aurorascharff/nextjs-app-architecture-skill)
 
@@ -80,7 +80,7 @@ Installing the external skill alongside project Cursor Rules creates **two compe
 | [`.cursor/skills/app-conventions/SKILL.md`](../../.cursor/skills/app-conventions/SKILL.md) | Agent entry — **only** project skill for architecture |
 | [`references/nextjs-rsc-streaming.md`](../../.cursor/skills/app-conventions/references/nextjs-rsc-streaming.md) | Detailed adopt/reject table |
 | [`docs/project-react-skill-requirements.md`](../project-react-skill-requirements.md) | Skill authoring rules |
-| [ADR-002 template](../prds/07_governance/adr_002_next162_vercel_runtime_policy.template.md) | Next **16.4** runtime pin; **§5.1** Instant Navigations required |
+| [ADR-002 template](../prds/07_governance/adr_002_nextjs_vercel_runtime_policy.template.md) | Next **16.4** runtime pin; **§5.1** Instant Navigations required |
 
 ---
 

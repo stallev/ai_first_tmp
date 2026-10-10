@@ -36,7 +36,7 @@
 | `docs/reference/pulse_project_reference.md` | Канон |
 | `docs/prds/architecture_master_index.md` | Канон |
 | `docs/prds/07_governance/adr_001_stack_and_runtime.md` | ACCEPTED |
-| `docs/prds/07_governance/adr_002_next162_vercel_runtime_policy.md` | ACCEPTED |
+| `docs/prds/07_governance/adr_002_nextjs_vercel_runtime_policy.md` | ACCEPTED |
 | `docs/prds/03_data_model/database_schema_v1.md` | Канон |
 | `docs/prds/01_product_scope/user_flows/users_mvp/*.md` | Канон |
 | `docs/design/canonical_routes.md` | Канон |

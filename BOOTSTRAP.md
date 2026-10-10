@@ -9,12 +9,12 @@
 ## Обзор
 
 ```
-Экспорт boilerplate → Snapshot Pulse → Placeholders → Visual seed → P0…P6 → AWS/Neon/Vercel → P7+ фазы
+Репозиторий из шаблона → Placeholders → Visual seed → P0…P6 → AWS/Neon/Vercel → P7+ фазы
 ```
 
 | Этап | Промпт / действие | Результат |
 |------|-------------------|-----------|
-| 0 | Ручная подготовка | Repo + snapshot + infra |
+| 0 | Ручная подготовка | Repo из шаблона + infra |
 | 0.5 | [`P1-html-prototype-claude-desktop.md`](prompts/P1-html-prototype-claude-desktop.md) | Seed HTML в `docs/prototypes/` (рекомендуется) |
 | P0 | [`P0-bootstrap.md`](prompts/P0-bootstrap.md) | AGENTS, T0 rules, структура `docs/` |
 | P1 | [`P1-html-prototype.md`](prompts/P1-html-prototype.md) | HTML prototype (ingest или create) |
@@ -38,57 +38,30 @@
 
 ---
 
-## Шаг 1 — Экспорт boilerplate
+## Шаг 1 — Репозиторий из шаблона
 
-### Из fitapp (локально)
+Этот репозиторий — **стартовый шаблон**, а не проект. Новый проект создаётся из него:
 
-Boilerplate лежит в `templates/ai-first-monorepo/` (gitignored в fitapp). Скопируйте в новый репозиторий:
+- GitHub: **Use this template** → новый репозиторий, затем `git clone`;
+- или локально: `git clone <template-url> my-new-project`, затем `git remote set-url origin <new-url>` (историю шаблона можно сохранить или начать заново).
 
-```powershell
-# Windows — пример
-$src = "C:\github\fitapp\templates\ai-first-monorepo"
-$dst = "C:\github\my-new-project"
-New-Item -ItemType Directory -Force -Path $dst
-Copy-Item "$src\*" $dst -Recurse -Force
-```
-
-```bash
-# macOS / Linux
-rsync -a --exclude node_modules /path/to/fitapp/templates/ai-first-monorepo/ /path/to/my-new-project/
-```
-
-### Отдельный репозиторий (целевой)
-
-1. Создайте repo `ai-first-monorepo-starter` (или свой fork boilerplate)
-2. Уберите `/templates/ai-first-monorepo/` из `.gitignore` **в starter repo**
-3. Initial commit — весь boilerplate
+Корневой `AGENTS.md` шаблона описывает **сопровождение шаблона**; в проекте его заменяет `AGENTS.template.md` (шаг 3).
 
 ---
 
-## Шаг 2 — Snapshot Pulse reference
+## Шаг 2 — Pulse reference (уже в шаблоне)
 
-Поместите read-only копию Pulse в `docs/examples/pulse/`.
-
-**Минимум для агентов:**
+Read-only snapshot Pulse поставляется в [`docs/examples/pulse/`](docs/examples/pulse/) — копировать ничего не нужно.
 
 | Путь | Зачем |
 |------|-------|
 | `docs/examples/pulse/docs/meta/` | Полный registry W0–W14 |
 | `docs/examples/pulse/docs/implementation/mvp/` | Contracts, phases, specs |
-| `docs/examples/pulse/.cursor/rules/` | Эталон rules |
+| `docs/examples/pulse/.cursor/rules/` | Эталон rules (не канон проекта) |
 | `docs/examples/pulse/apps/web/src/` | proxy, data, s3, components |
 | `docs/examples/pulse/packages/` | domain, policy, db |
 
-**Исключить:** `node_modules/`, `.next/`, `.env*`, `apps/text_data/`
-
-```bash
-rsync -a \
-  --exclude node_modules --exclude .next --exclude '.env*' \
-  /path/to/fitapp/ \
-  /path/to/my-new-project/docs/examples/pulse/fitapp-snapshot/
-```
-
-Подробнее: [`docs/examples/pulse/README.md`](docs/examples/pulse/README.md)
+Snapshot не содержит `node_modules/`, `.next/`, `.env*`, dev-credentials. Подробнее: [`docs/examples/pulse/README.md`](docs/examples/pulse/README.md)
 
 ---
 
@@ -123,9 +96,10 @@ rg '\{\{' --glob '!node_modules' .
 
 | From | To |
 |------|-----|
-| `AGENTS.template.md` | `AGENTS.md` |
-| `.cursor/rules/tiers/t0-always/project-context.template.mdc` | `.cursor/rules/project-context.mdc` |
-| `docs/meta/*.template.md` | убрать `.template` (после P2) |
+| `AGENTS.template.md` | `AGENTS.md` (заменяет AGENTS.md сопровождения шаблона) |
+| `.cursor/rules/tiers/t0-always/project-context.template.mdc` | `.cursor/rules/project-context.mdc` (копия; tier-шаблон остаётся) |
+
+Документы `docs/meta/*` уже лежат под финальными именами (статус «Template» во front matter) и адаптируются на месте в P2. `phase_tasks.template.md` и ADR-шаблоны — шаблоны копирования, не переименовываются.
 
 **Claude Code:** корневой [`CLAUDE.md`](CLAUDE.md) — `@AGENTS.md` плюс указатель на generated `.claude/rules/*.md`. SoT MUST — только `.cursor/rules/*.mdc`; после копирования/правки `.mdc` — `npm run rules:sync` (или `node scripts/sync-claude-rules.mjs`). Не `@`-импортировать `.mdc`. Не править `.claude/rules/` руками. Playbook: [`docs/claude-code-cursor-rules-sync.md`](docs/claude-code-cursor-rules-sync.md). `scaffold/apps/web/CLAUDE.md` на P5 остаётся тонким `@AGENTS.md` (зеркало правил только в корне).
 
@@ -291,7 +265,7 @@ GCP: включить **PageSpeed Insights API**. Прогон: `npm run psi:lab
 
 ### После P0
 
-- [ ] `AGENTS.md` exists
+- [ ] `AGENTS.md` — проектный (из `AGENTS.template.md`), не файл сопровождения шаблона
 - [ ] `CLAUDE.md` exists at root (`@AGENTS.md` + Claude rules pointer)
 - [ ] T0 rules in `.cursor/rules/`
 - [ ] `npm run rules:check` pass
@@ -373,7 +347,7 @@ my-new-project/
 | Prompt map | [`prompts/00-orchestration.md`](prompts/00-orchestration.md) |
 | S3 uploads | [`docs/guidelines/nextjs/ai_s3_file_upload_guidelines.md`](docs/guidelines/nextjs/ai_s3_file_upload_guidelines.md) |
 | Stack patterns | [`docs/reference/stack_patterns_from_pulse.md`](docs/reference/stack_patterns_from_pulse.md) |
-| Pulse reference | [`docs/reference/pulse_project_reference.template.md`](docs/reference/pulse_project_reference.template.md) |
+| Pulse reference | [`docs/reference/pulse_project_reference.md`](docs/reference/pulse_project_reference.md) |
 
 ---
 

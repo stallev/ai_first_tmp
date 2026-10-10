@@ -1,6 +1,6 @@
 # Code review protocol: проблема → ожидаемая форма → diff
 
-Project HOW для **commit / standalone review pipeline** (`agent-code-review-subagent.mdc`). **WHEN** — уровни, sensitive zones, бюджет, trace — в том же rule; commit units — `model-routing.mdc` §3a. Оркестрация commit — `agent-commit-pipeline.mdc` §3. Методология: [`docs/meta/ai_first_project_methodology.template.md`](../meta/ai_first_project_methodology.template.md) §2.2 ВЕРИФИКАЦИЯ.
+Project HOW для **commit / standalone review pipeline** (`agent-code-review-subagent.mdc`). **WHEN** — уровни, sensitive zones, бюджет, trace — в том же rule; commit units — `model-routing.mdc` §3a. Оркестрация commit — `agent-commit-pipeline.mdc` §3. Методология: [`docs/meta/ai_first_project_methodology.md`](../meta/ai_first_project_methodology.md) §2.2 ВЕРИФИКАЦИЯ.
 
 Исполнитель review — субагент **`reviewer`** ([`.cursor/agents/reviewer.md`](../../.cursor/agents/reviewer.md), [`docs/meta/ai_agent_model_routing.md`](../meta/ai_agent_model_routing.md)): один вызов на commit unit (CU) с runtime-кодом; §5 — его prompt.
 

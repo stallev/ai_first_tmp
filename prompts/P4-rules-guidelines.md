@@ -22,7 +22,7 @@ Platform Architect.
    - Replace remaining `{{PLACEHOLDERS}}`
    - Map rules ↔ guidelines
 5. Update `AGENTS.md` — cursor rules section
-6. Create `docs/reference/pulse_project_reference.md` from template
+6. Review `docs/reference/pulse_project_reference.md` — adapt «Что не копировать слепо» to the project domain
 7. **Do NOT** activate T2 UI rules yet
 
 ## Forbidden

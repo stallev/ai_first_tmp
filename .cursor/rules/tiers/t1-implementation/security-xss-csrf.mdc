@@ -15,7 +15,7 @@ alwaysApply: false
 **Methodology:** [`docs/meta/ai_first_project_methodology.md`](docs/meta/ai_first_project_methodology.md)  
 **Guide:** [`docs/guidelines/security/ai_security_xss_csrf_guidelines.md`](docs/guidelines/security/ai_security_xss_csrf_guidelines.md)  
 **Deep dive:** [`docs/general/01-security-xss-csrf.md`](docs/general/01-security-xss-csrf.md)  
-**Auth layers:** **auth-security** · [ADR-002](docs/prds/07_governance/adr_002_next162_vercel_runtime_policy.md)
+**Auth layers:** **auth-security** · [ADR-002](docs/prds/07_governance/adr_002_nextjs_vercel_runtime_policy.md)
 
 ## XSS (MUST)
 

@@ -1,6 +1,6 @@
 # ADR-002 — Next.js 16.4 runtime policy (Vercel) — template
 
-**Статус:** TEMPLATE — после W4 скопировать в `adr_002_next162_vercel_runtime_policy.md` и заполнить проект.  
+**Статус:** TEMPLATE — после W4 скопировать в `adr_002_nextjs_vercel_runtime_policy.md` и заполнить проект.  
 **До W4:** Rules и Guidelines могут ссылаться на этот файл.
 
 **Проект:** {{PROJECT_NAME}}  

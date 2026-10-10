@@ -12,7 +12,7 @@ This is **not** the Next.js from training data. APIs, conventions, and file stru
 
 - Read the relevant guide in `node_modules/next/dist/docs/` before writing code
 - Heed deprecation notices
-- **Project canon:** [ADR-002](../../docs/prds/07_governance/adr_002_next162_vercel_runtime_policy.md) and `.cursor/rules/nextjs-vercel-app-router.mdc` — not generic Next docs alone
+- **Project canon:** [ADR-002](../../docs/prds/07_governance/adr_002_nextjs_vercel_runtime_policy.md) and `.cursor/rules/nextjs-vercel-app-router.mdc` — not generic Next docs alone
 <!-- END:nextjs-agent-rules -->
 
 ## Stack (this app)

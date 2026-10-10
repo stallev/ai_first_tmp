@@ -1,8 +1,8 @@
-# AI-First Monorepo Boilerplate
+# AI-First Monorepo Starter
 
-Шаблон для создания новых проектов на стеке **Next.js 16.4 + Vercel + Neon PostgreSQL + Prisma v7 + Auth.js v5 + shadcn/ui + Tailwind v4**.
+**Стартовый шаблон** (не продукт) для создания новых проектов на стеке **Next.js 16.4 + Vercel + Neon PostgreSQL + Prisma v7 + Auth.js v5 + shadcn/ui + Tailwind v4**.
 
-**Методология:** [`docs/meta/ai_first_project_methodology.template.md`](docs/meta/ai_first_project_methodology.template.md)  
+**Методология:** [`docs/meta/ai_first_project_methodology.md`](docs/meta/ai_first_project_methodology.md)  
 **Bootstrap (пошагово):** [`BOOTSTRAP.md`](BOOTSTRAP.md)  
 **Оркестрация промптов:** [`prompts/00-orchestration.md`](prompts/00-orchestration.md)
 
@@ -18,7 +18,7 @@
 
 **Важно:** **Cursor Rules** и **Guidelines** boilerplate **важнее** reference-кода Pulse. Pulse — образец структуры и flows; при конфликте следовать Rules/Guidelines текущего проекта.
 
-> **Примечание:** каталог `templates/ai-first-monorepo/` в fitapp добавлен в `.gitignore` — содержимое переносится в отдельный репозиторий. При переносе скопируйте также snapshot Pulse в `docs/examples/pulse/`.
+> Snapshot Pulse уже включён в шаблон. Сопровождение самого шаблона — [`AGENTS.md`](AGENTS.md).
 
 ---
 
@@ -26,28 +26,28 @@
 
 Полная инструкция: **[`BOOTSTRAP.md`](BOOTSTRAP.md)**
 
-1. Скопируйте boilerplate в корень нового репозитория
+1. Создайте репозиторий из шаблона (GitHub **Use this template** или `git clone`)
 2. Заполните placeholders (см. [`PLACEHOLDERS.md`](PLACEHOLDERS.md))
-3. Поместите snapshot Pulse в `docs/examples/pulse/` (код + docs из fitapp)
-4. **Рекомендуется:** visual seed в `docs/prototypes/` ([`prompts/P1-html-prototype-claude-desktop.md`](prompts/P1-html-prototype-claude-desktop.md))
-5. Запустите промпты по порядку: **P0 → P1 → P2 → P3-W* → P4 → P5 → P6 → P7+**
-6. Активируйте cursor rules по tier manifest: [`.cursor/rules/README.md`](.cursor/rules/README.md), затем `npm run rules:sync`
+3. **Рекомендуется:** visual seed в `docs/prototypes/` ([`prompts/P1-html-prototype-claude-desktop.md`](prompts/P1-html-prototype-claude-desktop.md))
+4. Запустите промпты по порядку: **P0 → P1 → P2 → P3-W* → P4 → P5 → P6 → P7+**
+5. Rules T1 / T2 активируются промптами P4 / P6 по манифесту [`.cursor/rules/README.md`](.cursor/rules/README.md)
 
 ---
 
 ## Структура
 
 ```
+├── AGENTS.md                         → сопровождение шаблона (заменяется в проекте)
 ├── BOOTSTRAP.md                      → пошаговый bootstrap нового проекта
-├── AGENTS.template.md                → AGENTS.md после bootstrap
+├── AGENTS.template.md                → AGENTS.md проекта после bootstrap
 ├── CLAUDE.md                         → @AGENTS.md + Claude rules pointer
-├── package.json                      → rules:sync / rules:check / psi:lab
+├── package.json                      → rules:sync / rules:check / deps:check / encoding:check / psi:lab
 ├── scripts/sync-claude-rules.mjs
 ├── scripts/psi-lab/                  → lab PageSpeed Insights (REST, deployed origin)
 ├── .claude/rules/                    → generated from .mdc (git)
 ├── PLACEHOLDERS.md                   → список {{PLACEHOLDER}} для замены
 ├── .cursor/rules/                    → T0–T2 rules (Pulse stack + psi-lab-testing)
-│   ├── tiers/                        → t0 / t1 / t2 — порядок активации
+│   ├── tiers/                        → t0 / t1 / t2 — SoT правил
 │   └── README.md                     → manifest
 ├── docs/
 │   ├── guidelines/                   → канон реализации (индекс: README.md)

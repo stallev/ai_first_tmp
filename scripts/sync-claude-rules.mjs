@@ -145,6 +145,10 @@ function findTierRuleProblems() {
   }
   for (const name of fs.readdirSync(cursorRulesDir).filter((file) => file.endsWith(".mdc"))) {
     const tierPath = tierPathByName.get(name);
+    // project-context.mdc is filled in from project-context.template.mdc at P0 and legitimately differs.
+    if (!tierPath && tierPathByName.has(name.replace(/\.mdc$/, ".template.mdc"))) {
+      continue;
+    }
     if (!tierPath) {
       problems.push(`${name}: active rule has no copy in tiers/ (add it to a tier first)`);
       continue;

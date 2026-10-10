@@ -125,7 +125,7 @@ docs/implementation/mvp/
 
 ## 3. Структура документации
 
-См. §3.1 в `documentation_creation_registry.template.md` и полный образец Pulse registry.
+См. §3.1 в `documentation_creation_registry.md` и полный образец Pulse registry.
 
 **Иерархия истины:** канон — [`.cursor/rules/tiers/t0-always/project-context.template.mdc`](../../.cursor/rules/tiers/t0-always/project-context.template.mdc) § Source-of-truth order (после bootstrap: `project-context.mdc`).
 

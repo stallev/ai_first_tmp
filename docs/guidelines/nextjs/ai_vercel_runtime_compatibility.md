@@ -2,7 +2,7 @@
 
 **Project:** Pulse — `apps/web`  
 **Technologies:** Next.js **16.4**, React 19, TypeScript, **Vercel**, Neon PostgreSQL  
-**Canonical policy:** [ADR-002 template](../../prds/07_governance/adr_002_next162_vercel_runtime_policy.template.md), [ADR-001](../../prds/07_governance/adr_001_stack_and_runtime.md) (после W4)
+**Canonical policy:** [ADR-002 template](../../prds/07_governance/adr_002_nextjs_vercel_runtime_policy.template.md), [ADR-001](../../prds/07_governance/adr_001_stack_and_runtime.md) (после W4)
 
 ---
 

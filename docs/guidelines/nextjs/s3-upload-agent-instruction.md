@@ -11,7 +11,7 @@ This file is an **implementation guide** for AI agents and developers. It is **s
 2. Upload contract — [`file_upload_contract.md`](../../implementation/mvp/contracts/file_upload_contract.md).
 3. Schema — [`database_schema_v1.md`](../../prds/03_data_model/database_schema_v1.md) — `file_asset`, `file_upload_status`.
 4. Authorization — [`policy_enforcement_contract.md`](../../prds/04_authorization_privacy/policy_enforcement_contract.md).
-5. Next.js 16 + Vercel — [ADR-002](../../prds/07_governance/adr_002_next162_vercel_runtime_policy.md) and [ai_nextjs_db_data_handle.md](./ai_nextjs_db_data_handle.md).
+5. Next.js 16 + Vercel — [ADR-002](../../prds/07_governance/adr_002_nextjs_vercel_runtime_policy.md) and [ai_nextjs_db_data_handle.md](./ai_nextjs_db_data_handle.md).
 
 **Do not** introduce a parallel file registry: all S3 objects are tracked in Prisma model **`FileAsset`** ([`schema.prisma`](../../../packages/db/prisma/schema.prisma)).
 

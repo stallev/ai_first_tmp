@@ -2,7 +2,7 @@
 
 **Version:** 1.2 · **Stack:** Next.js **16.4** App Router, React 19, Prisma v7, Neon, Vercel  
 **Methodology:** [`docs/meta/ai_first_project_methodology.md`](../../meta/ai_first_project_methodology.md)  
-**Runtime:** [ADR-002 template](../../prds/07_governance/adr_002_next162_vercel_runtime_policy.template.md)  
+**Runtime:** [ADR-002 template](../../prds/07_governance/adr_002_nextjs_vercel_runtime_policy.template.md)  
 **Reference:** Pulse snapshot [`ai_nextjs_db_data_handle.md`](../../examples/pulse/docs/guidelines/nextjs/ai_nextjs_db_data_handle.md)  
 **iOS Safari:** [`docs/incidents/ios-safari-mutation-transport-pattern.md`](../../incidents/ios-safari-mutation-transport-pattern.md) · cursor rule **ios-safari-mutation-transport**
 
@@ -53,7 +53,7 @@ export default async function Page(props: {
 
 ## 5. Request interception (not in DAL)
 
-Route protection lives in **`proxy.ts`**, not in Server Actions. See [ADR-002](../../prds/07_governance/adr_002_next162_vercel_runtime_policy.md).
+Route protection lives in **`proxy.ts`**, not in Server Actions. See [ADR-002](../../prds/07_governance/adr_002_nextjs_vercel_runtime_policy.md).
 
 ---
 

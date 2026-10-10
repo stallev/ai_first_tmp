@@ -3,7 +3,7 @@
 **{{PROJECT_NAME}}** — {{PRODUCT_DESCRIPTION}}  
 Monorepo: **Next.js 16.4** App Router + Vercel + Neon PostgreSQL.
 
-**Methodology (обязательно):** [`docs/meta/ai_first_project_methodology.template.md`](docs/meta/ai_first_project_methodology.template.md) (после bootstrap: `ai_first_project_methodology.md`) — цикл КОНТЕКСТ → TIER/DoR → ФАЗА → КОНТРАКТ → ЗАДАЧИ (CU) → [SPEC-GAP] → РЕАЛИЗАЦИЯ → ВЕРИФИКАЦИЯ → REVIEW (CU) → COMMIT. **Маршрутизация моделей:** [`docs/meta/ai_agent_model_routing.md`](docs/meta/ai_agent_model_routing.md) + `model-routing.mdc`.
+**Methodology (обязательно):** [`docs/meta/ai_first_project_methodology.md`](docs/meta/ai_first_project_methodology.md) — цикл КОНТЕКСТ → TIER/DoR → ФАЗА → КОНТРАКТ → ЗАДАЧИ (CU) → [SPEC-GAP] → РЕАЛИЗАЦИЯ → ВЕРИФИКАЦИЯ → REVIEW (CU) → COMMIT. **Маршрутизация моделей:** [`docs/meta/ai_agent_model_routing.md`](docs/meta/ai_agent_model_routing.md) + `model-routing.mdc`.
 
 ## Референсный проект (обязательно)
 
@@ -45,7 +45,7 @@ Monorepo: **Next.js 16.4** App Router + Vercel + Neon PostgreSQL.
 
 | Область | Документ |
 |---------|----------|
-| Методология | [`docs/meta/ai_first_project_methodology.template.md`](docs/meta/ai_first_project_methodology.template.md) |
+| Методология | [`docs/meta/ai_first_project_methodology.md`](docs/meta/ai_first_project_methodology.md) |
 | **Маршрутизация моделей** | [`docs/meta/ai_agent_model_routing.md`](docs/meta/ai_agent_model_routing.md) — task tier T0–T3, Definition of Ready, commit units; runtime: `model-routing.mdc` |
 | **Реестр создания docs** | [`docs/meta/documentation_creation_registry.md`](docs/meta/documentation_creation_registry.md) — §2.3.2a пути H / N / S, §2.3.6 DoR-ready документы |
 | Шаблон задач фазы | [`docs/meta/phase_tasks.template.md`](docs/meta/phase_tasks.template.md) — commit units, `Tier`, `Paths` |

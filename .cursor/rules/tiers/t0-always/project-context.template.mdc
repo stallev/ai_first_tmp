@@ -24,7 +24,7 @@ When {{PROJECT_NAME}} docs are silent — follow Pulse reference **architecture,
 
 ## Stack (baseline — full Pulse stack)
 
-- **Next.js** **16.4** (exact patch pin, no caret) App Router, **TypeScript** — [ADR-002](docs/prds/07_governance/adr_002_next162_vercel_runtime_policy.template.md) (после W4: скопировать в `adr_002_….md`)
+- **Next.js** **16.4** (exact patch pin, no caret) App Router, **TypeScript** — [ADR-002](docs/prds/07_governance/adr_002_nextjs_vercel_runtime_policy.template.md) (после W4: скопировать в `adr_002_….md`)
 - **Instant Navigations:** `cacheComponents: true` + `partialPrefetching: true`; динамика за `<Suspense>` / `'use cache'`; `export const instant = false` только с задокументированной причиной
 - **Request interception:** **`proxy.ts`** (Next.js 16); `middleware.ts` — только временная миграция
 - **Hosting:** Vercel · **UI:** shadcn/ui + Tailwind CSS v4 ({{DESIGN_SYSTEM_NAME}} tokens)
@@ -35,7 +35,7 @@ When {{PROJECT_NAME}} docs are silent — follow Pulse reference **architecture,
 - **Observability:** Sentry (`@sentry/nextjs`)
 - **Monorepo:** `apps/web`, `apps/workers` (planned), `packages/{domain,policy,db}`
 
-Runtime policy: [ADR-001](docs/prds/07_governance/adr_001_stack_and_runtime.md) (после W4), [ADR-002 template](docs/prds/07_governance/adr_002_next162_vercel_runtime_policy.template.md).
+Runtime policy: [ADR-001](docs/prds/07_governance/adr_001_stack_and_runtime.md) (после W4), [ADR-002 template](docs/prds/07_governance/adr_002_nextjs_vercel_runtime_policy.template.md).
 
 ## Source-of-truth order when documents conflict
 

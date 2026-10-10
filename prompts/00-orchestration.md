@@ -1,7 +1,7 @@
 # Prompt Orchestration — AI-First Monorepo Bootstrap
 
 **Проект:** {{PROJECT_NAME}}  
-**Boilerplate:** `templates/ai-first-monorepo/`  
+**Шаблон:** этот репозиторий (стартовый шаблон; проект создаётся из него)  
 **Bootstrap guide:** [`BOOTSTRAP.md`](../BOOTSTRAP.md)  
 **Methodology:** [`docs/meta/ai_first_project_methodology.md`](../docs/meta/ai_first_project_methodology.md)  
 **Pulse reference:** [`docs/examples/pulse/`](../docs/examples/pulse/)
@@ -71,7 +71,7 @@ Visual seed (реком.) ──▶ P0 ──▶ P1 (ingest/create) ──▶ P2
 
 **Правило:** 1 сессия = **одна волна** или **1–3 файла** внутри волны (см. registry §3).
 
-Полный перечень файлов — [`documentation_creation_registry.template.md`](../docs/meta/documentation_creation_registry.template.md) и Pulse snapshot.
+Полный перечень файлов — [`documentation_creation_registry.md`](../docs/meta/documentation_creation_registry.md) и Pulse snapshot.
 
 ---
 
