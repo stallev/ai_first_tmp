@@ -1,18 +1,18 @@
-# {{PROJECT_NAME}} Web ó Agent Instructions
+# {{PROJECT_NAME}} Web ‚Äî Agent Instructions
 
 > Monorepo context: [`../../AGENTS.md`](../../AGENTS.md)
 
-**{{PROJECT_NAME}} Web** ó Next.js **16.4** App Router, ?????? BFF ??? ???????????? ??????-????????.  
-Hosting: **Vercel** ∑ UI: **shadcn/ui + Tailwind CSS v4** (Warm Forest).
+**{{PROJECT_NAME}} Web** ‚Äî Next.js **16.4** App Router, —Ç–æ–Ω–∫–∏–π BFF –¥–ª—è {{PROJECT_NAME}}.  
+Hosting: **Vercel** ¬∑ UI: **shadcn/ui + Tailwind CSS v4** (Warm Forest).
 
 <!-- BEGIN:nextjs-agent-rules -->
-## Next.js 16 ó read before coding
+## Next.js 16 ‚Äî read before coding
 
 This is **not** the Next.js from training data. APIs, conventions, and file structure differ from Next.js 15.
 
 - Read the relevant guide in `node_modules/next/dist/docs/` before writing code
 - Heed deprecation notices
-- **Project canon:** [ADR-002](../../docs/prds/07_governance/adr_002_next162_vercel_runtime_policy.md) and `.cursor/rules/nextjs-vercel-app-router.mdc` ó not generic Next docs alone
+- **Project canon:** [ADR-002](../../docs/prds/07_governance/adr_002_next162_vercel_runtime_policy.md) and `.cursor/rules/nextjs-vercel-app-router.mdc` ‚Äî not generic Next docs alone
 <!-- END:nextjs-agent-rules -->
 
 ## Stack (this app)
@@ -27,52 +27,52 @@ This is **not** the Next.js from training data. APIs, conventions, and file stru
 
 ```
 apps/web/src/
-+-- app/              ó App Router routes (canonical: docs/design/canonical_routes.md)
-+-- proxy.ts          ó Request interception (Next.js 16; NOT middleware.ts for new code)
-+-- data/             ó DAL (server-only queries)
-+-- lib/              ó App utilities, messages, UI helpers
-+-- components/
-    +-- atoms/        ó Typography atoms (Heading, ContentText, Ö) ó catalog: /design-system
-    +-- ui/           ó Tokenized shadcn primitives (Button, PulseCard, CustomLink, Ö)
-    +-- design-lab/   ó Design Lab showcase only ó MUST NOT import in product routes
+‚îú‚îÄ‚îÄ app/              ‚Äî App Router routes (canonical: docs/design/canonical_routes.md)
+‚îú‚îÄ‚îÄ proxy.ts          ‚Äî Request interception (Next.js 16; NOT middleware.ts for new code)
+‚îú‚îÄ‚îÄ data/             ‚Äî DAL (server-only queries)
+‚îú‚îÄ‚îÄ lib/              ‚Äî App utilities, messages, UI helpers
+‚îî‚îÄ‚îÄ components/
+    ‚îú‚îÄ‚îÄ atoms/        ‚Äî Typography atoms (Heading, ContentText, ‚Ä¶) ‚Äî catalog: /design-system
+    ‚îú‚îÄ‚îÄ ui/           ‚Äî Tokenized shadcn primitives (Button, PulseCard, CustomLink, ‚Ä¶)
+    ‚îî‚îÄ‚îÄ design-lab/   ‚Äî Design Lab showcase only ‚Äî MUST NOT import in product routes
 ```
 
-**Design Lab catalog:** dev-only `/design-system` (`app/(dev)/design-system/`) visualizes the canonical UI catalog. Product screens **MUST** import from `@/components/atoms` and `@/components/ui/*` ó spec: [`design_system_lab_spec.md`](../../docs/implementation/mvp/specs/design_system_lab_spec.md).
+**Design Lab catalog:** dev-only `/design-system` (`app/(dev)/design-system/`) visualizes the canonical UI catalog. Product screens **MUST** import from `@/components/atoms` and `@/components/ui/*` ‚Äî spec: [`design_system_lab_spec.md`](../../docs/implementation/mvp/specs/design_system_lab_spec.md).
 
-- **`page.tsx` / `layout.tsx`** ó only files with `default` export
-- Feature components ó **named export**, one component per `*.tsx` file (=140 lines target)
-- Client entry ó `*.client.tsx` suffix when needed
+- **`page.tsx` / `layout.tsx`** ‚Äî only files with `default` export
+- Feature components ‚Äî **named export**, one component per `*.tsx` file (=140 lines target)
+- Client entry ‚Äî `*.client.tsx` suffix when needed
 
 ## Required patterns
 
-Enforceable details live in Cursor Rules ó summary only:
+Enforceable details live in Cursor Rules ‚Äî summary only:
 
 | Topic | Rule / doc |
 |-------|------------|
 | Request interception | `src/proxy.ts`; `export function proxy()`; runtime = **nodejs**; codemod: `npx @next/codemod@canary middleware-to-proxy .` |
 | Async Request APIs | `await cookies()`, `await headers()`, `await params`, `await searchParams` |
 | RSC boundary | `'use client'` only for hooks / browser APIs |
-| Thin BFF | Route Handlers & Server Actions ? `packages/domain` + `src/data/**` |
-| Auth in proxy | **`auth.config.ts` only** ó no Prisma, never import `auth.ts` |
-| Policy in proxy | `@{{PACKAGE_SCOPE}}/policy-edge` only ó **never** `@{{PACKAGE_SCOPE}}/policy-server` |
-| Cache invalidation | `updateTag`, `revalidateTag`, `revalidatePath` ó ??. ADR-002 |
-| Background work | Vercel Cron + jobs ó **not** `unstable_after` |
-| Data layer | [`ai_nextjs_db_data_handle.md`](../../docs/guidelines/nextjs/ai_nextjs_db_data_handle.md) ß7 |
-| iOS Safari mutations | [`ios-safari-mutation-transport-pattern.md`](../../docs/incidents/ios-safari-mutation-transport-pattern.md) ó rule: `ios-safari-mutation-transport.mdc` |
-| Forms | [`ai_form_handling_pattern.md`](../../docs/guidelines/react/ai_form_handling_pattern.md) ß7 |
-| Domain literals & error codes | `@{{PACKAGE_SCOPE}}/domain` constants ó rule: `domain-literals-and-codes.mdc` |
+| Thin BFF | Route Handlers & Server Actions ‚Üí `packages/domain` + `src/data/**` |
+| Auth in proxy | **`auth.config.ts` only** ‚Äî no Prisma, never import `auth.ts` |
+| Policy in proxy | `@{{PACKAGE_SCOPE}}/policy-edge` only ‚Äî **never** `@{{PACKAGE_SCOPE}}/policy-server` |
+| Cache invalidation | `updateTag`, `revalidateTag`, `revalidatePath` ‚Äî —Å–º. ADR-002 |
+| Background work | Vercel Cron + jobs ‚Äî **not** `unstable_after` |
+| Data layer | [`ai_nextjs_db_data_handle.md`](../../docs/guidelines/nextjs/ai_nextjs_db_data_handle.md) ¬ß7 |
+| iOS Safari mutations | [`ios-safari-mutation-transport-pattern.md`](../../docs/incidents/ios-safari-mutation-transport-pattern.md) ‚Äî rule: `ios-safari-mutation-transport.mdc` |
+| Forms | [`ai_form_handling_pattern.md`](../../docs/guidelines/react/ai_form_handling_pattern.md) ¬ß7 |
+| Domain literals & error codes | `@{{PACKAGE_SCOPE}}/domain` constants ‚Äî rule: `domain-literals-and-codes.mdc` |
 
 ## UI & UX
 
-Visual and interaction canon ó **do not invent** ad-hoc styles:
+Visual and interaction canon ‚Äî **do not invent** ad-hoc styles:
 
 | Topic | Source |
 |-------|--------|
-| **UI component catalog** | `/design-system` (local dev) ó import `@/components/atoms`, `@/components/ui/*`; spec: [`design_system_lab_spec.md`](../../docs/implementation/mvp/specs/design_system_lab_spec.md) |
+| **UI component catalog** | `/design-system` (local dev) ‚Äî import `@/components/atoms`, `@/components/ui/*`; spec: [`design_system_lab_spec.md`](../../docs/implementation/mvp/specs/design_system_lab_spec.md) |
 | Design tokens, typography | [`fitness-platform-design-system.md`](../../docs/default_docs/fitness-platform-design-system.md), [`typography_text_guidelines.md`](../../docs/guidelines/typography_text_guidelines.md) |
 | Page layout reference | [`{{MAIN_PROTOTYPE_HTML}}`](../../docs/prototypes/{{MAIN_PROTOTYPE_HTML}}) |
-| User-visible copy | `@/lib/messages` (when wired) ó rules: `ui-messages-and-copy.mdc`, `ui-messages-bundle-splitting.mdc` |
-| Toast after mutations | Sonner ó rule: `ui-toast-mutations.mdc` |
+| User-visible copy | `@/lib/messages` (when wired) ‚Äî rules: `ui-messages-and-copy.mdc`, `ui-messages-bundle-splitting.mdc` |
+| Toast after mutations | Sonner ‚Äî rule: `ui-toast-mutations.mdc` |
 | Pending controls | rule: `ui-mutation-pending.mdc` |
 | Optimistic toggles | rule: `ui-optimistic-mutations.mdc` |
 
@@ -82,10 +82,10 @@ Visual and interaction canon ó **do not invent** ad-hoc styles:
 |------|-------|
 | `nextjs-vercel-app-router.mdc` | Next 16, Vercel, proxy, async APIs |
 | `data-server-actions-and-api.mdc` | DAL, Actions vs Route Handlers |
-| `ios-safari-mutation-transport.mdc` | iOS Safari `Load failed` ó Class A/B |
+| `ios-safari-mutation-transport.mdc` | iOS Safari `Load failed` ‚Äî Class A/B |
 | `auth-security.mdc` | Auth.js, defense in depth |
 | `app-router-streaming-loading.mdc` | Suspense, `loading.tsx` |
-| Client lazy loading | [`ai_client_lazy_loading.md`](../../docs/guidelines/nextjs/ai_client_lazy_loading.md) ó `next/dynamic` |
+| Client lazy loading | [`ai_client_lazy_loading.md`](../../docs/guidelines/nextjs/ai_client_lazy_loading.md) ‚Äî `next/dynamic` |
 | `s3-file-asset-uploads.mdc` | FileAsset + AWS S3 |
 | `react-ui-components.mdc` | RSC/client boundaries |
 | `react-one-component-per-file.mdc` | One component per file |
@@ -107,16 +107,16 @@ Full index: [`docs/guidelines/README.md`](../../docs/guidelines/README.md).
 | Skill | Focus |
 |-------|-------|
 | **`app-conventions`** | Project conventions: `data/` + `actions/` + `components/`, Design Lab, DAL, RSC streaming. Spec: [`docs/project-react-skill-requirements.md`](../../docs/project-react-skill-requirements.md) |
-| **`next-dev-loop`** (user skill) | **Only when the user explicitly asks** ó runtime dual-view (`/_next/mcp` + `agent-browser`), 4 layers. Not auto after edits/commit. |
-| **Lab PSI** | **Only when the user explicitly asks** ó deployed origin via `npm run psi:lab` (`PAGE_SPEED_API_KEY`). Not localhost. |
+| **`next-dev-loop`** (user skill) | **Only when the user explicitly asks** ‚Äî runtime dual-view (`/_next/mcp` + `agent-browser`), 4 layers. Not auto after edits/commit. |
+| **Lab PSI** | **Only when the user explicitly asks** ‚Äî deployed origin via `npm run psi:lab` (`PAGE_SPEED_API_KEY`). Not localhost. |
 
-**Do not install** external Next.js **architecture** skills (`npx skills install Ö`). Mapping: [`docs/reference/adr_010_nextjs_app_architecture_skill.md`](../../docs/reference/adr_010_nextjs_app_architecture_skill.md). Workflow skill `next-dev-loop` is allowed as a user skill (**opt-in by user request**).
+**Do not install** external Next.js **architecture** skills (`npx skills install ‚Ä¶`). Mapping: [`docs/reference/adr_010_nextjs_app_architecture_skill.md`](../../docs/reference/adr_010_nextjs_app_architecture_skill.md). Workflow skill `next-dev-loop` is allowed as a user skill (**opt-in by user request**).
 
 > Read `.cursor/skills/app-conventions/SKILL.md` when scaffolding features.
 
 ## Observability (Sentry)
 
-Error tracking via `@sentry/nextjs` ó config in `src/instrumentation*.ts`, `src/sentry.*.config.ts`, `src/app/global-error.tsx`.
+Error tracking via `@sentry/nextjs` ‚Äî config in `src/instrumentation*.ts`, `src/sentry.*.config.ts`, `src/app/global-error.tsx`.
 
 | Variable | Purpose |
 |----------|---------|
@@ -136,7 +136,7 @@ npm run build    # production build
 npm run lint     # ESLint
 ```
 
-When `packages/` exist ó from monorepo root before phase DoD:
+When `packages/` exist ‚Äî from monorepo root before phase DoD:
 
 ```bash
 npm run typecheck
@@ -151,7 +151,7 @@ npm run lint        # or npm run lint:web from root
 
 ### Runtime dual-view (on user request only)
 
-Skill **`next-dev-loop`**: confirm the feature works in a live `next dev` by cross-checking **two views** ó `/_next/mcp` (routes, RSC, server actions, compile/runtime errors) and `agent-browser` (DOM, console, network, React fiber/props/state). Loop when asked: narrow scope via runtime ? edit ? 4 layers (compile ? runtime errors ? browser UX ? React). **Do not** start automatically after UI edits or before commit ó only when the user explicitly asks (e.g. ´??????? ? runtimeª, ´next-dev-loopª). Details: user skill `next-dev-loop`; index: [`docs/guidelines/nextjs/README.md`](../../docs/guidelines/nextjs/README.md) ß Agent runtime verification.
+Skill **`next-dev-loop`**: confirm the feature works in a live `next dev` by cross-checking **two views** ‚Äî `/_next/mcp` (routes, RSC, server actions, compile/runtime errors) and `agent-browser` (DOM, console, network, React fiber/props/state). Loop when asked: narrow scope via runtime ‚Üí edit ‚Üí 4 layers (compile ‚Üí runtime errors ‚Üí browser UX ‚Üí React). **Do not** start automatically after UI edits or before commit ‚Äî only when the user explicitly asks (e.g. ¬´–ø—Ä–æ–≤–µ—Ä—å –≤ runtime¬ª, ¬´next-dev-loop¬ª). Details: user skill `next-dev-loop`; index: [`docs/guidelines/nextjs/README.md`](../../docs/guidelines/nextjs/README.md) ¬ß Agent runtime verification.
 
 Lab PSI is **orthogonal**: `npm run psi:lab` against a **deployed** origin when the user asks. Not localhost. Not MCP as primary. See [`ai_psi_lab_testing.md`](../../guidelines/nextjs/ai_psi_lab_testing.md).
 
@@ -161,17 +161,17 @@ Lab PSI is **orthogonal**: `npm run psi:lab` against a **deployed** origin when 
 - [ ] New interception in **`src/proxy.ts`**, not Next 15 `middleware.ts` patterns
 - [ ] No `@{{PACKAGE_SCOPE}}/policy-server` import in `proxy.ts` / `middleware.ts`
 - [ ] Routes match [`canonical_routes.md`](../../docs/design/canonical_routes.md)
-- [ ] UI follows Warm Forest tokens ó no arbitrary Tailwind color strings for product UI
-- [ ] Product UI uses Design Lab catalog imports (`@/components/atoms`, `@/components/ui/*`) ó no `@/components/design-lab/**` in routes
-- [ ] Mutation/error codes and roles from `@{{PACKAGE_SCOPE}}/domain` ó no inline magic strings (**domain-literals-and-codes**)
+- [ ] UI follows Warm Forest tokens ‚Äî no arbitrary Tailwind color strings for product UI
+- [ ] Product UI uses Design Lab catalog imports (`@/components/atoms`, `@/components/ui/*`) ‚Äî no `@/components/design-lab/**` in routes
+- [ ] Mutation/error codes and roles from `@{{PACKAGE_SCOPE}}/domain` ‚Äî no inline magic strings (**domain-literals-and-codes**)
 - [ ] Mutations: pending UI + toast per mutation rules
-- [ ] Runtime dual-view (`next-dev-loop`) ó **only if the user requested it**
-- [ ] Lab PSI (`npm run psi:lab`) ó **only if the user requested a deployed-origin score**
+- [ ] Runtime dual-view (`next-dev-loop`) ‚Äî **only if the user requested it**
+- [ ] Lab PSI (`npm run psi:lab`) ‚Äî **only if the user requested a deployed-origin score**
 
 ## Do NOT
 
 - Import `@{{PACKAGE_SCOPE}}/policy-server` from `proxy.ts` or Edge runtime
 - Add routes outside [`canonical_routes.md`](../../docs/design/canonical_routes.md) without updating that doc
-- Put business logic in Route Handlers ó delegate to `packages/domain`
+- Put business logic in Route Handlers ‚Äî delegate to `packages/domain`
 - Bypass PRD with client-side-only business rules
-- Duplicate guideline content here ó link to Cursor Rules and `docs/guidelines/`
+- Duplicate guideline content here ‚Äî link to Cursor Rules and `docs/guidelines/`

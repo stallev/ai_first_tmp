@@ -1,16 +1,16 @@
-# Next.js Loading & Page Performance ó Pulse
+# Next.js Loading & Page Performance ‚Äî Pulse
 
-**Version:** 2.0 ∑ **Project:** Pulse `apps/web`  
+**Version:** 2.0 ¬∑ **Project:** Pulse `apps/web`  
 **Stack:** Next.js **16.4** App Router, React 19, Vercel, Neon PostgreSQL 17 + Prisma v7  
 **Methodology:** [`docs/meta/ai_first_project_methodology.md`](../../docs/meta/ai_first_project_methodology.md)  
 **Runtime:** [ADR-002 template](../../docs/prds/07_governance/adr_002_next162_vercel_runtime_policy.template.md)  
 **Cursor rule:** **app-router-streaming-loading**
 
-> **Scope:** `apps/web/src/app/**` ó loading UX, streaming shell, and page-level performance. Cross-request data cache: **`'use cache'`** (Next.js 16) ó see ß8; tag invalidation ó [`cache_revalidation_policy.md`](../../docs/prds/05_runtime/cache_revalidation_policy.md) (????? W5).
+> **Scope:** `apps/web/src/app/**` ‚Äî loading UX, streaming shell, and page-level performance. Cross-request data cache: **`'use cache'`** (Next.js 16) ‚Äî see ¬ß8; tag invalidation ‚Äî [`cache_revalidation_policy.md`](../../docs/prds/05_runtime/cache_revalidation_policy.md) (–ø–æ—Å–ª–µ W5).
 
 Verify against Context7 `/vercel/next.js` and [Loading UI and Streaming](https://nextjs.org/docs/app/building-your-application/routing/loading-ui-and-streaming).
 
-**Adapted from:** Pulse snapshot [`ai_loading_patterns.md`](../../docs/examples/pulse/docs/guidelines/nextjs/ai_loading_patterns.md) (includes former `ai_page_performance_streaming.md` in ß4ñß18) ó Vercel, Pulse domain.
+**Adapted from:** Pulse snapshot [`ai_loading_patterns.md`](../../docs/examples/pulse/docs/guidelines/nextjs/ai_loading_patterns.md) (includes former `ai_page_performance_streaming.md` in ¬ß4‚Äì¬ß18) ‚Äî Vercel, Pulse domain.
 
 ---
 
@@ -19,15 +19,15 @@ Verify against Context7 `/vercel/next.js` and [Loading UI and Streaming](https:/
 1. [Overview & key concepts](#1-overview--key-concepts)
 2. [Streaming model in App Router](#2-streaming-model-in-app-router)
 3. [Mechanisms: `loading.tsx` and Suspense](#3-mechanisms-loadingtsx-and-suspense)
-4. [Light `page.tsx` and layout](#4-light-pagetsx-and-layout) ó incl. [ß4.1 `params.then()` opt-in](#41-opt-in-synchronous-page--paramsthen-cache-components)
+4. [Light `page.tsx` and layout](#4-light-pagetsx-and-layout) ‚Äî incl. [¬ß4.1 `params.then()` opt-in](#41-opt-in-synchronous-page--paramsthen-cache-components)
 5. [Independent regions behind Suspense](#5-independent-regions-behind-suspense)
 6. [`auth()` cost and request dedup](#6-auth-cost-and-request-dedup)
 7. [Eliminating DB waterfalls](#7-eliminating-db-waterfalls)
-8. [Query caching ó React `cache()` vs `'use cache'`](#8-query-caching--react-cache-vs-use-cache) ó incl. [ß8.1 Instant Navigations](#81-instant-navigations-nextjs-163--best-practice) ∑ [ß8.1.1 Instant Insights](#811-instant-insights-dev)
+8. [Query caching ‚Äî React `cache()` vs `'use cache'`](#8-query-caching--react-cache-vs-use-cache) ‚Äî incl. [¬ß8.1 Instant Navigations](#81-instant-navigations-nextjs-163--best-practice) ¬∑ [¬ß8.1.1 Instant Insights](#811-instant-insights-dev)
 9. [Neon: cold start and connection](#9-neon-cold-start-and-connection)
 10. [`loading.tsx` as navigation insurance](#10-loadingtsx-as-navigation-insurance)
 11. [Skeletons without CLS](#11-skeletons-without-cls)
-12. [Error handling near data](#12-error-handling-near-data) ó incl. [ß12.1 region boundaries](#121-region-error-boundaries-catcherror--opt-in)
+12. [Error handling near data](#12-error-handling-near-data) ‚Äî incl. [¬ß12.1 region boundaries](#121-region-error-boundaries-catcherror--opt-in)
 13. [Mutation loading vs route loading](#13-mutation-loading-vs-route-loading)
 14. [Pulse route examples](#14-pulse-route-examples)
 15. [Metrics and budgets](#15-metrics-and-budgets)
@@ -40,7 +40,7 @@ Verify against Context7 `/vercel/next.js` and [Loading UI and Streaming](https:/
 
 ## 1. Overview & key concepts
 
-**Key principle:** On navigation, the new route **must appear immediately** ó even if data is still loading. Use lightweight `page.tsx`, **`loading.tsx`**, and **Suspense** per independent data region.
+**Key principle:** On navigation, the new route **must appear immediately** ‚Äî even if data is still loading. Use lightweight `page.tsx`, **`loading.tsx`**, and **Suspense** per independent data region.
 
 **Vercel:** App Router **streaming** (HTML + RSC payload aligned with Suspense) is supported in production.
 
@@ -54,19 +54,19 @@ Page chrome (nav, titles, containers, skeletons) sent **before** data arrives. U
 
 ### 1.3 RSC chunk
 
-A portion of the React Server Components payload in the HTTP response. Without Suspense ó one large chunk at the end. With Suspense ó several smaller chunks as data resolves.
+A portion of the React Server Components payload in the HTTP response. Without Suspense ‚Äî one large chunk at the end. With Suspense ‚Äî several smaller chunks as data resolves.
 
-### 1.4 Data boundaries (ìseniorî framing)
+### 1.4 Data boundaries (‚Äúsenior‚Äù framing)
 
-- **Shell:** nav, titles, static chrome ó no slow DB waits
+- **Shell:** nav, titles, static chrome ‚Äî no slow DB waits
 - **Independent sources:** each gets its own Suspense (catalog filters vs trainer grid)
 - **Bottleneck isolation:** move heavy `await` into child components
 
-After material loading/streaming changes, validate on **Vercel preview** when available ó latency and caching differ from localhost.
+After material loading/streaming changes, validate on **Vercel preview** when available ‚Äî latency and caching differ from localhost.
 
 ### 1.5 Client JS layer (orthogonal)
 
-Server streaming (`loading.tsx`, Suspense) does **not** reduce client bundle size. Heavy **Client Components** (`react-day-picker`, `recharts`, editors) need **`next/dynamic`** and interaction-gated imports ó see [`ai_client_lazy_loading.md`](./ai_client_lazy_loading.md). Cursor rules: **react-ui-components**, **app-router-streaming-loading**.
+Server streaming (`loading.tsx`, Suspense) does **not** reduce client bundle size. Heavy **Client Components** (`react-day-picker`, `recharts`, editors) need **`next/dynamic`** and interaction-gated imports ‚Äî see [`ai_client_lazy_loading.md`](./ai_client_lazy_loading.md). Cursor rules: **react-ui-components**, **app-router-streaming-loading**.
 
 ---
 
@@ -74,22 +74,22 @@ Server streaming (`loading.tsx`, Suspense) does **not** reduce client bundle siz
 
 ```
 User request
-        ¶
-        ?
-   proxy.ts (JWT gate, Node)   ? no Prisma ó see ADR-002
-        ¶
-        ?
-  Root Layout (await auth())   ? acceptable if JWT-only, no heavy DB in layout
-        ¶
-        ?
-  Segment Layout               ? MUST stay without heavy await
-        ¶
-        ?
-  page.tsx (light shell)       ? first RSC chunk sent quickly
-   +-- <Suspense fallback={<Skeleton />}>
-   ¶       +-- <ContentRegionA />   ?-- await DB query A
-   +-- <Suspense fallback={<Skeleton />}>
-           +-- <ContentRegionB />   ?-- await DB query B (independent of A)
+        ‚îÇ
+        ‚ñº
+   proxy.ts (JWT gate, Node)   ‚Üê no Prisma ‚Äî see ADR-002
+        ‚îÇ
+        ‚ñº
+  Root Layout (await auth())   ‚Üê acceptable if JWT-only, no heavy DB in layout
+        ‚îÇ
+        ‚ñº
+  Segment Layout               ‚Üê MUST stay without heavy await
+        ‚îÇ
+        ‚ñº
+  page.tsx (light shell)       ‚Üê first RSC chunk sent quickly
+   ‚îú‚îÄ‚îÄ <Suspense fallback={<Skeleton />}>
+   ‚îÇ       ‚îî‚îÄ‚îÄ <ContentRegionA />   ‚óÑ‚îÄ‚îÄ await DB query A
+   ‚îî‚îÄ‚îÄ <Suspense fallback={<Skeleton />}>
+           ‚îî‚îÄ‚îÄ <ContentRegionB />   ‚óÑ‚îÄ‚îÄ await DB query B (independent of A)
 ```
 
 > Without streaming, TTFB equals the slowest query. With streaming, the static shell is sent as soon as it is ready, decoupling FCP from data fetch time.
@@ -106,10 +106,10 @@ Place beside `page.tsx`. Next.js wraps the segment in Suspense automatically.
 
 ```
 apps/web/src/app/
-+-- trainers/
-¶   +-- page.tsx
-¶   +-- loading.tsx
-¶   +-- _components/
+‚îú‚îÄ‚îÄ trainers/
+‚îÇ   ‚îú‚îÄ‚îÄ page.tsx
+‚îÇ   ‚îú‚îÄ‚îÄ loading.tsx
+‚îÇ   ‚îî‚îÄ‚îÄ _components/
 ```
 
 Skeleton should match page chrome (Warm Forest spacing, `Container` variant from catalog).
@@ -128,7 +128,7 @@ import { TrainerGridSkeleton } from './_components/trainer-grid-skeleton'
 export default async function TrainersPage() {
   return (
     <div>
-      <h1>Ö</h1>
+      <h1>‚Ä¶</h1>
       <Suspense fallback={<TrainerGridSkeleton />}>
         <TrainerGrid />
       </Suspense>
@@ -145,8 +145,8 @@ Same full-page UI via both `loading.tsx` **and** outer Suspense wrapping **ident
 
 | Mechanism | When |
 |-----------|------|
-| `loading.tsx` | New route segment navigation ó instant route shell |
-| `<Suspense fallback={Ö}>` | Multiple independent data sources on one page |
+| `loading.tsx` | New route segment navigation ‚Äî instant route shell |
+| `<Suspense fallback={‚Ä¶}>` | Multiple independent data sources on one page |
 
 ---
 
@@ -157,16 +157,16 @@ Same full-page UI via both `loading.tsx` **and** outer Suspense wrapping **ident
 `page.tsx` and segment `layout.tsx` contain **only fast operations**:
 
 - `await params` / `await searchParams`
-- Fast session check (`auth()` from JWT ó OK when no heavy DB in jwt callback)
+- Fast session check (`auth()` from JWT ‚Äî OK when no heavy DB in jwt callback)
 - Redirect / `notFound`
 - Static shell markup
 
-Anything slower than ~5ñ10 ms (Prisma, external APIs) ? **child async Server Components** behind `<Suspense>`, preferably in `*.server.tsx` or `*-content.server.tsx` siblings.
+Anything slower than ~5‚Äì10 ms (Prisma, external APIs) ‚Üí **child async Server Components** behind `<Suspense>`, preferably in `*.server.tsx` or `*-content.server.tsx` siblings.
 
-### Bad ó blocks shell
+### Bad ‚Äî blocks shell
 
 ```tsx
-// ? page.tsx ó waits for all data before first chunk
+// ‚ùå page.tsx ‚Äî waits for all data before first chunk
 export default async function ClientBookingDetailPage({
   params,
 }: {
@@ -181,10 +181,10 @@ export default async function ClientBookingDetailPage({
 }
 ```
 
-### Good ó shell immediately, data streams
+### Good ‚Äî shell immediately, data streams
 
 ```tsx
-// ? page.tsx ó fast checks + shell; heavy work in child
+// ‚úÖ page.tsx ‚Äî fast checks + shell; heavy work in child
 import { Suspense } from 'react'
 import { auth } from '@/auth'
 import { redirect, notFound } from 'next/navigation'
@@ -214,22 +214,22 @@ Data fetching lives in `booking-detail-content.server.tsx` via DAL `apps/web/src
 
 ### 4.1 Opt-in: synchronous page + `params.then()` (Cache Components)
 
-**Default (ADR-002):** `await params` / `await searchParams` in async `page.tsx` ó see examples above.
+**Default (ADR-002):** `await params` / `await searchParams` in async `page.tsx` ‚Äî see examples above.
 
-**Opt-in** when `cacheComponents: true` and stable page chrome must paint **before** dynamic params resolve (static shell / Partial Prerendering). Provenance: evaluated against [nextjs-app-architecture-skill](https://github.com/aurorascharff/nextjs-app-architecture-skill) ó **not installed**; governance: [`adr_010_nextjs_app_architecture_skill.md`](../../reference/adr_010_nextjs_app_architecture_skill.md).
+**Opt-in** when `cacheComponents: true` and stable page chrome must paint **before** dynamic params resolve (static shell / Partial Prerendering). Provenance: evaluated against [nextjs-app-architecture-skill](https://github.com/aurorascharff/nextjs-app-architecture-skill) ‚Äî **not installed**; governance: [`adr_010_nextjs_app_architecture_skill.md`](../../reference/adr_010_nextjs_app_architecture_skill.md).
 
 ```tsx
 import { Suspense } from 'react'
 import { BookingDetailContent } from './_components/booking-detail-content.server'
 import { BookingDetailSkeleton } from './_components/booking-detail-skeleton'
 
-// Sync page ó chrome above .then() is static-shell eligible
+// Sync page ‚Äî chrome above .then() is static-shell eligible
 export default function ClientBookingDetailPage({
   params,
 }: PageProps<'/client/bookings/[id]'>) {
   return (
     <div className="space-y-4">
-      <PageHeader title="Ö" /> {/* paints immediately */}
+      <PageHeader title="‚Ä¶" /> {/* paints immediately */}
       <Suspense fallback={<BookingDetailSkeleton />}>
         {params.then(({ id }) => (
           <BookingDetailContent bookingId={id} />
@@ -242,10 +242,10 @@ export default function ClientBookingDetailPage({
 
 **Rules**
 
-- Use **`PageProps<'/route'>`** from `typedRoutes: true` ó do not hand-roll param types.
-- **`generateMetadata` may still `await params`** ó runs before page render.
+- Use **`PageProps<'/route'>`** from `typedRoutes: true` ‚Äî do not hand-roll param types.
+- **`generateMetadata` may still `await params`** ‚Äî runs before page render.
 - Fast auth guard: prefer layout/segment guard or sync redirect pattern documented in phase contract; do not block static shell with heavy `auth()` + DB.
-- Document opt-in in PR when first applying to a route (ß18 exception **Sync shell + params.then**).
+- Document opt-in in PR when first applying to a route (¬ß18 exception **Sync shell + params.then**).
 
 ---
 
@@ -253,7 +253,7 @@ export default function ClientBookingDetailPage({
 
 ### Rule
 
-Each UI region backed by **its own** data source ? separate `<Suspense>` boundary. Independent blocks must not block each other.
+Each UI region backed by **its own** data source ‚Üí separate `<Suspense>` boundary. Independent blocks must not block each other.
 
 | Situation | Action |
 |-----------|--------|
@@ -266,7 +266,7 @@ Each UI region backed by **its own** data source ? separate `<Suspense>` boundar
 When several queries are needed **inside one** async child, start them in parallel:
 
 ```tsx
-// ? Parallel in one async component
+// ‚úÖ Parallel in one async component
 async function ClientBookingsContent({ userId }: { userId: string }) {
   const [upcoming, past] = await Promise.all([
     getUpcomingBookings(userId),
@@ -277,7 +277,7 @@ async function ClientBookingsContent({ userId }: { userId: string }) {
 ```
 
 ```tsx
-// ? Sequential waterfall ó second query waits for first
+// ‚ùå Sequential waterfall ‚Äî second query waits for first
 async function ClientBookingsContent({ userId }: { userId: string }) {
   const upcoming = await getUpcomingBookings(userId)
   const past = await getPastBookings(userId)
@@ -285,14 +285,14 @@ async function ClientBookingsContent({ userId }: { userId: string }) {
 }
 ```
 
-> **?? `Promise.all` caveat:** if one query fails, all fail. For **logically independent UI regions** (upcoming list vs past list), prefer **separate Suspense** + separate `error.tsx` so each region degrades independently. Use `Promise.all` only when data is **atomically linked** (cannot render without all results).
+> **‚ö†Ô∏è `Promise.all` caveat:** if one query fails, all fail. For **logically independent UI regions** (upcoming list vs past list), prefer **separate Suspense** + separate `error.tsx` so each region degrades independently. Use `Promise.all` only when data is **atomically linked** (cannot render without all results).
 
 ### Nested vs sibling Suspense
 
-**False hierarchy** ó ID already in `params`; nesting adds visual waterfall without real dependency:
+**False hierarchy** ‚Äî ID already in `params`; nesting adds visual waterfall without real dependency:
 
 ```tsx
-// ? trainerId from params ó nesting is unnecessary
+// ‚ùå trainerId from params ‚Äî nesting is unnecessary
 export default async function TrainerProfilePage({ params }) {
   const { id } = await params
   return (
@@ -305,7 +305,7 @@ export default async function TrainerProfilePage({ params }) {
   )
 }
 
-// ? Parallel independent boundaries
+// ‚úÖ Parallel independent boundaries
 export default async function TrainerProfilePage({ params }) {
   const { id } = await params
   return (
@@ -321,7 +321,7 @@ export default async function TrainerProfilePage({ params }) {
 }
 ```
 
-**Justified nesting** ó child needs a value only available after parent DB read:
+**Justified nesting** ‚Äî child needs a value only available after parent DB read:
 
 ```tsx
 async function TrainerProfile({ id }: { id: string }) {
@@ -330,7 +330,7 @@ async function TrainerProfile({ id }: { id: string }) {
     <>
       <ProfileHeader trainer={trainer} />
       <Suspense fallback={<ServicesSkeleton />}>
-        {/* servicesGroupId not in params ó real dependency */}
+        {/* servicesGroupId not in params ‚Äî real dependency */}
         <TrainerServices groupId={trainer.servicesGroupId} />
       </Suspense>
     </>
@@ -344,29 +344,29 @@ async function TrainerProfile({ id }: { id: string }) {
 
 ### Context (Pulse)
 
-Root `layout.tsx` may `await auth()` for session-aware chrome (nav, role). Pulse uses **JWT sessions** (Auth.js v5, Credentials) ó see [ADR-003](../../prds/07_governance/adr_003_auth_credentials_jwt_rbac.md).
+Root `layout.tsx` may `await auth()` for session-aware chrome (nav, role). Pulse uses **JWT sessions** (Auth.js v5, Credentials) ‚Äî see [ADR-003](../../prds/07_governance/adr_003_auth_credentials_jwt_rbac.md).
 
 Typical JWT `auth()`:
 
 - Cookie read: ~0.1 ms
-- JWT verify: ~1ñ3 ms
+- JWT verify: ~1‚Äì3 ms
 - **Total: usually < 5 ms**
 
-Worst-case: jwt callback hits DB on token refresh (e.g. hourly `maxAge`) ó one extra Prisma round-trip to Neon.
+Worst-case: jwt callback hits DB on token refresh (e.g. hourly `maxAge`) ‚Äî one extra Prisma round-trip to Neon.
 
 ### Rule
 
 ```
-auth() in root layout ó acceptable when:
-  ? jwt() callback has no heavy DB on every call
-  ? DB in jwt() only on real token refresh (not every request)
-  ? Layout does not run additional Prisma queries beyond auth()
-  ? Session result is not used for heavy DB work in layout
+auth() in root layout ‚Äî acceptable when:
+  ‚úÖ jwt() callback has no heavy DB on every call
+  ‚úÖ DB in jwt() only on real token refresh (not every request)
+  ‚úÖ Layout does not run additional Prisma queries beyond auth()
+  ‚úÖ Session result is not used for heavy DB work in layout
 ```
 
-Perimeter auth in **`proxy.ts`** uses `auth.config.ts` only (no Prisma). Server `auth()` in RSC/Actions uses full `auth.ts` ó see [`ai_auth_implementation_guide.md`](../auth/ai_auth_implementation_guide.md).
+Perimeter auth in **`proxy.ts`** uses `auth.config.ts` only (no Prisma). Server `auth()` in RSC/Actions uses full `auth.ts` ‚Äî see [`ai_auth_implementation_guide.md`](../auth/ai_auth_implementation_guide.md).
 
-### React `cache()` ó dedup within one request
+### React `cache()` ‚Äî dedup within one request
 
 When `auth()` or session-derived reads are needed in **multiple** RSC nodes, wrap in `cache()` so work runs once per HTTP request:
 
@@ -379,22 +379,22 @@ export const getRequestCachedAuth = cache(async () => {
 })
 ```
 
-Colocate cached auth helpers in `apps/web/src/lib/auth/` (e.g. `request-cache.ts`) when implementing product routes ó extend existing modules, do not duplicate.
+Colocate cached auth helpers in `apps/web/src/lib/auth/` (e.g. `request-cache.ts`) when implementing product routes ‚Äî extend existing modules, do not duplicate.
 
 ### Future (not MVP): non-blocking session promise
 
-If profiling shows `auth()` as TTFB bottleneck, pass a promise without `await` in layout and resolve in a client boundary. Requires AppShell refactor ó **only after measurement**.
+If profiling shows `auth()` as TTFB bottleneck, pass a promise without `await` in layout and resolve in a client boundary. Requires AppShell refactor ‚Äî **only after measurement**.
 
 ---
 
 ## 7. Eliminating DB waterfalls
 
-**DB waterfall** ó sequential `await` chain where each query waits for the previous, though data is independent.
+**DB waterfall** ‚Äî sequential `await` chain where each query waits for the previous, though data is independent.
 
 ### Diagnosis
 
 ```tsx
-// ? Waterfall: latency ò sum of all queries
+// ‚ùå Waterfall: latency ‚âà sum of all queries
 const prisma = getPrisma()
 const user = await prisma.user.findUnique({ where: { id: userId } })
 const bookings = await prisma.booking.findMany({ where: { clientId: userId } })
@@ -404,7 +404,7 @@ const wishlist = await prisma.wishlistEntry.findMany({ where: { userId } })
 ### Fix
 
 ```tsx
-// ? Parallel: latency ò max(query latencies)
+// ‚úÖ Parallel: latency ‚âà max(query latencies)
 const prisma = getPrisma()
 const [user, bookings, wishlist] = await Promise.all([
   prisma.user.findUnique({ where: { id: userId } }),
@@ -416,22 +416,22 @@ const [user, bookings, wishlist] = await Promise.all([
 ### Hidden waterfall through Suspense
 
 ```tsx
-// ? Child query starts only after parent resolves
+// ‚ùå Child query starts only after parent resolves
 async function ParentContent({ userId }) {
   const user = await getUser(userId)
   return <ChildContent trainerId={user.favoriteTrainerId} />
 }
 
-// ? Prefer parallel start or independent Suspense if trainerId is known from params/session
+// ‚úÖ Prefer parallel start or independent Suspense if trainerId is known from params/session
 ```
 
-Use `@{{PACKAGE_SCOPE}}/db` / `getPrisma()` from DAL ó **never** ad-hoc `@/lib/db`. Queries live in `apps/web/src/data/**`.
+Use `@{{PACKAGE_SCOPE}}/db` / `getPrisma()` from DAL ‚Äî **never** ad-hoc `@/lib/db`. Queries live in `apps/web/src/data/**`.
 
 ---
 
-## 8. Query caching ó React `cache()` vs `'use cache'`
+## 8. Query caching ‚Äî React `cache()` vs `'use cache'`
 
-Next.js 16 replaces **`unstable_cache()`** with the **`'use cache'`** directive. **Do not add new `unstable_cache` calls** in Pulse ó use `'use cache'` + `cacheTag()` + `cacheLife()`.
+Next.js 16 replaces **`unstable_cache()`** with the **`'use cache'`** directive. **Do not add new `unstable_cache` calls** in Pulse ‚Äî use `'use cache'` + `cacheTag()` + `cacheLife()`.
 
 Enable Cache Components when implementing cross-request cached reads:
 
@@ -446,7 +446,7 @@ const nextConfig: NextConfig = {
 export default nextConfig
 ```
 
-Verify against Context7 `/vercel/next.js` (prefer version-matched docs under `node_modules/next/dist/docs/` when on a pin) ó [Cache Components](https://nextjs.org/docs/app/getting-started/cache-components), [`use cache`](https://nextjs.org/docs/app/api-reference/directives/use-cache).
+Verify against Context7 `/vercel/next.js` (prefer version-matched docs under `node_modules/next/dist/docs/` when on a pin) ‚Äî [Cache Components](https://nextjs.org/docs/app/getting-started/cache-components), [`use cache`](https://nextjs.org/docs/app/api-reference/directives/use-cache).
 
 | Layer | API | Scope | Use for |
 |-------|-----|-------|---------|
@@ -454,34 +454,34 @@ Verify against Context7 `/vercel/next.js` (prefer version-matched docs under `no
 | **Cross-request cache** | `'use cache'` + `cacheTag()` + `cacheLife()` | Between requests / deploy-aware | Public catalog, trainer profile static slice |
 | **Fresh per request** | No cross-request cache | Always live | Bookings, slot availability, auth-gated mutable data |
 
-### 8.1 Instant Navigations (Next.js 16.4) ó required
+### 8.1 Instant Navigations (Next.js 16.4) ‚Äî required
 
-[Instant Navigations](https://nextjs.org/blog/next-16-3-instant-navigations) are **required** on pin **16.4** ([ADR-002 template](../../docs/prds/07_governance/adr_002_next162_vercel_runtime_policy.template.md) ß5.1). **Adoption order:** enable **Cache Components** first, then **Partial Prefetching**. Shape each route as Stream, Cache, or deliberate Block:
+[Instant Navigations](https://nextjs.org/blog/next-16-3-instant-navigations) are **required** on pin **16.4** ([ADR-002 template](../../docs/prds/07_governance/adr_002_next162_vercel_runtime_policy.template.md) ¬ß5.1). **Adoption order:** enable **Cache Components** first, then **Partial Prefetching**. Shape each route as Stream, Cache, or deliberate Block:
 
 ```ts
-// apps/web/next.config.ts ó required
+// apps/web/next.config.ts ‚Äî required
 const nextConfig: NextConfig = {
   cacheComponents: true,
-  partialPrefetching: true, // Instant Navigations companion ó never alone, never first
+  partialPrefetching: true, // Instant Navigations companion ‚Äî never alone, never first
 }
 ```
 
 | Choice | Mechanism | When |
 |--------|-----------|------|
-| **Stream** | `<Suspense fallback={Ö}>` / `loading.tsx` | Dynamic / private data; show shell immediately |
+| **Stream** | `<Suspense fallback={‚Ä¶}>` / `loading.tsx` | Dynamic / private data; show shell immediately |
 | **Cache** | `'use cache'` + tags | Shared/public UI safe to reuse across requests |
-| **Private cache** | `'use cache: private'` | **Browser** only ó not the static shell, not CDN |
-| **Block** | `export const instant = false` | Rare ó intentional wait for server; document why |
+| **Private cache** | `'use cache: private'` | **Browser** only ‚Äî not the static shell, not CDN |
+| **Block** | `export const instant = false` | Rare ‚Äî intentional wait for server; document why |
 
-Todayís `loading.tsx` + sibling Suspense (ß3ñß5, ß10) align with **Stream**. Do **not** enable `partialPrefetching` without `cacheComponents`. `<Link prefetch={true}>` only **per-link** after a live App Shell ó not the default.
+Today‚Äôs `loading.tsx` + sibling Suspense (¬ß3‚Äì¬ß5, ¬ß10) align with **Stream**. Do **not** enable `partialPrefetching` without `cacheComponents`. `<Link prefetch={true}>` only **per-link** after a live App Shell ‚Äî not the default.
 
-Playwright `instant()` from `@next/playwright` ó **SHOULD** on critical product navigations once flags are on. The Playwright package is **not** part of this boilerplate scaffold.
+Playwright `instant()` from `@next/playwright` ‚Äî **SHOULD** on critical product navigations once flags are on. The Playwright package is **not** part of this boilerplate scaffold.
 
 **Out of scope for MVP canon:** `experimental.useOffline`, Rust React Compiler, `import.meta.glob`, mandatory `next/root-params` (cookie-first i18n), blind Block on every route.
 
 #### 8.1.1 Instant Insights (dev)
 
-**Instant Insights** is the Next.js **dev overlay / validation** for Instant Navigations (`cacheComponents` + `partialPrefetching`). In **dev** the overlay is **warning**. Production **build** reports `blocking-prerender-*` ó do **not** mix that with `blocking-route`. It flags routes that **block** prerender or instant navigation ó **not** a general bug-finder (logic, a11y, visual QA). Do **not** confuse with **`next-dev-loop`** (opt-in dual-view runtime verification ó [README](./README.md) ß Agent runtime verification). A shell without the overlay is **not** confirmation that Instant Navigations are healthy.
+**Instant Insights** is the Next.js **dev overlay / validation** for Instant Navigations (`cacheComponents` + `partialPrefetching`). In **dev** the overlay is **warning**. Production **build** reports `blocking-prerender-*` ‚Äî do **not** mix that with `blocking-route`. It flags routes that **block** prerender or instant navigation ‚Äî **not** a general bug-finder (logic, a11y, visual QA). Do **not** confuse with **`next-dev-loop`** (opt-in dual-view runtime verification ‚Äî [README](./README.md) ¬ß Agent runtime verification). A shell without the overlay is **not** confirmation that Instant Navigations are healthy.
 
 **What it catches**
 
@@ -492,14 +492,14 @@ Playwright `instant()` from `@next/playwright` ó **SHOULD** on critical product 
 | Auth/session on static shell | Session read without Stream/Block | Route flagged as blocking |
 | Dynamic viewport + runtime | `generateViewport` reading cookies/headers | Layout blocks navigation |
 
-**What it does not catch:** business logic bugs, accessibility, visual regressions, empty shells (`fallback={null}`) that still look ìinstantî but show nothing ó treat empty shells as a separate anti-pattern (ß17).
+**What it does not catch:** business logic bugs, accessibility, visual regressions, empty shells (`fallback={null}`) that still look ‚Äúinstant‚Äù but show nothing ‚Äî treat empty shells as a separate anti-pattern (¬ß17).
 
-**Fixes (same Stream / Cache / Block as ß8.1)**
+**Fixes (same Stream / Cache / Block as ¬ß8.1)**
 
 | Overlay advice | Action |
 |----------------|--------|
-| **[stream]** | Wrap dynamic / runtime access in `<Suspense fallback={Ö}>` with a **meaningful** skeleton (not `null`) |
-| **[cache]** | Cache shared reads with `'use cache'` + tags ó **not** for `cookies()` / `headers()` |
+| **[stream]** | Wrap dynamic / runtime access in `<Suspense fallback={‚Ä¶}>` with a **meaningful** skeleton (not `null`) |
+| **[cache]** | Cache shared reads with `'use cache'` + tags ‚Äî **not** for `cookies()` / `headers()` |
 | **[block]** | `export const instant = false` only with an explicit product reason |
 
 **Config (optional migration knobs)**
@@ -511,23 +511,23 @@ const nextConfig: NextConfig = {
   partialPrefetching: true,
   experimental: {
     instantInsights: {
-      // 'warning' ó validate all segments; 'manual-warning' ó only segments that export `instant`
+      // 'warning' ‚Äî validate all segments; 'manual-warning' ‚Äî only segments that export `instant`
       validationLevel: 'warning',
     },
   },
 }
 ```
 
-Per-segment opt-out / severity: `export const instant = false` or `export const instant = { level: 'warning' }` ó see [route segment `instant`](https://nextjs.org/docs/app/api-reference/file-conventions/route-segment-config/instant).
+Per-segment opt-out / severity: `export const instant = false` or `export const instant = { level: 'warning' }` ‚Äî see [route segment `instant`](https://nextjs.org/docs/app/api-reference/file-conventions/route-segment-config/instant).
 
 **Agent checklist (route work with Instant Navigations on)**
 
 - [ ] Read Instant Insights overlay for the touched route; close each finding with Stream, Cache, or deliberate Block
-- [ ] Fallbacks are layout-shaped skeletons ó never `fallback={null}` / empty Suspense around the whole page body
+- [ ] Fallbacks are layout-shaped skeletons ‚Äî never `fallback={null}` / empty Suspense around the whole page body
 - [ ] Do not treat Instant Insights as full QA; keep `typecheck` / `lint` (and Playwright `instant()` on critical paths when flags are on)
-- [ ] Incremental migration: `validationLevel: 'manual-warning'` or scoped `instant = false` ó document why
+- [ ] Incremental migration: `validationLevel: 'manual-warning'` or scoped `instant = false` ‚Äî document why
 
-### React `cache()` ó per-request dedup
+### React `cache()` ‚Äî per-request dedup
 
 Wrap expensive read functions so they **do not run twice** in one RSC tree:
 
@@ -544,9 +544,9 @@ export const cachedLoadTrainerServices = cache(async (trainerProfileId: string) 
 })
 ```
 
-Colocate role- or domain-specific cached loaders in `apps/web/src/lib/**` or `src/data/**` ó one module per concern, no scatter.
+Colocate role- or domain-specific cached loaders in `apps/web/src/lib/**` or `src/data/**` ‚Äî one module per concern, no scatter.
 
-### `'use cache'` ó cross-request cache (Next.js 16)
+### `'use cache'` ‚Äî cross-request cache (Next.js 16)
 
 Colocate cached read functions in `src/data/**` with `import 'server-only'`. Tag names **must** match [`cache_revalidation_policy.md`](../../prds/05_runtime/cache_revalidation_policy.md).
 
@@ -556,11 +556,11 @@ import 'server-only'
 import { cacheLife, cacheTag } from 'next/cache'
 import { getPrisma } from '@{{PACKAGE_SCOPE}}/db'
 
-/** Public approved trainer catalog ó cross-request cache. */
+/** Public approved trainer catalog ‚Äî cross-request cache. */
 export async function getCachedTrainersCatalog() {
   'use cache'
   cacheTag('trainers:catalog')
-  cacheLife('minutes') // or cacheLife({ revalidate: 60 }) ó safety TTL; mutations use updateTag
+  cacheLife('minutes') // or cacheLife({ revalidate: 60 }) ‚Äî safety TTL; mutations use updateTag
 
   const prisma = getPrisma()
   return prisma.trainerProfile.findMany({
@@ -570,7 +570,7 @@ export async function getCachedTrainersCatalog() {
   })
 }
 
-/** Per-trainer public slice ó tag includes id (replaces unstable_cache keyParts). */
+/** Per-trainer public slice ‚Äî tag includes id (replaces unstable_cache keyParts). */
 export async function getCachedTrainerPublicProfile(trainerId: string) {
   'use cache'
   cacheTag('trainers:catalog', `trainer:${trainerId}`)
@@ -579,7 +579,7 @@ export async function getCachedTrainerPublicProfile(trainerId: string) {
   const prisma = getPrisma()
   return prisma.trainerProfile.findUnique({
     where: { id: trainerId, status: 'approved' },
-    /* Ö public select Ö */
+    /* ‚Ä¶ public select ‚Ä¶ */
   })
 }
 ```
@@ -592,7 +592,7 @@ After mutation in a Server Action:
 import { updateTag } from 'next/cache'
 
 export async function approveTrainerAction(trainerId: string) {
-  // Ö policy ? domain ? db Ö
+  // ‚Ä¶ policy ‚Üí domain ‚Üí db ‚Ä¶
   updateTag('admin:trainers:pending')
   updateTag('trainers:catalog')
   updateTag(`trainer:${trainerId}`)
@@ -601,21 +601,21 @@ export async function approveTrainerAction(trainerId: string) {
 
 ### `'use cache'` rules
 
-- **No `unstable_cache` in new code** ó migrate existing call sites to `'use cache'` when touched.
-- **Tags** ó `cacheTag(...)` inside the function; strings **must** match the tag registry in `cache_revalidation_policy.md`.
-- **Lifetime** ó `cacheLife('minutes' | 'hours' | Ö)` or `cacheLife({ revalidate: N })`; deploy still busts caches ó **`updateTag` after mutations is primary**.
-- **Cache keys** ó automatic from function id + serializable arguments (no manual `keyParts`).
-- **Never cache authorization** ó verify session on every read path; cache is a performance layer only.
-- **Runtime APIs** ó **cannot** call `cookies()`, `headers()`, or `searchParams` inside `'use cache'`. Extract values **outside**, pass as arguments (they become part of the cache key):
+- **No `unstable_cache` in new code** ‚Äî migrate existing call sites to `'use cache'` when touched.
+- **Tags** ‚Äî `cacheTag(...)` inside the function; strings **must** match the tag registry in `cache_revalidation_policy.md`.
+- **Lifetime** ‚Äî `cacheLife('minutes' | 'hours' | ‚Ä¶)` or `cacheLife({ revalidate: N })`; deploy still busts caches ‚Äî **`updateTag` after mutations is primary**.
+- **Cache keys** ‚Äî automatic from function id + serializable arguments (no manual `keyParts`).
+- **Never cache authorization** ‚Äî verify session on every read path; cache is a performance layer only.
+- **Runtime APIs** ‚Äî **cannot** call `cookies()`, `headers()`, or `searchParams` inside `'use cache'`. Extract values **outside**, pass as arguments (they become part of the cache key):
 
 ```tsx
-// ? cookies() inside use cache
+// ‚ùå cookies() inside use cache
 async function CachedWishlist() {
   'use cache'
   const session = (await cookies()).get('session') // Error
 }
 
-// ? pass userId from dynamic parent (Suspense child or page shell)
+// ‚úÖ pass userId from dynamic parent (Suspense child or page shell)
 async function ClientWishlistPage() {
   const session = await auth()
   if (!session?.user?.id) redirect('/auth/login')
@@ -634,7 +634,7 @@ async function CachedWishlist({ userId }: { userId: string }) {
 }
 ```
 
-For compliance-only cases where refactor is blocked, **`'use cache: private'`** may allow runtime APIs ó prefer explicit arguments (see Next.js 16 docs).
+For compliance-only cases where refactor is blocked, **`'use cache: private'`** may allow runtime APIs ‚Äî prefer explicit arguments (see Next.js 16 docs).
 
 ### What to cache (Pulse MVP)
 
@@ -653,27 +653,27 @@ For compliance-only cases where refactor is blocked, **`'use cache: private'`** 
 
 ## 9. Neon: cold start and connection
 
-Neon is serverless PostgreSQL. Suspended compute adds **~300ñ1000 ms** to the first query after idle ó main DB source of worst-case latency.
+Neon is serverless PostgreSQL. Suspended compute adds **~300‚Äì1000 ms** to the first query after idle ‚Äî main DB source of worst-case latency.
 
 ### Measures
 
-**1. Pooled `DATABASE_URL` ó mandatory for runtime**
+**1. Pooled `DATABASE_URL` ‚Äî mandatory for runtime**
 
 ```env
-# Pooled ó -pooler in hostname (app runtime)
+# Pooled ‚Äî -pooler in hostname (app runtime)
 DATABASE_URL="postgresql://user:pass@ep-xxx-pooler.region.aws.neon.tech/dbname?sslmode=require"
 
-# Direct ó migrations/seed CLI only
+# Direct ‚Äî migrations/seed CLI only
 DIRECT_URL="postgresql://user:pass@ep-xxx.region.aws.neon.tech/dbname?sslmode=require"
 ```
 
 See [`neon_prisma_migrations_guide.md`](../../implementation/mvp/guides/neon_prisma_migrations_guide.md) and [`migration_runbook.md`](../../prds/06_operations/migration_runbook.md).
 
-**2. Suspend timeout** ó tune in Neon Console for production traffic patterns.
+**2. Suspend timeout** ‚Äî tune in Neon Console for production traffic patterns.
 
-**3. Transient errors (P1001)** ó wrap critical read paths with retry when implementing auth/DB hot paths (pattern: small helper in `apps/web/src/lib/db/` ó add when `@{{PACKAGE_SCOPE}}/db` lands in P01+).
+**3. Transient errors (P1001)** ‚Äî wrap critical read paths with retry when implementing auth/DB hot paths (pattern: small helper in `apps/web/src/lib/db/` ‚Äî add when `@{{PACKAGE_SCOPE}}/db` lands in P01+).
 
-**4. Streaming shell as UX buffer** ó even on cold start, user sees nav and skeletons immediately; DB latency hides behind visible fallbacks, not a blank screen.
+**4. Streaming shell as UX buffer** ‚Äî even on cold start, user sees nav and skeletons immediately; DB latency hides behind visible fallbacks, not a blank screen.
 
 ---
 
@@ -683,24 +683,24 @@ See [`neon_prisma_migrations_guide.md`](../../implementation/mvp/guides/neon_pri
 
 ### When required
 
-Every `page.tsx` segment that runs server-side data work (Prisma, slow I/O) **must** have colocated `loading.tsx`, unless [ß18](#18-documented-exceptions) applies.
+Every `page.tsx` segment that runs server-side data work (Prisma, slow I/O) **must** have colocated `loading.tsx`, unless [¬ß18](#18-documented-exceptions) applies.
 
 ```
 app/
-+-- trainers/
-¶   +-- page.tsx
-¶   +-- loading.tsx          ? required for catalog
-+-- client/
-¶   +-- bookings/
-¶       +-- page.tsx
-¶       +-- loading.tsx      ? required
+‚îú‚îÄ‚îÄ trainers/
+‚îÇ   ‚îú‚îÄ‚îÄ page.tsx
+‚îÇ   ‚îî‚îÄ‚îÄ loading.tsx          ‚Üê required for catalog
+‚îú‚îÄ‚îÄ client/
+‚îÇ   ‚îî‚îÄ‚îÄ bookings/
+‚îÇ       ‚îú‚îÄ‚îÄ page.tsx
+‚îÇ       ‚îî‚îÄ‚îÄ loading.tsx      ‚Üê required
 ```
 
 Auth/session alone does **not** require `loading.tsx`; add it when the page fetches DB data.
 
 ### Content
 
-Reproduce **page chrome** (container, vertical rhythm) with `<Skeleton />` ó not a generic full-page spinner. Use `Container` from `@/components/ui/container` and skeleton shapes from [`ui_states_contract.md`](../../design/ui_states_contract.md) S1.
+Reproduce **page chrome** (container, vertical rhythm) with `<Skeleton />` ‚Äî not a generic full-page spinner. Use `Container` from `@/components/ui/container` and skeleton shapes from [`ui_states_contract.md`](../../design/ui_states_contract.md) S1.
 
 Reuse the same skeleton component in `loading.tsx` and Suspense fallback when they represent the **same** layout.
 
@@ -708,15 +708,15 @@ Reuse the same skeleton component in `loading.tsx` and Suspense fallback when th
 
 ## 11. Skeletons without CLS
 
-**CLS (Cumulative Layout Shift)** ó layout jump when skeleton replaces real content. Target **< 0.1** in production (Core Web Vitals).
+**CLS (Cumulative Layout Shift)** ‚Äî layout jump when skeleton replaces real content. Target **< 0.1** in production (Core Web Vitals).
 
 ### Rules
 
-1. **Match dimensions** ó skeleton `h-*` / `w-*` ò final content (cards, KPI rows, table rows).
-2. **Match structure** ó header + N body lines + CTA ? same block count in skeleton.
-3. **Fixed wrappers** ó use `min-h-*` on containers when height is predictable.
-4. **One component per file** ó shared skeletons as named exports per **react-one-component-per-file**.
-5. **Catalog primitive** ó `<Skeleton />` from `@/components/ui/skeleton`, not bare pulsing divs.
+1. **Match dimensions** ‚Äî skeleton `h-*` / `w-*` ‚âà final content (cards, KPI rows, table rows).
+2. **Match structure** ‚Äî header + N body lines + CTA ‚Üí same block count in skeleton.
+3. **Fixed wrappers** ‚Äî use `min-h-*` on containers when height is predictable.
+4. **One component per file** ‚Äî shared skeletons as named exports per **react-one-component-per-file**.
+5. **Catalog primitive** ‚Äî `<Skeleton />` from `@/components/ui/skeleton`, not bare pulsing divs.
 
 ```tsx
 import { Skeleton } from '@/components/ui/skeleton'
@@ -735,7 +735,7 @@ export function TrainerCardSkeleton() {
 }
 ```
 
-Wireframe matrix: [`ui_states_contract.md`](../../design/ui_states_contract.md) ó per-route skeleton shapes.
+Wireframe matrix: [`ui_states_contract.md`](../../design/ui_states_contract.md) ‚Äî per-route skeleton shapes.
 
 ---
 
@@ -745,7 +745,7 @@ Wireframe matrix: [`ui_states_contract.md`](../../design/ui_states_contract.md) 
 
 ### Rule
 
-Every segment with async server data **must** have `error.tsx` (colocated or inherited from parent). Copy from `@/lib/messages`; use `Button` from catalog ó not raw `<button>`.
+Every segment with async server data **must** have `error.tsx` (colocated or inherited from parent). Copy from `@/lib/messages`; use `Button` from catalog ‚Äî not raw `<button>`.
 
 ```tsx
 'use client'
@@ -787,11 +787,11 @@ export default function ClientBookingError({
 
 Independent Suspense regions **should** pair with error boundaries when partial failure is acceptable (catalog grid fails, filters still work).
 
-### 12.1 Region error boundaries (`catchError`) ó opt-in
+### 12.1 Region error boundaries (`catchError`) ‚Äî opt-in
 
 Segment **`error.tsx`** handles route-level failures. For **partial** UI (one Suspense region fails, siblings stay), wrap the region in a client error boundary that understands Next.js control-flow throws.
 
-Prefer stable [`catchError`](https://nextjs.org/docs/app/getting-started/error-handling#nested-error-boundaries) from `next/error` (Next.js **16.3+**) ó `retry()` re-fetches Server Component children; does not swallow `notFound()` / `redirect()`.
+Prefer stable [`catchError`](https://nextjs.org/docs/app/getting-started/error-handling#nested-error-boundaries) from `next/error` (Next.js **16.3+**) ‚Äî `retry()` re-fetches Server Component children; does not swallow `notFound()` / `redirect()`.
 
 ```tsx
 // components/ui/region-error-boundary.tsx
@@ -807,9 +807,9 @@ function RegionErrorFallback(
 ) {
   return (
     <div className="rounded-lg border border-border bg-card p-4">
-      <AlertText>{props.title ?? 'Ö'}</AlertText>
+      <AlertText>{props.title ?? '‚Ä¶'}</AlertText>
       <Button type="button" variant="outline" className="mt-3" onClick={() => retry()}>
-        Ö
+        ‚Ä¶
       </Button>
     </div>
   )
@@ -819,16 +819,16 @@ export const RegionErrorBoundary = catchError(RegionErrorFallback)
 ```
 
 ```tsx
-<RegionErrorBoundary title="Ö">
+<RegionErrorBoundary title="‚Ä¶">
   <Suspense fallback={<ReviewsSkeleton />}>
     <TrainerReviews trainerId={id} />
   </Suspense>
 </RegionErrorBoundary>
 ```
 
-**When to use:** catalog grid, reviews block, admin queue table ó not for auth redirects or whole-page failures (use `error.tsx`).
+**When to use:** catalog grid, reviews block, admin queue table ‚Äî not for auth redirects or whole-page failures (use `error.tsx`).
 
-Provenance: evaluated against nextjs-app-architecture-skill ó in-repo only; see ADR-010.
+Provenance: evaluated against nextjs-app-architecture-skill ‚Äî in-repo only; see ADR-010.
 
 ---
 
@@ -837,7 +837,7 @@ Provenance: evaluated against nextjs-app-architecture-skill ó in-repo only; see 
 | Type | Mechanism |
 |------|-----------|
 | **Route navigation** | `loading.tsx`, Suspense fallbacks |
-| **Form/button mutation** | `useTransition` / `useActionState` ó [ai_form_handling_pattern.md](../react/ai_form_handling_pattern.md) ß4 |
+| **Form/button mutation** | `useTransition` / `useActionState` ‚Äî [ai_form_handling_pattern.md](../react/ai_form_handling_pattern.md) ¬ß4 |
 
 Do not use route skeletons for button pending states. See **ui-mutation-pending** and **ui-toast-mutations** cursor rules.
 
@@ -848,28 +848,28 @@ Do not use route skeletons for button pending states. See **ui-mutation-pending*
 | Route | Pattern |
 |-------|---------|
 | `/trainers` | Filter shell + Suspense trainer grid; catalog tag `trainers:catalog` |
-| `/trainers/[id]` | Profile + reviews + schedule ó sibling Suspense per tab region |
-| `/client/bookings` | Upcoming / past ó two Suspense regions |
+| `/trainers/[id]` | Profile + reviews + schedule ‚Äî sibling Suspense per tab region |
+| `/client/bookings` | Upcoming / past ‚Äî two Suspense regions |
 | `/client/bookings/[id]` | Detail shell + Suspense content |
 | `/trainer/dashboard` | KPI shell + Suspense upcoming sessions |
 | `/trainer/schedule` | Grid shell + Suspense slot data |
 | `/admin/trainers/pending` | `loading.tsx` + table Suspense |
-| `/` (public landing) | Sync `page.tsx`; above-fold in `<Suspense fallback={<LandingHomeAboveFoldFallback />}>` ? `LandingHomeAboveFold` (`getLocale()` inside Suspense); below-fold `LandingPageRest`; copy via `'use cache'` ó see ß14.1 |
-| `/book/[trainerId]` | Wizard steps ó Suspense per step data (services, slots) |
+| `/` (public landing) | Sync `page.tsx`; above-fold in `<Suspense fallback={<LandingHomeAboveFoldFallback />}>` ‚Üí `LandingHomeAboveFold` (`getLocale()` inside Suspense); below-fold `LandingPageRest`; copy via `'use cache'` ‚Äî see ¬ß14.1 |
+| `/book/[trainerId]` | Wizard steps ‚Äî Suspense per step data (services, slots) |
 
-### 14.1 Public landing `/` ó LCP + Cache Components
+### 14.1 Public landing `/` ‚Äî LCP + Cache Components
 
-With `cacheComponents: true`, **`cookies()` / `headers()` / `getLocale()` must not run in sync `page.tsx` or sync root `layout.tsx`** ó Next.js logs [`blocking-route`](https://nextjs.org/docs/messages/blocking-route) and delays the static shell.
+With `cacheComponents: true`, **`cookies()` / `headers()` / `getLocale()` must not run in sync `page.tsx` or sync root `layout.tsx`** ‚Äî Next.js logs [`blocking-route`](https://nextjs.org/docs/messages/blocking-route) and delays the static shell.
 
 | Piece | Contract |
 |-------|----------|
 | `apps/web/src/app/layout.tsx` | **Sync** `<html>/<body>`; `DEFAULT_LOCALE` + `getMessagesForLocale()`; **no** `readLocaleCookie()` / `auth()` at layout root |
-| `RootLayoutLocaleBridgeServer` | Inside `<Suspense>` ó resolves session locale; updates `LocaleProvider` via `LocaleHydrationBridge` **without** remounting `{children}` |
-| `apps/web/src/app/(marketing)/page.tsx` | **Sync** ó only composes Suspense regions |
-| `LandingHomeAboveFoldFallback` | Sync fallback ó hero + nav on `DEFAULT_LOCALE` (LCP `<h1>` paints immediately) |
-| `LandingHomeAboveFold` | Async inside Suspense ó `getLocale()` + `getCachedLandingPageMessages(locale)` |
-| `LandingPageRest` | Async inside separate Suspense ó below-fold sections |
-| Fonts (LCP text) | `next/font` Source Serif 4 ó `display: "swap"`, `preload: true` in root layout |
+| `RootLayoutLocaleBridgeServer` | Inside `<Suspense>` ‚Äî resolves session locale; updates `LocaleProvider` via `LocaleHydrationBridge` **without** remounting `{children}` |
+| `apps/web/src/app/(marketing)/page.tsx` | **Sync** ‚Äî only composes Suspense regions |
+| `LandingHomeAboveFoldFallback` | Sync fallback ‚Äî hero + nav on `DEFAULT_LOCALE` (LCP `<h1>` paints immediately) |
+| `LandingHomeAboveFold` | Async inside Suspense ‚Äî `getLocale()` + `getCachedLandingPageMessages(locale)` |
+| `LandingPageRest` | Async inside separate Suspense ‚Äî below-fold sections |
+| Fonts (LCP text) | `next/font` Source Serif 4 ‚Äî `display: "swap"`, `preload: true` in root layout |
 
 **Anti-pattern:** duplicate `<html>` in Suspense fallback vs content (breaks DevTools instrumentation and forces full document remount).
 
@@ -883,16 +883,16 @@ With `cacheComponents: true`, **`cookies()` / `headers()` / `getLocale()` must n
 | **TTFB** (Neon cold) | < 600 ms | < 1000 ms | > 1800 ms | cold start; streaming shell masks UX |
 | **FCP** | < 1.8 s | < 3 s | > 3 s | first RSC chunk, shell weight |
 | **LCP** | < 2.5 s | < 4 s | > 4 s | main content Suspense boundary |
-| **CLS** | < 0.1 | < 0.25 | > 0.25 | skeleton vs real layout (ß11) |
+| **CLS** | < 0.1 | < 0.25 | > 0.25 | skeleton vs real layout (¬ß11) |
 | **INP** | < 200 ms | < 500 ms | > 500 ms | client hydration, not route loading |
 
 ### When optimizing
 
-1. **TTFB > 500 ms warm** ó inspect `auth()` in layout, blocking awaits in `page.tsx`.
-2. **TTFB > 1000 ms** ó likely Neon cold start; check pooler URL and suspend timeout.
-3. **High FCP** ó heavy top-level `await` in `page.tsx`.
-4. **High LCP** ó main content behind wrong Suspense boundary; on `/`, async siblings without Suspense before hero (see ß14 landing row).
-5. **High CLS** ó skeleton dimensions vs final UI.
+1. **TTFB > 500 ms warm** ‚Äî inspect `auth()` in layout, blocking awaits in `page.tsx`.
+2. **TTFB > 1000 ms** ‚Äî likely Neon cold start; check pooler URL and suspend timeout.
+3. **High FCP** ‚Äî heavy top-level `await` in `page.tsx`.
+4. **High LCP** ‚Äî main content behind wrong Suspense boundary; on `/`, async siblings without Suspense before hero (see ¬ß14 landing row).
+5. **High CLS** ‚Äî skeleton dimensions vs final UI.
 
 Optional: `useReportWebVitals` from `next/web-vitals` or Sentry (post-MVP instrumentation).
 
@@ -904,39 +904,39 @@ Run before finishing any `page.tsx`, segment `layout.tsx`, or colocated `loading
 
 ### A. Structure
 
-- [ ] `page.tsx` ó sync shell when `cacheComponents: true`; **`cookies()` / `headers()` / `getLocale()` only inside `<Suspense>` children** (see ß14.1, [`blocking-route`](https://nextjs.org/docs/messages/blocking-route))
-- [ ] Root `layout.tsx` ó single stable `<html>/<body>`; defer `auth()` / locale to Suspense bridge ó not duplicate document trees in fallback
-- [ ] No heavy Prisma / slow I/O in `page.tsx` or segment layout ó data in `*.server.tsx` or `src/data/**` behind `<Suspense>`
-- [ ] Each independent DB-backed UI region ó own `<Suspense fallback={<RegionSkeleton />}>`
-- [ ] Each heavy async child ó separate file (`*.server.tsx` or clear `*-content.server.tsx` name)
+- [ ] `page.tsx` ‚Äî sync shell when `cacheComponents: true`; **`cookies()` / `headers()` / `getLocale()` only inside `<Suspense>` children** (see ¬ß14.1, [`blocking-route`](https://nextjs.org/docs/messages/blocking-route))
+- [ ] Root `layout.tsx` ‚Äî single stable `<html>/<body>`; defer `auth()` / locale to Suspense bridge ‚Äî not duplicate document trees in fallback
+- [ ] No heavy Prisma / slow I/O in `page.tsx` or segment layout ‚Äî data in `*.server.tsx` or `src/data/**` behind `<Suspense>`
+- [ ] Each independent DB-backed UI region ‚Äî own `<Suspense fallback={<RegionSkeleton />}>`
+- [ ] Each heavy async child ‚Äî separate file (`*.server.tsx` or clear `*-content.server.tsx` name)
 
 ### B. Parallelism
 
-- [ ] Independent queries in one component ó `Promise.all`, not sequential `await`
+- [ ] Independent queries in one component ‚Äî `Promise.all`, not sequential `await`
 - [ ] No hidden waterfalls: child Suspense does not wait for parent without real data dependency
-- [ ] Independent UI regions ó separate Suspense (not one `Promise.all` that fails entirely)
+- [ ] Independent UI regions ‚Äî separate Suspense (not one `Promise.all` that fails entirely)
 
 ### C. Cache
 
-- [ ] Repeated reads in one request ó React `cache()` or shared cached loader
-- [ ] Cross-request public reads ó **`'use cache'`** + `cacheTag()` + `cacheLife()` per [`cache_revalidation_policy.md`](../../prds/05_runtime/cache_revalidation_policy.md) ó **not** `unstable_cache`
-- [ ] `cacheComponents: true` **and** `partialPrefetching: true` in `next.config.ts` (Instant Navigations best practice ó ß8.1)
+- [ ] Repeated reads in one request ‚Äî React `cache()` or shared cached loader
+- [ ] Cross-request public reads ‚Äî **`'use cache'`** + `cacheTag()` + `cacheLife()` per [`cache_revalidation_policy.md`](../../prds/05_runtime/cache_revalidation_policy.md) ‚Äî **not** `unstable_cache`
+- [ ] `cacheComponents: true` **and** `partialPrefetching: true` in `next.config.ts` (Instant Navigations best practice ‚Äî ¬ß8.1)
 - [ ] Dynamic regions use Stream (`Suspense`) or Cache; Block (`instant = false`) only with a documented reason
-- [ ] With Instant Navigations on: Instant Insights overlay reviewed for the route; findings closed via Stream / Cache / Block (ß8.1.1)
-- [ ] No `fallback={null}` / empty Suspense around the whole page body (Insights may treat it as ìinstantî while UI shows nothing)
-- [ ] No `cookies()` / `headers()` inside `'use cache'` ó pass values as arguments from dynamic parent
-- [ ] Mutations call matching `updateTag` ó no stale catalog/bookings after write
+- [ ] With Instant Navigations on: Instant Insights overlay reviewed for the route; findings closed via Stream / Cache / Block (¬ß8.1.1)
+- [ ] No `fallback={null}` / empty Suspense around the whole page body (Insights may treat it as ‚Äúinstant‚Äù while UI shows nothing)
+- [ ] No `cookies()` / `headers()` inside `'use cache'` ‚Äî pass values as arguments from dynamic parent
+- [ ] Mutations call matching `updateTag` ‚Äî no stale catalog/bookings after write
 
 ### D. `loading.tsx` and `error.tsx`
 
-- [ ] Data-heavy segment ó colocated `loading.tsx` (or documented ß18 exception)
+- [ ] Data-heavy segment ‚Äî colocated `loading.tsx` (or documented ¬ß18 exception)
 - [ ] Segment covered by `error.tsx` (own or parent)
 - [ ] No duplicate full-page loading UI (`loading.tsx` + identical outer Suspense)
 
 ### E. Skeletons & Neon
 
 - [ ] Skeletons structurally match content (CLS target < 0.1)
-- [ ] `@/components/ui/skeleton` ó not bare div pulse
+- [ ] `@/components/ui/skeleton` ‚Äî not bare div pulse
 - [ ] One skeleton component per file when shared
 - [ ] Runtime uses pooled `DATABASE_URL` (`-pooler` hostname)
 
@@ -951,8 +951,8 @@ Verify on **Vercel preview** when available.
 | `await prisma.*` at top of `page.tsx` | Blocks first RSC chunk | Child async component + Suspense |
 | One `Promise.all` of all page queries in `page.tsx` | Blocks shell even if fast | Independent Suspense regions |
 | `Promise.all` for independent UI regions | One failure kills whole block | Separate Suspense + `error.tsx` each |
-| Duplicate session reads without `cache()` | N◊ JWT work per request | `cache()` wrapper |
-| `loading.tsx` ó spinner only, no chrome | Poor UX, CLS | Page-shaped skeleton |
+| Duplicate session reads without `cache()` | N√ó JWT work per request | `cache()` wrapper |
+| `loading.tsx` ‚Äî spinner only, no chrome | Poor UX, CLS | Page-shaped skeleton |
 | `loading.tsx` + Suspense fallback for same surface | Duplication | Pick segment vs region |
 | No `error.tsx` with async data | Unhandled throw crashes segment | Add colocated `error.tsx` |
 | Sequential independent Prisma calls | DB waterfall | `Promise.all` or split Suspense |
@@ -961,12 +961,12 @@ Verify on **Vercel preview** when available.
 | Caching authorization decisions | Security drift | Auth on every read path |
 | New code using `unstable_cache` | Legacy Next 15 API | `'use cache'` + `cacheTag()` + `cacheLife()` |
 | `cookies()` inside `'use cache'` | Build/runtime error or wrong cache key | Pass session/user id as argument from parent |
-| `cookies()` / `getLocale()` in sync `page.tsx` or sync root layout | `blocking-route` ó whole route blocked | Sync fallback shell + async child inside `<Suspense>` (ß14.1) |
+| `cookies()` / `getLocale()` in sync `page.tsx` or sync root layout | `blocking-route` ‚Äî whole route blocked | Sync fallback shell + async child inside `<Suspense>` (¬ß14.1) |
 | Duplicate `<html>` in layout Suspense fallback vs content | Full document remount; DevTools noise | One `<html>/<body>`; bridge locale via `LocaleHydrationBridge` |
 | Route skeleton for mutation pending | Wrong UX layer | `useTransition` + pending UI |
-| Child async component refetches entity parent already loaded | N+1 queries; wasted latency | Pass plain DTO from parent list/detail ó see **ai_data_fetching_patterns** ß9 |
-| Empty Suspense (`fallback={null}`) around page body | Instant Insights may score ìinstantî while users see a blank shell | Meaningful region skeletons; Stream with visible fallback (ß8.1.1) |
-| Ignoring Instant Insights on Instant Navigations routes | Blocking runtime/uncached IO ships unnoticed | Close overlay findings with Stream / Cache / Block (ß8.1.1) |
+| Child async component refetches entity parent already loaded | N+1 queries; wasted latency | Pass plain DTO from parent list/detail ‚Äî see **ai_data_fetching_patterns** ¬ß9 |
+| Empty Suspense (`fallback={null}`) around page body | Instant Insights may score ‚Äúinstant‚Äù while users see a blank shell | Meaningful region skeletons; Stream with visible fallback (¬ß8.1.1) |
+| Ignoring Instant Insights on Instant Navigations routes | Blocking runtime/uncached IO ships unnoticed | Close overlay findings with Stream / Cache / Block (¬ß8.1.1) |
 
 ---
 
@@ -976,11 +976,11 @@ State briefly in PR/task which exception applies:
 
 | Exception | When |
 |-----------|------|
-| **Redirect-only** | `page.tsx` only checks session and `redirect()` ó no slow-dependent UI |
+| **Redirect-only** | `page.tsx` only checks session and `redirect()` ‚Äî no slow-dependent UI |
 | **Single bounded query** | One fast `findUnique`, no other independent slow regions |
 | **Inherited loading** | Parent `loading.tsx` matches chrome; page uses Suspense for regions |
-| **Client-only data** | Region loaded via client fetch after paint ó document tradeoff vs RSC streaming |
-| **Sync shell + `params.then()`** | Route with `cacheComponents: true`; stable chrome above dynamic block ó ß4.1 |
+| **Client-only data** | Region loaded via client fetch after paint ‚Äî document tradeoff vs RSC streaming |
+| **Sync shell + `params.then()`** | Route with `cacheComponents: true`; stable chrome above dynamic block ‚Äî ¬ß4.1 |
 
 ---
 
@@ -994,19 +994,19 @@ State briefly in PR/task which exception applies:
 | [`ai_nextjs_db_data_handle.md`](./ai_nextjs_db_data_handle.md) | DAL, Server Actions vs Route Handlers |
 | [`neon_prisma_migrations_guide.md`](../../implementation/mvp/guides/neon_prisma_migrations_guide.md) | Pooler vs direct URLs |
 | [`ai_vercel_runtime_compatibility.md`](./ai_vercel_runtime_compatibility.md) | Vercel streaming baseline |
-| [`ai_client_lazy_loading.md`](./ai_client_lazy_loading.md) | `next/dynamic`, heavy client deps ó orthogonal to Suspense |
+| [`ai_client_lazy_loading.md`](./ai_client_lazy_loading.md) | `next/dynamic`, heavy client deps ‚Äî orthogonal to Suspense |
 | [Next.js: Loading UI and Streaming](https://nextjs.org/docs/app/building-your-application/routing/loading-ui-and-streaming) | Official API |
 | [Next.js: Error Handling](https://nextjs.org/docs/app/getting-started/error-handling) | `error.tsx`, `reset` |
 | [Next.js: `use cache`](https://nextjs.org/docs/app/api-reference/directives/use-cache) | Cross-request cache directive (replaces `unstable_cache`) |
 | [Next.js: Cache Components](https://nextjs.org/docs/app/getting-started/cache-components) | `cacheComponents`, PPR, static + cached + dynamic mix |
-| [Next.js 16.4: Instant Navigations](https://nextjs.org/blog/next-16-3-instant-navigations) | Required ß8.1 ó Cache Components then `partialPrefetching` |
-| [Next.js: `instant` route segment config](https://nextjs.org/docs/app/api-reference/file-conventions/route-segment-config/instant) | Instant Insights validationLevel / per-segment `instant` ó ß8.1.1 |
-| [ADR-002 template](../../docs/prds/07_governance/adr_002_next162_vercel_runtime_policy.template.md) | Pin 16.4 + ß5.1 Instant Navigations required |
-| Pulse [`ai_loading_patterns.md`](../../docs/examples/pulse/docs/guidelines/nextjs/ai_loading_patterns.md) | Snapshot; former `ai_page_performance_streaming.md` merged into ß4ñß18 |
-| [`adr_010_nextjs_app_architecture_skill.md`](../../reference/adr_010_nextjs_app_architecture_skill.md) | External RSC skill ó adopt/reject mapping |
+| [Next.js 16.4: Instant Navigations](https://nextjs.org/blog/next-16-3-instant-navigations) | Required ¬ß8.1 ‚Äî Cache Components then `partialPrefetching` |
+| [Next.js: `instant` route segment config](https://nextjs.org/docs/app/api-reference/file-conventions/route-segment-config/instant) | Instant Insights validationLevel / per-segment `instant` ‚Äî ¬ß8.1.1 |
+| [ADR-002 template](../../docs/prds/07_governance/adr_002_next162_vercel_runtime_policy.template.md) | Pin 16.4 + ¬ß5.1 Instant Navigations required |
+| Pulse [`ai_loading_patterns.md`](../../docs/examples/pulse/docs/guidelines/nextjs/ai_loading_patterns.md) | Snapshot; former `ai_page_performance_streaming.md` merged into ¬ß4‚Äì¬ß18 |
+| [`adr_010_nextjs_app_architecture_skill.md`](../../reference/adr_010_nextjs_app_architecture_skill.md) | External RSC skill ‚Äî adopt/reject mapping |
 
 ---
 
 **Version:** 2.6  
 **Last updated:** August 2026  
-**Next.js:** 16.4 (pinned) ∑ Instant Navigations + Instant Insights (ß8.1.1) ∑ **Hosting:** Vercel ∑ **Cross-request cache:** `'use cache'` (not `unstable_cache`)
+**Next.js:** 16.4 (pinned) ¬∑ Instant Navigations + Instant Insights (¬ß8.1.1) ¬∑ **Hosting:** Vercel ¬∑ **Cross-request cache:** `'use cache'` (not `unstable_cache`)

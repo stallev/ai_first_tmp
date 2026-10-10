@@ -1,10 +1,10 @@
-# Next.js Guidelines — {{PROJECT_NAME}}
+# Next.js Guidelines â€” {{PROJECT_NAME}}
 
-**Baseline:** Next.js **16.4** (pinned) App Router · **Vercel** · Turbopack · Neon + Prisma v7  
-**Upstream:** [Next.js 16.4](https://nextjs.org/blog/next-16-3) — Instant Navigations **required** ([ADR-002 template §5.1](../../docs/prds/07_governance/adr_002_next162_vercel_runtime_policy.template.md))  
+**Baseline:** Next.js **16.4** (pinned) App Router Â· **Vercel** Â· Turbopack Â· Neon + Prisma v7  
+**Upstream:** [Next.js 16.4](https://nextjs.org/blog/next-16-3) â€” Instant Navigations **required** ([ADR-002 template Â§5.1](../../docs/prds/07_governance/adr_002_next162_vercel_runtime_policy.template.md))  
 **Methodology:** [`docs/meta/ai_first_project_methodology.md`](../../docs/meta/ai_first_project_methodology.md)  
 **Runtime policy (mandatory):** [ADR-002 template](../../docs/prds/07_governance/adr_002_next162_vercel_runtime_policy.template.md)  
-**Stack:** [ADR-001](../../docs/prds/07_governance/adr_001_stack_and_runtime.md) (????? W4)  
+**Stack:** [ADR-001](../../docs/prds/07_governance/adr_001_stack_and_runtime.md) (Ğ¿Ğ¾ÑĞ»Ğµ W4)  
 **Reference:** Pulse [`docs/examples/pulse/docs/guidelines/nextjs/`](../../docs/examples/pulse/docs/guidelines/nextjs/)
 
 ---
@@ -39,15 +39,15 @@ Per official Next.js 16 upgrade guide (Context7 `/vercel/next.js`):
 
 | Document | Topic |
 |----------|--------|
-| [ai_nextjs_db_data_handle.md](./ai_nextjs_db_data_handle.md) | Server Actions vs Route Handlers, DAL, iOS Safari §7 |
+| [ai_nextjs_db_data_handle.md](./ai_nextjs_db_data_handle.md) | Server Actions vs Route Handlers, DAL, iOS Safari Â§7 |
 | [ai_data_fetching_patterns.md](./ai_data_fetching_patterns.md) | Race conditions, `React.cache()`, `'use cache'`, dedup, retry |
-| [ai_loading_patterns.md](./ai_loading_patterns.md) | `loading.tsx`, Suspense, streaming shell, page performance; **`'use cache'`** / **`'use cache: private'`** (browser); **§8.1** Instant Navigations; **§8.1.1** Instant Insights (dev warning); Playwright `instant()` SHOULD; **§14.1** landing LCP |
+| [ai_loading_patterns.md](./ai_loading_patterns.md) | `loading.tsx`, Suspense, streaming shell, page performance; **`'use cache'`** / **`'use cache: private'`** (browser); **Â§8.1** Instant Navigations; **Â§8.1.1** Instant Insights (dev warning); Playwright `instant()` SHOULD; **Â§14.1** landing LCP |
 | [ai_client_lazy_loading.md](./ai_client_lazy_loading.md) | `next/dynamic`, heavy client deps (`react-day-picker`, `recharts`), interaction-gated panels |
 | [ai_vercel_runtime_compatibility.md](./ai_vercel_runtime_compatibility.md) | Vercel + Next 16 baseline |
 | [ai_admin_interface_requirements.md](./ai_admin_interface_requirements.md) | Admin forms layout |
-| [ai_s3_file_upload_guidelines.md](./ai_s3_file_upload_guidelines.md) | **AWS S3** — bucket/IAM/CORS, presigned PUT/GET, FileAsset lifecycle |
+| [ai_s3_file_upload_guidelines.md](./ai_s3_file_upload_guidelines.md) | **AWS S3** â€” bucket/IAM/CORS, presigned PUT/GET, FileAsset lifecycle |
 | [s3-upload-agent-instruction.md](./s3-upload-agent-instruction.md) | S3 implementation detail + code samples |
-| [blob-upload-agent-instruction.md](./blob-upload-agent-instruction.md) | **Deprecated** — Vercel Blob; use S3 guides above |
+| [blob-upload-agent-instruction.md](./blob-upload-agent-instruction.md) | **Deprecated** â€” Vercel Blob; use S3 guides above |
 | [ai_psi_lab_testing.md](./ai_psi_lab_testing.md) | Lab PSI on **deployed** origin (`npm run psi:lab`); portable canon [`psi-lab-testing.md`](../psi-lab-testing.md) |
 
 ---
@@ -56,13 +56,13 @@ Per official Next.js 16 upgrade guide (Context7 `/vercel/next.js`):
 
 1. **Next.js 16.4 + Vercel** per ADR-001/ADR-002; async Request APIs.
 2. **`proxy.ts`** for request interception; split Auth.js config.
-3. **Cache reads:** **`'use cache'`** + `cacheTag()` / `cacheLife()` for cross-request data — not `unstable_cache`; **`cacheComponents: true`** when enabled.
+3. **Cache reads:** **`'use cache'`** + `cacheTag()` / `cacheLife()` for cross-request data â€” not `unstable_cache`; **`cacheComponents: true`** when enabled.
 4. **Cache invalidation:** `updateTag` (Server Actions) / `revalidateTag` / `revalidatePath`.
-5. **No `unstable_after`** for jobs — Vercel Cron + `delivery_log`.
-6. **Server Components by default** — thin BFF to `packages/`.
-7. **Instant Navigations / `partialPrefetching`:** **required** — Cache Components first, then Partial Prefetching; Stream / Cache / Block (ADR-002 §5.1); Instant Insights — [`ai_loading_patterns.md`](./ai_loading_patterns.md) §8.1.1. Playwright `instant()` SHOULD.
-8. **No self-fetch from RSC** — DAL direct calls; client fetch only when necessary — [`ai_data_fetching_patterns.md`](./ai_data_fetching_patterns.md).
-9. **Deep dive:** [`docs/general/02-data-fetching.md`](../../docs/general/02-data-fetching.md) — theory; operational norms in guideline above.
+5. **No `unstable_after`** for jobs â€” Vercel Cron + `delivery_log`.
+6. **Server Components by default** â€” thin BFF to `packages/`.
+7. **Instant Navigations / `partialPrefetching`:** **required** â€” Cache Components first, then Partial Prefetching; Stream / Cache / Block (ADR-002 Â§5.1); Instant Insights â€” [`ai_loading_patterns.md`](./ai_loading_patterns.md) Â§8.1.1. Playwright `instant()` SHOULD.
+8. **No self-fetch from RSC** â€” DAL direct calls; client fetch only when necessary â€” [`ai_data_fetching_patterns.md`](./ai_data_fetching_patterns.md).
+9. **Deep dive:** [`docs/general/02-data-fetching.md`](../../docs/general/02-data-fetching.md) â€” theory; operational norms in guideline above.
 
 ---
 
@@ -75,27 +75,27 @@ Skill **`next-dev-loop`** confirms a feature works in a live `next dev` by cross
 | Next.js | `/_next/mcp` | routes, segments, RSC, server actions, server logs, Turbopack compile issues |
 | Browser | `agent-browser` | DOM, console, network, React fiber/props/state, vitals |
 
-**Loop (when the skill is running):** narrow scope via runtime ? edit ? 4 layers — (1) compilation, (2) runtime errors, (3) browser UX, (4) React behavior — then cross-check both views.
+**Loop (when the skill is running):** narrow scope via runtime â†’ edit â†’ 4 layers â€” (1) compilation, (2) runtime errors, (3) browser UX, (4) React behavior â€” then cross-check both views.
 
-**Trigger:** start **only** when the user explicitly asks (e.g. «??????? ? runtime», «next-dev-loop», «verify in browser / live»). Do **not** auto-start after UI edits, before DoD, or in the commit pipeline. Default verification remains `typecheck` + `lint`.
+**Trigger:** start **only** when the user explicitly asks (e.g. Â«Ğ¿Ñ€Ğ¾Ğ²ĞµÑ€ÑŒ Ğ² runtimeÂ», Â«next-dev-loopÂ», Â«verify in browser / liveÂ»). Do **not** auto-start after UI edits, before DoD, or in the commit pipeline. Default verification remains `typecheck` + `lint`.
 
-**Instant Insights ? `next-dev-loop`:** Instant Insights is the Next.js **dev overlay** for Instant Navigations blocking routes (Stream / Cache / Block) — see [`ai_loading_patterns.md`](./ai_loading_patterns.md) §8.1.1. It is not a substitute for dual-view runtime verification and is not part of the commit pipeline.
+**Instant Insights â‰  `next-dev-loop`:** Instant Insights is the Next.js **dev overlay** for Instant Navigations blocking routes (Stream / Cache / Block) â€” see [`ai_loading_patterns.md`](./ai_loading_patterns.md) Â§8.1.1. It is not a substitute for dual-view runtime verification and is not part of the commit pipeline.
 
-Requires Next **16.3+** Turbopack and `agent-browser` = 0.31.1. Protocol details live in the user skill — do not invent a second browser protocol (e.g. Playwright MCP) as a substitute.
+Requires Next **16.3+** Turbopack and `agent-browser` = 0.31.1. Protocol details live in the user skill â€” do not invent a second browser protocol (e.g. Playwright MCP) as a substitute.
 
-See: methodology §2.2 · `agent-commit-pipeline.mdc` §1 · [ADR-010](../../docs/reference/adr_010_nextjs_app_architecture_skill.md) (workflow vs architecture skills).
+See: methodology Â§2.2 Â· `agent-commit-pipeline.mdc` Â§1 Â· [ADR-010](../../docs/reference/adr_010_nextjs_app_architecture_skill.md) (workflow vs architecture skills).
 
 ### Lab PageSpeed Insights (on user request only)
 
 **Orthogonal** to `next-dev-loop`. Dual-view measures **live `next dev`**. Lab PSI measures a **public deployed** origin via REST `runPagespeed` (`npm run psi:lab`, key `PAGE_SPEED_API_KEY`). Do **not** use MCP PageSpeed as the primary channel. Do **not** treat `localhost` as green zone.
 
-Trigger: only when the user asks (PSI, PageSpeed, «??????? ????»). Not auto, not commit pipeline. Rule: **`psi-lab-testing.mdc`**. HOW: [`ai_psi_lab_testing.md`](./ai_psi_lab_testing.md).
+Trigger: only when the user asks (PSI, PageSpeed, Â«Ğ¿Ñ€Ğ¾Ğ³Ğ¾Ğ½Ğ¸ Ğ¿Ñ€Ğ¾Ğ´Â»). Not auto, not commit pipeline. Rule: **`psi-lab-testing.mdc`**. HOW: [`ai_psi_lab_testing.md`](./ai_psi_lab_testing.md).
 
 ---
 
 ## For AI assistants
 
-1. Read [ADR-002 template](../../docs/prds/07_governance/adr_002_next162_vercel_runtime_policy.template.md) before routing/auth (incl. §5.1 Instant Navigations).
+1. Read [ADR-002 template](../../docs/prds/07_governance/adr_002_next162_vercel_runtime_policy.template.md) before routing/auth (incl. Â§5.1 Instant Navigations).
 2. Use MCP **Context7** (`/vercel/next.js`) for API wording after ADR-002; prefer version-matched docs under `node_modules/next/dist/docs/` when available.
 3. React: [React guidelines](../react/README.md).
 
@@ -103,4 +103,4 @@ Trigger: only when the user asks (PSI, PageSpeed, «??????? ????»). Not auto, not
 
 ---
 
-**Last updated:** August 2026 · **Next.js:** 16.4 (pinned) · **Hosting:** Vercel
+**Last updated:** August 2026 Â· **Next.js:** 16.4 (pinned) Â· **Hosting:** Vercel
