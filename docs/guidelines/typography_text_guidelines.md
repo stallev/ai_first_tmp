@@ -2,7 +2,7 @@
 
 Typography for **`apps/web`** using shared atoms (on scaffold), semantic HTML, {{DESIGN_SYSTEM_NAME}} font tokens, and accessibility.
 
-**Design source:** [`visual_identity_contract.md`](../../design/visual_identity_contract.md), interim [`{{INTERIM_DESIGN_SYSTEM_DOC}}`](../../default_docs/{{INTERIM_DESIGN_SYSTEM_DOC}}) §typography  
+**Design source:** [`visual_identity_contract.md`](../design/visual_identity_contract.md), interim [`{{INTERIM_DESIGN_SYSTEM_DOC}}`](../default_docs/{{INTERIM_DESIGN_SYSTEM_DOC}}) §typography  
 **UI rule:** **ui-design-system-shadcn**
 
 ---
@@ -58,7 +58,7 @@ From design system — **mobile-first** (base = mobile, `md:`/`lg:` = desktop):
 | Body | `text-base` | `text-base` |
 | Caption / meta | `text-sm text-muted-foreground` | same |
 
-**Prototype parity:** match font family, weight, and size from [`{{MAIN_PROTOTYPE_HTML}}`](../../prototypes/{{MAIN_PROTOTYPE_HTML}}) — Cursor rule **ui-prototype-fidelity**.
+**Prototype parity:** match font family, weight, and size from [`{{MAIN_PROTOTYPE_HTML}}`](../prototypes/{{MAIN_PROTOTYPE_HTML}}) — Cursor rule **ui-prototype-fidelity**.
 
 ---
 

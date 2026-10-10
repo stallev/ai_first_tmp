@@ -35,6 +35,7 @@
 npm run rules:check
 npm run deps:check
 npm run encoding:check
+npm run docs:links
 ```
 
 Коммиты — по **agent-commit-pipeline** (`<branch>: type(scope): subject`); изменения шаблона — docs / config / tooling, уровень review `diff-only`, если нет runtime-кода.

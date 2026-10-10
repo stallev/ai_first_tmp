@@ -6,6 +6,7 @@
     "rules:check": "node scripts/sync-claude-rules.mjs --check",
     "deps:check": "node scripts/check-exact-deps.mjs",
     "encoding:check": "node scripts/check-text-encoding.mjs",
+    "docs:links": "node scripts/check-doc-links.mjs",
     "psi:lab": "node scripts/psi-lab/run-pagespeed.mjs"
   }
 }

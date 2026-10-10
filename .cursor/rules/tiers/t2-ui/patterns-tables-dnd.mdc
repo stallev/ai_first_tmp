@@ -11,7 +11,7 @@ alwaysApply: false
 When extending **tables**, **sortable rows**, or **drag-and-drop**, follow:
 
 - [`ai_responsive_table_guidelines.md`](docs/guidelines/react/ai_responsive_table_guidelines.md) — responsive tables, dense list patterns (admin moderation queues).
-- Pulse reference [`ai_drag_drop_guidelines.md`](docs/examples/pulse/docs/guidelines/react/ai_drag_drop_guidelines.md) — **@dnd-kit** when dependencies installed (trainer schedule ordering — post-MVP if not in scope).
+- Drag & drop — **@dnd-kit** when dependencies installed (trainer schedule ordering — post-MVP if not in scope).
 
 Do not copy HTML prototype pixel-perfect — **shadcn Table** and guides define structure.
 

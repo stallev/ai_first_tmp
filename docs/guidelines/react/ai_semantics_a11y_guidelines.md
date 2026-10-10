@@ -178,6 +178,6 @@ Before finishing a UI task:
 | [`docs/general/03-accessibility.md`](../../general/03-accessibility.md) | Deep dive — focus trap, keyboard patterns |
 | [`ai_browser_rendering_performance.md`](./ai_browser_rendering_performance.md) | Motion / prefers-reduced-motion |
 | [`visual_identity_contract.md`](../../design/visual_identity_contract.md) | Contrast tokens |
-| [`ui-mobile-first.mdc`](../../.cursor/rules/ui-mobile-first.mdc) | Touch targets |
+| [`ui-mobile-first.mdc`](../../../.cursor/rules/ui-mobile-first.mdc) | Touch targets |
 
 **Reference:** Pulse [`docs/examples/pulse/`](../../examples/pulse/) — a11y patterns; **Guidelines override Pulse reference code**.

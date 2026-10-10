@@ -1,6 +1,6 @@
 # Next.js RSC streaming — project reference
 
-**Provenance (not installed):** patterns evaluated from [nextjs-app-architecture-skill](https://github.com/aurorascharff/nextjs-app-architecture-skill) — see [`docs/reference/adr_010_nextjs_app_architecture_skill.md`](../../../docs/reference/adr_010_nextjs_app_architecture_skill.md).
+**Provenance (not installed):** patterns evaluated from [nextjs-app-architecture-skill](https://github.com/aurorascharff/nextjs-app-architecture-skill) — see [`docs/reference/adr_010_nextjs_app_architecture_skill.md`](../../../../docs/reference/adr_010_nextjs_app_architecture_skill.md).
 
 **Do not** run `npx skills install` for external Next.js architecture skills. Canonical sources for agents:
 

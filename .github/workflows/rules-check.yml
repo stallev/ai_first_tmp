@@ -15,3 +15,4 @@ jobs:
       - run: npm run rules:check
       - run: npm run deps:check
       - run: npm run encoding:check
+      - run: npm run docs:links

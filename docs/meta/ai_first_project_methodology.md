@@ -4,7 +4,7 @@
 **Проект:** {{PROJECT_NAME}} — {{PRODUCT_DESCRIPTION}}  
 **Версия:** 1.0  
 **Статус:** Template — заполнить при bootstrap (промпт P2)  
-**Референс:** Pulse (fitapp) — [`docs/examples/pulse/`](../../examples/pulse/) · [`pulse_project_reference.md`](../reference/pulse_project_reference.md)
+**Референс:** Pulse (fitapp) — [`docs/examples/pulse/`](../examples/pulse/) · [`pulse_project_reference.md`](../reference/pulse_project_reference.md)
 
 > **Template note:** полный образец methodology — `docs/examples/pulse/docs/meta/ai_first_project_methodology.md`
 
@@ -12,7 +12,7 @@
 
 ## Введение
 
-Документ описывает AI-first подход к разработке **{{PROJECT_NAME}}**. Структура наследуется из Pulse reference, адаптируется под домен и interim docs в [`{{INTERIM_DOCS_GLOB}}`](../../default_docs/) и [`docs/prototypes/`](../../prototypes/).
+Документ описывает AI-first подход к разработке **{{PROJECT_NAME}}**. Структура наследуется из Pulse reference, адаптируется под домен и interim docs в [`{{INTERIM_DOCS_GLOB}}`](../default_docs/) и [`docs/prototypes/`](../prototypes/).
 
 **Цель:** AI-агенты следуют задокументированным контрактам, а не изобретают архитектуру.
 

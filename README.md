@@ -42,7 +42,7 @@
 ├── BOOTSTRAP.md                      → пошаговый bootstrap нового проекта
 ├── AGENTS.template.md                → AGENTS.md проекта после bootstrap
 ├── CLAUDE.md                         → @AGENTS.md + Claude rules pointer
-├── package.json                      → rules:sync / rules:check / deps:check / encoding:check / psi:lab
+├── package.json                      → rules:sync / rules:check / deps:check / encoding:check / docs:links / psi:lab
 ├── scripts/sync-claude-rules.mjs
 ├── scripts/psi-lab/                  → lab PageSpeed Insights (REST, deployed origin)
 ├── .claude/rules/                    → generated from .mdc (git)
