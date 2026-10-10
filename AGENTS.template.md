@@ -5,6 +5,10 @@ Monorepo: **Next.js 16.4** App Router + Vercel + Neon PostgreSQL.
 
 **Methodology (обязательно):** [`docs/meta/ai_first_project_methodology.md`](docs/meta/ai_first_project_methodology.md) — цикл КОНТЕКСТ → TIER/DoR → ФАЗА → КОНТРАКТ → ЗАДАЧИ (CU) → [SPEC-GAP] → РЕАЛИЗАЦИЯ → ВЕРИФИКАЦИЯ → REVIEW (CU) → COMMIT. **Маршрутизация моделей:** [`docs/meta/ai_agent_model_routing.md`](docs/meta/ai_agent_model_routing.md) + `model-routing.mdc`.
 
+## Профиль качества (обязательно)
+
+[`docs/meta/project_quality_profile.md`](docs/meta/project_quality_profile.md) — уровень строгости проекта и включённые модули стека. Объём документации, глубина DoR и путей H/N/S, тесты, review-гейт, a11y и perf берутся **оттуда**, а не по максимуму методологии. Матрица уровней — [`project_quality_profile.template.md`](docs/meta/project_quality_profile.template.md); security floor (§5) — на любом уровне.
+
 ## Референсный проект (обязательно)
 
 Архитектурные подходы, структура документации и паттерны разработки **наследуются** из референсного проекта **Pulse** (fitapp):
@@ -63,7 +67,7 @@ Monorepo: **Next.js 16.4** App Router + Vercel + Neon PostgreSQL.
 КОНТЕКСТ → TIER/DoR → ФАЗА → КОНТРАКТ → ЗАДАЧИ (CU) → [SPEC-GAP] → РЕАЛИЗАЦИЯ → ВЕРИФИКАЦИЯ → REVIEW (CU) → COMMIT
 ```
 
-1. Прочитать этот файл + `project-context.mdc`. Классифицировать задачу (`Tier: T0|T1|T2|T3 — … · CU: P{N}-CU{k}`) и проверить Definition of Ready по [`ai_agent_model_routing.md`](docs/meta/ai_agent_model_routing.md) до правок. DoR пройден — код пишет оркестратор; не пройден — `architect` spec-gap правит документы.
+1. Прочитать этот файл + `project-context.mdc` + профиль качества. Классифицировать задачу (`Tier: T0|T1|T2|T3 — … · CU: P{N}-CU{k}`) и проверить Definition of Ready по [`ai_agent_model_routing.md`](docs/meta/ai_agent_model_routing.md) до правок. DoR пройден — код пишет оркестратор; не пройден — `architect` spec-gap правит документы.
 2. Определить фазу (`docs/implementation/mvp/phases_tasks_descriptions/P{N}_*.md`). Перед первой задачей фазы — **Phase DoR audit** в `P{N}_tasks.md` (один вызов `architect` spec-gap на фазу).
 3. Прочитать разделы contracts / specs / ADR, на которые ссылается задача (`§N.M`), а не документы целиком.
 4. **Перед написанием/правкой кода** — прочитать применимые `.cursor/rules/*.mdc` для затрагиваемой области (индекс: [`.cursor/rules/README.md`](.cursor/rules/README.md) или таблица в `app-conventions` skill). Эти файлы — enforceable и имеют приоритет над `docs/examples/pulse/**` при конфликте (Pulse — донор/референс, не источник истины). Claude Code грузит зеркало `.claude/rules/*.md`, не `.mdc` (§ Cursor vs Claude Code rules).

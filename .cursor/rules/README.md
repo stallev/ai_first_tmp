@@ -13,8 +13,8 @@
 | Когда | Действие |
 |-------|----------|
 | **P0** | T0 уже активен; создать `.cursor/rules/project-context.mdc` из шаблона |
-| **P4** (после W1) | Скопировать `tiers/t1-implementation/*.mdc` в корень |
-| **P6** (Design System Lab) | Скопировать `tiers/t2-ui/*.mdc` в корень; до P6 T2 **не включать** |
+| **P4** (после W1) | Скопировать `tiers/t1-implementation/*.mdc` в корень — кроме правил выключенных модулей (колонка «Модуль») |
+| **P6** (Design System Lab) | Скопировать `tiers/t2-ui/*.mdc` в корень — кроме правил выключенных модулей; до P6 T2 **не включать** |
 
 После каждой активации — `npm run rules:sync`.
 
@@ -43,19 +43,21 @@
 
 ## T1 — Implementation (P4, после W1 governance)
 
-| Rule | Назначение |
-|------|------------|
-| `nextjs-vercel-app-router.mdc` | Next.js 16.4 (exact patch, no caret), `proxy.ts`, Instant Navigations |
-| `auth-security.mdc` | Auth.js v5, JWT, defense in depth |
-| `security-xss-csrf.mdc` | XSS, CSRF, CSP, DOMPurify |
-| `policy-packages.mdc` | `@{{PACKAGE_SCOPE}}/policy-*` boundaries |
-| `data-server-actions-and-api.mdc` | DAL, Actions vs Route Handlers |
-| `app-router-streaming-loading.mdc` | Suspense, `loading.tsx`, cache |
-| `ios-safari-mutation-transport.mdc` | iOS Safari dual transport |
-| `s3-file-asset-uploads.mdc` | FileAsset + AWS S3 presigned |
-| `javascript-fundamentals.mdc` | Closures, map/filter/reduce, generators, ESM modules, TS generics |
-| `psi-lab-testing.mdc` | Requestable — lab PSI on deployed origin (REST, not MCP / localhost) |
-| `dependency-pinning.mdc` | Exact npm versions (no `^` / `~`), `.npmrc` `save-exact`, lockfile + `npm ci`, `chore(deps)` CU; `npm run deps:check`. Globs: `package.json`, lockfile, `.npmrc` |
+**Модуль** — ключ из профиля качества ([`project_quality_profile.template.md`](../../docs/meta/project_quality_profile.template.md) §4). Правило с модулем активируется, только если модуль включён в `docs/meta/project_quality_profile.md`; «—» — активируется всегда.
+
+| Rule | Модуль | Назначение |
+|------|--------|------------|
+| `nextjs-vercel-app-router.mdc` | — | Next.js 16.4 (exact patch, no caret), `proxy.ts`, Instant Navigations |
+| `auth-security.mdc` | `auth` | Auth.js v5, JWT, defense in depth |
+| `security-xss-csrf.mdc` | — | XSS, CSRF, CSP, DOMPurify |
+| `policy-packages.mdc` | `auth` | `@{{PACKAGE_SCOPE}}/policy-*` boundaries |
+| `data-server-actions-and-api.mdc` | — | DAL, Actions vs Route Handlers |
+| `app-router-streaming-loading.mdc` | — | Suspense, `loading.tsx`, cache |
+| `ios-safari-mutation-transport.mdc` | `ios_safari_transport` | iOS Safari dual transport |
+| `s3-file-asset-uploads.mdc` | `s3_uploads` | FileAsset + AWS S3 presigned |
+| `javascript-fundamentals.mdc` | — | Closures, map/filter/reduce, generators, ESM modules, TS generics |
+| `psi-lab-testing.mdc` | — | Requestable — lab PSI on deployed origin (REST, not MCP / localhost) |
+| `dependency-pinning.mdc` | — | Exact npm versions (no `^` / `~`), `.npmrc` `save-exact`, lockfile + `npm ci`, `chore(deps)` CU; `npm run deps:check`. Globs: `package.json`, lockfile, `.npmrc` |
 
 Файлы: [`tiers/t1-implementation/`](tiers/t1-implementation/)
 
@@ -63,26 +65,28 @@
 
 ## T2 — UI / React (P6, Design System Lab)
 
-| Rule | Назначение |
-|------|------------|
-| `react-ui-components.mdc` | RSC/client boundaries |
-| `react-one-component-per-file.mdc` | One export; ≤140 lines |
-| `react-logic-presentation.mdc` | Logic vs presentation split |
-| `react-naming-conventions.mdc` | Naming conventions |
-| `react-state-management.mdc` | useReducer/useContext/Zustand/Redux Toolkit, SSR safety |
-| `ui-design-system-shadcn.mdc` | Design tokens, shadcn catalog |
-| `ui-mobile-first.mdc` | Bottom nav / sidebar |
-| `ui-prototype-fidelity.mdc` | Prototype visual parity |
-| `ui-semantics-a11y.mdc` | WCAG 2.1 AA |
-| `ui-animation-performance.mdc` | GPU animations, layout thrashing |
-| `ui-toast-mutations.mdc` | Sonner after mutations |
-| `ui-mutation-pending.mdc` | `aria-busy`, pending UI |
-| `ui-optimistic-mutations.mdc` | `useOptimistic` toggles |
-| `ui-messages-and-copy.mdc` | `@/lib/messages` |
-| `ui-messages-bundle-splitting.mdc` | Срезы словаря по типу страницы и локали; полный словарь не в клиентском бандле |
-| `ui-icons-lucide.mdc` | lucide-react |
-| `admin-forms-layout.mdc` | Admin forms layout |
-| `patterns-tables-dnd.mdc` | Responsive tables |
+Prototype без Design Lab (профиль §4): T2 активировать перед первой UI-задачей вместо P6.
+
+| Rule | Модуль | Назначение |
+|------|--------|------------|
+| `react-ui-components.mdc` | — | RSC/client boundaries |
+| `react-one-component-per-file.mdc` | — | One export; ≤140 lines |
+| `react-logic-presentation.mdc` | — | Logic vs presentation split |
+| `react-naming-conventions.mdc` | — | Naming conventions |
+| `react-state-management.mdc` | — | useReducer/useContext/Zustand/Redux Toolkit, SSR safety |
+| `ui-design-system-shadcn.mdc` | — | Design tokens, shadcn catalog |
+| `ui-mobile-first.mdc` | — | Bottom nav / sidebar |
+| `ui-prototype-fidelity.mdc` | — | Prototype visual parity |
+| `ui-semantics-a11y.mdc` | — | WCAG 2.1 AA |
+| `ui-animation-performance.mdc` | — | GPU animations, layout thrashing |
+| `ui-toast-mutations.mdc` | — | Sonner after mutations |
+| `ui-mutation-pending.mdc` | — | `aria-busy`, pending UI |
+| `ui-optimistic-mutations.mdc` | — | `useOptimistic` toggles |
+| `ui-messages-and-copy.mdc` | — | `@/lib/messages` |
+| `ui-messages-bundle-splitting.mdc` | `i18n` | Срезы словаря по типу страницы и локали; полный словарь не в клиентском бандле |
+| `ui-icons-lucide.mdc` | — | lucide-react |
+| `admin-forms-layout.mdc` | — | Admin forms layout |
+| `patterns-tables-dnd.mdc` | — | Responsive tables |
 
 Файлы: [`tiers/t2-ui/`](tiers/t2-ui/)
 

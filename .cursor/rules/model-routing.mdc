@@ -28,6 +28,8 @@ Stay inside the Cursor Models pool (Grok 4.x, Composer 2.5). Do not route to thi
 
 Output: `Tier: T0|T1|T2|T3 — reason (≤10 words) · CU: P{N}-CU{k}|none`
 
+**Quality profile** ([`docs/meta/project_quality_profile.md`](docs/meta/project_quality_profile.md); none yet → `standard`) sets how much of DoR applies — D2 paths, D3 DoR: `prototype` — no DoR, a task is Goal + Acceptance; `lean` — the orchestrator checks items 1–4 and 6 inline, item 6 per D2; `standard` / `strict` — all items.
+
 **Definition of Ready (DoR)** — check by reading only the linked sections, no repo exploration:
 1. Task links to spec / contract / ADR / PRD **sections** (`§N.M`), and they open.
 2. Acceptance is testable and states the expected outcome.
@@ -62,7 +64,7 @@ The orchestrator implements T0/T1 and T2 after spec-gap itself. Spawn a subagent
 Do NOT spawn for: T0 tasks; ready tasks that fit this context; sequential steps touching the same files; anything finishable in ≤3 tool calls.
 Each subagent starts cold and re-reads files — over-splitting costs more than it saves.
 
-**Phase DoR audit:** before the first task of a phase, ONE `architect` spec-gap call checks DoR for all tasks in `P{N}_tasks.md` and fixes the docs. Ad-hoc spec-gap later — only for gaps found mid-task.
+**Phase DoR audit:** before the first task of a phase, ONE `architect` spec-gap call checks DoR for all tasks in `P{N}_tasks.md` and fixes the docs (profile D3 `standard` / `strict`; `lean` — the orchestrator self-audits inline; `prototype` — none). Ad-hoc spec-gap later — only for gaps found mid-task.
 
 ## 3. Handoff contract
 
@@ -96,6 +98,6 @@ Planned in advance in `P{N}_tasks.md` § Commit plan ([`phase_tasks.template.md`
 
 ## 6. Review & commit at the CU boundary
 
-- **One gate per CU** — [`agent-code-review-subagent.mdc`](agent-code-review-subagent.mdc): runtime code in the CU → `reviewer` (protocol 2a→2b→2c, Paths H/N/S as expected shape); docs / `.mdc` / tests / tooling only → `diff-only` by the orchestrator.
+- **One gate per CU** — [`agent-code-review-subagent.mdc`](agent-code-review-subagent.mdc): runtime code in the CU → `reviewer` (protocol 2a→2b→2c, Paths H/N/S as expected shape) — which CUs need it depends on profile D6 (`agent-code-review-subagent.mdc` § Depth); docs / `.mdc` / tests / tooling only → `diff-only` by the orchestrator.
 - **Auto-commit** — [`agent-commit-pipeline.mdc`](agent-commit-pipeline.mdc): when the last task of a declared CU is done, VERIFICATION is green and `reviewer` has no blockers (≤1 delta re-review), commit without asking. Never push, `--amend`, `--no-verify`; never stage `.env*` / secrets. Blocker remains → stop and report.
 - **Do not** enable IDE Agent Review on every save/commit as a substitute for this contract.

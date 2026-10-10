@@ -9,12 +9,13 @@
 ## Обзор
 
 ```
-Репозиторий из шаблона → Placeholders → Visual seed → P0…P6 → AWS/Neon/Vercel → P7+ фазы
+Репозиторий из шаблона → P00 профиль качества → Placeholders → Visual seed → P0…P6 → AWS/Neon/Vercel → P7+ фазы
 ```
 
 | Этап | Промпт / действие | Результат |
 |------|-------------------|-----------|
 | 0 | Ручная подготовка | Repo из шаблона + infra |
+| P00 | [`P00-quality-profile.md`](prompts/P00-quality-profile.md) | `docs/meta/project_quality_profile.md` — уровень строгости и модули стека |
 | 0.5 | [`P1-html-prototype-claude-desktop.md`](prompts/P1-html-prototype-claude-desktop.md) | Seed HTML в `docs/prototypes/` (рекомендуется) |
 | P0 | [`P0-bootstrap.md`](prompts/P0-bootstrap.md) | AGENTS, T0 rules, структура `docs/` |
 | P1 | [`P1-html-prototype.md`](prompts/P1-html-prototype.md) | HTML prototype (ingest или create) |
@@ -62,6 +63,21 @@ Read-only snapshot Pulse поставляется в [`docs/examples/pulse/`](do
 | `docs/examples/pulse/packages/` | domain, policy, db |
 
 Snapshot не содержит `node_modules/`, `.next/`, `.env*`, dev-credentials. Подробнее: [`docs/examples/pulse/README.md`](docs/examples/pulse/README.md)
+
+---
+
+## Шаг 2.5 — Профиль качества (P00, первым)
+
+До любых правок проекта выполните [`prompts/P00-quality-profile.md`](prompts/P00-quality-profile.md): агент задаёт вопросы о продукте и предлагает выбрать уровень строгости.
+
+| Уровень | Коротко |
+|---------|---------|
+| `prototype` | Демо без реальных данных: минимум docs, без тестов и независимого review |
+| `lean` | MVP / внутренний инструмент: ключевые docs, unit-тесты domain и policy, `reviewer` только для рискованных CU, Design Lab обязателен |
+| `standard` | Небольшой продакшн: волны W0–W9, тесты + e2e smoke в CI, `reviewer` на каждый CU с кодом |
+| `strict` | Полный канон: все волны, coverage-пороги, полный e2e, PSI перед релизом |
+
+Результат — `docs/meta/project_quality_profile.md`; матрица и модули — [`docs/meta/project_quality_profile.template.md`](docs/meta/project_quality_profile.template.md). Security floor действует на всех уровнях. Уровень можно повысить позже (профиль §8).
 
 ---
 
@@ -179,7 +195,7 @@ DIRECT_URL=postgresql://...
 
 ---
 
-## Шаг 7 — AWS S3 (file uploads)
+## Шаг 7 — AWS S3 (file uploads) — модуль `s3_uploads`
 
 Полный guideline: [`docs/guidelines/nextjs/ai_s3_file_upload_guidelines.md`](docs/guidelines/nextjs/ai_s3_file_upload_guidelines.md)
 
@@ -213,7 +229,7 @@ DIRECT_URL=postgresql://...
 
 ---
 
-## Шаг 9 — Auth.js (Credentials)
+## Шаг 9 — Auth.js (Credentials) — модуль `auth`
 
 После P5 scaffold:
 
@@ -227,7 +243,7 @@ AUTH_SECRET=
 
 ---
 
-## Шаг 10 — Sentry (optional, recommended)
+## Шаг 10 — Sentry — модуль `sentry`
 
 ```env
 NEXT_PUBLIC_SENTRY_DSN=
@@ -240,7 +256,7 @@ SENTRY_PROJECT=
 
 ---
 
-## Шаг 11 — Resend (post-MVP)
+## Шаг 11 — Resend (post-MVP) — модуль `email_jobs`
 
 На MVP: только таблицы `job_execution` / `delivery_log` в schema.  
 Env `RESEND_API_KEY` — когда фаза email (P21 analog).
@@ -261,6 +277,10 @@ GCP: включить **PageSpeed Insights API**. Прогон: `npm run psi:lab
 ---
 
 ## Шаг 12 — Верификация bootstrap
+
+### После P00
+
+- [ ] `docs/meta/project_quality_profile.md` — уровень, overrides с причинами, модули, обоснование
 
 ### После P0
 
@@ -291,6 +311,7 @@ GCP: включить **PageSpeed Insights API**. Прогон: `npm run psi:lab
 ### После P6
 
 - [ ] `/design-system` renders 390px + md
+- [ ] С `lean`: минимальный объём Lab по профилю — все основные компоненты и все состояния (spec § «Минимальный объём по профилю»)
 - [ ] T2 rules active (состав — по манифесту)
 - [ ] `npm run rules:check` pass
 - [ ] Product routes don't import `design-lab/`

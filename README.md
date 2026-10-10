@@ -27,10 +27,11 @@
 Полная инструкция: **[`BOOTSTRAP.md`](BOOTSTRAP.md)**
 
 1. Создайте репозиторий из шаблона (GitHub **Use this template** или `git clone`)
-2. Заполните placeholders (см. [`PLACEHOLDERS.md`](PLACEHOLDERS.md))
-3. **Рекомендуется:** visual seed в `docs/prototypes/` ([`prompts/P1-html-prototype-claude-desktop.md`](prompts/P1-html-prototype-claude-desktop.md))
-4. Запустите промпты по порядку: **P0 → P1 → P2 → P3-W* → P4 → P5 → P6 → P7+**
-5. Rules T1 / T2 активируются промптами P4 / P6 по манифесту [`.cursor/rules/README.md`](.cursor/rules/README.md)
+2. **Выберите профиль качества** — [`prompts/P00-quality-profile.md`](prompts/P00-quality-profile.md): `prototype` / `lean` / `standard` / `strict` определяет объём документации, тестов, review и модули стека
+3. Заполните placeholders (см. [`PLACEHOLDERS.md`](PLACEHOLDERS.md))
+4. **Рекомендуется:** visual seed в `docs/prototypes/` ([`prompts/P1-html-prototype-claude-desktop.md`](prompts/P1-html-prototype-claude-desktop.md))
+5. Запустите промпты по порядку: **P0 → P1 → P2 → P3-W* → P4 → P5 → P6 → P7+**
+6. Rules T1 / T2 активируются промптами P4 / P6 по манифесту [`.cursor/rules/README.md`](.cursor/rules/README.md)
 
 ---
 
@@ -59,7 +60,7 @@
 │   ├── reference/                    → pulse_project_reference.md, stack patterns
 │   ├── claude-code-cursor-rules-sync.md
 │   └── examples/pulse/               → snapshot референса (заполнить вручную)
-├── prompts/                          → P0–P6 + Claude Desktop seed + orchestration
+├── prompts/                          → P00 (профиль качества), P0–P6, Claude Desktop seed, orchestration
 ├── specs/                            → design_system_lab_spec.template.md
 └── scaffold/                         → пустой monorepo skeleton
 ```

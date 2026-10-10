@@ -153,7 +153,7 @@ npm run lint        # or npm run lint:web from root
 
 Skill **`next-dev-loop`**: confirm the feature works in a live `next dev` by cross-checking **two views** — `/_next/mcp` (routes, RSC, server actions, compile/runtime errors) and `agent-browser` (DOM, console, network, React fiber/props/state). Loop when asked: narrow scope via runtime → edit → 4 layers (compile → runtime errors → browser UX → React). **Do not** start automatically after UI edits or before commit — only when the user explicitly asks (e.g. «проверь в runtime», «next-dev-loop»). Details: user skill `next-dev-loop`; index: [`docs/guidelines/nextjs/README.md`](../../docs/guidelines/nextjs/README.md) § Agent runtime verification.
 
-Lab PSI is **orthogonal**: `npm run psi:lab` against a **deployed** origin when the user asks. Not localhost. Not MCP as primary. See [`ai_psi_lab_testing.md`](../../guidelines/nextjs/ai_psi_lab_testing.md).
+Lab PSI is **orthogonal**: `npm run psi:lab` against a **deployed** origin when the user asks. Not localhost. Not MCP as primary. See [`ai_psi_lab_testing.md`](../../docs/guidelines/nextjs/ai_psi_lab_testing.md).
 
 ### Manual verification checklist (web)
 

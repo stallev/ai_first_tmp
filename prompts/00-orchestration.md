@@ -16,6 +16,7 @@
 4. **Prototype:** visual reference only — канон: Rules → AGENTS → Contracts → PRD
 5. **DB-first:** schema wave (W3 data model) до domain contracts (W8)
 6. **Context7:** обязателен для runtime/auth/data промптов (см. registry §2.7)
+7. **Профиль качества:** уровень (`prototype` | `lean` | `standard` | `strict`) и модули из `docs/meta/project_quality_profile.md` определяют объём волн, тестов и review во всех следующих промптах
 
 ---
 
@@ -23,6 +24,7 @@
 
 | ID | Файл | Когда | Deliverable |
 |----|------|-------|-------------|
+| **P00** | [`P00-quality-profile.md`](P00-quality-profile.md) | День 0, **первым** | `docs/meta/project_quality_profile.md` — уровень строгости, модули стека |
 | **P0** | [`P0-bootstrap.md`](P0-bootstrap.md) | День 0 | Структура каталогов, AGENTS, T0 rules |
 | **P1-desktop** | [`P1-html-prototype-claude-desktop.md`](P1-html-prototype-claude-desktop.md) | До P1 (рекомендуется) | Seed: один HTML в `docs/prototypes/` (Claude Desktop + spec + URL DS) |
 | **P1** | [`P1-html-prototype.md`](P1-html-prototype.md) | После P0 + brief | `docs/prototypes/{{MAIN_PROTOTYPE_HTML}}` — ingest или create |
@@ -38,21 +40,22 @@
 ## Gates (обязательные проверки)
 
 ```
-Visual seed (реком.) ──▶ P0 ──▶ P1 (ingest/create) ──▶ P2 ──▶ P3 (W1…W14) ──▶ P4 ──▶ P5 ──▶ P6 ──▶ P7 (P01+)
-                              │                         │
-                              │                         └── Gate: database_schema_v1 canonical до W8 contracts
-                              └── Gate: interim docs / product brief exists
+P00 ──▶ Visual seed (реком.) ──▶ P0 ──▶ P1 (ingest/create) ──▶ P2 ──▶ P3 (W1…W14) ──▶ P4 ──▶ P5 ──▶ P6 ──▶ P7 (P01+)
+                                      │                         │
+                                      │                         └── Gate: database_schema_v1 canonical до W8 contracts
+                                      └── Gate: interim docs / product brief exists
 ```
 
 | Gate | Условие |
 |------|---------|
+| G0 → P0 | `docs/meta/project_quality_profile.md` создан пользователем через P00 |
 | G1 → P2 | Есть product brief или `docs/default_docs/` |
 | G1b → W2 UX-03 | Рекомендуется `docs/prototypes/{{MAIN_PROTOTYPE_HTML}}` (token dump) |
 | G2 → P3-W3 | P2 registry утверждён пользователем |
-| G3 → P5 | W1–W2 + W3 schema + минимум W5 auth + W8 boundaries contract |
+| G3 → P5 | `database_schema_v1.md` canonical + волны, обязательные для уровня профиля (registry §5.0) до W8 включительно |
 | G4 → P6 | Next.js build pass, `globals.css` scaffold |
-| G5 → P7 | Design Lab acceptance criteria pass |
-| G6 → каждая фаза P{N} | Phase DoR audit в `P{N}_tasks.md` закрыт: все задачи проходят DoR ([`ai_agent_model_routing.md`](../docs/meta/ai_agent_model_routing.md) § DoR) |
+| G5 → P7 | Design Lab acceptance criteria pass, включая минимальный объём по профилю (все компоненты и состояния; с `lean`) |
+| G6 → каждая фаза P{N} | Phase DoR audit в `P{N}_tasks.md` закрыт: все задачи проходят DoR ([`ai_agent_model_routing.md`](../docs/meta/ai_agent_model_routing.md) § DoR); глубина — профиль D3 |
 
 ---
 
@@ -144,8 +147,9 @@ Manifest: [`.cursor/rules/README.md`](../.cursor/rules/README.md)
 
 ```
 1. READ prompts/00-orchestration.md (this file)
-2. READ PLACEHOLDERS.md — verify all {{}} replaced
-3. Visual seed → docs/prototypes/ (Claude Desktop prompt) — recommended before P1
-4. EXECUTE P0 → verify → P1 (ingest/create) → …
-5. Never skip gates
+2. EXECUTE P00 — quality profile chosen by the user (gate G0)
+3. READ PLACEHOLDERS.md — verify all {{}} replaced
+4. Visual seed → docs/prototypes/ (Claude Desktop prompt) — recommended before P1
+5. EXECUTE P0 → verify → P1 (ingest/create) → …
+6. Never skip gates
 ```

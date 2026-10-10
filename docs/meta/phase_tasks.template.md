@@ -15,6 +15,7 @@
 Канон правил:
   - Definition of Ready, task tiers, commit units — docs/meta/ai_agent_model_routing.md § DoR, § Commit units
   - Критерии путей H / N / S — docs/meta/documentation_creation_registry.md §2.3.2a
+  - Глубина DoR, путей, тестов и review — профиль качества docs/meta/project_quality_profile.md (D2–D7)
 Не копировать критерии в этот файл — только ссылки и Paths на задачу.
 -->
 
@@ -24,7 +25,7 @@
 
 ## Phase DoR audit
 
-Выполняется **до** первой задачи фазы: один вызов `architect` в режиме `spec-gap` на все задачи ниже.
+Выполняется **до** первой задачи фазы: один вызов `architect` в режиме `spec-gap` на все задачи ниже (профиль D3: `standard` / `strict`; `lean` — оркестратор inline; `prototype` — секцию удалить).
 
 - [ ] Все задачи прошли DoR — дата · исполнитель · изменённые документы
 - [ ] Open questions связанных документов пусты или не блокируют задачи этой фазы
@@ -37,7 +38,7 @@
   - T3 (в т.ч. любая задача с Paths S) — всегда отдельный CU.
   - Ориентир ≤ ~400 hand-written строк на CU; больше — делить при планировании.
   - Заголовок CU = commit subject: `type(scope): subject` (agent-commit-pipeline).
-  - Review: `reviewer` — есть runtime-код; `diff-only` — только docs / .mdc / tests / tooling.
+  - Review: по профилю D6 (agent-code-review-subagent § Depth): `standard` / `strict` — `reviewer` при runtime-коде; `diff-only` — только docs / .mdc / tests / tooling.
   - Commit: auto — агент коммитит на границе CU после зелёной ВЕРИФИКАЦИИ и review без blockers.
 Формат задачи:
   - [ ] P{N}-T{k} · T0|T1|T2|T3 · Spec: [file §N.M](…) · Contract: [file §N.M](…) · ADR/PRD: [ID](…)
@@ -53,7 +54,7 @@
 - [ ] P{N}-T2 · T0 · Files: `apps/web/src/lib/messages/...` · Acceptance: {проверка} → {исход}
       Paths: n/a — copy
 
-**CU DoD:** `npm run typecheck` · `npm run lint` · smoke {route} (H + N)
+**CU DoD:** `npm run typecheck` · `npm run lint` · тесты по профилю D4 / D5 · smoke {route} (H + N)
 
 ### P{N}-CU2 — feat(auth): {subject} · Review: reviewer · Commit: auto
 
@@ -61,7 +62,7 @@
       Files: `apps/web/src/app/.../actions.ts`, `packages/policy/**` · Acceptance: {проверка} → {исход}
       Paths: H [§4.1] · N [§4.2: duplicate, invalid transition] · S [§4.3, authz «{role} × {resource}»: anon → login, чужая роль → 403, IDOR → 404]
 
-**CU DoD:** `npm run typecheck` · `npm run lint` · smoke H / N / S (403 и IDOR)
+**CU DoD:** `npm run typecheck` · `npm run lint` · тесты по профилю D4 / D5 (S-пути — тестом с `lean`) · smoke H / N / S (403 и IDOR)
 
 ### P{N}-CU3 — docs(docs): sync {area} docs · Review: diff-only · Commit: auto
 

@@ -28,20 +28,16 @@
 3. **Обратные ссылки** — по мере появления новых документов в уже созданные добавляются ссылки «→ см. также».
 4. **Инструкции для AI-агентов** — как писать, верифицировать и не дублировать источники истины.
 
-**Уже существуют (не создавать заново, только дополнять ссылками):**
+**Поставляются шаблоном или создаются до P2 (не создавать заново, только дополнять ссылками):**
 
 | Файл | Статус |
 |------|--------|
-| `docs/meta/ai_first_project_methodology.md` | Канон |
+| `docs/meta/ai_first_project_methodology.md` | Канон (адаптируется в P2) |
+| `docs/meta/project_quality_profile.md` | Канон — создаёт P00; уровень определяет набор волн (§5.0) |
 | `docs/reference/pulse_project_reference.md` | Канон |
-| `docs/prds/architecture_master_index.md` | Канон |
-| `docs/prds/07_governance/adr_001_stack_and_runtime.md` | ACCEPTED |
-| `docs/prds/07_governance/adr_002_nextjs_vercel_runtime_policy.md` | ACCEPTED |
-| `docs/prds/03_data_model/database_schema_v1.md` | Канон |
-| `docs/prds/01_product_scope/user_flows/users_mvp/*.md` | Канон |
-| `docs/design/canonical_routes.md` | Канон |
-| `docs/architecture_learning_pack/01_architecture_overview.md` | Канон |
 | `docs/default_docs/*` | Interim archive — только читать при миграции |
+
+Фундаментальные документы, которые в Pulse существовали до реестра (ADR-001/002, `architecture_master_index`, user flows, `canonical_routes`, `database_schema_v1`, `01_architecture_overview`), в новом проекте создаются волнами — строки `W1-F*` и `W13-00`.
 | `docs/guidelines/**` | Канон реализации — ссылаться, не дублировать |
 | `docs/claude-code-cursor-rules-sync.md` | Канон механизма Cursor `.mdc` → Claude `.md` (`npm run rules:sync`) — **не пересоздавать в P2** |
 
@@ -115,6 +111,8 @@
 #### 2.3.2a Критерии применимости путей H / N / S (канон)
 
 **Единственный источник** критериев: матрица §2.3.3, Definition of Ready ([`ai_agent_model_routing.md`](./ai_agent_model_routing.md) § DoR), шаблон задач ([`phase_tasks.template.md`](./phase_tasks.template.md)) и `reviewer` ссылаются сюда, не копируют. Решение «нужен ли путь» принимается по признакам ниже, а не по ощущению «if applicable».
+
+**Глубина по профилю качества:** какие из путей ниже обязательны на уровне проекта — измерение D2 [`project_quality_profile.template.md`](./project_quality_profile.template.md) §3 (уровень — в `project_quality_profile.md`). Признак S выше уровня `prototype` не понижается (security floor профиля §5).
 
 Пути описываются в contract / spec (в разделе с якорем `§N.M`); задача ссылается на раздел. Каждый путь — проверяемая строка Acceptance (smoke, тест или ручной шаг с ожидаемым исходом).
 
@@ -334,6 +332,29 @@ READ registry → READ dependencies → DRAFT file → ADD backlinks → UPDATE 
 
 > **Template note.** Структура волн и универсальные документы (governance, UX/UI, auth, runtime, data model, ops) — канон шаблона. Строки с доменными файлами (booking, trainer, wishlist, complaint …) — **пример Pulse**: в P2 заменить доменными аналогами {{PROJECT_NAME}} или удалить. Какие волны обязательны — по профилю качества проекта.
 
+### 5.0 Волны по уровню профиля качества
+
+Уровень — из [`project_quality_profile.md`](./project_quality_profile.md) (D1; нет профиля → `standard`). Волна обязательна для отмеченных уровней; «часть» — только перечисленные строки. Документы выключенных модулей (профиль §4) пропускаются на любом уровне.
+
+| Волна | Prototype | Lean | Standard | Strict |
+|-------|-----------|------|----------|--------|
+| W0 Meta | — | ✓ | ✓ | ✓ |
+| W1 Governance + product canon | часть: W1-F4…F6, W1-03 | часть: W1-F1…F6, W1-03, W1-04 | ✓ | ✓ |
+| W2 UX/UI foundation | — | часть: UX-03 (+ UX-02 при mobile-first) | ✓ | ✓ |
+| W3 Domain model | — | часть: W3-02, W3-04 | ✓ | ✓ |
+| W4 ADR (детализация) | — | только ADR включённых модулей | ✓ | ✓ |
+| W5 Authorization + runtime | — | часть: authorization_matrix, auth_runtime_spec (модуль `auth`) | ✓ | ✓ |
+| W6 Data model supplements | — | часть: seed_data_spec | ✓ | ✓ |
+| W7 UX interaction | — | часть: UX-05 ui_states, UX-06 forms | ✓ | ✓ |
+| W8 Contracts | — | часть: monorepo_boundaries + contracts мутаций с признаком S | ✓ | ✓ (+ Concurrency / Drift) |
+| W9 Specs | — | часть: global_shell + многошаговые flows | ✓ | ✓ |
+| W15 Design System Lab | если модуль включён | ✓ | ✓ | ✓ |
+| W10 Wireframes | — | — (достаточно HTML-прототипа) | только ключевые маршруты | ✓ |
+| W11 Phases + tasks | упрощённый список задач | ✓ | ✓ | ✓ |
+| W12 Operations + guides | — | часть: local_dev_setup, vercel_deploy, neon_prisma_migrations | ✓ | ✓ |
+| W13 Learning pack | — | — | часть: W13-00 | ✓ |
+| W14 Index sync | — | облегчённый | ✓ | ✓ |
+
 Легенда колонок:
 
 - **ID** — порядковый номер внутри волны
@@ -357,6 +378,12 @@ READ registry → READ dependencies → DRAFT file → ADD backlinks → UPDATE 
 
 | ID | Файл | Зависит от | Обновить backlinks |
 |----|------|------------|-------------------|
+| W1-F1 | `docs/prds/07_governance/adr_001_stack_and_runtime.md` | project-context, quality profile (модули) | architecture_master_index |
+| W1-F2 | `docs/prds/07_governance/adr_002_nextjs_vercel_runtime_policy.md` | шаблон `adr_002_nextjs_vercel_runtime_policy.template.md`, ADR-001 | adr_index |
+| W1-F3 | `docs/prds/architecture_master_index.md` | ADR-001, ADR-002 | AGENTS.md |
+| W1-F4 | `docs/prds/01_product_scope/user_flows/users_mvp/{role}_flow.md` — по одному на роль | interim brief, `{{USER_ROLES}}`, prototype | architecture_master_index |
+| W1-F5 | `docs/design/canonical_routes.md` — единственный инвентарь маршрутов | user flows, prototype | AGENTS.md, architecture_master_index |
+| W1-F6 | `docs/prds/03_data_model/database_schema_v1.md` — **DB-first**, до W3 / W8 | user flows, interim brief | architecture_master_index |
 | W1-01 | `docs/prds/07_governance/adr_index.md` | ADR-001, ADR-002, registry | `07_governance/README.md`, `architecture_master_index.md` |
 | W1-02 | `docs/prds/07_governance/decision_process.md` | adr_index | adr_index, methodology |
 | W1-03 | `docs/prds/01_product_scope/mvp_scope.md` | interim MVP brief (`{{INTERIM_DOCS_GLOB}}`), user flows, ADR-001 | architecture_master_index, methodology checklist |
@@ -555,6 +582,7 @@ READ registry → READ dependencies → DRAFT file → ADD backlinks → UPDATE 
 
 | ID | File | Зависит от | Обновить backlinks |
 |----|------|------------|-------------------|
+| W13-00 | `docs/architecture_learning_pack/01_architecture_overview.md` | architecture_master_index, monorepo_boundaries_contract | AGENTS.md |
 | W13-01 | `docs/architecture_learning_pack/02_booking_lifecycle_layers.md` | booking_lifecycle_contract, data_access_patterns | 01_architecture_overview |
 | W13-02 | `03_trainer_verification_layers.md` | trainer_verification_contract | 01_architecture_overview |
 | W13-03 | `04_email_jobs_layers.md` | email_notifications_contract, cron_jobs_registry | 01_architecture_overview |

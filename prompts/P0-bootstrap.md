@@ -5,6 +5,7 @@ Software Architect (AI-first monorepo).
 
 ## Preconditions
 - [ ] Репозиторий проекта создан из шаблона (BOOTSTRAP §1)
+- [ ] Gate **G0**: `docs/meta/project_quality_profile.md` создан ([`P00-quality-profile.md`](P00-quality-profile.md))
 - [ ] [`PLACEHOLDERS.md`](../PLACEHOLDERS.md) заполнен
 - [ ] (Рекомендуется) visual seed в `docs/prototypes/{{MAIN_PROTOTYPE_HTML}}` — см. [`P1-html-prototype-claude-desktop.md`](P1-html-prototype-claude-desktop.md)
 

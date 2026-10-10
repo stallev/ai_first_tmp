@@ -9,7 +9,7 @@ alwaysApply: false
 **HOW (таблицы, вердикты, prompt для `reviewer`):** [`docs/guidelines/ai_code_review_protocol.md`](docs/guidelines/ai_code_review_protocol.md) — **читать перед** уровнем `reviewer`; для `skip` / `diff-only` не нужен.
 **Routing:** [`model-routing.mdc`](model-routing.mdc) §3a / §6 — commit units и единый review-гейт.
 
-**Принцип:** один review-гейт на CU. Дорогой независимый review (`reviewer`, Grok 4.7) — на каждый CU с runtime-кодом; батчинг задач в CU делает каждый прогон оправданным. Docs / tooling — дёшево, в контексте автора. Лимиты — § Budget.
+**Принцип:** один review-гейт на CU. Дорогой независимый review (`reviewer`, Grok 4.7) — на каждый CU с runtime-кодом (профиль `standard` / `strict`; `lean` / `prototype` — § Depth); батчинг задач в CU делает каждый прогон оправданным. Docs / tooling — дёшево, в контексте автора. Лимиты — § Budget.
 
 ## Запрещено: bugbot
 
@@ -46,6 +46,16 @@ Standalone review **не** ведёт к commit. `reviewer` **не правит 
 | `reviewer` | Любой runtime-код в CU (в т.ч. T3 / `Paths: S`); явный запрос пользователя | субагент `reviewer` | 2a → 2b → 2c |
 
 Старший уровень побеждает; сомнение — брать старший.
+
+**Профиль качества (D6)** — [`docs/meta/project_quality_profile.md`](docs/meta/project_quality_profile.md) (нет профиля → `standard`) сдвигает уровень для runtime-кода:
+
+| Профиль | Runtime-код в CU |
+|---------|------------------|
+| `standard`, `strict` | Таблица выше без изменений |
+| `lean` | `reviewer` — только CU с T3 / `Paths: S` / runtime-кодом в sensitive zone; остальной runtime — `diff-only` |
+| `prototype` | `diff-only` для всех CU; в CU с `Paths: S` оркестратор дополнительно проходит T3-чеклист из `reviewer` |
+
+Явный запрос пользователя → всегда `reviewer`, независимо от профиля.
 
 | Diff | Уровень |
 |------|---------|

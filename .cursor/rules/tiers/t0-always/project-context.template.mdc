@@ -11,6 +11,10 @@ alwaysApply: true
 Роли: **{{USER_ROLES}}**.  
 MVP scope: см. [`docs/prds/01_product_scope/mvp_scope.md`](docs/prds/01_product_scope/mvp_scope.md) (после W1).
 
+## Quality profile (read with AGENTS.md)
+
+[`docs/meta/project_quality_profile.md`](docs/meta/project_quality_profile.md) — chosen level (`prototype` | `lean` | `standard` | `strict`), overrides and enabled stack modules. It decides how many docs waves, which DoR / H·N·S paths, tests, review gate, a11y and perf checks apply. Rules that say «по профилю Dn» take the value from there; no profile → `standard`. **Security floor** (profile template §5) applies at every level.
+
 ## Reference project (mandatory patterns)
 
 Architectural and AI-first patterns inherit from **Pulse** (fitness marketplace — full implementation snapshot):
@@ -22,7 +26,7 @@ Architectural and AI-first patterns inherit from **Pulse** (fitness marketplace 
 When {{PROJECT_NAME}} docs are silent — follow Pulse reference **architecture, feature patterns, and methodology**, adapting domain and ADR deltas.  
 **{{PROJECT_NAME}} Cursor Rules and Guidelines override Pulse reference code** when they conflict — see [`pulse_project_reference.md`](docs/reference/pulse_project_reference.md) §Priority.
 
-## Stack (baseline — full Pulse stack)
+## Stack (baseline — full Pulse stack; optional modules per quality profile §4)
 
 - **Next.js** **16.4** (exact patch pin, no caret) App Router, **TypeScript** — [ADR-002](docs/prds/07_governance/adr_002_nextjs_vercel_runtime_policy.template.md) (после W4: скопировать в `adr_002_….md`)
 - **Instant Navigations:** `cacheComponents: true` + `partialPrefetching: true`; динамика за `<Suspense>` / `'use cache'`; `export const instant = false` только с задокументированной причиной
@@ -46,10 +50,10 @@ Runtime policy: [ADR-001](docs/prds/07_governance/adr_001_stack_and_runtime.md) 
 3. **Contracts** (`docs/implementation/mvp/contracts/`)
 4. **PRD** (`docs/prds/`) — when created; interim: [`{{INTERIM_DOCS_GLOB}}`]({{INTERIM_DOCS_GLOB}})
 5. **[`docs/design/canonical_routes.md`](docs/design/canonical_routes.md)** — single route inventory
-6. **Guidelines** (`guidelines/`) — index in [`docs/guidelines/README.md`](docs/guidelines/README.md)
+6. **Guidelines** (`docs/guidelines/`) — index in [`docs/guidelines/README.md`](docs/guidelines/README.md)
 7. **HTML prototype** — visual reference only (`docs/prototypes/{{MAIN_PROTOTYPE_HTML}}`), subordinate to canonical docs
 
-**Vs Pulse snapshot:** root Cursor Rules **and** root Guidelines always win over [`docs/examples/pulse/`](docs/examples/pulse/) (even though Guidelines are #6 in this list). **Enforceable paths:** `.cursor/rules/*.mdc` at the repo root and `guidelines/**`. **Not canon:** `docs/examples/pulse/.cursor/rules/**`, `docs/examples/pulse/docs/guidelines/**`, any `docs/examples/lampto/**` (that tree is **not vendored**).
+**Vs Pulse snapshot:** root Cursor Rules **and** root Guidelines always win over [`docs/examples/pulse/`](docs/examples/pulse/) (even though Guidelines are #6 in this list). **Enforceable paths:** `.cursor/rules/*.mdc` at the repo root and `docs/guidelines/**`. **Not canon:** `docs/examples/pulse/.cursor/rules/**`, `docs/examples/pulse/docs/guidelines/**`, any `docs/examples/lampto/**` (that tree is **not vendored**).
 
 **Pulse namesakes are not authoritative.** Snapshot files with the *same names* as root rules/guidelines (e.g. `ui-design-system-shadcn.mdc`) are a read-only code/domain reference — they do not override this file.
 
@@ -66,6 +70,7 @@ Runtime policy: [ADR-001](docs/prds/07_governance/adr_001_stack_and_runtime.md) 
 | Area | Document |
 |------|----------|
 | Methodology | [`docs/meta/ai_first_project_methodology.md`](docs/meta/ai_first_project_methodology.md) |
+| **Quality profile** | [`docs/meta/project_quality_profile.md`](docs/meta/project_quality_profile.md) · matrix: [`project_quality_profile.template.md`](docs/meta/project_quality_profile.template.md) |
 | Doc creation order | [`docs/meta/documentation_creation_registry.md`](docs/meta/documentation_creation_registry.md) |
 | Architecture map | [`docs/prds/architecture_master_index.md`](docs/prds/architecture_master_index.md) |
 | Agent onboarding | [`docs/architecture_learning_pack/01_architecture_overview.md`](docs/architecture_learning_pack/01_architecture_overview.md) |
@@ -82,7 +87,7 @@ Runtime policy: [ADR-001](docs/prds/07_governance/adr_001_stack_and_runtime.md) 
 | Tier | When | Manifest |
 |------|------|----------|
 | T0 | Bootstrap | [`.cursor/rules/README.md`](.cursor/rules/README.md) §T0 |
-| T1 | After docs W1–W2 | §T1 |
+| T1 | P4 (after W1) | §T1 |
 | T2 | After Design Lab (P6) | §T2 |
 
 Task classification T0–T3 (orchestrator) is a different axis from this table: [`ai_agent_model_routing.md`](docs/meta/ai_agent_model_routing.md).

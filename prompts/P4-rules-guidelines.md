@@ -5,6 +5,7 @@ Platform Architect.
 
 ## Preconditions
 - [ ] W1 governance docs exist (ADR-001, ADR-002 minimum)
+- [ ] `docs/meta/project_quality_profile.md` — список включённых модулей
 - [ ] P0 T0 rules already active
 
 ## Inputs
@@ -15,7 +16,7 @@ Platform Architect.
 - `docs/meta/ai_first_project_methodology.md`
 
 ## Task
-1. Copy **T1 rules** → `.cursor/rules/`
+1. Copy **T1 rules** → `.cursor/rules/` — кроме правил выключенных модулей (манифест, колонка «Модуль»)
 2. `npm run rules:sync` / `npm run rules:check`
 3. Verify all rules link to methodology + correct `@{{PACKAGE_SCOPE}}/`
 4. Update `docs/guidelines/README.md`:

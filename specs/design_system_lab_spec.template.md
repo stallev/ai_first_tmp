@@ -82,6 +82,38 @@ Implementation-spec для AI-агента: реализация **shared UI pri
 
 ---
 
+## Минимальный объём по профилю
+
+Уровень — [`project_quality_profile.md`](../../../meta/project_quality_profile.md) (нет профиля → `standard`). **Начиная с `lean` Design Lab обязателен** и не отключается overrides ([профиль §4.1](../../../meta/project_quality_profile.template.md)). На `lean` / `standard` / `strict` минимальный объём ниже — gate **G5** перед первой фазой продуктового UI; он **перекрывает** разбиение Phase 1 / Phase 2 этого spec: перечисленные компоненты Phase 2 входят в обязательный минимум.
+
+**Компоненты (все основные):**
+
+| Группа | Компоненты |
+|--------|------------|
+| Typography | `Heading` (все уровни), `SectionTitle`, `ContentText` (все варианты), `AlertText` |
+| Actions / navigation | `Button` (variants × sizes), `CustomLink` |
+| Form controls | Input, Textarea, Select, Checkbox, Radio, Switch, Field + Label + error text |
+| Surfaces | `Card` / `SurfaceCard`, Badge, Skeleton |
+| Overlays | Dialog, Sheet, Toast (Sonner) |
+| Navigation | Tabs; shell: bottom nav `< md`, sidebar `≥ md` |
+
+**Состояния — для каждого применимого компонента:**
+
+| Тип | Состояния |
+|-----|-----------|
+| Интерактивные | default · hover · focus-visible · active / pressed · disabled |
+| Мутации | loading / pending (`aria-busy`, подпись-герундий, spinner) |
+| Валидация | error · invalid-field (`aria-invalid` + текст ошибки) |
+| Экранные (L3) | empty · loading · error · forbidden — по `ui_states_contract.md` |
+
+Каждое состояние — на **390px** и **`md`**, в **светлой и тёмной** теме.
+
+| Уровень | Дополнительно |
+|---------|---------------|
+| `prototype` | Lab опционален (модуль `design_lab`); если включён — достаточно L1 + L2 для Button / Typography |
+| `lean`, `standard` | Минимальный объём выше |
+| `strict` | + все L3 composed patterns из § Page structure; axe-проверка страницы Lab без нарушений |
+
 ## Mandatory enforcement — Cursor Rules
 
 Агент **MUST** соблюдать следующие правила при реализации. Нарушение = reject на verification.
@@ -786,6 +818,7 @@ Populate from [`prototype_route_mapping.md`](../../../design/prototype_route_map
 
 ### Design Lab
 
+- [ ] Минимальный объём по профилю выполнен — все компоненты и все состояния (§ Минимальный объём по профилю), 390px + `md`, light + dark
 - [ ] Route `/design-system` accessible in development
 - [ ] Production guard returns 404 (unless `ALLOW_DESIGN_LAB=1`)
 - [ ] L1 token swatches for brand, radius, elevation, typography

@@ -8,6 +8,7 @@
 
 ## Preconditions
 - [ ] P2 registry canonical
+- [ ] Волна W{N} обязательна для уровня профиля (registry §5.0); строки выключенных модулей пропускаются
 - [ ] Все файлы из «Зависит от» для W{N} существуют
 - [ ] Gate G2 passed for W1
 
@@ -24,7 +25,7 @@ For each row W{N}-XX **in order**:
 1. Draft file with front matter (§2.2 registry)
 2. Body sections per §2.3.3 matrix (type-specific)
 3. Contracts: §2.3.4 template · Specs: §2.3.5 template — numbered sections `§N.M`
-4. Paths H / N / S — decide by **triggers** in registry §2.3.2a (not «if applicable»); every `N/A` needs an exemption reason
+4. Paths H / N / S — decide by **triggers** in registry §2.3.2a (not «if applicable»), depth per profile D2; every `N/A` needs an exemption reason
 5. Run the **DoR-ready checklist** (registry §2.3.6); unresolved items → `Open questions` with owner, never `TBD` in MUST sections
 6. Phase tasks (`P{N}_tasks.md`) — from [`phase_tasks.template.md`](../docs/meta/phase_tasks.template.md): commit units, `Tier`, `§` links, `Paths`
 7. **Backlinks** in earlier files (same session)

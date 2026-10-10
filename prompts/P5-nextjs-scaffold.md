@@ -7,6 +7,7 @@ Senior Fullstack Developer (Next.js 16 + PostgreSQL + monorepo).
 - [ ] `database_schema_v1.md` canonical
 - [ ] `monorepo_boundaries_contract.md` (W8) or draft
 - [ ] T0 + T1 cursor rules active
+- [ ] `docs/meta/project_quality_profile.md` — модули (профиль §4) определяют, что скаффолдить
 - [ ] ADR-001, ADR-002 ACCEPTED
 
 ## Inputs
@@ -25,11 +26,11 @@ Senior Fullstack Developer (Next.js 16 + PostgreSQL + monorepo).
    - Next.js **current 16.4.x patch** — baseline **16.4**. Confirm with `npm view next version` + Context7 `/vercel/next.js`; if latest is still 16.4.x, pin **that** exact version. Align `@next/third-parties` and `eslint-config-next`. No `^16`.
    - `src/proxy.ts` (NOT middleware.ts for new code)
    - `src/data/`, `src/lib/`, `src/components/{atoms,ui,design-lab}/`
-   - Auth.js v5 Credentials scaffold
-   - Sentry stub (`@sentry/nextjs`)
+   - Auth.js v5 Credentials scaffold — модуль `auth`
+   - Sentry stub (`@sentry/nextjs`) — модуль `sentry`
    - `globals.css` with token placeholders
 7. Root `AGENTS.md` уже создан в P0. Скопировать `scaffold/apps/web/AGENTS.template.md` → `apps/web/AGENTS.md` (заменить placeholders); скопировать `scaffold/apps/web/CLAUDE.md` → `apps/web/CLAUDE.md` (статичный `@AGENTS.md`-импорт, без изменений). Корневой `CLAUDE.md` не дублировать MUST — зеркало `.claude/rules/`.
-8. Env example: `DATABASE_URL`, `DIRECT_URL`, `AUTH_SECRET`, S3 (`AWS_IAM_*`, `S3_BUCKET_*`), Sentry vars — см. [`BOOTSTRAP.md`](../BOOTSTRAP.md) §6–§10, [`ai_s3_file_upload_guidelines.md`](../docs/guidelines/nextjs/ai_s3_file_upload_guidelines.md)
+8. Env example: `DATABASE_URL`, `DIRECT_URL`; по модулям — `AUTH_SECRET` (`auth`), S3 (`AWS_IAM_*`, `S3_BUCKET_*`; `s3_uploads`), Sentry vars (`sentry`) — см. [`BOOTSTRAP.md`](../BOOTSTRAP.md) §6–§10, [`ai_s3_file_upload_guidelines.md`](../docs/guidelines/nextjs/ai_s3_file_upload_guidelines.md)
 9. Создать `.cursor/skills/app-conventions/SKILL.md` — **проектный скилл поверх cursor rules**:
    - Frontmatter: `name: app-conventions`; description без слов `performance`/`optimization`/`bundle`
    - Раздел `## Relationship to other skills` (defer-clause — обязателен, см. §4)
@@ -38,8 +39,9 @@ Senior Fullstack Developer (Next.js 16 + PostgreSQL + monorepo).
    - Раздел `## Deviations from vercel-react-best-practices` (пустой по умолчанию)
    - Spec: [`docs/project-react-skill-requirements.md`](../docs/project-react-skill-requirements.md)
 
-## Stack (full Pulse — all required)
-Next.js 16.4 · Vercel · Neon · Prisma v7 · Auth.js v5 · AWS S3 · Resend (schema-only MVP) · Sentry · shadcn · Tailwind v4 · Sonner
+## Stack
+Core: Next.js 16.4 · Vercel · Neon · Prisma v7 · shadcn · Tailwind v4 · Sonner.
+Модули по профилю (§4): Auth.js v5 (`auth`) · AWS S3 (`s3_uploads`) · Resend + `apps/workers` (`email_jobs`) · Sentry (`sentry`). Выключенный модуль — не ставить пакеты, не создавать env и каталоги.
 
 ## Forbidden
 - Business feature screens (→ P01+ phases)
