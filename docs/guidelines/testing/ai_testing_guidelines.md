@@ -54,6 +54,8 @@
 | CI | `npm run test:coverage` (пороги D4) + `npm run test:e2e` smoke | `standard` |
 | CI | + полный e2e (H / N / S), axe | `strict` |
 
+CI запускается на **Node.js 24** (`node-version: "24"` в [`ci.template.yml`](../../../scaffold/.github/workflows/ci.template.yml)). Та же мажорная линия — локально и на Vercel (`engines.node`: `24.x`).
+
 E2E в CI — против `next build && next start` (webServer в Playwright config) или preview-деплоя (`E2E_BASE_URL`).
 
 ## Related

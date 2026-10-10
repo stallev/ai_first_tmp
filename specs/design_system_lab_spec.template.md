@@ -348,7 +348,7 @@ Neutral catalog name — **не** префикс референсного про
 | **variant** | `default`, `outline`, `secondary`, `ghost`, `tonal`, `destructive`, `link` |
 | **size** | `xs`, `sm`, `default`, `lg`, `icon`, `icon-xs`, `icon-sm`, `icon-lg` |
 | **state** | default, disabled, `loading` (spinner + `data-loading`) |
-| **composition** | `asChild` + Radix Slot for Next.js `<Link>` |
+| **composition** | Base UI `render` prop for Next.js `<Link>` |
 
 **Visual canon (prototype):** per `visual_identity_contract` + prototype inspect — radius, height, hover/active affordances.
 
@@ -370,9 +370,7 @@ Neutral catalog name — **не** префикс референсного про
 import Link from "next/link";
 import { Button } from "@/components/ui/button";
 
-<Button asChild>
-  <Link href="/catalog">Browse catalog</Link>
-</Button>
+<Button render={<Link href="/catalog" />}>Browse catalog</Button>
 ```
 
 **MUST NOT** use `legacyBehavior` / `passHref`.
@@ -432,12 +430,12 @@ Tokenize shadcn primitives to **{{DESIGN_SYSTEM_NAME}}** / prototype parity. Com
 
 | Задача | Context7 library (приоритет) | Query focus |
 |--------|------------------------------|-------------|
-| shadcn/Radix primitives | `/websites/ui_shadcn` | Component API, `Field`/`aria-invalid`, Dialog/Sheet focus trap, Tabs |
+| shadcn/Base UI primitives | `/websites/ui_shadcn` | Component API, `Field`/`aria-invalid`, Dialog/Sheet focus trap, Tabs |
 | Next.js App Router / RSC | `/vercel/next.js` | `'use client'` boundary, route groups, Server Components |
 | Forms + a11y | `/websites/ui_shadcn` + [`ai_semantics_a11y_guidelines.md`](../../../guidelines/react/ai_semantics_a11y_guidelines.md) | labels, `aria-describedby`, keyboard |
 | Calendar / date UI | `/websites/ui_shadcn` | `Calendar`, selection, disabled dates |
 
-**MUST NOT:** hand-roll Radix behavior (focus trap, roving tabindex, switch/checkbox semantics) без сверки Context7.
+**MUST NOT:** hand-roll Base UI behavior (focus trap, roving tabindex, switch/checkbox semantics) без сверки Context7.
 
 **SHOULD:** зафиксировать в PR comment «Context7 verified: `{libraryId}` — {topic}».
 
@@ -445,7 +443,7 @@ Tokenize shadcn primitives to **{{DESIGN_SYSTEM_NAME}}** / prototype parity. Com
 
 ```text
 Typography text role only?           → components/atoms/
-shadcn/Radix or tokenized control?   → components/ui/ (tokenize in place if exists)
+shadcn/Base UI or tokenized control? → components/ui/ (tokenize in place if exists)
 Cross-role composed block (≥2 roles)? → components/ui/ (catalog L3) OR styleguide recipe
 Global nav / top bar / app chrome?   → components/shell/
 Domain-specific card/row/wizard?     → components/{{DOMAIN_COMPONENT_FOLDER}}/
@@ -467,7 +465,7 @@ Status/domain maps, elevation?       → lib/ui/ or @{{PACKAGE_SCOPE}}/domain (n
 | **FX-2** | Hierarchy | Один primary focus; secondary не конкурирует | P4 One Primary Action; `Button` variant `default` |
 | **FX-3** | Progressive disclosure | Сложность по шагам (wizard, tabs, sheet) | P1; per {{PROJECT_NAME}} user flows |
 | **FX-4** | Production states | `default`, `hover`, `focus`, `disabled`, `error`, `empty`, `loading` — где применимо | [`ui_states_contract.md`](../../../design/ui_states_contract.md); Lab matrix |
-| **FX-5** | Accessibility | WCAG 2.1 AA: names, contrast, keyboard, focus visible | **ui-semantics-a11y**; Radix/shadcn first |
+| **FX-5** | Accessibility | WCAG 2.1 AA: names, contrast, keyboard, focus visible | **ui-semantics-a11y**; shadcn (Base UI) first |
 | **FX-6** | Mobile-first | Base = 390px; touch ≥ **44×44px**; thumb-zone CTAs | **ui-mobile-first** |
 | **FX-7** | Immediate feedback | Mutations: pending + toast; toggles: optimistic optional | **ui-mutation-pending**, **ui-toast-mutations** |
 | **FX-8** | Zero dead ends | Empty/error с CTA | P2 Zero Dead Ends |
@@ -597,7 +595,7 @@ Domain folders **MUST** compose only from `atoms/`, `ui/`, `shell/`. Design Lab 
 | Copy JSX from `design-lab/` into routes | Import catalog + compose |
 | Generic shadcn look without prototype pass | Tokenize per § Prototype fidelity workflow |
 | Checkbox for catalog filter chips | `FilterChip` / tile pattern per prototype |
-| Skip Context7 for Radix/shadcn | MUST query before implement |
+| Skip Context7 for shadcn/Base UI | MUST query before implement |
 
 ---
 
@@ -832,7 +830,7 @@ Populate from [`prototype_route_mapping.md`](../../../design/prototype_route_map
 
 - [ ] Cursor Rules § enforced (spot-check ui-prototype-fidelity, ui-mobile-first, react-one-component-per-file)
 - [ ] New components placed per § Component catalog placement; FAANG contract FX-1–FX-10 spot-check
-- [ ] Context7 verification noted for Radix/shadcn/Next patterns where applicable
+- [ ] Context7 verification noted for shadcn/Base UI/Next patterns where applicable
 - [ ] `canonical_routes.md` updated
 - [ ] Lint + typecheck pass
 
@@ -873,7 +871,7 @@ Shared-компоненты продукта (atoms / ui): `Paths: n/a — prese
 | Lab not updated when CVA changes | `matrices.ts` must import variant keys from CVA or duplicate const with comment «sync with buttonVariants» |
 | Reference kit diverges from web | After merge, note in PR: implemented from {{PROJECT_NAME}} contract |
 | Lab strings bypass `@/lib/messages` | Allowed only in `components/design-lab/**` |
-| Agent skips Context7 for shadcn/Radix | Reject on verification; § Agent prerequisites — Context7 |
+| Agent skips Context7 for shadcn/Base UI | Reject on verification; § Agent prerequisites — Context7 |
 | Component in wrong folder (`patterns/`, duplicate tile) | § Catalog layers decision tree |
 
 ---

@@ -33,7 +33,7 @@
 | Hosting | Vercel |
 | DB | Neon PostgreSQL 17 + Prisma v7 |
 | Auth | Auth.js v5, Credentials, JWT |
-| UI | shadcn/ui + Tailwind CSS v4 |
+| UI | shadcn/ui (Base UI) + Tailwind CSS v4 |
 | Email | Resend (post-MVP; schema-ready) |
 | Storage | AWS S3 (presigned) |
 | Observability | Sentry |

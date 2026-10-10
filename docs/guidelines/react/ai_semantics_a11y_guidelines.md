@@ -73,7 +73,7 @@ Pulse serves clients, trainers, and admins on mobile and desktop. Semantic struc
 - **Keyboard:** all functionality available without pointer (except path-dependent gestures if any).
 - **Focus visible:** `focus-visible:ring-*` — never `outline-none` without replacement.
 - **Touch targets:** ≥ **44×44px** on mobile (**ui-mobile-first**).
-- **No keyboard trap** except intentional modal focus trap (Radix Dialog/Sheet).
+- **No keyboard trap** except intentional modal focus trap (shadcn Dialog/Sheet on Base UI).
 
 ### Understandable
 
@@ -84,7 +84,7 @@ Pulse serves clients, trainers, and admins on mobile and desktop. Semantic struc
 ### Robust
 
 - Valid HTML structure; avoid duplicate IDs.
-- Prefer Radix/shadcn for complex widgets (tabs, combobox, dialog) — tested ARIA patterns.
+- Prefer shadcn (Base UI) for complex widgets (tabs, combobox, dialog) — tested ARIA patterns.
 
 ---
 
@@ -127,7 +127,7 @@ Follow [`ai_form_handling_pattern.md`](./ai_form_handling_pattern.md):
 
 ---
 
-## 6. shadcn/ui & Radix
+## 6. shadcn/ui (Base UI)
 
 Install primitives via shadcn MCP — they ship focus management, dialog semantics, and keyboard handlers. **Do not reimplement** modal focus trap by hand unless extending with documented reason.
 
@@ -136,7 +136,7 @@ Install primitives via shadcn MCP — they ship focus management, dialog semanti
 - **`aria-hidden="true"`** — декоративные элементы; фокус всё ещё может попасть внутрь
 - **`inert`** — фон за модалкой: блокирует фокус, клики и скринридеры (предпочтительно для overlay backdrop)
 
-Radix Dialog/Sheet обеспечивают focus trap, Escape, focus return — используй их (**ui-mobile-first** Sheet `< md` / Dialog `≥ md`).
+shadcn Dialog/Sheet (Base UI) обеспечивают focus trap, Escape, focus return — используй их (**ui-mobile-first** Sheet `< md` / Dialog `≥ md`).
 
 ---
 
@@ -163,7 +163,7 @@ Before finishing a UI task:
 - [ ] Design system §15 checklist applied where relevant
 - [ ] Public landing: sync `page.tsx`; hero via `LandingHomeAboveFoldFallback` / `LandingHomeAboveFold` — [`ai_loading_patterns.md`](../nextjs/ai_loading_patterns.md) §14.1
 - [ ] Skip link to `#main-content` in root layout
-- [ ] Modals: Radix/shadcn — не hand-roll focus trap
+- [ ] Modals: shadcn (Base UI) — не hand-roll focus trap
 
 ---
 

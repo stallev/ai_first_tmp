@@ -72,9 +72,13 @@ Spec: [`design_system_lab_spec.md`](../../implementation/mvp/specs/design_system
 
 ## 4. shadcn/ui workflow
 
-1. Search shadcn MCP / registry before custom primitives
-2. Install to `components/ui/`
-3. Tokenize with {{DESIGN_SYSTEM_NAME}} CSS variables in `globals.css`
+Primitives are **Base UI**. Cursor rule: **ui-design-system-shadcn**.
+
+1. `shadcn init -b base` once; `components.json` `"style": "base-vega"`; dependency `@base-ui/react`
+2. Search shadcn MCP / registry before custom primitives
+3. Install to `components/ui/`
+4. Tokenize with {{DESIGN_SYSTEM_NAME}} CSS variables in `globals.css`
+5. Compose with the Base UI `render` prop (`<Button render={<Link href="…" />}>`), not `asChild`
 
 ---
 
@@ -137,7 +141,7 @@ Cursor rules: **react-ui-components**, **app-router-streaming-loading**.
 
 ### A11y
 
-- Keyboard navigation for dialogs/sheets (Radix/shadcn)
+- Keyboard navigation for dialogs/sheets (shadcn on Base UI)
 - Visible focus rings (`focus-visible:ring-ring`)
 - `aria-label` on icon-only buttons; `aria-hidden` on decorative icons
 - `aria-invalid` + `FieldError` on forms; `aria-busy` on mutations (**ui-mutation-pending**)

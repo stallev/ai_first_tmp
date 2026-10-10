@@ -30,7 +30,7 @@
 
 ## Предварительные требования
 
-- **Node.js** 20+ (LTS)
+- **Node.js** 24.x (local, CI, Vercel; `engines.node`: `24.x`)
 - **npm** 10+ (workspaces)
 - Аккаунты: **GitHub**, **Vercel**, **Neon**, **AWS** (S3 + IAM)
 - **Cursor** с доступом к Context7 (`/vercel/next.js` 16.4.x, Auth.js, Prisma)

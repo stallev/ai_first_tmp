@@ -32,7 +32,7 @@ alwaysApply: false
 | **Names** | У каждого интерактива — visible label или `aria-label`; icon-only → `aria-label` + `sr-only` fallback |
 | **Icons** | Декоративные lucide — `aria-hidden`; смысл — в текст/label (**ui-icons-lucide**) |
 | **Focus** | Видимый `focus-visible:` (`ring-ring`); порядок табуляции = визуальный порядок |
-| **Modals/Sheets** | Focus trap, Escape закрывает — shadcn/Radix primitives |
+| **Modals/Sheets** | Focus trap, Escape закрывает — shadcn/Base UI primitives |
 | **Forms** | `aria-invalid`, `aria-describedby` / `FieldError` при ошибках |
 | **Mutations** | `disabled` + `aria-busy` — **ui-mutation-pending** |
 | **Contrast** | AA: текст 4.5:1, UI 3:1 — {{DESIGN_SYSTEM_NAME}} tokens, light + dark |
@@ -43,7 +43,7 @@ alwaysApply: false
 ## Приоритет primitives
 
 1. **Native element** с правильной семантикой  
-2. **shadcn/ui (Radix)** — Dialog, Sheet, Select, Tabs  
+2. **shadcn/ui (Base UI)** — Dialog, Sheet, Select, Tabs  
 3. Custom ARIA — только если 1–2 недостаточно; не дублировать поведение браузера
 
 ## Agent checklist (перед merge UI)

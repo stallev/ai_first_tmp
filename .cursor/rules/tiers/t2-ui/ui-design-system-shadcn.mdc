@@ -41,7 +41,12 @@ Design explicitly: **empty**, **loading**, **error**, **forbidden**.
 
 ## Primitives
 
-shadcn: Card, Button, Tabs, Dialog, Sheet, Table, Form/Field/Label, Alert, Skeleton — install via shadcn MCP, then tokenize.
+shadcn on **Base UI**: Card, Button, Tabs, Dialog, Sheet, Table, Form/Field/Label, Alert, Skeleton — install via shadcn MCP, then tokenize.
+
+- Init: `shadcn init -b base`. In `components.json`, `"style": "base-vega"`.
+- Primitive package: `@base-ui/react`.
+- Compose with the Base UI `render` prop.
+- **MUST NOT:** `shadcn init -b radix`, a `radix-*` style, or `@radix-ui/*` as the shadcn primitive layer.
 
 ## Design Lab catalog (product UI — MUST)
 

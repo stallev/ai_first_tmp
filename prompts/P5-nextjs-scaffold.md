@@ -17,7 +17,7 @@ Senior Fullstack Developer (Next.js 16 + PostgreSQL + monorepo).
 - Context7: `/vercel/next.js`, `/websites/prisma_io`, `/websites/authjs_dev`
 
 ## Task
-1. **Monorepo root:** package.json workspaces, `npm run typecheck`, `npm run lint`. **Keep** existing `rules:sync` / `rules:check` / `deps:check` (do not drop them when adding workspaces). Copy [`scaffold/.npmrc`](../scaffold/.npmrc) → root `.npmrc` **before** the first `npm install`; all versions exact per **`.cursor/rules/dependency-pinning.mdc`**; commit `package-lock.json`; CI / Vercel install command — `npm ci`.
+1. **Monorepo root:** package.json workspaces, `npm run typecheck`, `npm run lint`. **Keep** existing `rules:sync` / `rules:check` / `deps:check` (do not drop them when adding workspaces). Set `"engines": { "node": "24.x" }` (local, CI, Vercel). Copy [`scaffold/.npmrc`](../scaffold/.npmrc) → root `.npmrc` **before** the first `npm install`; all versions exact per **`.cursor/rules/dependency-pinning.mdc`**; commit `package-lock.json`; CI / Vercel install command — `npm ci`.
 2. **Git commit tooling:** скопировать из [`scaffold/`](../scaffold/) → `commitlint.config.mjs`, `.husky/`; установить devDeps и scripts по **`.cursor/rules/agent-commit-pipeline.mdc` § Git tooling setup**. Optional: husky pre-commit also runs `npm run rules:check`.
 3. **packages/db:** Prisma schema from `database_schema_v1.md`, Neon URLs
 4. **packages/domain:** mutation codes scaffold, ports
@@ -45,7 +45,7 @@ Senior Fullstack Developer (Next.js 16 + PostgreSQL + monorepo).
    - Spec: [`docs/project-react-skill-requirements.md`](../docs/project-react-skill-requirements.md)
 
 ## Stack
-Core: Next.js 16.4 · Vercel · Neon · Prisma v7 · shadcn · Tailwind v4 · Sonner.
+Core: Next.js 16.4 · Node.js 24.x · Vercel · Neon · Prisma v7 · shadcn (Base UI) · Tailwind v4 · Sonner.
 Модули по профилю (§4): Auth.js v5 (`auth`) · AWS S3 (`s3_uploads`) · Resend + `apps/workers` (`email_jobs`) · Sentry (`sentry`). Выключенный модуль — не ставить пакеты, не создавать env и каталоги.
 
 ## Forbidden

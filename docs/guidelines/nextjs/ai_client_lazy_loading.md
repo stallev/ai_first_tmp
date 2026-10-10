@@ -106,7 +106,7 @@ DatePickerCalendarPanel.client.tsx   → Calendar + react-day-picker (or lazy im
 - `dynamic` import in the **field** file (or dedicated `CalendarPanelLazy.client.tsx`).
 - Render lazy child only when `open === true`.
 - `loading` skeleton must match **panel** size (limit CLS) — not the whole page skeleton.
-- Keep `aria-expanded` on trigger; panel region gets focus management via Radix Popover.
+- Keep `aria-expanded` on trigger; panel region gets focus management via the shadcn Popover (Base UI).
 
 **Current state:** [`DatePickerField.client.tsx`](../../../apps/web/src/components/ui/DatePickerField.client.tsx) lazy-loads [`DatePickerCalendarPanel.client.tsx`](../../../apps/web/src/components/ui/DatePickerCalendarPanel.client.tsx) when popover is open (§4.2).
 
@@ -118,7 +118,7 @@ Same rules: `'use client'` file, `dynamic` at module top, `loading` + conditiona
 
 ### 4.4. Dialog / Sheet content
 
-**When:** heavy form or editor inside Radix Dialog/Sheet.
+**When:** heavy form or editor inside a shadcn Dialog/Sheet (Base UI).
 
 - Keep Dialog/Sheet shell in parent; lazy-load **content body** when `open === true` (or on first open with `hasOpened` flag).
 - Mobile: Sheet from bottom (**ui-mobile-first**); skeleton height ≈ final sheet content.

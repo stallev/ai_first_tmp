@@ -31,7 +31,8 @@ When {{PROJECT_NAME}} docs are silent — follow Pulse reference **architecture,
 - **Next.js** **16.4** (exact patch pin, no caret) App Router, **TypeScript** — [ADR-002](docs/prds/07_governance/adr_002_nextjs_vercel_runtime_policy.template.md) (после W4: скопировать в `adr_002_….md`)
 - **Instant Navigations:** `cacheComponents: true` + `partialPrefetching: true`; динамика за `<Suspense>` / `'use cache'`; `export const instant = false` только с задокументированной причиной
 - **Request interception:** **`proxy.ts`** (Next.js 16); `middleware.ts` — только временная миграция
-- **Hosting:** Vercel · **UI:** shadcn/ui + Tailwind CSS v4 ({{DESIGN_SYSTEM_NAME}} tokens)
+- **Node.js:** **24.x** — local, CI (`node-version: "24"`), Vercel (`engines.node`: `24.x`)
+- **Hosting:** Vercel · **UI:** shadcn/ui (Base UI) + Tailwind CSS v4 ({{DESIGN_SYSTEM_NAME}} tokens)
 - **Database:** Neon **PostgreSQL 17** + **Prisma v7** (pooled `DATABASE_URL`, `DIRECT_URL` for migrations)
 - **Auth:** Auth.js v5, **Credentials** (email + password), JWT sessions, role in token
 - **Email:** Resend — **post-MVP** (MVP: schema `job_execution`/`delivery_log` only)
