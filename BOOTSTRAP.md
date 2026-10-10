@@ -124,7 +124,7 @@ rg '\{\{' --glob '!node_modules' .
 | From | To |
 |------|-----|
 | `AGENTS.template.md` | `AGENTS.md` |
-| `project-context.template.mdc` | `.cursor/rules/project-context.mdc` |
+| `.cursor/rules/tiers/t0-always/project-context.template.mdc` | `.cursor/rules/project-context.mdc` |
 | `docs/meta/*.template.md` | убрать `.template` (после P2) |
 
 **Claude Code:** корневой [`CLAUDE.md`](CLAUDE.md) — `@AGENTS.md` плюс указатель на generated `.claude/rules/*.md`. SoT MUST — только `.cursor/rules/*.mdc`; после копирования/правки `.mdc` — `npm run rules:sync` (или `node scripts/sync-claude-rules.mjs`). Не `@`-импортировать `.mdc`. Не править `.claude/rules/` руками. Playbook: [`docs/claude-code-cursor-rules-sync.md`](docs/claude-code-cursor-rules-sync.md). `scaffold/apps/web/CLAUDE.md` на P5 остаётся тонким `@AGENTS.md` (зеркало правил только в корне).
@@ -160,11 +160,11 @@ rg '\{\{' --glob '!node_modules' .
 
 | Когда | Действие |
 |-------|----------|
-| **P0** | Скопировать `tiers/t0-always/*.mdc` → `.cursor/rules/` + `project-context.mdc` (не копировать `*.template.mdc`), затем `npm run rules:sync` |
+| **P0** | T0 уже активен в шаблоне; создать `.cursor/rules/project-context.mdc` из `tiers/t0-always/project-context.template.mdc`, затем `npm run rules:sync` |
 | **P4** | + `tiers/t1-implementation/*.mdc`, затем `npm run rules:sync` |
 | **P6** | + `tiers/t2-ui/*.mdc`, затем `npm run rules:sync` |
 
-Итого: **5 → 12 → 27** active rules (+ `project-context` = 27 total rule files active).
+Состав каждого tier — только в манифесте [`.cursor/rules/README.md`](.cursor/rules/README.md); здесь числа не дублируются.
 
 ---
 
@@ -318,7 +318,7 @@ GCP: включить **PageSpeed Insights API**. Прогон: `npm run psi:lab
 ### После P6
 
 - [ ] `/design-system` renders 390px + md
-- [ ] T2 rules active (28 total)
+- [ ] T2 rules active (состав — по манифесту)
 - [ ] `npm run rules:check` pass
 - [ ] Product routes don't import `design-lab/`
 
@@ -344,7 +344,7 @@ my-new-project/
 │   ├── implementation/mvp/
 │   ├── claude-code-cursor-rules-sync.md
 │   └── examples/pulse/       # read-only reference
-├── .cursor/rules/            # 27 rules when complete (SoT)
+├── .cursor/rules/            # активные копии; SoT — tiers/ (манифест README.md)
 ├── .claude/rules/            # generated mirror — do not edit
 └── prompts/                  # keep for onboarding new agents
 ```

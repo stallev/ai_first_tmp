@@ -9,9 +9,9 @@ alwaysApply: false
 # UI animation & rendering performance
 
 **Methodology:** [`docs/meta/ai_first_project_methodology.md`](docs/meta/ai_first_project_methodology.md)  
-**Guide:** [`guidelines/react/ai_browser_rendering_performance.md`](../../guidelines/react/ai_browser_rendering_performance.md)  
-**Deep dive:** [`docs/general/05-browser-rendering.md`](../../docs/general/05-browser-rendering.md)  
-**Lazy bundles:** **react-ui-components** + [`ai_client_lazy_loading.md`](../../guidelines/nextjs/ai_client_lazy_loading.md)
+**Guide:** [`guidelines/react/ai_browser_rendering_performance.md`](guidelines/react/ai_browser_rendering_performance.md)  
+**Deep dive:** [`docs/general/05-browser-rendering.md`](docs/general/05-browser-rendering.md)  
+**Lazy bundles:** **react-ui-components** + [`ai_client_lazy_loading.md`](guidelines/nextjs/ai_client_lazy_loading.md)
 
 ## Pixel pipeline
 

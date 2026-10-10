@@ -2,7 +2,7 @@
 /**
  * Text files of the template must be valid UTF-8 without mojibake.
  * Catches files saved as Windows-1252 (smart quotes, dashes, arrows lost to `?`)
- * and UTF-8 text double-decoded as Windows-1252 (`â€”` instead of `—`).
+ * and UTF-8 text double-decoded as Windows-1252 (an em dash turns into "a-circumflex + euro + quote").
  * Scope: tracked text files outside the read-only reference snapshots in docs/examples/.
  */
 import { execFileSync } from "node:child_process";
@@ -13,7 +13,8 @@ import { fileURLToPath } from "node:url";
 const rootDir = path.resolve(path.dirname(fileURLToPath(import.meta.url)), "..");
 const TEXT_EXTENSIONS = new Set([".md", ".mdc", ".mjs", ".js", ".ts", ".json", ".yml", ".yaml", ".css", ".html"]);
 const EXCLUDED_PREFIXES = ["docs/examples/"];
-const MOJIBAKE_MARKERS = ["â€", "�"];
+// Built from code points so this file does not trip its own check.
+const MOJIBAKE_MARKERS = [String.fromCodePoint(0xe2, 0x20ac), String.fromCodePoint(0xfffd)];
 
 function listTrackedTextFiles() {
   const output = execFileSync("git", ["ls-files", "-z"], { cwd: rootDir, encoding: "utf8" });

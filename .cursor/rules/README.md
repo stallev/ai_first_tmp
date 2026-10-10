@@ -1,23 +1,30 @@
 # Cursor Rules — Tier Manifest
 
-34 rule из Pulse stack + lab PSI + dependency pinning, parameterized для новых проектов.  
+Правила стека Pulse + lab PSI + dependency pinning, параметризованные для новых проектов. **Этот манифест — единственное место, где перечислен состав tiers.** Другие документы ссылаются сюда и не повторяют списки и количества.  
 **Methodology:** [`docs/meta/ai_first_project_methodology.md`](../../docs/meta/ai_first_project_methodology.md) §2.4
 
 **Референс:** [`docs/examples/pulse/`](../../docs/examples/pulse/) — Pulse snapshot. **Guidelines + Rules boilerplate override Pulse code** — [`pulse_project_reference.md`](../../docs/reference/pulse_project_reference.md).
 
-## Активация при bootstrap (P0 / P4)
+## Источник истины и активация
 
-1. Скопировать все `.mdc` из нужных tier-папок в `.cursor/rules/` (или symlink)
-2. Переименовать `project-context.template.mdc` → `project-context.mdc` после заполнения placeholders
-3. T2 rules **не включать** до завершения P6 (Design System Lab)
+- **SoT каждого правила — `tiers/<tier>/<rule>.mdc`.** Корень `.cursor/rules/` содержит только **активированные копии**. Править tier-копию, затем скопировать в корень; `npm run rules:check` падает, если корневая копия расходится с tier-копией или правила нет ни в одном tier.
+- **В шаблоне активен только T0** (без `project-context` — его создаёт P0 из `tiers/t0-always/project-context.template.mdc` после замены placeholders). Это ровно состояние «после P0».
+
+| Когда | Действие |
+|-------|----------|
+| **P0** | T0 уже активен; создать `.cursor/rules/project-context.mdc` из шаблона |
+| **P4** (после W1) | Скопировать `tiers/t1-implementation/*.mdc` в корень |
+| **P6** (Design System Lab) | Скопировать `tiers/t2-ui/*.mdc` в корень; до P6 T2 **не включать** |
+
+После каждой активации — `npm run rules:sync`.
 
 ## Claude Code mirror
 
-После любой правки или копирования `.mdc` в **корень** `.cursor/rules/` (не `tiers/`): `npm run rules:sync`. Зеркало: [`.claude/rules/*.md`](../../.claude/rules/) — **не править руками**. Не синкать `*.template.mdc`. Playbook: [`docs/claude-code-cursor-rules-sync.md`](../../docs/claude-code-cursor-rules-sync.md). CI: `npm run rules:check`.
+После любой правки или копирования `.mdc` в **корень** `.cursor/rules/`: `npm run rules:sync`. Зеркало: [`.claude/rules/*.md`](../../.claude/rules/) — **не править руками**. Не синкать `*.template.mdc`. Playbook: [`docs/claude-code-cursor-rules-sync.md`](../../docs/claude-code-cursor-rules-sync.md). CI: `npm run rules:check`.
 
 ---
 
-## T0 — Always applied (bootstrap, день 0)
+## T0 — Always applied (активен в шаблоне)
 
 | Rule | alwaysApply | Назначение |
 |------|:-----------:|------------|
@@ -34,7 +41,7 @@
 
 ---
 
-## T1 — Implementation (после W1 governance + перед/во время P5 scaffold)
+## T1 — Implementation (P4, после W1 governance)
 
 | Rule | Назначение |
 |------|------------|
@@ -54,7 +61,7 @@
 
 ---
 
-## T2 — UI / React (после P6 Design System Lab)
+## T2 — UI / React (P6, Design System Lab)
 
 | Rule | Назначение |
 |------|------------|

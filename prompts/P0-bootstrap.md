@@ -20,7 +20,7 @@ Software Architect (AI-first monorepo).
 2. Заменить все `{{PLACEHOLDER}}` (verify: `rg '{{'`)
 3. Переименовать:
    - `AGENTS.template.md` → `AGENTS.md`
-   - `project-context.template.mdc` → `.cursor/rules/project-context.mdc`
+   - `.cursor/rules/tiers/t0-always/project-context.template.mdc` → `.cursor/rules/project-context.mdc`
 4. Создать пустую структуру `docs/` **без удаления существующих файлов**:
    ```
    docs/{default_docs,prototypes,reference,examples/pulse,meta,prds,design,guidelines,implementation/mvp/{contracts,specs,phases_tasks_descriptions,tasks,guides},architecture_learning_pack,incidents}
@@ -45,7 +45,7 @@ Software Architect (AI-first monorepo).
 - [ ] T0 rules в `.cursor/rules/` (без `*.template.mdc`)
 - [ ] `npm run rules:check` pass; `.claude/rules/` stem-match активных T0 `.mdc`
 - [ ] `docs/meta/` готов для P2
-- [ ] Guidelines скопированы (27 files)
+- [ ] Guidelines скопированы (полный набор из `guidelines/README.md`)
 - [ ] Если seed был — `docs/prototypes/{{MAIN_PROTOTYPE_HTML}}` на месте
 
 ## Next

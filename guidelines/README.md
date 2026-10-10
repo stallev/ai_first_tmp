@@ -6,7 +6,7 @@
 
 ## Приоритет источников (для агентов)
 
-Полный канонический список — [`.cursor/rules/project-context.template.mdc`](../.cursor/rules/project-context.template.mdc) § Source-of-truth order (после bootstrap: `project-context.mdc`). Не дублировать список здесь; кратко: Cursor Rules → … → Guidelines (`guidelines/`) → prototype. Над Pulse snapshot всегда выигрывают корневые Rules **и** Guidelines.
+Полный канонический список — [`.cursor/rules/tiers/t0-always/project-context.template.mdc`](../.cursor/rules/tiers/t0-always/project-context.template.mdc) § Source-of-truth order (после bootstrap: `project-context.mdc`). Не дублировать список здесь; кратко: Cursor Rules → … → Guidelines (`guidelines/`) → prototype. Над Pulse snapshot всегда выигрывают корневые Rules **и** Guidelines.
 
 См. [`docs/reference/pulse_project_reference.md`](../docs/reference/pulse_project_reference.md).
 

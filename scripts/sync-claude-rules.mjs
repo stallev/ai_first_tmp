@@ -126,7 +126,48 @@ function listClaudeMdFiles() {
   return fs.readdirSync(claudeRulesDir).filter((name) => name.endsWith(".md"));
 }
 
+// tiers/** is the source of truth for every rule; the root holds activated copies only.
+function findTierRuleProblems() {
+  const tiersDir = path.join(cursorRulesDir, "tiers");
+  const tierPathByName = new Map();
+  const problems = [];
+  for (const tier of fs.readdirSync(tiersDir)) {
+    const tierDir = path.join(tiersDir, tier);
+    if (!fs.statSync(tierDir).isDirectory()) {
+      continue;
+    }
+    for (const name of fs.readdirSync(tierDir).filter((file) => file.endsWith(".mdc"))) {
+      if (tierPathByName.has(name)) {
+        problems.push(`${name}: present in two tiers`);
+      }
+      tierPathByName.set(name, path.join(tierDir, name));
+    }
+  }
+  for (const name of fs.readdirSync(cursorRulesDir).filter((file) => file.endsWith(".mdc"))) {
+    const tierPath = tierPathByName.get(name);
+    if (!tierPath) {
+      problems.push(`${name}: active rule has no copy in tiers/ (add it to a tier first)`);
+      continue;
+    }
+    const readNormalized = (filePath) => fs.readFileSync(filePath, "utf8").replace(/\r\n/g, "\n");
+    if (readNormalized(path.join(cursorRulesDir, name)) !== readNormalized(tierPath)) {
+      const tierRelative = path.relative(rootDir, tierPath).split(path.sep).join("/");
+      problems.push(`${name}: differs from ${tierRelative} (edit the tier copy, then copy it to the root)`);
+    }
+  }
+  return problems;
+}
+
+function exitOnTierProblems() {
+  const problems = findTierRuleProblems();
+  if (problems.length) {
+    console.error("tier:", problems.join("\n  "));
+    process.exit(1);
+  }
+}
+
 function runCheck() {
+  exitOnTierProblems();
   const expected = expectedClaudeFiles();
   const actualNames = new Set(listClaudeMdFiles());
   const expectedNames = new Set(expected.keys());
@@ -138,8 +179,9 @@ function runCheck() {
     if (!fs.existsSync(dest)) {
       continue;
     }
-    const current = fs.readFileSync(dest, "utf8");
-    if (current !== text) {
+    // core.autocrlf rewrites line endings on checkout; only content drift matters.
+    const current = fs.readFileSync(dest, "utf8").replace(/\r\n/g, "\n");
+    if (current !== text.replace(/\r\n/g, "\n")) {
       drift.push(name);
     }
   }
@@ -158,6 +200,7 @@ function runCheck() {
 }
 
 function runSync() {
+  exitOnTierProblems();
   const expected = expectedClaudeFiles();
   fs.mkdirSync(claudeRulesDir, { recursive: true });
   for (const [name, text] of expected) {

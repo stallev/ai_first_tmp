@@ -9,8 +9,8 @@ Platform Architect.
 
 ## Inputs
 - [`.cursor/rules/README.md`](../.cursor/rules/README.md) — tier manifest
-- Boilerplate `.cursor/rules/tiers/t1-implementation/` (7 rules)
-- `docs/guidelines/` (27 files — verify paths)
+- Boilerplate `.cursor/rules/tiers/t1-implementation/` (состав — манифест §T1)
+- `docs/guidelines/` (verify paths)
 - Pulse rules reference: `docs/examples/pulse/.cursor/rules/`
 - `docs/meta/ai_first_project_methodology.md`
 
@@ -30,9 +30,9 @@ Platform Architect.
 - Pulse domain invariants in rules (use project-context placeholders)
 
 ## Verification
-- [ ] 12 rules total active (T0 + T1)
+- [ ] Активны T0 + T1 по манифесту (`ls .cursor/rules/*.mdc` = §T0 + §T1 + `project-context.mdc`)
 - [ ] `npm run rules:check` pass
-- [ ] guidelines/README indexes all 27 guides
+- [ ] guidelines/README indexes every guide file
 - [ ] Each T1 rule references Context7 where applicable
 - [ ] pulse_project_reference.md complete
 

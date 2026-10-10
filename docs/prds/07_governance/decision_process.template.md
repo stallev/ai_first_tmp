@@ -8,7 +8,7 @@
 
 **Methodology:** [`docs/meta/ai_first_project_methodology.md`](../../meta/ai_first_project_methodology.md)
 
-Канон SoT: [`.cursor/rules/project-context.template.mdc`](../../../.cursor/rules/project-context.template.mdc) (после bootstrap: `project-context.mdc`).
+Канон SoT: [`.cursor/rules/tiers/t0-always/project-context.template.mdc`](../../../.cursor/rules/tiers/t0-always/project-context.template.mdc) (после bootstrap: `project-context.mdc`).
 
 ---
 
@@ -118,7 +118,7 @@ MVP lock-in (ADR-001, ADR-002) — сразу **ACCEPTED** без ожидани
 | **PRD** | — | User-visible behavior, MVP scope |
 | **Cursor Rules** | — | Enforcement в коде; не дублировать ADR текстом |
 
-Иерархия при конфликте: см. [`.cursor/rules/project-context.template.mdc`](../../../.cursor/rules/project-context.template.mdc) § Source-of-truth order (после bootstrap: `project-context.mdc`). **ADR выше interim `default_docs/`**, ниже contracts для module behavior.
+Иерархия при конфликте: см. [`.cursor/rules/tiers/t0-always/project-context.template.mdc`](../../../.cursor/rules/tiers/t0-always/project-context.template.mdc) § Source-of-truth order (после bootstrap: `project-context.mdc`). **ADR выше interim `default_docs/`**, ниже contracts для module behavior.
 
 ---
 

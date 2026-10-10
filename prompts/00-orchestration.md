@@ -108,17 +108,19 @@ Visual seed (реком.) ──▶ P0 ──▶ P1 (ingest/create) ──▶ P2
 
 ## Cursor Rules activation timeline
 
-| После промпта | Tier | Rules count |
-|---------------|------|-------------|
-| P0 / P4 | T0 | 5 |
-| P4 / P5 | T1 | 7 |
-| P6 | T2 | 15 |
+| После промпта | Tier |
+|---------------|------|
+| P0 (активен в шаблоне) | T0 |
+| P4 (после W1) | T1 |
+| P6 | T2 |
+
+Состав tiers — только в манифесте.
 
 Manifest: [`.cursor/rules/README.md`](../.cursor/rules/README.md)
 
 ---
 
-## Guidelines (included — 28 files)
+## Guidelines (included)
 
 Полный набор в `guidelines/` — не создавать заново; адаптировать ссылки и {{PLACEHOLDERS}} в P4.
 

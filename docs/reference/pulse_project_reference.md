@@ -27,7 +27,7 @@
 
 **При разработке:**
 
-Нумерованный SoT — канон: [`.cursor/rules/project-context.template.mdc`](../../.cursor/rules/project-context.template.mdc) § Source-of-truth order (после bootstrap: `project-context.mdc`). **Не дублировать список здесь.**
+Нумерованный SoT — канон: [`.cursor/rules/tiers/t0-always/project-context.template.mdc`](../../.cursor/rules/tiers/t0-always/project-context.template.mdc) § Source-of-truth order (после bootstrap: `project-context.mdc`). **Не дублировать список здесь.**
 
 Над **Pulse snapshot** всегда выигрывают корневые Cursor Rules **и** корневые Guidelines (даже если Guidelines в SoT ниже PRD). Snapshot namesakes в `docs/examples/pulse/.cursor/rules/**` и `docs/examples/pulse/docs/guidelines/**` **не канон**. Дерева `docs/examples/lampto/` в этом репозитории **нет**.
 

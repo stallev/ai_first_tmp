@@ -39,7 +39,7 @@ Monorepo: **Next.js 16.4** App Router + Vercel + Neon PostgreSQL.
 
 ## Иерархия источников истины
 
-Полный канонический список — [`.cursor/rules/project-context.template.mdc`](.cursor/rules/project-context.template.mdc) § Source-of-truth order (после bootstrap: `project-context.mdc`). Не дублировать список здесь.
+Полный канонический список — [`.cursor/rules/tiers/t0-always/project-context.template.mdc`](.cursor/rules/tiers/t0-always/project-context.template.mdc) § Source-of-truth order (после bootstrap: `project-context.mdc`). Не дублировать список здесь.
 
 ## Документация — точки входа
 

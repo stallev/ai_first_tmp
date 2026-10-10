@@ -9,7 +9,8 @@ alwaysApply: false
 # Semantic markup & a11y (`apps/web`)
 
 **Methodology:** [`docs/meta/ai_first_project_methodology.md`](docs/meta/ai_first_project_methodology.md)  
-**Guide:** [`ai_semantics_a11y_guidelines.md`](docs/guidelines/react/ai_semantics_a11y_guidelines.md)  
+**Guide:** [`ai_semantics_a11y_guidelines.md`](guidelines/react/ai_semantics_a11y_guidelines.md)  
+**Deep dive:** [`docs/general/03-accessibility.md`](docs/general/03-accessibility.md)  
 **Design system:** [`fitness-platform-design-system.md`](docs/default_docs/fitness-platform-design-system.md) §15 Checklist
 
 **Target:** **WCAG 2.1 Level AA** — contrast, keyboard, names, structure.

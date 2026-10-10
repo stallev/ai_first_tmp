@@ -7,7 +7,7 @@
 
 **Methodology:** [`docs/meta/ai_first_project_methodology.md`](../../meta/ai_first_project_methodology.md)
 
-Канон SoT: [`.cursor/rules/project-context.template.mdc`](../../../.cursor/rules/project-context.template.mdc) (после bootstrap: `project-context.mdc`).
+Канон SoT: [`.cursor/rules/tiers/t0-always/project-context.template.mdc`](../../../.cursor/rules/tiers/t0-always/project-context.template.mdc) (после bootstrap: `project-context.mdc`).
 
 ---
 

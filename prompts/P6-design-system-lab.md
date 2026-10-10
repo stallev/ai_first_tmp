@@ -20,7 +20,7 @@ Frontend Architect.
 3. **Atoms:** Heading, SectionTitle, ContentText, AlertText → `components/atoms/`
 4. **Primitives:** tokenized Button, Card, CustomLink, PulseCard (rename per project)
 5. **Design Lab:** route `/design-system` in `(dev)` group — L1 Tokens + L2 Primitives + L3 Patterns (minimal)
-6. Activate **T2 cursor rules** (15 UI/React rules) → `.cursor/rules/`
+6. Activate **T2 cursor rules** (манифест §T2) → `.cursor/rules/`
 7. `npm run rules:sync` (T0+T1+T2 `.mdc` ↔ `.claude/rules/*.md`, без `*.template.mdc`)
 8. Update `canonical_routes.md` with `/design-system`
 9. Update `ui-warm-forest-shadcn.mdc` or create project-themed rule if renamed
@@ -35,7 +35,7 @@ Frontend Architect.
 
 ## Verification
 - [ ] Design Lab renders on 390px and md
-- [ ] 27 rules total active (T0+T1+T2)
+- [ ] Активны T0 + T1 + T2 по манифесту
 - [ ] `npm run rules:check` pass
 - [ ] Spec acceptance criteria pass
 - [ ] `npm run lint` pass

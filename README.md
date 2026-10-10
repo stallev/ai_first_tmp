@@ -93,13 +93,13 @@
 
 ## Cursor Rules — tiers
 
-| Tier | Когда активировать | Кол-во |
-|------|-------------------|--------|
-| **T0** | Bootstrap (день 0) | 5 rules — alwaysApply |
-| **T1** | Docs phase + scaffold | 10 rules — implementation (+ security-xss-csrf, javascript-fundamentals, psi-lab-testing) |
-| **T2** | Design System Lab (P6) | 17 rules — UI/React (+ ui-animation-performance, react-state-management) |
+| Tier | Когда активировать | Назначение |
+|------|-------------------|------------|
+| **T0** | Активен в шаблоне (состояние «после P0») | Оркестрация, commit/review, docs alignment, типы |
+| **T1** | P4 (после W1) | Implementation: Next.js, auth, data, security, deps |
+| **T2** | P6 (Design System Lab) | UI / React |
 
-Полный список: [`.cursor/rules/README.md`](.cursor/rules/README.md)
+Состав tiers — только в манифесте: [`.cursor/rules/README.md`](.cursor/rules/README.md). SoT правила — его копия в `tiers/`.
 
 ---
 

@@ -27,7 +27,7 @@
 
 **При разработке {{PROJECT_NAME}}:**
 
-Нумерованный SoT — канон: [`.cursor/rules/project-context.template.mdc`](../../.cursor/rules/project-context.template.mdc) (после bootstrap: `project-context.mdc`). **Не дублировать список здесь.**
+Нумерованный SoT — канон: [`.cursor/rules/tiers/t0-always/project-context.template.mdc`](../../.cursor/rules/tiers/t0-always/project-context.template.mdc) (после bootstrap: `project-context.mdc`). **Не дублировать список здесь.**
 
 Над Pulse snapshot всегда выигрывают корневые Cursor Rules **и** корневые `guidelines/**` (даже если Guidelines в SoT ниже PRD). Не канон: `docs/examples/pulse/.cursor/rules/**`, `docs/examples/pulse/docs/guidelines/**`, любой `docs/examples/lampto/**` (дерева нет).
 

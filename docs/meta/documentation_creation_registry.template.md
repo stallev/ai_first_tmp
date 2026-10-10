@@ -51,7 +51,7 @@
 
 ### 2.1 Иерархия источников истины
 
-Базовый порядок — канон: [`.cursor/rules/project-context.template.mdc`](../../.cursor/rules/project-context.template.mdc) § Source-of-truth order (после bootstrap: `project-context.mdc`). Не дублировать список здесь.
+Базовый порядок — канон: [`.cursor/rules/tiers/t0-always/project-context.template.mdc`](../../.cursor/rules/tiers/t0-always/project-context.template.mdc) § Source-of-truth order (после bootstrap: `project-context.mdc`). Не дублировать список здесь.
 
 Уточнения для документации (в рамках соответствующих уровней канона):
 - **`AGENTS.md`** — включая `apps/web/AGENTS.md` для web-кода
