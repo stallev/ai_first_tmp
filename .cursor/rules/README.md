@@ -1,6 +1,6 @@
 # Cursor Rules — Tier Manifest
 
-33 rule из Pulse stack + lab PSI, parameterized для новых проектов.  
+34 rule из Pulse stack + lab PSI + dependency pinning, parameterized для новых проектов.  
 **Methodology:** [`docs/meta/ai_first_project_methodology.md`](../../docs/meta/ai_first_project_methodology.md) §2.4
 
 **Референс:** [`docs/examples/pulse/`](../../docs/examples/pulse/) — Pulse snapshot. **Guidelines + Rules boilerplate override Pulse code** — [`pulse_project_reference.md`](../../docs/reference/pulse_project_reference.md).
@@ -48,6 +48,7 @@
 | `s3-file-asset-uploads.mdc` | FileAsset + AWS S3 presigned |
 | `javascript-fundamentals.mdc` | Closures, map/filter/reduce, generators, ESM modules, TS generics |
 | `psi-lab-testing.mdc` | Requestable — lab PSI on deployed origin (REST, not MCP / localhost) |
+| `dependency-pinning.mdc` | Exact npm versions (no `^` / `~`), `.npmrc` `save-exact`, lockfile + `npm ci`, `chore(deps)` CU; `npm run deps:check`. Globs: `package.json`, lockfile, `.npmrc` |
 
 Файлы: [`tiers/t1-implementation/`](tiers/t1-implementation/)
 

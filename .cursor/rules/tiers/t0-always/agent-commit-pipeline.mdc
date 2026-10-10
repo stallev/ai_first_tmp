@@ -38,6 +38,7 @@ alwaysApply: true
 - `npm run typecheck` (root monorepo) — когда workspaces уже есть (после P5)
 - `npm run lint` — когда скрипт есть
 - `npm run rules:check` — если есть `.claude/rules/` (после `rules:sync`)
+- `npm run deps:check` — если в diff есть `package.json` / `package-lock.json` / `.npmrc` (`dependency-pinning.mdc`)
 - CU DoD из `P{N}_tasks.md` (и Phase DoD — на последнем CU фазы)
 
 Если в задаче правили `.cursor/rules/*.mdc` — в **той же задаче** `npm run rules:sync` и закоммитить `.claude/rules/`. Не править зеркало руками.

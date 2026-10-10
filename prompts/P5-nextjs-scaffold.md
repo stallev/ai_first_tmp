@@ -16,7 +16,7 @@ Senior Fullstack Developer (Next.js 16 + PostgreSQL + monorepo).
 - Context7: `/vercel/next.js`, `/websites/prisma_io`, `/websites/authjs_dev`
 
 ## Task
-1. **Monorepo root:** package.json workspaces, `npm run typecheck`, `npm run lint`. **Keep** existing `rules:sync` / `rules:check` (do not drop them when adding workspaces).
+1. **Monorepo root:** package.json workspaces, `npm run typecheck`, `npm run lint`. **Keep** existing `rules:sync` / `rules:check` / `deps:check` (do not drop them when adding workspaces). Copy [`scaffold/.npmrc`](../scaffold/.npmrc) → root `.npmrc` **before** the first `npm install`; all versions exact per **`.cursor/rules/dependency-pinning.mdc`**; commit `package-lock.json`; CI / Vercel install command — `npm ci`.
 2. **Git commit tooling:** скопировать из [`scaffold/`](../scaffold/) → `commitlint.config.mjs`, `.husky/`; установить devDeps и scripts по **`.cursor/rules/agent-commit-pipeline.mdc` § Git tooling setup**. Optional: husky pre-commit also runs `npm run rules:check`.
 3. **packages/db:** Prisma schema from `database_schema_v1.md`, Neon URLs
 4. **packages/domain:** mutation codes scaffold, ports
@@ -48,7 +48,8 @@ Next.js 16.4 · Vercel · Neon · Prisma v7 · Auth.js v5 · AWS S3 · Resend (s
 
 ## Verification
 - [ ] `next` in `apps/web/package.json` is exact current 16.4.x (baseline 16.4; verified via `npm view next version`)
-- [ ] root `package.json` still has `rules:sync` / `rules:check`
+- [ ] root `package.json` still has `rules:sync` / `rules:check` / `deps:check`
+- [ ] root `.npmrc` with `save-exact=true`; `npm run deps:check` pass; `package-lock.json` committed
 - [ ] `npm run typecheck` pass
 - [ ] `npm run lint` pass
 - [ ] `next build` pass (minimal pages OK)

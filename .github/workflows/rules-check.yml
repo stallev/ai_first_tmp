@@ -13,3 +13,4 @@ jobs:
         with:
           node-version: "20"
       - run: npm run rules:check
+      - run: npm run deps:check

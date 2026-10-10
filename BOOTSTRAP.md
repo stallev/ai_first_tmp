@@ -313,11 +313,12 @@ GCP: включить **PageSpeed Insights API**. Прогон: `npm run psi:lab
 - [ ] `proxy.ts` present, not legacy middleware patterns
 - [ ] `apps/web/CLAUDE.md` exists (`@AGENTS.md` import)
 - [ ] `next` pinned to current 16.4.x patch (no `^16`)
+- [ ] root `.npmrc` (`save-exact=true`) from `scaffold/.npmrc`; `npm run deps:check` pass; CI / Vercel on `npm ci`
 
 ### После P6
 
 - [ ] `/design-system` renders 390px + md
-- [ ] T2 rules active (27 total)
+- [ ] T2 rules active (28 total)
 - [ ] `npm run rules:check` pass
 - [ ] Product routes don't import `design-lab/`
 
