@@ -32,7 +32,7 @@ Platform Architect.
 ## Verification
 - [ ] Активны T0 + T1 по манифесту (`ls .cursor/rules/*.mdc` = §T0 + §T1 + `project-context.mdc`)
 - [ ] `npm run rules:check` pass
-- [ ] guidelines/README indexes every guide file
+- [ ] docs/guidelines/README indexes every guide file
 - [ ] Each T1 rule references Context7 where applicable
 - [ ] pulse_project_reference.md complete
 

@@ -1,8 +1,8 @@
 # Data fetching patterns — Next.js 16 / React 19
 
 **Stack:** Next.js **16.4**, React 19, Prisma v7  
-**Methodology:** [`docs/meta/ai_first_project_methodology.md`](../../docs/meta/ai_first_project_methodology.md)  
-**Deep dive:** [`docs/general/02-data-fetching.md`](../../docs/general/02-data-fetching.md)  
+**Methodology:** [`docs/meta/ai_first_project_methodology.md`](../../meta/ai_first_project_methodology.md)  
+**Deep dive:** [`docs/general/02-data-fetching.md`](../../general/02-data-fetching.md)  
 **DAL canon:** [`ai_nextjs_db_data_handle.md`](./ai_nextjs_db_data_handle.md)  
 **Loading UX:** [`ai_loading_patterns.md`](./ai_loading_patterns.md)  
 **Cursor rules:** **data-server-actions-and-api**, **app-router-streaming-loading**
@@ -174,7 +174,7 @@ async function TrainerCard({ trainerId }: { trainerId: string }) {
 - Child needs **different** data shape or authorization scope — separate DAL function, still prefer passing id only when parent did not already load entity.
 - Client leaf with `use(promise)` — server passes unresolved `Promise` only when documented (search-as-you-type, hover popover).
 
-Provenance: evaluated against [nextjs-app-architecture-skill](https://github.com/aurorascharff/nextjs-app-architecture-skill) — **not installed**; [`adr_010_nextjs_app_architecture_skill.md`](../../docs/reference/adr_010_nextjs_app_architecture_skill.md).
+Provenance: evaluated against [nextjs-app-architecture-skill](https://github.com/aurorascharff/nextjs-app-architecture-skill) — **not installed**; [`adr_010_nextjs_app_architecture_skill.md`](../../reference/adr_010_nextjs_app_architecture_skill.md).
 
 ---
 
@@ -196,10 +196,10 @@ Provenance: evaluated against [nextjs-app-architecture-skill](https://github.com
 
 | Document | Topic |
 |----------|--------|
-| [`docs/general/02-data-fetching.md`](../../docs/general/02-data-fetching.md) | Full theory: SWR, dedup impl, retry code |
+| [`docs/general/02-data-fetching.md`](../../general/02-data-fetching.md) | Full theory: SWR, dedup impl, retry code |
 | [`ai_nextjs_db_data_handle.md`](./ai_nextjs_db_data_handle.md) | Actions vs Route Handlers |
 | [`ai_optimistic_ui_pattern.md`](../react/ai_optimistic_ui_pattern.md) | Client optimistic |
 | Pulse reference | `docs/examples/pulse/apps/web/src/data/` |
-| [`adr_010_nextjs_app_architecture_skill.md`](../../docs/reference/adr_010_nextjs_app_architecture_skill.md) | External RSC skill mapping |
+| [`adr_010_nextjs_app_architecture_skill.md`](../../reference/adr_010_nextjs_app_architecture_skill.md) | External RSC skill mapping |
 
 **Reference:** Pulse (docs/examples/pulse) — DAL structure; **Guidelines текущего проекта override Pulse**.

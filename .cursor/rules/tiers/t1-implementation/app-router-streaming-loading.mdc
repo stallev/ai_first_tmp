@@ -6,8 +6,8 @@ alwaysApply: false
 
 # App Router: streaming, loading & page performance (mandatory for route work)
 
-**Normative doc:** [`guidelines/nextjs/ai_loading_patterns.md`](guidelines/nextjs/ai_loading_patterns.md) — loading UX **and** page performance (Pulse merged former `ai_page_performance_streaming.md` into §4–§18).  
-**Client JS (orthogonal layer):** [`ai_client_lazy_loading.md`](guidelines/nextjs/ai_client_lazy_loading.md) — `next/dynamic`, heavy client deps; Suspense does **not** defer `react-day-picker` / `recharts`.  
+**Normative doc:** [`docs/guidelines/nextjs/ai_loading_patterns.md`](docs/guidelines/nextjs/ai_loading_patterns.md) — loading UX **and** page performance (Pulse merged former `ai_page_performance_streaming.md` into §4–§18).  
+**Client JS (orthogonal layer):** [`ai_client_lazy_loading.md`](docs/guidelines/nextjs/ai_client_lazy_loading.md) — `next/dynamic`, heavy client deps; Suspense does **not** defer `react-day-picker` / `recharts`.  
 **Runtime:** [ADR-002 template](docs/prds/07_governance/adr_002_next162_vercel_runtime_policy.template.md) — Next.js **16.4** (exact patch pin), Instant Navigations **required** (§5.1 / loading §8.1)  
 **Cache tags:** [`cache_revalidation_policy.md`](docs/prds/05_runtime/cache_revalidation_policy.md) (после W5)
 
@@ -16,8 +16,8 @@ When you **add or edit** `page.tsx`, segment `layout.tsx`, colocated `loading.ts
 ## Do
 
 1. **Design for Instant Navigations:** adopt Cache Components **then** Partial Prefetching; prefer Stream (`<Suspense>` / `loading.tsx`) or Cache (`'use cache'`) so navigations stay instant; use `export const instant = false` only with an explicit product reason (Block) — §8.1.
-2. **Instant Insights (dev):** overlay is **warning** (not general QA, ≠ `next-dev-loop`). Close findings with Stream / Cache / Block — [`ai_loading_patterns.md`](guidelines/nextjs/ai_loading_patterns.md) §8.1.1. Production build uses `blocking-prerender-*` — do not mix with `blocking-route`.
-3. **Multiple independent Prisma queries** for **different UI sections** → separate async Server Components (prefer `*.server.tsx`), each in **`<Suspense fallback={<RegionSkeleton />}>`**. Avoid blocking the whole page with one top-level `Promise.all` unless a [§18 exception](guidelines/nextjs/ai_loading_patterns.md#18-documented-exceptions) is documented.
+2. **Instant Insights (dev):** overlay is **warning** (not general QA, ≠ `next-dev-loop`). Close findings with Stream / Cache / Block — [`ai_loading_patterns.md`](docs/guidelines/nextjs/ai_loading_patterns.md) §8.1.1. Production build uses `blocking-prerender-*` — do not mix with `blocking-route`.
+3. **Multiple independent Prisma queries** for **different UI sections** → separate async Server Components (prefer `*.server.tsx`), each in **`<Suspense fallback={<RegionSkeleton />}>`**. Avoid blocking the whole page with one top-level `Promise.all` unless a [§18 exception](docs/guidelines/nextjs/ai_loading_patterns.md#18-documented-exceptions) is documented.
 4. **New or materially changed data-heavy route** → colocated **`loading.tsx`** (skeleton matching page chrome) per §10.
 5. Keep **`page.tsx` light** (§4): `await params` / `searchParams`, fast `auth()` + redirects, static shell; defer heavy work to Suspense children in `src/data/**` or `*.server.tsx`. **Opt-in:** sync page + `params.then()` when `cacheComponents: true` — see `ai_loading_patterns.md` §4.1 / ADR-010.
 6. **Independent queries in one async child** → `Promise.all`, not sequential awaits (§7). For independent **UI regions**, prefer sibling Suspense over one `Promise.all` that fails atomically (§5).

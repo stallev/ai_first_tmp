@@ -70,7 +70,7 @@ export default async function Page(props: {
 
 ## 5. Decision — cache reads and invalidation
 
-**Cross-request cached reads:** **`'use cache'`** + **`cacheTag()`** / **`cacheLife()`** in `src/data/**`. **Do not add new `unstable_cache()`**. Enable **`cacheComponents: true`**. Detail: [`guidelines/nextjs/ai_loading_patterns.md`](../../../guidelines/nextjs/ai_loading_patterns.md) §8.
+**Cross-request cached reads:** **`'use cache'`** + **`cacheTag()`** / **`cacheLife()`** in `src/data/**`. **Do not add new `unstable_cache()`**. Enable **`cacheComponents: true`**. Detail: [`docs/guidelines/nextjs/ai_loading_patterns.md`](../../guidelines/nextjs/ai_loading_patterns.md) §8.
 
 | API | When |
 |-----|------|
@@ -105,7 +105,7 @@ const nextConfig: NextConfig = {
 
 Playwright `@next/playwright` `instant()` — **SHOULD** on critical product navigations when flags are on (do **not** treat Pulse `/trainers` as mandatory routes). Scaffold does **not** add the Playwright package in this boilerplate task.
 
-Detail: [`guidelines/nextjs/ai_loading_patterns.md`](../../../guidelines/nextjs/ai_loading_patterns.md) §8.1 / §8.1.1.
+Detail: [`docs/guidelines/nextjs/ai_loading_patterns.md`](../../guidelines/nextjs/ai_loading_patterns.md) §8.1 / §8.1.1.
 
 ---
 
@@ -146,5 +146,5 @@ Detail: [`guidelines/nextjs/ai_loading_patterns.md`](../../../guidelines/nextjs/
 ## Related documents
 
 - [`.cursor/rules/nextjs-vercel-app-router.mdc`](../../../.cursor/rules/nextjs-vercel-app-router.mdc)
-- [`guidelines/nextjs/README.md`](../../../guidelines/nextjs/README.md)
+- [`docs/guidelines/nextjs/README.md`](../../guidelines/nextjs/README.md)
 - Pulse snapshot (code/domain reference, not boilerplate canon): [`docs/examples/pulse/docs/prds/07_governance/adr_002_next162_vercel_runtime_policy.md`](../../examples/pulse/docs/prds/07_governance/adr_002_next162_vercel_runtime_policy.md)

@@ -1,8 +1,8 @@
 # Browser rendering performance — React / Tailwind v4
 
 **Stack:** Next.js **16.4**, React 19, Tailwind CSS v4  
-**Methodology:** [`docs/meta/ai_first_project_methodology.md`](../../docs/meta/ai_first_project_methodology.md)  
-**Deep dive:** [`docs/general/05-browser-rendering.md`](../../docs/general/05-browser-rendering.md)  
+**Methodology:** [`docs/meta/ai_first_project_methodology.md`](../../meta/ai_first_project_methodology.md)  
+**Deep dive:** [`docs/general/05-browser-rendering.md`](../../general/05-browser-rendering.md)  
 **Cursor rule:** **ui-animation-performance**  
 **Lazy loading:** [`ai_client_lazy_loading.md`](../nextjs/ai_client_lazy_loading.md)
 
@@ -128,8 +128,8 @@ className="transition-all duration-300" // may animate layout props
 
 | Document | Topic |
 |----------|--------|
-| [`docs/general/05-browser-rendering.md`](../../docs/general/05-browser-rendering.md) | FLIP technique, full pipeline theory |
-| [`docs/general/04-code-splitting.md`](../../docs/general/04-code-splitting.md) | TBT, bundle size |
+| [`docs/general/05-browser-rendering.md`](../../general/05-browser-rendering.md) | FLIP technique, full pipeline theory |
+| [`docs/general/04-code-splitting.md`](../../general/04-code-splitting.md) | TBT, bundle size |
 | [`ai_client_lazy_loading.md`](../nextjs/ai_client_lazy_loading.md) | Client bundle |
 | [`ai_semantics_a11y_guidelines.md`](./ai_semantics_a11y_guidelines.md) | Motion a11y |
 

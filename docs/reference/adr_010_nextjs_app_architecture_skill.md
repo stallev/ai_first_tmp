@@ -13,7 +13,7 @@
 
 ## 1. Context
 
-The community skill packages RSC composition patterns for Next.js 16+ (Suspense at page level, async server components, Cache Components, anti-waterfall). Our stack already documents overlapping patterns in Cursor Rules and `guidelines/nextjs/`, plus monorepo boundaries, DAL/actions split, iOS Safari mutation transport, Design Lab, and phase contracts that the external skill does not cover.
+The community skill packages RSC composition patterns for Next.js 16+ (Suspense at page level, async server components, Cache Components, anti-waterfall). Our stack already documents overlapping patterns in Cursor Rules and `docs/guidelines/nextjs/`, plus monorepo boundaries, DAL/actions split, iOS Safari mutation transport, Design Lab, and phase contracts that the external skill does not cover.
 
 Installing the external skill alongside project Cursor Rules creates **two competing sources of truth** (folder layout, skeleton placement, action file naming, page sync vs async).
 

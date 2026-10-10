@@ -45,6 +45,6 @@ Split Auth.js config is **mandatory**: `auth.config.ts` for proxy; `auth.ts` (+ 
 - [ ] Session verified on every mutation and protected read
 - [ ] No `@{{PACKAGE_SCOPE}}/policy-server` in proxy/middleware
 
-- [ ] XSS/CSRF/CSP — **security-xss-csrf** + [`ai_security_xss_csrf_guidelines.md`](../../guidelines/security/ai_security_xss_csrf_guidelines.md)
+- [ ] XSS/CSRF/CSP — **security-xss-csrf** + [`ai_security_xss_csrf_guidelines.md`](docs/guidelines/security/ai_security_xss_csrf_guidelines.md)
 
 Reference: Pulse (docs/examples/pulse) `auth-security.mdc` — **Guidelines override Pulse reference code**.

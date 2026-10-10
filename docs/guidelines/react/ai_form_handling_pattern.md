@@ -158,4 +158,4 @@ Wrap submit in `useTransition`; branch on `isIosSafari()` before calling Action 
 5. **Cache:** `updateTag` / `revalidatePath` in action after mutation (ADR-002)
 6. **Class B critical form:** iOS Safari fallback per §7 and **ios-safari-mutation-transport**
 
-**Reference:** Pulse snapshot [`ai_form_handling_pattern.md`](../../docs/examples/pulse/docs/guidelines/react/ai_form_handling_pattern.md)
+**Reference:** Pulse snapshot [`ai_form_handling_pattern.md`](../../examples/pulse/docs/guidelines/react/ai_form_handling_pattern.md)

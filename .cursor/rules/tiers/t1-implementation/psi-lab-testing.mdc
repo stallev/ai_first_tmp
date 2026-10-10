@@ -5,8 +5,8 @@ alwaysApply: false
 
 # Lab PageSpeed Insights (deployed origin)
 
-**Canon (portable):** [`guidelines/psi-lab-testing.md`](guidelines/psi-lab-testing.md)  
-**Project HOW:** [`guidelines/nextjs/ai_psi_lab_testing.md`](guidelines/nextjs/ai_psi_lab_testing.md)  
+**Canon (portable):** [`docs/guidelines/psi-lab-testing.md`](docs/guidelines/psi-lab-testing.md)  
+**Project HOW:** [`docs/guidelines/nextjs/ai_psi_lab_testing.md`](docs/guidelines/nextjs/ai_psi_lab_testing.md)  
 **CLI:** `npm run psi:lab` → [`scripts/psi-lab/run-pagespeed.mjs`](scripts/psi-lab/run-pagespeed.mjs)
 
 ## Trigger

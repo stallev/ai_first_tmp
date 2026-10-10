@@ -26,7 +26,7 @@ Cursor и Claude Code **не читают одни и те же файлы**. Е
 .claude/rules/*.md    (не править руками)
 ```
 
-HOW-гайды (`guidelines/`) в rules **не кладут** — они не auto-load; агент читает их по индексу, когда реализует UI.
+HOW-гайды (`docs/guidelines/`) в rules **не кладут** — они не auto-load; агент читает их по индексу, когда реализует UI.
 
 ---
 
@@ -37,7 +37,7 @@ HOW-гайды (`guidelines/`) в rules **не кладут** — они не au
 | Narrative | `AGENTS.md` | Cursor: сам файл. Claude: `@AGENTS.md` в `CLAUDE.md` | вручную |
 | MUST (SoT) | `.cursor/rules/*.mdc` | Cursor: `alwaysApply` / `globs` | **только здесь** |
 | MUST (зеркало) | `.claude/rules/*.md` | Claude: без `paths` = always-on; с `paths` = glob | **только sync** |
-| HOW | `guidelines/` (или аналог) | нет | вручную |
+| HOW | `docs/guidelines/` (или аналог) | нет | вручную |
 
 `CLAUDE.md` — тонкий указатель, не дублирует тела MUST.
 
@@ -209,6 +209,6 @@ npm run rules:check
 ## Что не входит в этот механизм
 
 - Содержимое конкретных MUST (стек, auth, UI) — это продукт целевого репо.
-- Skills Cursor / Claude, MCP, `guidelines/` — отдельные слои.
+- Skills Cursor / Claude, MCP, `docs/guidelines/` — отдельные слои.
 - `.claude/worktrees/` и прочие служебные каталоги Claude — не канон правил.
 - Двусторонняя синхронизация: Claude → Cursor **нет**. SoT только `.mdc`.

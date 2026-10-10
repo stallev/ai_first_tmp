@@ -5,7 +5,7 @@ Patterns for **Next.js 16.4 App Router**, **React 19**, **TypeScript**, **Tailwi
 **Methodology:** [`docs/meta/ai_first_project_methodology.md`](../../meta/ai_first_project_methodology.md)  
 **Design system:** [`fitness-platform-design-system.md`](../../default_docs/fitness-platform-design-system.md)  
 **Typography:** [`typography_text_guidelines.md`](../typography_text_guidelines.md)  
-**Reference:** Pulse [`docs/examples/pulse/docs/guidelines/react/`](../../examples/pulse/docs/guidelines/react/) — **Guidelines текущего проекта override Pulse reference code** ([`pulse_project_reference.md`](../../docs/reference/pulse_project_reference.md)).
+**Reference:** Pulse [`docs/examples/pulse/docs/guidelines/react/`](../../examples/pulse/docs/guidelines/react/) — **Guidelines текущего проекта override Pulse reference code** ([`pulse_project_reference.md`](../../reference/pulse_project_reference.md)).
 
 ---
 

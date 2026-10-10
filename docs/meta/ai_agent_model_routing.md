@@ -5,7 +5,7 @@
 **Версия:** 2.0  
 **Дата:** 2026-10-10  
 **Зависит от:** [`ai_first_project_methodology.template.md`](./ai_first_project_methodology.template.md) §2.2–§2.5 (после bootstrap — `ai_first_project_methodology.md`), [`.cursor/rules/model-routing.mdc`](../../.cursor/rules/model-routing.mdc), [`documentation_creation_registry.template.md`](./documentation_creation_registry.template.md) §2.3.2a / §2.3.6  
-**Связанные документы:** [`AGENTS.md`](../../AGENTS.md) (после bootstrap; до него — [`AGENTS.template.md`](../../AGENTS.template.md)), [`phase_tasks.template.md`](./phase_tasks.template.md), [`guidelines/ai_code_review_protocol.md`](../../guidelines/ai_code_review_protocol.md)
+**Связанные документы:** [`AGENTS.md`](../../AGENTS.md) (после bootstrap; до него — [`AGENTS.template.md`](../../AGENTS.template.md)), [`phase_tasks.template.md`](./phase_tasks.template.md), [`docs/guidelines/ai_code_review_protocol.md`](../guidelines/ai_code_review_protocol.md)
 
 ---
 
@@ -151,7 +151,7 @@ Lint не заменяет `reviewer`. `reviewer` не заменяет `npm run
 
 ## Review и commit (не Bugbot)
 
-Один гейт на CU — [`agent-code-review-subagent.mdc`](../../.cursor/rules/agent-code-review-subagent.mdc), HOW — [`ai_code_review_protocol.md`](../../guidelines/ai_code_review_protocol.md):
+Один гейт на CU — [`agent-code-review-subagent.mdc`](../../.cursor/rules/agent-code-review-subagent.mdc), HOW — [`ai_code_review_protocol.md`](../guidelines/ai_code_review_protocol.md):
 
 | Содержимое CU | Review | Кто |
 |---------------|--------|-----|
@@ -198,7 +198,7 @@ Lint не заменяет `reviewer`. `reviewer` не заменяет `npm run
 | [`ai_first_project_methodology.template.md`](./ai_first_project_methodology.template.md) | Цикл КОНТЕКСТ → TIER/DoR → … → COMMIT |
 | [`agent-code-review-subagent.mdc`](../../.cursor/rules/agent-code-review-subagent.mdc) | Review-гейт CU, sensitive zones |
 | [`agent-commit-pipeline.mdc`](../../.cursor/rules/agent-commit-pipeline.mdc) | Auto-commit на границе CU |
-| [`ai_code_review_protocol.md`](../../guidelines/ai_code_review_protocol.md) | HOW трёх проходов и prompt `reviewer` |
+| [`ai_code_review_protocol.md`](../guidelines/ai_code_review_protocol.md) | HOW трёх проходов и prompt `reviewer` |
 | [Subagents](https://cursor.com/docs/agent/subagents) | Формат `.cursor/agents/*.md` |
 
 ## Agent notes

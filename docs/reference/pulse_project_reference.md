@@ -101,7 +101,7 @@
 ## Связанные документы
 
 - [`docs/examples/pulse/README.md`](../examples/pulse/README.md) — snapshot layout
-- [`guidelines/README.md`](../../guidelines/README.md) — канон реализации
+- [`docs/guidelines/README.md`](../guidelines/README.md) — канон реализации
 - [`.cursor/rules/README.md`](../../.cursor/rules/README.md) — tier manifest
 - [`docs/general/README.md`](../general/README.md) — deep dives → guidelines mapping
 - [`docs/meta/ai_first_project_methodology.md`](../meta/ai_first_project_methodology.md)

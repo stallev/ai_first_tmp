@@ -72,7 +72,7 @@ Nested objects by domain:
 
 Чеклист, запреты импорта (`"use client"`, barrel, `no-restricted-imports`) и антипаттерны — правило **ui-messages-bundle-splitting**.
 
-Pulse [`i18n_runtime_spec.md`](../../docs/examples/pulse/docs/implementation/mvp/contracts/i18n_runtime_spec.md) I18N-MUST-8 (один корневой `LocaleProvider` и `useMessages()`) этим правилом перекрыт.
+Pulse [`i18n_runtime_spec.md`](../../examples/pulse/docs/implementation/mvp/contracts/i18n_runtime_spec.md) I18N-MUST-8 (один корневой `LocaleProvider` и `useMessages()`) этим правилом перекрыт.
 
 ---
 
@@ -96,4 +96,4 @@ Dates, times, money, relative timestamps — **`@/lib/i18n/format.ts`** with exp
 
 Prefer **`lucide-react`** — **ui-icons-lucide** rule and [React README](./README.md).
 
-**Reference:** Pulse snapshot [`copy_and_messages.md`](../../docs/examples/pulse/docs/guidelines/react/copy_and_messages.md)
+**Reference:** Pulse snapshot [`copy_and_messages.md`](../../examples/pulse/docs/guidelines/react/copy_and_messages.md)

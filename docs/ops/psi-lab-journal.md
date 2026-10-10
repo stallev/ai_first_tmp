@@ -2,8 +2,8 @@
 
 **Тип:** Ops log  
 **Статус:** Canonical (append-only rows)  
-**Канон:** [`guidelines/psi-lab-testing.md`](../../guidelines/psi-lab-testing.md)  
-**Проект:** [`guidelines/nextjs/ai_psi_lab_testing.md`](../../guidelines/nextjs/ai_psi_lab_testing.md)
+**Канон:** [`docs/guidelines/psi-lab-testing.md`](../guidelines/psi-lab-testing.md)  
+**Проект:** [`docs/guidelines/nextjs/ai_psi_lab_testing.md`](../guidelines/nextjs/ai_psi_lab_testing.md)
 
 Агент дописывает строку после прогона **по запросу пользователя**. Не коммитить сырой JSON с ключом (ключа в JSON быть не должно).
 

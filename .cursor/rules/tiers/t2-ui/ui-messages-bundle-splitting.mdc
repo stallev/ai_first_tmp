@@ -8,7 +8,7 @@ alwaysApply: false
 
 # Словари интерфейса: разбиение по типам страниц
 
-**Guide:** [`guidelines/react/copy_and_messages.md`](guidelines/react/copy_and_messages.md) §Срезы словаря  
+**Guide:** [`docs/guidelines/react/copy_and_messages.md`](docs/guidelines/react/copy_and_messages.md) §Срезы словаря  
 **Copy:** **ui-messages-and-copy** (`.cursor/rules/ui-messages-and-copy.mdc`)
 
 ## Принцип

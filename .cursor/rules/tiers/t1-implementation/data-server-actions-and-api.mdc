@@ -11,8 +11,8 @@ alwaysApply: false
 # Data access: Server Actions and API routes
 
 **Methodology:** [`docs/meta/ai_first_project_methodology.md`](docs/meta/ai_first_project_methodology.md)  
-**Normative doc:** [`guidelines/nextjs/ai_nextjs_db_data_handle.md`](guidelines/nextjs/ai_nextjs_db_data_handle.md) (§7 iOS Safari)  
-**Data fetching:** [`guidelines/nextjs/ai_data_fetching_patterns.md`](guidelines/nextjs/ai_data_fetching_patterns.md) — no self-fetch, `cache()`, `'use cache'`, parent?child DTO (§7)  
+**Normative doc:** [`docs/guidelines/nextjs/ai_nextjs_db_data_handle.md`](docs/guidelines/nextjs/ai_nextjs_db_data_handle.md) (§7 iOS Safari)  
+**Data fetching:** [`docs/guidelines/nextjs/ai_data_fetching_patterns.md`](docs/guidelines/nextjs/ai_data_fetching_patterns.md) — no self-fetch, `cache()`, `'use cache'`, parent?child DTO (§7)  
 **Incidents:** [`docs/incidents/ios-safari-mutation-transport-pattern.md`](docs/incidents/ios-safari-mutation-transport-pattern.md)
 
 ## Core behavior

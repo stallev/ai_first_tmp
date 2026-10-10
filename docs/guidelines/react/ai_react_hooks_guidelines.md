@@ -160,4 +160,4 @@ Cursor rule: **react-naming-conventions**. React canon: [custom hooks](https://r
 
 ---
 
-**Reference:** Pulse snapshot [`ai_react_hooks_guidelines.md`](../../docs/examples/pulse/docs/guidelines/react/ai_react_hooks_guidelines.md)
+**Reference:** Pulse snapshot [`ai_react_hooks_guidelines.md`](../../examples/pulse/docs/guidelines/react/ai_react_hooks_guidelines.md)

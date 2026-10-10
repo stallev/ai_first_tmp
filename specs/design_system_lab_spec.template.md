@@ -868,7 +868,7 @@ Shared-компоненты продукта (atoms / ui): `Paths: n/a — prese
 | [`forms_and_validation_ux.md`](../../../design/forms_and_validation_ux.md) | Form controls UX (Phase 2a+) |
 | [`ux_ui_principles.md`](../../../design/ux_ui_principles.md) | FAANG-adapted {{PROJECT_NAME}} UX (FX contract) |
 | [`ai_component_guidelines.md`](../../../guidelines/react/ai_component_guidelines.md) | Folder layout §6; catalog imports |
-| [`guidelines/README.md`](../../../guidelines/README.md) | Full rules index | [`documentation_creation_registry.md`](../../../meta/documentation_creation_registry.md) — wave W15-01
+| [`docs/guidelines/README.md`](../../../guidelines/README.md) | Full rules index | [`documentation_creation_registry.md`](../../../meta/documentation_creation_registry.md) — wave W15-01
 
 ---
 

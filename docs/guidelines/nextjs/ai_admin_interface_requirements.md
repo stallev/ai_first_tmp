@@ -62,4 +62,4 @@ See [ai_responsive_table_guidelines.md](../react/ai_responsive_table_guidelines.
 | Long inputs | max 650px |
 | Destructive | Confirm + no optimistic |
 
-**Reference:** Pulse snapshot [`ai_admin_interface_requirements.md`](../../docs/examples/pulse/docs/guidelines/nextjs/ai_admin_interface_requirements.md)
+**Reference:** Pulse snapshot [`ai_admin_interface_requirements.md`](../../examples/pulse/docs/guidelines/nextjs/ai_admin_interface_requirements.md)

@@ -2,15 +2,15 @@
 
 **Version:** 2.0 · **Project:** Pulse `apps/web`  
 **Stack:** Next.js **16.4** App Router, React 19, Vercel, Neon PostgreSQL 17 + Prisma v7  
-**Methodology:** [`docs/meta/ai_first_project_methodology.md`](../../docs/meta/ai_first_project_methodology.md)  
-**Runtime:** [ADR-002 template](../../docs/prds/07_governance/adr_002_next162_vercel_runtime_policy.template.md)  
+**Methodology:** [`docs/meta/ai_first_project_methodology.md`](../../meta/ai_first_project_methodology.md)  
+**Runtime:** [ADR-002 template](../../prds/07_governance/adr_002_next162_vercel_runtime_policy.template.md)  
 **Cursor rule:** **app-router-streaming-loading**
 
-> **Scope:** `apps/web/src/app/**` — loading UX, streaming shell, and page-level performance. Cross-request data cache: **`'use cache'`** (Next.js 16) — see §8; tag invalidation — [`cache_revalidation_policy.md`](../../docs/prds/05_runtime/cache_revalidation_policy.md) (после W5).
+> **Scope:** `apps/web/src/app/**` — loading UX, streaming shell, and page-level performance. Cross-request data cache: **`'use cache'`** (Next.js 16) — see §8; tag invalidation — [`cache_revalidation_policy.md`](../../prds/05_runtime/cache_revalidation_policy.md) (после W5).
 
 Verify against Context7 `/vercel/next.js` and [Loading UI and Streaming](https://nextjs.org/docs/app/building-your-application/routing/loading-ui-and-streaming).
 
-**Adapted from:** Pulse snapshot [`ai_loading_patterns.md`](../../docs/examples/pulse/docs/guidelines/nextjs/ai_loading_patterns.md) (includes former `ai_page_performance_streaming.md` in §4–§18) — Vercel, Pulse domain.
+**Adapted from:** Pulse snapshot [`ai_loading_patterns.md`](../../examples/pulse/docs/guidelines/nextjs/ai_loading_patterns.md) (includes former `ai_page_performance_streaming.md` in §4–§18) — Vercel, Pulse domain.
 
 ---
 
@@ -456,7 +456,7 @@ Verify against Context7 `/vercel/next.js` (prefer version-matched docs under `no
 
 ### 8.1 Instant Navigations (Next.js 16.4) — required
 
-[Instant Navigations](https://nextjs.org/blog/next-16-3-instant-navigations) are **required** on pin **16.4** ([ADR-002 template](../../docs/prds/07_governance/adr_002_next162_vercel_runtime_policy.template.md) §5.1). **Adoption order:** enable **Cache Components** first, then **Partial Prefetching**. Shape each route as Stream, Cache, or deliberate Block:
+[Instant Navigations](https://nextjs.org/blog/next-16-3-instant-navigations) are **required** on pin **16.4** ([ADR-002 template](../../prds/07_governance/adr_002_next162_vercel_runtime_policy.template.md) §5.1). **Adoption order:** enable **Cache Components** first, then **Partial Prefetching**. Shape each route as Stream, Cache, or deliberate Block:
 
 ```ts
 // apps/web/next.config.ts — required
@@ -1001,8 +1001,8 @@ State briefly in PR/task which exception applies:
 | [Next.js: Cache Components](https://nextjs.org/docs/app/getting-started/cache-components) | `cacheComponents`, PPR, static + cached + dynamic mix |
 | [Next.js 16.4: Instant Navigations](https://nextjs.org/blog/next-16-3-instant-navigations) | Required §8.1 — Cache Components then `partialPrefetching` |
 | [Next.js: `instant` route segment config](https://nextjs.org/docs/app/api-reference/file-conventions/route-segment-config/instant) | Instant Insights validationLevel / per-segment `instant` — §8.1.1 |
-| [ADR-002 template](../../docs/prds/07_governance/adr_002_next162_vercel_runtime_policy.template.md) | Pin 16.4 + §5.1 Instant Navigations required |
-| Pulse [`ai_loading_patterns.md`](../../docs/examples/pulse/docs/guidelines/nextjs/ai_loading_patterns.md) | Snapshot; former `ai_page_performance_streaming.md` merged into §4–§18 |
+| [ADR-002 template](../../prds/07_governance/adr_002_next162_vercel_runtime_policy.template.md) | Pin 16.4 + §5.1 Instant Navigations required |
+| Pulse [`ai_loading_patterns.md`](../../examples/pulse/docs/guidelines/nextjs/ai_loading_patterns.md) | Snapshot; former `ai_page_performance_streaming.md` merged into §4–§18 |
 | [`adr_010_nextjs_app_architecture_skill.md`](../../reference/adr_010_nextjs_app_architecture_skill.md) | External RSC skill — adopt/reject mapping |
 
 ---

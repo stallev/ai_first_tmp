@@ -1,10 +1,10 @@
 # Security: XSS, CSRF, CSP — agent guidelines
 
 **Stack:** Next.js **16.4** App Router, React 19, Auth.js v5  
-**Methodology:** [`docs/meta/ai_first_project_methodology.md`](../../docs/meta/ai_first_project_methodology.md)  
-**Deep dive:** [`docs/general/01-security-xss-csrf.md`](../../docs/general/01-security-xss-csrf.md)  
+**Methodology:** [`docs/meta/ai_first_project_methodology.md`](../../meta/ai_first_project_methodology.md)  
+**Deep dive:** [`docs/general/01-security-xss-csrf.md`](../../general/01-security-xss-csrf.md)  
 **Cursor rule:** **security-xss-csrf** · **auth-security** (auth layers)  
-**Runtime:** [ADR-002](../../docs/prds/07_governance/adr_002_next162_vercel_runtime_policy.md) — CSP in **`proxy.ts`**
+**Runtime:** [ADR-002](../../prds/07_governance/adr_002_next162_vercel_runtime_policy.md) — CSP in **`proxy.ts`**
 
 AI agents **MUST** apply defense in depth — несколько слоёв, не одна мера.
 
@@ -123,7 +123,7 @@ XSS может обойти CSRF-токены — поэтому XSS опасн�
 |----------|------|
 | [`ai_auth_implementation_guide.md`](../auth/ai_auth_implementation_guide.md) | Auth.js layers, proxy |
 | [`ai_nextjs_db_data_handle.md`](../nextjs/ai_nextjs_db_data_handle.md) | Actions vs Route Handlers |
-| [`docs/general/01-security-xss-csrf.md`](../../docs/general/01-security-xss-csrf.md) | Full theory + examples |
+| [`docs/general/01-security-xss-csrf.md`](../../general/01-security-xss-csrf.md) | Full theory + examples |
 | Pulse reference | `docs/examples/pulse/apps/web/src/proxy.ts` |
 
 **Reference:** Pulse (docs/examples/pulse) — security patterns; **current project Guidelines override Pulse code**.

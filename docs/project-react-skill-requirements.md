@@ -19,7 +19,7 @@ dependencies:
 > **Обязательно:** перед созданием скилла устранить дубль источников (см. §0).
 > **Обязательно:** после создания скилла добавить ссылку в `apps/web/AGENTS.md` и `AGENTS.md` (§ Agent skills).
 > **RSC streaming:** patterns evaluated from [nextjs-app-architecture-skill](https://github.com/aurorascharff/nextjs-app-architecture-skill) — **in-repo only**, do not install; [`adr_010_nextjs_app_architecture_skill.md`](./adr_010_nextjs_app_architecture_skill.md).
-> **Runtime dual-view verify:** отдельный Cursor **user** skill `next-dev-loop` (не часть `app-conventions`); запуск **только по явному запросу пользователя** — см. methodology §2.2 и [`guidelines/nextjs/README.md`](../guidelines/nextjs/README.md) § Agent runtime verification.
+> **Runtime dual-view verify:** отдельный Cursor **user** skill `next-dev-loop` (не часть `app-conventions`); запуск **только по явному запросу пользователя** — см. methodology §2.2 и [`docs/guidelines/nextjs/README.md`](docs/guidelines/nextjs/README.md) § Agent runtime verification.
 
 ---
 

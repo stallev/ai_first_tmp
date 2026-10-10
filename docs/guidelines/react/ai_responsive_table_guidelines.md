@@ -52,4 +52,4 @@
 - Server-side pagination for large queues
 - URL `?page=` for shareable admin views
 
-**Reference:** Pulse snapshot [`ai_responsive_table_guidelines.md`](../../docs/examples/pulse/docs/guidelines/react/ai_responsive_table_guidelines.md)
+**Reference:** Pulse snapshot [`ai_responsive_table_guidelines.md`](../../examples/pulse/docs/guidelines/react/ai_responsive_table_guidelines.md)

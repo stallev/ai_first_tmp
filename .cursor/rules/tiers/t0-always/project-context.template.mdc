@@ -46,7 +46,7 @@ Runtime policy: [ADR-001](docs/prds/07_governance/adr_001_stack_and_runtime.md) 
 3. **Contracts** (`docs/implementation/mvp/contracts/`)
 4. **PRD** (`docs/prds/`) — when created; interim: [`{{INTERIM_DOCS_GLOB}}`]({{INTERIM_DOCS_GLOB}})
 5. **[`docs/design/canonical_routes.md`](docs/design/canonical_routes.md)** — single route inventory
-6. **Guidelines** (`guidelines/`) — index in [`guidelines/README.md`](guidelines/README.md)
+6. **Guidelines** (`guidelines/`) — index in [`docs/guidelines/README.md`](docs/guidelines/README.md)
 7. **HTML prototype** — visual reference only (`docs/prototypes/{{MAIN_PROTOTYPE_HTML}}`), subordinate to canonical docs
 
 **Vs Pulse snapshot:** root Cursor Rules **and** root Guidelines always win over [`docs/examples/pulse/`](docs/examples/pulse/) (even though Guidelines are #6 in this list). **Enforceable paths:** `.cursor/rules/*.mdc` at the repo root and `guidelines/**`. **Not canon:** `docs/examples/pulse/.cursor/rules/**`, `docs/examples/pulse/docs/guidelines/**`, any `docs/examples/lampto/**` (that tree is **not vendored**).
@@ -70,12 +70,12 @@ Runtime policy: [ADR-001](docs/prds/07_governance/adr_001_stack_and_runtime.md) 
 | Architecture map | [`docs/prds/architecture_master_index.md`](docs/prds/architecture_master_index.md) |
 | Agent onboarding | [`docs/architecture_learning_pack/01_architecture_overview.md`](docs/architecture_learning_pack/01_architecture_overview.md) |
 | Database schema | [`docs/prds/03_data_model/database_schema_v1.md`](docs/prds/03_data_model/database_schema_v1.md) |
-| Guidelines | [`guidelines/README.md`](guidelines/README.md) |
+| Guidelines | [`docs/guidelines/README.md`](docs/guidelines/README.md) |
 | **UI component catalog (Design Lab)** | `/design-system` — spec: [`design_system_lab_spec.md`](docs/implementation/mvp/specs/design_system_lab_spec.md) |
 | Pulse reference | [`docs/reference/pulse_project_reference.md`](docs/reference/pulse_project_reference.md) |
 | Prompt orchestration | [`prompts/00-orchestration.md`](prompts/00-orchestration.md) |
 | **Model routing (task tier T0–T3)** | [`docs/meta/ai_agent_model_routing.md`](docs/meta/ai_agent_model_routing.md) · runtime `model-routing.mdc` |
-| **Lab PSI (deployed)** | [`guidelines/nextjs/ai_psi_lab_testing.md`](guidelines/nextjs/ai_psi_lab_testing.md) · portable [`guidelines/psi-lab-testing.md`](guidelines/psi-lab-testing.md) |
+| **Lab PSI (deployed)** | [`docs/guidelines/nextjs/ai_psi_lab_testing.md`](docs/guidelines/nextjs/ai_psi_lab_testing.md) · portable [`docs/guidelines/psi-lab-testing.md`](docs/guidelines/psi-lab-testing.md) |
 
 ## Cursor rules tiers
 

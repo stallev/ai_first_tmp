@@ -70,7 +70,7 @@ apps/web/src/
 | Mutations UX | `ui-mutation-pending`, `ui-toast-mutations`, `ui-optimistic-mutations` | Sonner, aria-busy |
 | Design system | `ui-warm-forest-shadcn.mdc` | Design Lab catalog only |
 
-Full index: [`guidelines/README.md`](../../../guidelines/README.md).
+Full index: [`docs/guidelines/README.md`](../../../docs/guidelines/README.md).
 
 ---
 

@@ -77,7 +77,7 @@ Request → proxy.ts (nodejs, auth.config only)
 
 ## File uploads (AWS S3)
 
-- Guideline: [`guidelines/nextjs/ai_s3_file_upload_guidelines.md`](../../guidelines/nextjs/ai_s3_file_upload_guidelines.md)
+- Guideline: [`docs/guidelines/nextjs/ai_s3_file_upload_guidelines.md`](../guidelines/nextjs/ai_s3_file_upload_guidelines.md)
 - Rule: `s3-file-asset-uploads.mdc` (T1)
 - Bootstrap AWS: [`BOOTSTRAP.md`](../../BOOTSTRAP.md) §Шаг 7
 
@@ -94,7 +94,7 @@ Request → proxy.ts (nodejs, auth.config only)
 | **Route Handler CSRF** | Проверка `origin` header на мутирующих endpoints |
 | **Секреты** | `timingSafeEqual` из `crypto` для timing-safe comparison |
 
-Guide: [`guidelines/security/ai_security_xss_csrf_guidelines.md`](../../guidelines/security/ai_security_xss_csrf_guidelines.md)  
+Guide: [`docs/guidelines/security/ai_security_xss_csrf_guidelines.md`](../guidelines/security/ai_security_xss_csrf_guidelines.md)  
 Deep dive: [`docs/general/01-security-xss-csrf.md`](../../docs/general/01-security-xss-csrf.md)  
 Cursor rule: **security-xss-csrf**
 
@@ -112,7 +112,7 @@ Cursor rule: **security-xss-csrf**
 | **Dynamic import** | `next/dynamic` для тяжёлых client deps (Calendar, rich editor) — rule `ai_client_lazy_loading.md` |
 | **`prefers-reduced-motion`** | Глобальный CSS reset в `globals.css` |
 
-Guide: [`guidelines/react/ai_browser_rendering_performance.md`](../../guidelines/react/ai_browser_rendering_performance.md)  
+Guide: [`docs/guidelines/react/ai_browser_rendering_performance.md`](../guidelines/react/ai_browser_rendering_performance.md)  
 Deep dive: [`docs/general/05-browser-rendering.md`](../../docs/general/05-browser-rendering.md)  
 Cursor rule: **ui-animation-performance**
 

@@ -122,9 +122,9 @@ Manifest: [`.cursor/rules/README.md`](../.cursor/rules/README.md)
 
 ## Guidelines (included)
 
-Полный набор в `guidelines/` — не создавать заново; адаптировать ссылки и {{PLACEHOLDERS}} в P4.
+Полный набор в `docs/guidelines/` — не создавать заново; адаптировать ссылки и {{PLACEHOLDERS}} в P4.
 
-**S3 uploads:** [`guidelines/nextjs/ai_s3_file_upload_guidelines.md`](../guidelines/nextjs/ai_s3_file_upload_guidelines.md) + infra в [`BOOTSTRAP.md`](../BOOTSTRAP.md) §7.
+**S3 uploads:** [`docs/guidelines/nextjs/ai_s3_file_upload_guidelines.md`](../docs/guidelines/nextjs/ai_s3_file_upload_guidelines.md) + infra в [`BOOTSTRAP.md`](../BOOTSTRAP.md) §7.
 
 ---
 

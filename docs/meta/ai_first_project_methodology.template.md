@@ -119,7 +119,7 @@ docs/implementation/mvp/
 
 ### 2.7 Guidelines
 
-`guidelines/` — полный набор (included in boilerplate). Индекс: [`README.md`](../../guidelines/README.md)
+`docs/guidelines/` — полный набор (included in boilerplate). Индекс: [`README.md`](../guidelines/README.md)
 
 ---
 

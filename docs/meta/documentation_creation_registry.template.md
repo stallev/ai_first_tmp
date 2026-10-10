@@ -42,7 +42,7 @@
 | `docs/design/canonical_routes.md` | Канон |
 | `docs/architecture_learning_pack/01_architecture_overview.md` | Канон |
 | `docs/default_docs/*` | Interim archive — только читать при миграции |
-| `guidelines/**` | Канон реализации — ссылаться, не дублировать |
+| `docs/guidelines/**` | Канон реализации — ссылаться, не дублировать |
 | `docs/claude-code-cursor-rules-sync.md` | Канон механизма Cursor `.mdc` → Claude `.md` (`npm run rules:sync`) — **не пересоздавать в P2** |
 
 ---
@@ -326,7 +326,7 @@ READ registry → READ dependencies → DRAFT file → ADD backlinks → UPDATE 
 | UX-09 | `docs/design/styleguide.md` | Миграция design system в canonical (компоненты, elevation, spacing) |
 | UX-10 | `docs/design/content_and_microcopy_contract.md` | Тон, `@/lib/messages`, toast copy rules |
 
-**Guidelines не дублировать** — UX contracts ссылаются на `guidelines/` как enforcement layer для кода.
+**Guidelines не дублировать** — UX contracts ссылаются на `docs/guidelines/` как enforcement layer для кода.
 
 ---
 
@@ -370,7 +370,7 @@ READ registry → READ dependencies → DRAFT file → ADD backlinks → UPDATE 
 |----|------|------------|-------------------|
 | W2-01 | UX-01 `docs/design/ux_ui_principles.md` | pages_functional_spec, prototype HTML | pages_functional_spec, design/README |
 | W2-02 | UX-02 `docs/design/responsive_navigation_contract.md` | ux_ui_principles, canonical_routes, prototype | ux_ui_principles, canonical_routes |
-| W2-03 | UX-03 `docs/design/visual_identity_contract.md` | ux_ui_principles, design-system interim, typography guidelines | ux_ui_principles, guidelines/README |
+| W2-03 | UX-03 `docs/design/visual_identity_contract.md` | ux_ui_principles, design-system interim, typography guidelines | ux_ui_principles, docs/guidelines/README |
 | W2-04 | UX-07 `docs/design/accessibility_requirements.md` | ux_ui_principles, ai_semantics_a11y guidelines | ux_ui_principles |
 | W2-05 | UX-08 `docs/design/prototype_route_mapping.md` | canonical_routes, prototype HTML | canonical_routes, ux_ui_principles |
 
@@ -443,7 +443,7 @@ READ registry → READ dependencies → DRAFT file → ADD backlinks → UPDATE 
 
 | ID | Файл | Зависит от | Обновить backlinks |
 |----|------|------------|-------------------|
-| W7-01 | UX-04 `docs/design/interaction_design_contract.md` | ux_ui_principles, ui-toast/mutation rules | ux_ui_principles, guidelines/react |
+| W7-01 | UX-04 `docs/design/interaction_design_contract.md` | ux_ui_principles, ui-toast/mutation rules | ux_ui_principles, docs/guidelines/react |
 | W7-02 | UX-05 `docs/design/ui_states_contract.md` | ux_ui_principles, ai_loading_patterns | pages_functional_spec, ux_ui_principles |
 | W7-03 | UX-06 `docs/design/forms_and_validation_ux.md` | ui_states_contract, ai_form_handling_pattern | interaction_design_contract |
 | W7-04 | UX-10 `docs/design/content_and_microcopy_contract.md` | copy_and_messages guideline | interaction_design_contract |

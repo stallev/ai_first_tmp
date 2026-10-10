@@ -33,7 +33,7 @@ Monorepo: **Next.js 16.4** App Router + Vercel + Neon PostgreSQL.
 
 - `apps/*` handlers = тонкие адаптеры. Логика в `packages/`
 - **Запрещено** импортировать `packages/policy/server` из `proxy.ts` / `middleware.ts`
-- Domain literals — `@{{PACKAGE_SCOPE}}/domain`; user-visible текст — `@/lib/messages`. Клиентский бандл получает срез словаря своей группы маршрутов и текущей локали, не полный словарь — **ui-messages-bundle-splitting** и [`guidelines/react/copy_and_messages.md`](guidelines/react/copy_and_messages.md) §Срезы словаря
+- Domain literals — `@{{PACKAGE_SCOPE}}/domain`; user-visible текст — `@/lib/messages`. Клиентский бандл получает срез словаря своей группы маршрутов и текущей локали, не полный словарь — **ui-messages-bundle-splitting** и [`docs/guidelines/react/copy_and_messages.md`](docs/guidelines/react/copy_and_messages.md) §Срезы словаря
 - Долгие операции — **не в request path** → workers/cron
 - Post-MVP поля — nullable в схеме с первого дня
 
@@ -52,7 +52,7 @@ Monorepo: **Next.js 16.4** App Router + Vercel + Neon PostgreSQL.
 | Карта архитектуры | [`docs/prds/architecture_master_index.md`](docs/prds/architecture_master_index.md) |
 | MVP scope | [`docs/prds/01_product_scope/mvp_scope.md`](docs/prds/01_product_scope/mvp_scope.md) |
 | Database schema | [`docs/prds/03_data_model/database_schema_v1.md`](docs/prds/03_data_model/database_schema_v1.md) |
-| Guidelines + Rules | [`guidelines/README.md`](guidelines/README.md) |
+| Guidelines + Rules | [`docs/guidelines/README.md`](docs/guidelines/README.md) |
 | Prompt orchestration | [`prompts/00-orchestration.md`](prompts/00-orchestration.md) |
 | HTML-прототип (visual) | [`docs/prototypes/{{MAIN_PROTOTYPE_HTML}}`](docs/prototypes/{{MAIN_PROTOTYPE_HTML}}) |
 | Pulse reference | [`docs/examples/pulse/`](docs/examples/pulse/) |
@@ -87,7 +87,7 @@ Cursor `alwaysApply: false` without `globs` (e.g. `agent-code-review-subagent.md
 
 Кратко: prefix = `git branch --show-current`; формат `<branch-name>: type(scope): subject`.
 
-Review: проблема → ожидаемая форма → diff; уровень (`skip` / `diff-only` / `reviewer`) задаёт содержимое diff, не type коммита. Runtime-код в CU — субагент `reviewer` (pinned, readonly), один на commit, re-review только delta. Коммит на границе CU — автоматически после зелёной ВЕРИФИКАЦИИ и review без blockers; задача вне CU не коммитится. В ответе всегда trace-блок `Review: …`. Таблицы и prompt — [`guidelines/ai_code_review_protocol.md`](guidelines/ai_code_review_protocol.md).
+Review: проблема → ожидаемая форма → diff; уровень (`skip` / `diff-only` / `reviewer`) задаёт содержимое diff, не type коммита. Runtime-код в CU — субагент `reviewer` (pinned, readonly), один на commit, re-review только delta. Коммит на границе CU — автоматически после зелёной ВЕРИФИКАЦИИ и review без blockers; задача вне CU не коммитится. В ответе всегда trace-блок `Review: …`. Таблицы и prompt — [`docs/guidelines/ai_code_review_protocol.md`](docs/guidelines/ai_code_review_protocol.md).
 
 ## Agent skills (`.cursor/skills/`)
 

@@ -1,6 +1,6 @@
 # Security guidelines
 
-**Deep dive:** [`docs/general/01-security-xss-csrf.md`](../../docs/general/01-security-xss-csrf.md)  
+**Deep dive:** [`docs/general/01-security-xss-csrf.md`](../../general/01-security-xss-csrf.md)  
 **Auth layer:** [`auth/ai_auth_implementation_guide.md`](../auth/ai_auth_implementation_guide.md)  
 **Cursor rule:** **security-xss-csrf**
 

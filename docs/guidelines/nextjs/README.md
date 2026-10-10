@@ -1,11 +1,11 @@
 # Next.js Guidelines — {{PROJECT_NAME}}
 
 **Baseline:** Next.js **16.4** (pinned) App Router · **Vercel** · Turbopack · Neon + Prisma v7  
-**Upstream:** [Next.js 16.4](https://nextjs.org/blog/next-16-3) — Instant Navigations **required** ([ADR-002 template §5.1](../../docs/prds/07_governance/adr_002_next162_vercel_runtime_policy.template.md))  
-**Methodology:** [`docs/meta/ai_first_project_methodology.md`](../../docs/meta/ai_first_project_methodology.md)  
-**Runtime policy (mandatory):** [ADR-002 template](../../docs/prds/07_governance/adr_002_next162_vercel_runtime_policy.template.md)  
-**Stack:** [ADR-001](../../docs/prds/07_governance/adr_001_stack_and_runtime.md) (после W4)  
-**Reference:** Pulse [`docs/examples/pulse/docs/guidelines/nextjs/`](../../docs/examples/pulse/docs/guidelines/nextjs/)
+**Upstream:** [Next.js 16.4](https://nextjs.org/blog/next-16-3) — Instant Navigations **required** ([ADR-002 template §5.1](../../prds/07_governance/adr_002_next162_vercel_runtime_policy.template.md))  
+**Methodology:** [`docs/meta/ai_first_project_methodology.md`](../../meta/ai_first_project_methodology.md)  
+**Runtime policy (mandatory):** [ADR-002 template](../../prds/07_governance/adr_002_next162_vercel_runtime_policy.template.md)  
+**Stack:** [ADR-001](../../prds/07_governance/adr_001_stack_and_runtime.md) (после W4)  
+**Reference:** Pulse [`docs/examples/pulse/docs/guidelines/nextjs/`](../../examples/pulse/docs/guidelines/nextjs/)
 
 ---
 
@@ -62,7 +62,7 @@ Per official Next.js 16 upgrade guide (Context7 `/vercel/next.js`):
 6. **Server Components by default** — thin BFF to `packages/`.
 7. **Instant Navigations / `partialPrefetching`:** **required** — Cache Components first, then Partial Prefetching; Stream / Cache / Block (ADR-002 §5.1); Instant Insights — [`ai_loading_patterns.md`](./ai_loading_patterns.md) §8.1.1. Playwright `instant()` SHOULD.
 8. **No self-fetch from RSC** — DAL direct calls; client fetch only when necessary — [`ai_data_fetching_patterns.md`](./ai_data_fetching_patterns.md).
-9. **Deep dive:** [`docs/general/02-data-fetching.md`](../../docs/general/02-data-fetching.md) — theory; operational norms in guideline above.
+9. **Deep dive:** [`docs/general/02-data-fetching.md`](../../general/02-data-fetching.md) — theory; operational norms in guideline above.
 
 ---
 
@@ -83,7 +83,7 @@ Skill **`next-dev-loop`** confirms a feature works in a live `next dev` by cross
 
 Requires Next **16.3+** Turbopack and `agent-browser` = 0.31.1. Protocol details live in the user skill — do not invent a second browser protocol (e.g. Playwright MCP) as a substitute.
 
-See: methodology §2.2 · `agent-commit-pipeline.mdc` §1 · [ADR-010](../../docs/reference/adr_010_nextjs_app_architecture_skill.md) (workflow vs architecture skills).
+See: methodology §2.2 · `agent-commit-pipeline.mdc` §1 · [ADR-010](../../reference/adr_010_nextjs_app_architecture_skill.md) (workflow vs architecture skills).
 
 ### Lab PageSpeed Insights (on user request only)
 
@@ -95,7 +95,7 @@ Trigger: only when the user asks (PSI, PageSpeed, «прогони прод»). 
 
 ## For AI assistants
 
-1. Read [ADR-002 template](../../docs/prds/07_governance/adr_002_next162_vercel_runtime_policy.template.md) before routing/auth (incl. §5.1 Instant Navigations).
+1. Read [ADR-002 template](../../prds/07_governance/adr_002_next162_vercel_runtime_policy.template.md) before routing/auth (incl. §5.1 Instant Navigations).
 2. Use MCP **Context7** (`/vercel/next.js`) for API wording after ADR-002; prefer version-matched docs under `node_modules/next/dist/docs/` when available.
 3. React: [React guidelines](../react/README.md).
 

@@ -208,7 +208,7 @@ DIRECT_URL=postgresql://...
 
 ## Шаг 7 — AWS S3 (file uploads)
 
-Полный guideline: [`guidelines/nextjs/ai_s3_file_upload_guidelines.md`](guidelines/nextjs/ai_s3_file_upload_guidelines.md)
+Полный guideline: [`docs/guidelines/nextjs/ai_s3_file_upload_guidelines.md`](docs/guidelines/nextjs/ai_s3_file_upload_guidelines.md)
 
 ### Checklist infra
 
@@ -283,7 +283,7 @@ PAGE_SPEED_API_KEY=
 PSI_ORIGIN=https://your-production-domain.com
 ```
 
-GCP: включить **PageSpeed Insights API**. Прогон: `npm run psi:lab -- --url https://…` или `--suite`. Канон: [`guidelines/psi-lab-testing.md`](guidelines/psi-lab-testing.md).
+GCP: включить **PageSpeed Insights API**. Прогон: `npm run psi:lab -- --url https://…` или `--suite`. Канон: [`docs/guidelines/psi-lab-testing.md`](docs/guidelines/psi-lab-testing.md).
 
 ---
 
@@ -296,7 +296,7 @@ GCP: включить **PageSpeed Insights API**. Прогон: `npm run psi:lab
 - [ ] T0 rules in `.cursor/rules/`
 - [ ] `npm run rules:check` pass
 - [ ] `docs/` tree created
-- [ ] Guidelines in `docs/guidelines/` (copy from boilerplate `guidelines/`)
+- [ ] Guidelines in `docs/guidelines/` (поставляются шаблоном, не копируются)
 - [ ] Existing `docs/prototypes/*.html` preserved (if seed existed)
 
 ### После P2
@@ -371,7 +371,7 @@ my-new-project/
 |----------|------|
 | Placeholders | [`PLACEHOLDERS.md`](PLACEHOLDERS.md) |
 | Prompt map | [`prompts/00-orchestration.md`](prompts/00-orchestration.md) |
-| S3 uploads | [`guidelines/nextjs/ai_s3_file_upload_guidelines.md`](guidelines/nextjs/ai_s3_file_upload_guidelines.md) |
+| S3 uploads | [`docs/guidelines/nextjs/ai_s3_file_upload_guidelines.md`](docs/guidelines/nextjs/ai_s3_file_upload_guidelines.md) |
 | Stack patterns | [`docs/reference/stack_patterns_from_pulse.md`](docs/reference/stack_patterns_from_pulse.md) |
 | Pulse reference | [`docs/reference/pulse_project_reference.template.md`](docs/reference/pulse_project_reference.template.md) |
 

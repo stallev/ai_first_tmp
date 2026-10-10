@@ -2,7 +2,7 @@
 
 **Project:** Pulse — `apps/web`  
 **Technologies:** Next.js **16.4**, React 19, TypeScript, **Vercel**, Neon PostgreSQL  
-**Canonical policy:** [ADR-002 template](../../docs/prds/07_governance/adr_002_next162_vercel_runtime_policy.template.md), [ADR-001](../../docs/prds/07_governance/adr_001_stack_and_runtime.md) (после W4)
+**Canonical policy:** [ADR-002 template](../../prds/07_governance/adr_002_next162_vercel_runtime_policy.template.md), [ADR-001](../../prds/07_governance/adr_001_stack_and_runtime.md) (после W4)
 
 ---
 
@@ -63,4 +63,4 @@ The web app deploys on **Vercel**. Framework and hosting choices must align with
 | Storage | AWS S3 |
 | Email | Resend |
 
-**Reference:** Pulse snapshot [`ai_vercel_runtime_compatibility.md`](../../docs/examples/pulse/docs/guidelines/nextjs/ai_vercel_runtime_compatibility.md) — Netlify baseline replaced per ADR-001.
+**Reference:** Pulse snapshot [`ai_vercel_runtime_compatibility.md`](../../examples/pulse/docs/guidelines/nextjs/ai_vercel_runtime_compatibility.md) — Netlify baseline replaced per ADR-001.

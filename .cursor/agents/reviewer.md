@@ -14,7 +14,7 @@ This is the only review gate (`agent-code-review-subagent.mdc`). It is not Bugbo
 - **Problem (2a):** the commit unit's tasks from `P{N}_tasks.md` (Goal, Acceptance, linked `§` sections, `Paths`) and/or the user's request. Not the author's summary, not a draft commit message.
 - **Scope:** `git diff --staged` (pre-commit) or the scope the orchestrator names (standalone).
 
-## Protocol — [`guidelines/ai_code_review_protocol.md`](guidelines/ai_code_review_protocol.md)
+## Protocol — [`docs/guidelines/ai_code_review_protocol.md`](docs/guidelines/ai_code_review_protocol.md)
 
 1. **2a** — restate the problem in 3–5 lines from the input above.
 2. **2b** — before reading hunks (`git status --short` only), build the expected shape: ≤ 5 rows from the protocol table + every path H / N / S listed in the tasks (triggers — registry §2.3.2a).

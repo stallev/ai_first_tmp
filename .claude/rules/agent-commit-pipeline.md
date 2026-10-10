@@ -43,7 +43,7 @@ description: Commit pipeline: auto-commit at a commit-unit boundary or on explic
 
 При fail — исправить, не коммитить.
 
-**Runtime dual-view (`next-dev-loop`):** только по **явному запросу пользователя** — не часть обязательной ВЕРИФИКАЦИИ перед commit и не auto на UI-diff. Модель: `/_next/mcp` + `agent-browser`, 4 слоя (compile → runtime errors → browser UX → React). См. methodology §2.2 / `guidelines/nextjs/README.md` § Agent runtime verification.
+**Runtime dual-view (`next-dev-loop`):** только по **явному запросу пользователя** — не часть обязательной ВЕРИФИКАЦИИ перед commit и не auto на UI-diff. Модель: `/_next/mcp` + `agent-browser`, 4 слоя (compile → runtime errors → browser UX → React). См. methodology §2.2 / `docs/guidelines/nextjs/README.md` § Agent runtime verification.
 
 **Lab PSI (`psi-lab-testing`):** только по **явному запросу** на задеплоенный origin (`npm run psi:lab`). Не часть обязательной ВЕРИФИКАЦИИ перед commit. Не смешивать с `next-dev-loop` и не мерить `localhost`.
 
@@ -59,7 +59,7 @@ Stage только релевантные файлы (`git add`). Не комм�
 
 ### 3. Pre-commit review
 
-Выполнить **[`agent-code-review-subagent.mdc`](agent-code-review-subagent.mdc)** в режиме **pre-commit** (уровни и бюджет — там; таблицы и prompt — [`guidelines/ai_code_review_protocol.md`](guidelines/ai_code_review_protocol.md), читать на уровне `reviewer`):
+Выполнить **[`agent-code-review-subagent.mdc`](agent-code-review-subagent.mdc)** в режиме **pre-commit** (уровни и бюджет — там; таблицы и prompt — [`docs/guidelines/ai_code_review_protocol.md`](docs/guidelines/ai_code_review_protocol.md), читать на уровне `reviewer`):
 
 1. **Уровень** — § Depth: `skip` → `diff-only` → `reviewer`. Определяет **содержимое staged diff** (§ Sensitive zones — единственный список), а не type из будущего commit message. Runtime-код в CU (включая T3) → `reviewer`.
 2. **Три прохода** (`reviewer`): проблема → ожидаемая форма → diff. Проблема — из задач CU в `P{N}_tasks.md` и просьбы пользователя, не из diff и не из собственного message; неясна → спросить до review

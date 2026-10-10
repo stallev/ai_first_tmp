@@ -5,8 +5,8 @@
 **Версия:** 1.0  
 **Дата:** 2026-09-08  
 **Волна:** ops (вне PRD-волн)  
-**Зависит от:** [`guidelines/psi-lab-testing.md`](../psi-lab-testing.md)  
-**Связанные документы:** Cursor Rule `psi-lab-testing.mdc` · [`docs/ops/psi-lab-journal.md`](../../docs/ops/psi-lab-journal.md) · methodology §2.2 · [`canonical_routes.md`](../../docs/design/canonical_routes.md) (после W1)
+**Зависит от:** [`docs/guidelines/psi-lab-testing.md`](../psi-lab-testing.md)  
+**Связанные документы:** Cursor Rule `psi-lab-testing.mdc` · [`docs/ops/psi-lab-journal.md`](../../ops/psi-lab-journal.md) · methodology §2.2 · [`canonical_routes.md`](../../design/canonical_routes.md) (после W1)
 
 ---
 
@@ -32,12 +32,12 @@
 ## Requirements
 
 1. **MUST** запускать PSI **только по явной просьбе** пользователя. Не auto после UI-diff, не в commit pipeline.
-2. **MUST** звать [`scripts/psi-lab/run-pagespeed.mjs`](../../scripts/psi-lab/run-pagespeed.mjs) (`npm run psi:lab`). **MUST NOT** использовать MCP `pagespeed` / `user-pagespeed` как основной канал и **MUST NOT** параллелить MCP и REST.
+2. **MUST** звать [`scripts/psi-lab/run-pagespeed.mjs`](../../../scripts/psi-lab/run-pagespeed.mjs) (`npm run psi:lab`). **MUST NOT** использовать MCP `pagespeed` / `user-pagespeed` как основной канал и **MUST NOT** параллелить MCP и REST.
 3. **MUST** хранить ключ в корневом `.env` / `.env.local` как `PAGE_SPEED_API_KEY`. **MUST NOT** `NEXT_PUBLIC_*`.
 4. **MUST** отказывать, если URL — `localhost` / `127.0.0.1` / `*.localhost` / dev-сервер.
 5. **MUST** передавать четыре категории в одном запросе; PWA не включать.
 6. **SHOULD** прогревать CDN до lab (скрипт делает GET + cache-заголовки).
-7. **SHOULD** дописывать сводку в [`docs/ops/psi-lab-journal.md`](../../docs/ops/psi-lab-journal.md) после прогона по запросу.
+7. **SHOULD** дописывать сводку в [`docs/ops/psi-lab-journal.md`](../../ops/psi-lab-journal.md) после прогона по запросу.
 8. **MAY** чинить код в той же сессии **только** если категория &lt; 90 и аудит назван в JSON после flake-повтора.
 
 ## Project bindings
@@ -45,10 +45,10 @@
 | Binding | Значение |
 |---------|----------|
 | API | `GET https://pagespeedonline.googleapis.com/pagespeedonline/v5/runPagespeed` (Context7 `/websites/developers_google_speed_insights_rest_v5`) |
-| Env | `PAGE_SPEED_API_KEY`, `PSI_ORIGIN` — [`.env.example`](../../.env.example) |
+| Env | `PAGE_SPEED_API_KEY`, `PSI_ORIGIN` — [`.env.example`](../../../.env.example) |
 | CLI | `npm run psi:lab -- --url https://…` (default **mobile**) или `--suite` |
-| Paths | [`scripts/psi-lab/canon-paths.mjs`](../../scripts/psi-lab/canon-paths.mjs) — заполнить из canonical routes, когда файл появится |
-| Journal | [`docs/ops/psi-lab-journal.md`](../../docs/ops/psi-lab-journal.md) |
+| Paths | [`scripts/psi-lab/canon-paths.mjs`](../../../scripts/psi-lab/canon-paths.mjs) — заполнить из canonical routes, когда файл появится |
+| Journal | [`docs/ops/psi-lab-journal.md`](../../ops/psi-lab-journal.md) |
 | vs `next-dev-loop` | Dual-view **live `next dev`**. PSI — **задеплоенный** origin. Не смешивать. |
 
 ## Happy / negative / drift

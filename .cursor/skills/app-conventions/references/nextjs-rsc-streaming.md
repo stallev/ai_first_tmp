@@ -5,7 +5,7 @@
 **Do not** run `npx skills install` for external Next.js architecture skills. Canonical sources for agents:
 
 1. `.cursor/rules/*.mdc`
-2. `guidelines/nextjs/ai_loading_patterns.md`, `ai_data_fetching_patterns.md`
+2. `docs/guidelines/nextjs/ai_loading_patterns.md`, `ai_data_fetching_patterns.md`
 3. This file + `app-conventions/SKILL.md`
 
 ---

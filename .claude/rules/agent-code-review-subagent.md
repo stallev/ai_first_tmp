@@ -4,7 +4,7 @@ description: Review protocol: problem → expected shape → diff. One gate per 
 # Code review
 
 **Commit orchestration:** [`agent-commit-pipeline.mdc`](agent-commit-pipeline.mdc) — вызывает этот rule в **pre-commit** mode на границе commit unit (CU).
-**HOW (таблицы, вердикты, prompt для `reviewer`):** [`guidelines/ai_code_review_protocol.md`](guidelines/ai_code_review_protocol.md) — **читать перед** уровнем `reviewer`; для `skip` / `diff-only` не нужен.
+**HOW (таблицы, вердикты, prompt для `reviewer`):** [`docs/guidelines/ai_code_review_protocol.md`](docs/guidelines/ai_code_review_protocol.md) — **читать перед** уровнем `reviewer`; для `skip` / `diff-only` не нужен.
 **Routing:** [`model-routing.mdc`](model-routing.mdc) §3a / §6 — commit units и единый review-гейт.
 
 **Принцип:** один review-гейт на CU. Дорогой независимый review (`reviewer`, Grok 4.7) — на каждый CU с runtime-кодом; батчинг задач в CU делает каждый прогон оправданным. Docs / tooling — дёшево, в контексте автора. Лимиты — § Budget.

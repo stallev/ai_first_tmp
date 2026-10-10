@@ -26,11 +26,10 @@ Software Architect (AI-first monorepo).
    docs/{default_docs,prototypes,reference,examples/pulse,meta,prds,design,guidelines,implementation/mvp/{contracts,specs,phases_tasks_descriptions,tasks,guides},architecture_learning_pack,incidents}
    ```
    Канон прототипов: **`docs/prototypes/`**. Не создавать `docs/prototype/`. **MUST NOT** overwrite `docs/prototypes/*.html`.
-5. Скопировать `guidelines/` из boilerplate → `docs/guidelines/`
-6. Активировать **T0 cursor rules** (скопировать `tiers/t0-always/*.mdc` кроме `*.template.mdc`) → `.cursor/rules/`
-7. Создать `docs/guidelines/README.md` index (из boilerplate)
-8. Добавить `.gitkeep` в пустые scaffold dirs (не в `docs/prototypes/`, если там уже HTML)
-9. `npm run rules:sync` (или `node scripts/sync-claude-rules.mjs`). Не править `.claude/rules/` руками.
+5. Guidelines уже лежат в `docs/guidelines/` (индекс `docs/guidelines/README.md`) — **не копировать**
+6. **T0 cursor rules** уже активны в шаблоне — не копировать повторно; создать только `project-context.mdc` (шаг 3)
+7. Добавить `.gitkeep` в пустые scaffold dirs (не в `docs/prototypes/`, если там уже HTML)
+8. `npm run rules:sync` (или `node scripts/sync-claude-rules.mjs`). Не править `.claude/rules/` руками.
 
 ## Forbidden
 - Implementation code (кроме config skeleton в P5)
@@ -45,7 +44,7 @@ Software Architect (AI-first monorepo).
 - [ ] T0 rules в `.cursor/rules/` (без `*.template.mdc`)
 - [ ] `npm run rules:check` pass; `.claude/rules/` stem-match активных T0 `.mdc`
 - [ ] `docs/meta/` готов для P2
-- [ ] Guidelines скопированы (полный набор из `guidelines/README.md`)
+- [ ] Guidelines на месте в `docs/guidelines/` (без копии в корне)
 - [ ] Если seed был — `docs/prototypes/{{MAIN_PROTOTYPE_HTML}}` на месте
 
 ## Next

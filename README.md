@@ -49,13 +49,12 @@
 ├── .cursor/rules/                    → T0–T2 rules (Pulse stack + psi-lab-testing)
 │   ├── tiers/                        → t0 / t1 / t2 — порядок активации
 │   └── README.md                     → manifest
-├── guidelines/                       → канон реализации (индекс: README.md)
-│   ├── security/                     → XSS, CSRF, CSP
-│   ├── nextjs/                       → data, loading, lazy load, S3, lab PSI
-│   └── react/                        → components, a11y, rendering perf
 ├── docs/
+│   ├── guidelines/                   → канон реализации (индекс: README.md)
+│   │   ├── security/                 → XSS, CSRF, CSP
+│   │   ├── nextjs/                   → data, loading, lazy load, S3, lab PSI
+│   │   └── react/                    → components, a11y, rendering perf
 │   ├── general/                      → Senior deep dives (теория → guidelines)
-│   ├── guidelines/README.md          → alias к guidelines/ (путь Pulse)
 │   ├── meta/                         → methodology + registry templates
 │   ├── reference/                    → pulse_project_reference.md, stack patterns
 │   ├── claude-code-cursor-rules-sync.md
@@ -71,9 +70,9 @@
 
 | Каталог | Назначение |
 |---------|------------|
-| [`guidelines/`](guidelines/README.md) | Операционные нормы реализации (Next.js, React, Auth, Security, TypeScript) |
+| [`guidelines/`](docs/guidelines/README.md) | Операционные нормы реализации (Next.js, React, Auth, Security, TypeScript) |
 | [`.cursor/rules/`](.cursor/rules/README.md) | MUST для агента — tiers T0 / T1 / T2 |
-| [`docs/general/`](docs/general/README.md) | Senior deep dives; нормы синтезированы в guidelines/rules |
+| [`docs/general/`](docs/general/README.md) | Senior deep dives; нормы синтезированы в docs/guidelines/rules |
 | [`docs/general/ai_agent_ui_ux_guideline.md`](docs/general/ai_agent_ui_ux_guideline.md) | FX-1–FX-10, overlay tree, pre-merge UI checklist |
 | [`docs/examples/pulse/`](docs/examples/pulse/) | Reference: architecture, contracts, phases, code patterns |
 | [`CLAUDE.md`](CLAUDE.md) | Claude Code: `@AGENTS.md` + generated `.claude/rules/` (не править зеркало) |
@@ -83,11 +82,11 @@
 
 | Deep dive | Guideline | Cursor rule |
 |-----------|-----------|-------------|
-| [Security (XSS/CSRF)](docs/general/01-security-xss-csrf.md) | [`guidelines/security/`](guidelines/security/) | **security-xss-csrf** |
-| [Data fetching](docs/general/02-data-fetching.md) | [`ai_data_fetching_patterns.md`](guidelines/nextjs/ai_data_fetching_patterns.md) | **data-server-actions-and-api** |
-| [Accessibility](docs/general/03-accessibility.md) | [`ai_semantics_a11y_guidelines.md`](guidelines/react/ai_semantics_a11y_guidelines.md) | **ui-semantics-a11y** |
-| [Code splitting](docs/general/04-code-splitting.md) | [`ai_client_lazy_loading.md`](guidelines/nextjs/ai_client_lazy_loading.md) | **react-ui-components** |
-| [Browser rendering](docs/general/05-browser-rendering.md) | [`ai_browser_rendering_performance.md`](guidelines/react/ai_browser_rendering_performance.md) | **ui-animation-performance** |
+| [Security (XSS/CSRF)](docs/general/01-security-xss-csrf.md) | [`docs/guidelines/security/`](docs/guidelines/security/) | **security-xss-csrf** |
+| [Data fetching](docs/general/02-data-fetching.md) | [`ai_data_fetching_patterns.md`](docs/guidelines/nextjs/ai_data_fetching_patterns.md) | **data-server-actions-and-api** |
+| [Accessibility](docs/general/03-accessibility.md) | [`ai_semantics_a11y_guidelines.md`](docs/guidelines/react/ai_semantics_a11y_guidelines.md) | **ui-semantics-a11y** |
+| [Code splitting](docs/general/04-code-splitting.md) | [`ai_client_lazy_loading.md`](docs/guidelines/nextjs/ai_client_lazy_loading.md) | **react-ui-components** |
+| [Browser rendering](docs/general/05-browser-rendering.md) | [`ai_browser_rendering_performance.md`](docs/guidelines/react/ai_browser_rendering_performance.md) | **ui-animation-performance** |
 
 ---
 

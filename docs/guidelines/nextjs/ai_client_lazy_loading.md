@@ -7,7 +7,7 @@
 
 > **Scope:** lazy loading of **Client Components** and heavy **client-only** dependencies. Complements server-side streaming in [`ai_loading_patterns.md`](./ai_loading_patterns.md) and RSC boundaries in [`ai_component_guidelines.md`](../react/ai_component_guidelines.md).
 
-**Deep dive:** [`docs/general/04-code-splitting.md`](../../docs/general/04-code-splitting.md) — bundle theory, tree shaking, preload/prefetch.
+**Deep dive:** [`docs/general/04-code-splitting.md`](../../general/04-code-splitting.md) — bundle theory, tree shaking, preload/prefetch.
 
 **Official API (verify via Context7 `/vercel/next.js`):** [Next.js: Lazy loading](https://nextjs.org/docs/app/building-your-application/optimizing/lazy-loading)
 
@@ -219,7 +219,7 @@ Apply when adding or materially changing:
 
 ## 7. Audit backlog (Pulse — May 2026)
 
-Prioritized by impact. Re-run after major UI deps or new shared client primitives. Verify shared-chunk bleed with production `npm run build` output (Pulse snapshot: [`ai_client_lazy_loading.md`](../../docs/examples/pulse/docs/guidelines/nextjs/) — `ai_bundle_analyze_steps.md` is not in this snapshot; use this guideline + `npm run build` chunk report).
+Prioritized by impact. Re-run after major UI deps or new shared client primitives. Verify shared-chunk bleed with production `npm run build` output (Pulse snapshot: [`ai_client_lazy_loading.md`](../../examples/pulse/docs/guidelines/nextjs/) — `ai_bundle_analyze_steps.md` is not in this snapshot; use this guideline + `npm run build` chunk report).
 
 | Priority | Surface | Issue | Suggested approach |
 |----------|---------|-------|-------------------|
@@ -255,7 +255,7 @@ Prioritized by impact. Re-run after major UI deps or new shared client primitive
 | [`ai_component_guidelines.md`](../react/ai_component_guidelines.md) | RSC/client boundaries |
 | [`ai_form_handling_pattern.md`](../react/ai_form_handling_pattern.md) | Mutation pending vs route loading |
 | [`design_system_lab_spec.md`](../../implementation/mvp/specs/design_system_lab_spec.md) | Catalog before product import |
-| [`docs/general/04-code-splitting.md`](../../docs/general/04-code-splitting.md) | Full bundle theory |
+| [`docs/general/04-code-splitting.md`](../../general/04-code-splitting.md) | Full bundle theory |
 | [`ai_browser_rendering_performance.md`](../react/ai_browser_rendering_performance.md) | TBT, animations |
 | Pulse reference | `docs/examples/pulse/docs/guidelines/nextjs/` — bundle patterns |
 | [Next.js: Lazy loading](https://nextjs.org/docs/app/building-your-application/optimizing/lazy-loading) | Official API |

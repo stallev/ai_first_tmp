@@ -629,7 +629,7 @@ className="md:rounded-3xl md:p-6"
 | `docs/design/ux_ui_faang_best_practices_for_agents.md` | FAANG-level agent reference (Pulse canon) |
 | `docs/design/accessibility_requirements.md` | WCAG 2.1 AA product contract |
 | `docs/implementation/mvp/specs/design_system_lab_spec.md` | FX-1–FX-10, catalog inventory |
-| `docs/guidelines/react/ai_semantics_a11y_guidelines.md` | Implementation a11y (`guidelines/react/`) |
+| `docs/guidelines/react/ai_semantics_a11y_guidelines.md` | Implementation a11y (`docs/guidelines/react/`) |
 | `docs/guidelines/react/ai_form_handling_pattern.md` | Form pending/state patterns |
 | `docs/guidelines/react/ai_optimistic_ui_pattern.md` | useOptimistic patterns |
 | `docs/guidelines/react/ai_browser_rendering_performance.md` | GPU animations, layout thrashing |

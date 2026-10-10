@@ -63,4 +63,4 @@ if (status === BOOKING_STATUS.PENDING) { … }
 
 `src/lib/` grouped by domain: `lib/booking/`, `lib/format.ts`, `lib/validation/`.
 
-**Reference:** Pulse snapshot [`ai_react_utilities_guidelines.md`](../../docs/examples/pulse/docs/guidelines/react/ai_react_utilities_guidelines.md)
+**Reference:** Pulse snapshot [`ai_react_utilities_guidelines.md`](../../examples/pulse/docs/guidelines/react/ai_react_utilities_guidelines.md)

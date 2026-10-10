@@ -90,19 +90,19 @@
 
 ## Guidelines mapping
 
-Полный индекс: [`guidelines/README.md`](../../guidelines/README.md)  
+Полный индекс: [`docs/guidelines/README.md`](../../docs/guidelines/README.md)  
 General deep dives: [`docs/general/README.md`](../../docs/general/README.md)
 
 | Rule cluster | Guidelines |
 |--------------|------------|
-| Security (XSS/CSRF) | `guidelines/security/ai_security_xss_csrf_guidelines.md` |
-| Next.js / Vercel | `guidelines/nextjs/*` |
-| Lab PSI (deployed) | `guidelines/psi-lab-testing.md` + `guidelines/nextjs/ai_psi_lab_testing.md` |
-| Code review (protocol, subagent prompt) | `guidelines/ai_code_review_protocol.md` |
-| React / forms / optimistic / rendering | `guidelines/react/*` |
-| Auth | `guidelines/auth/ai_auth_implementation_guide.md` |
-| TypeScript monorepo | `guidelines/typescript/ai_typescript_monorepo_guidelines.md` |
-| Typography | `guidelines/typography_text_guidelines.md` |
+| Security (XSS/CSRF) | `docs/guidelines/security/ai_security_xss_csrf_guidelines.md` |
+| Next.js / Vercel | `docs/guidelines/nextjs/*` |
+| Lab PSI (deployed) | `docs/guidelines/psi-lab-testing.md` + `docs/guidelines/nextjs/ai_psi_lab_testing.md` |
+| Code review (protocol, subagent prompt) | `docs/guidelines/ai_code_review_protocol.md` |
+| React / forms / optimistic / rendering | `docs/guidelines/react/*` |
+| Auth | `docs/guidelines/auth/ai_auth_implementation_guide.md` |
+| TypeScript monorepo | `docs/guidelines/typescript/ai_typescript_monorepo_guidelines.md` |
+| Typography | `docs/guidelines/typography_text_guidelines.md` |
 
 ---
 
