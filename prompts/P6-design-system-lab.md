@@ -23,7 +23,7 @@ Frontend Architect.
 6. Activate **T2 cursor rules** (манифест §T2) → `.cursor/rules/`
 7. `npm run rules:sync` (T0+T1+T2 `.mdc` ↔ `.claude/rules/*.md`, без `*.template.mdc`)
 8. Update `canonical_routes.md` with `/design-system`
-9. Update `ui-warm-forest-shadcn.mdc` or create project-themed rule if renamed
+9. Update `ui-design-system-shadcn.mdc` or create project-themed rule if renamed
 
 ## Agent cycle
 КОНТЕКСТ → ФАЗА (P01/P03) → КОНТРАКТ (this spec) → ЗАДАЧИ → ВЕРИФИКАЦИЯ

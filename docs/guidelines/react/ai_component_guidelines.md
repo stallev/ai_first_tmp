@@ -1,8 +1,8 @@
 # React component guidelines — Pulse
 
-**Stack:** Next.js **16.4** App Router, React 19, shadcn/ui, Warm Forest tokens  
+**Stack:** Next.js **16.4** App Router, React 19, shadcn/ui, {{DESIGN_SYSTEM_NAME}} tokens  
 **Methodology:** [`docs/meta/ai_first_project_methodology.md`](../../meta/ai_first_project_methodology.md)  
-**Cursor rules:** **react-ui-components**, **react-one-component-per-file**, **ui-warm-forest-shadcn**
+**Cursor rules:** **react-ui-components**, **react-one-component-per-file**, **ui-design-system-shadcn**
 
 ---
 
@@ -74,7 +74,7 @@ Spec: [`design_system_lab_spec.md`](../../implementation/mvp/specs/design_system
 
 1. Search shadcn MCP / registry before custom primitives
 2. Install to `components/ui/`
-3. Tokenize with Warm Forest CSS variables in `globals.css`
+3. Tokenize with {{DESIGN_SYSTEM_NAME}} CSS variables in `globals.css`
 
 ---
 
@@ -104,7 +104,7 @@ components/
 
 **Full inventory (paths, phases, FAANG UX, Context7, prototype anchors):** [`design_system_lab_spec.md`](../../implementation/mvp/specs/design_system_lab_spec.md) § Component catalog placement & Phase 2–3 inventory.
 
-**Catalog index:** `/design-system` (dev-only). Cursor rule: **ui-warm-forest-shadcn** §Design Lab catalog.
+**Catalog index:** `/design-system` (dev-only). Cursor rule: **ui-design-system-shadcn** §Design Lab catalog.
 
 Routes stay thin — data in `src/data/**`, actions in `src/actions/**`.
 

@@ -195,7 +195,7 @@ description: >
 | Mutation pending UI | `ui-mutation-pending.mdc` | `disabled` + `aria-busy` обязательны |
 | Toast after mutation | `ui-toast-mutations.mdc` | Sonner, 2000ms, из `@/lib/messages` |
 | Domain strings/codes | `domain-literals-and-codes.mdc` | Из `@{{PACKAGE_SCOPE}}/domain`, без inline |
-| UI tokens / Shadcn | `ui-warm-forest-shadcn.mdc` | `bg-primary`, Design Lab catalog |
+| UI tokens / Shadcn | `ui-design-system-shadcn.mdc` | `bg-primary`, Design Lab catalog |
 | Accessibility | `ui-semantics-a11y.mdc` | WCAG 2.1 AA |
 ```
 

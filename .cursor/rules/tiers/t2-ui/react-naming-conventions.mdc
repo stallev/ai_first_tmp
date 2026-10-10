@@ -6,6 +6,8 @@ alwaysApply: true
 **Guides:** [ai_react_utilities_guidelines.md](docs/guidelines/react/ai_react_utilities_guidelines.md), [ai_react_hooks_guidelines.md](docs/guidelines/react/ai_react_hooks_guidelines.md)  
 **React canon:** [Rules of Hooks](https://react.dev/reference/rules) — verified via Context7 `/reactjs/react.dev`
 
+> Примеры имён ниже — из Pulse (бронирование тренеров); в проекте подставлять сущности своего домена.
+
 ## React components
 
 - **PascalCase** — `TrainerCard`, `BookingWizardStep`.

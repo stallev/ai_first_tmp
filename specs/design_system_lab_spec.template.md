@@ -101,7 +101,7 @@ Implementation-spec для AI-агента: реализация **shared UI pri
 
 | Rule file | Что проверять |
 |-----------|---------------|
-| [`ui-{{DESIGN_SYSTEM_SLUG}}-shadcn.mdc`](../../../../.cursor/rules/ui-{{DESIGN_SYSTEM_SLUG}}-shadcn.mdc) | Semantic tokens only (`bg-primary`, `text-muted-foreground`); fonts from `visual_identity_contract`; states empty/loading/error |
+| [`ui-design-system-shadcn.mdc`](../../../../.cursor/rules/ui-design-system-shadcn.mdc) | Semantic tokens only (`bg-primary`, `text-muted-foreground`); fonts from `visual_identity_contract`; states empty/loading/error |
 | [`ui-prototype-fidelity.mdc`](../../../../.cursor/rules/ui-prototype-fidelity.mdc) | Сверка каждого L2/L3 блока с прототипом: font, size, weight, radius, spacing |
 | [`ui-mobile-first.mdc`](../../../../.cursor/rules/ui-mobile-first.mdc) | Base = mobile; touch targets ≥ **44×44px**; Design Lab viewport control 390px |
 | [`ui-semantics-a11y.mdc`](../../../../.cursor/rules/ui-semantics-a11y.mdc) | Semantic HTML; icon-only `aria-label`; `AlertText role="alert"`; WCAG 2.1 AA contrast |
@@ -160,7 +160,7 @@ Implementation-spec для AI-агента: реализация **shared UI pri
 
 - Copy-paste `globals.css` brand values from Pulse / reference kit without mapping to {{PROJECT_NAME}} contract.
 - Import reference component names (`PulseCard`, `BsfyCard`, domain-specific Button variants) into `apps/web`.
-- Treat `fitness-platform-*` interim docs as canonical for {{PROJECT_NAME}}.
+- Treat interim docs in `{{INTERIM_DOCS_GLOB}}` as canonical for {{PROJECT_NAME}}.
 
 **MUST:**
 
@@ -244,7 +244,7 @@ Implementation-spec для AI-агента: реализация **shared UI pri
 5. Domain molecules — `components/{domain}/` per phase specs; внутри **только** catalog imports (`atoms/`, `ui/`, при необходимости `shell/`). См. § Appendix A.
 6. Размещение каждого нового компонента — по § **Component catalog placement & Phase 2–3 inventory**; FAANG UX + prototype parity обязательны.
 
-**Enforcement:** Cursor Rules **ui-{{DESIGN_SYSTEM_SLUG}}-shadcn** §Design Lab catalog, **react-logic-presentation**, **react-ui-components**, **ui-prototype-fidelity**.
+**Enforcement:** Cursor Rules **ui-design-system-shadcn** §Design Lab catalog, **react-logic-presentation**, **react-ui-components**, **ui-prototype-fidelity**.
 
 **Context7 verified:** route group `(dev)` не попадает в URL — `/design-system` maps to `app/(dev)/design-system/page.tsx` ([Next.js route groups](https://nextjs.org/docs/app/api-reference/file-conventions/route-groups)).
 
@@ -388,7 +388,7 @@ Tokenize shadcn primitives to **{{DESIGN_SYSTEM_NAME}}** / prototype parity. Com
 **Применяется:** Phase 2–3 Design Lab + **P03–P13** product UI  
 **Связанные UX-контракты:** [`ux_ui_principles.md`](../../../design/ux_ui_principles.md), [`forms_and_validation_ux.md`](../../../design/forms_and_validation_ux.md), [`accessibility_requirements.md`](../../../design/accessibility_requirements.md), [`styleguide.md`](../../../design/styleguide.md)
 
-Нормы зрелых consumer/enterprise продуктов (informally «FAANG-level») адаптированы для {{PROJECT_NAME}} из [`ux_ui_principles.md`](../../../design/ux_ui_principles.md). **Visual canon** — **{{DESIGN_SYSTEM_NAME}}** + HTML-прототип {{PROJECT_NAME}}; FAANG-контракт задаёт **поведение, состояния и a11y**, не подменяя токены прототипа. Pulse reference UX doc — optional pattern library only ([`docs/examples/pulse/`](../../../examples/pulse/)); **MUST NOT** override {{PROJECT_NAME}} contracts.
+Нормы зрелых consumer/enterprise продуктов (informally «FAANG-level») адаптированы для {{PROJECT_NAME}} из [`ux_ui_principles.md`](../../../design/ux_ui_principles.md). **Visual canon** — **Warm Forest** + HTML-прототип {{PROJECT_NAME}}; FAANG-контракт задаёт **поведение, состояния и a11y**, не подменяя токены прототипа. Pulse reference UX doc — optional pattern library only ([`docs/examples/pulse/`](../../../examples/pulse/)); **MUST NOT** override {{PROJECT_NAME}} contracts.
 
 ### Agent prerequisites — Context7 (MUST)
 
@@ -864,7 +864,7 @@ Shared-компоненты продукта (atoms / ui): `Paths: n/a — prese
 | [`visual_identity_contract.md`](../../../design/visual_identity_contract.md) | Canonical token source |
 | [`{{INTERIM_DESIGN_SYSTEM_DOC}}`](../../../default_docs/{{INTERIM_DESIGN_SYSTEM_DOC}}) | Interim DS detail |
 | [`{{REFERENCE_EXAMPLE_COMPONENTS_REL_PATH}}`](../../../{{REFERENCE_EXAMPLE_COMPONENTS_REL_PATH}}) | Optional CVA pattern library (not copy source) |
-| [`P01_tasks.md`](../tasks/P01_tasks.md) | Phase checklist (W16 P03 for Lab QA) |
+| [`P01_tasks.md`](../tasks/P01_tasks.md) | Phase checklist (Lab QA) |
 | [`forms_and_validation_ux.md`](../../../design/forms_and_validation_ux.md) | Form controls UX (Phase 2a+) |
 | [`ux_ui_principles.md`](../../../design/ux_ui_principles.md) | FAANG-adapted {{PROJECT_NAME}} UX (FX contract) |
 | [`ai_component_guidelines.md`](../../../guidelines/react/ai_component_guidelines.md) | Folder layout §6; catalog imports |

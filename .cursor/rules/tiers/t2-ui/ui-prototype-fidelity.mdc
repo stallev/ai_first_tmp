@@ -24,14 +24,14 @@ alwaysApply: false
 | **Гарнитуры** | Source Serif 4, Manrope, JetBrains Mono | `next/font` + `font-heading` / `font-sans` / `font-mono` |
 | **Кегль** | Type scale §typography, responsive table | Atoms (`Heading`, `ContentText`) или точные `text-[Npx]` из DS |
 | **Начертание / вес** | `font-normal`, `font-medium`, `font-semibold`, `font-bold` | Как в прототипе для каждого контекста |
-| **Цвета** | Warm Forest CSS variables | Semantic tokens: `text-foreground`, `bg-primary`, `text-muted-foreground` — **не** ad-hoc hex |
+| **Цвета** | {{DESIGN_SYSTEM_NAME}} CSS variables | Semantic tokens: `text-foreground`, `bg-primary`, `text-muted-foreground` — **не** ad-hoc hex |
 | **Spacing / radius** | M3 elevation, padding, `rounded-*` | Из design system §components |
 | **Section order** | HTML structure прототипа | Порядок блоков, sticky footers, chip rows |
 
 ## Workflow для агента
 
 1. Открыть соответствующий экран в **HTML prototype** + секцию в **design system**.
-2. Сверить вариант на **Design Lab** `/design-system` — импорт только из каталога `@/components/atoms`, `@/components/ui/*` (**ui-warm-forest-shadcn** §Design Lab catalog).
+2. Сверить вариант на **Design Lab** `/design-system` — импорт только из каталога `@/components/atoms`, `@/components/ui/*` (**ui-design-system-shadcn** §Design Lab catalog).
 3. Сверить **структуру DOM**, class names / token mapping, порядок секций.
 4. Реализовать через **shared components** (`components/ui/`, `components/atoms/`, feature folders) — не one-off стили на route.
 5. Responsive: mobile значения из прототипа = base; desktop — через `md:` / `lg:` per design system §2.
@@ -44,6 +44,6 @@ alwaysApply: false
 
 ## Связанные правила
 
-- **ui-warm-forest-shadcn**, **react-one-component-per-file**, **ui-icons-lucide**
+- **ui-design-system-shadcn**, **react-one-component-per-file**, **ui-icons-lucide**
 
 Reference: Pulse snapshot `docs/examples/pulse/docs/prototypes/` — pattern only. This project: `docs/prototypes/{{MAIN_PROTOTYPE_HTML}}`.

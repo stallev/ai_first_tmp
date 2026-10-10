@@ -28,7 +28,7 @@ Project HOW для **commit / standalone review pipeline** (`agent-code-review-s
 | Route Handler / API | валидация входа; authn/authz на самом handler; корректные status codes; секреты не в ответе и не в логах (`auth-security`, `security-xss-csrf`) |
 | DAL / Prisma | БД только в DAL (`data-server-actions-and-api`); scoping по владельцу; в UI DTO из domain, не Prisma shapes |
 | Миграция / схема | migration + `schema.prisma` + `database_schema_v1.md` согласованы |
-| UI-компонент | один компонент на файл ≤140 строк; Design Lab primitives; тексты из `@/lib/messages`; empty / loading / error / forbidden; a11y (`react-one-component-per-file`, `ui-warm-forest-shadcn`, `ui-semantics-a11y`) |
+| UI-компонент | один компонент на файл ≤140 строк; Design Lab primitives; тексты из `@/lib/messages`; empty / loading / error / forbidden; a11y (`react-one-component-per-file`, `ui-design-system-shadcn`, `ui-semantics-a11y`) |
 | Поведение, маршруты, права | docs в том же diff (`product-docs-alignment`): `canonical_routes.md`, contracts, ADR |
 | Правка `.cursor/rules/*.mdc` | `npm run rules:sync`; `.claude/rules/` в stage, не руками |
 | Любое | в stage только файлы задачи; существующие helpers переиспользованы (`ai-dry-deduplication`) |

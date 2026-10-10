@@ -3,7 +3,7 @@
 > Monorepo context: [`../../AGENTS.md`](../../AGENTS.md)
 
 **{{PROJECT_NAME}} Web** — Next.js **16.4** App Router, тонкий BFF для {{PROJECT_NAME}}.  
-Hosting: **Vercel** · UI: **shadcn/ui + Tailwind CSS v4** (Warm Forest).
+Hosting: **Vercel** · UI: **shadcn/ui + Tailwind CSS v4** ({{DESIGN_SYSTEM_NAME}}).
 
 <!-- BEGIN:nextjs-agent-rules -->
 ## Next.js 16 — read before coding
@@ -69,7 +69,7 @@ Visual and interaction canon — **do not invent** ad-hoc styles:
 | Topic | Source |
 |-------|--------|
 | **UI component catalog** | `/design-system` (local dev) — import `@/components/atoms`, `@/components/ui/*`; spec: [`design_system_lab_spec.md`](../../docs/implementation/mvp/specs/design_system_lab_spec.md) |
-| Design tokens, typography | [`fitness-platform-design-system.md`](../../docs/default_docs/fitness-platform-design-system.md), [`typography_text_guidelines.md`](../../docs/guidelines/typography_text_guidelines.md) |
+| Design tokens, typography | [`{{INTERIM_DESIGN_SYSTEM_DOC}}`](../../docs/default_docs/{{INTERIM_DESIGN_SYSTEM_DOC}}), [`typography_text_guidelines.md`](../../docs/guidelines/typography_text_guidelines.md) |
 | Page layout reference | [`{{MAIN_PROTOTYPE_HTML}}`](../../docs/prototypes/{{MAIN_PROTOTYPE_HTML}}) |
 | User-visible copy | `@/lib/messages` (when wired) — rules: `ui-messages-and-copy.mdc`, `ui-messages-bundle-splitting.mdc` |
 | Toast after mutations | Sonner — rule: `ui-toast-mutations.mdc` |
@@ -92,7 +92,7 @@ Visual and interaction canon — **do not invent** ad-hoc styles:
 | `react-logic-presentation.mdc` | Logic vs presentation split |
 | `react-naming-conventions.mdc` | Naming |
 | `domain-literals-and-codes.mdc` | Mutation codes, roles, domain strings |
-| `ui-warm-forest-shadcn.mdc` | Design system tokens |
+| `ui-design-system-shadcn.mdc` | Design system tokens |
 | `ui-mobile-first.mdc` | Responsive, bottom nav / sidebar |
 | `ui-prototype-fidelity.mdc` | Prototype visual parity |
 | `ui-semantics-a11y.mdc` | WCAG 2.1 AA |
@@ -161,7 +161,7 @@ Lab PSI is **orthogonal**: `npm run psi:lab` against a **deployed** origin when 
 - [ ] New interception in **`src/proxy.ts`**, not Next 15 `middleware.ts` patterns
 - [ ] No `@{{PACKAGE_SCOPE}}/policy-server` import in `proxy.ts` / `middleware.ts`
 - [ ] Routes match [`canonical_routes.md`](../../docs/design/canonical_routes.md)
-- [ ] UI follows Warm Forest tokens — no arbitrary Tailwind color strings for product UI
+- [ ] UI follows {{DESIGN_SYSTEM_NAME}} tokens — no arbitrary Tailwind color strings for product UI
 - [ ] Product UI uses Design Lab catalog imports (`@/components/atoms`, `@/components/ui/*`) — no `@/components/design-lab/**` in routes
 - [ ] Mutation/error codes and roles from `@{{PACKAGE_SCOPE}}/domain` — no inline magic strings (**domain-literals-and-codes**)
 - [ ] Mutations: pending UI + toast per mutation rules

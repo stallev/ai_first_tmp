@@ -15,6 +15,6 @@ When extending **tables**, **sortable rows**, or **drag-and-drop**, follow:
 
 Do not copy HTML prototype pixel-perfect — **shadcn Table** and guides define structure.
 
-**Pulse admin surfaces:** pending trainers, bookings list, user search — mobile card fallback per guidelines.
+**Admin surfaces** (Pulse: pending trainers, bookings list, user search) — mobile card fallback per guidelines.
 
 Reference: Pulse (docs/examples/pulse) `patterns-tables-dnd.mdc`.

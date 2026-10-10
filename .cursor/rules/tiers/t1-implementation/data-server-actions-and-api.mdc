@@ -1,5 +1,5 @@
 ---
-description: Data layer — Server Actions vs Route Handlers, DAL pattern (Pulse)
+description: Data layer — Server Actions vs Route Handlers, DAL pattern
 globs:
   - apps/web/src/app/**
   - apps/web/src/lib/**
@@ -26,7 +26,7 @@ alwaysApply: false
 |----------|--------|
 | Form submit; list/detail refresh | **Server Action** (+ iOS fallback on Class B — **ios-safari-mutation-transport**) |
 | Modal close updating parent | **Server Action** |
-| Optimistic toggle (wishlist, service active) | **Route Handler** primary (Class A) |
+| Optimistic toggle (Pulse: wishlist, service active) | **Route Handler** primary (Class A) |
 | JSON/polling/external API | **Route Handler** |
 | Frequent / debounced save | **Route Handler** + `resilientPostFetch` — not Server Action |
 

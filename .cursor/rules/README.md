@@ -70,7 +70,7 @@
 | `react-logic-presentation.mdc` | Logic vs presentation split |
 | `react-naming-conventions.mdc` | Naming conventions |
 | `react-state-management.mdc` | useReducer/useContext/Zustand/Redux Toolkit, SSR safety |
-| `ui-warm-forest-shadcn.mdc` | Design tokens, shadcn catalog |
+| `ui-design-system-shadcn.mdc` | Design tokens, shadcn catalog |
 | `ui-mobile-first.mdc` | Bottom nav / sidebar |
 | `ui-prototype-fidelity.mdc` | Prototype visual parity |
 | `ui-semantics-a11y.mdc` | WCAG 2.1 AA |

@@ -1,7 +1,7 @@
 ---
-description: TypeScript monorepo — typecheck, shared domain types, mutation ADT (Pulse AI agents)
+description: TypeScript monorepo — typecheck, shared domain types, mutation ADT
 ---
-# TypeScript monorepo — Pulse
+# TypeScript monorepo
 
 **Methodology:** [`docs/meta/ai_first_project_methodology.md`](docs/meta/ai_first_project_methodology.md)  
 **Canon:** [`docs/guidelines/typescript/ai_typescript_monorepo_guidelines.md`](docs/guidelines/typescript/ai_typescript_monorepo_guidelines.md)
@@ -17,7 +17,7 @@ Web-only `tsc` **does not** replace package checks.
 
 | Layer | Types |
 |-------|--------|
-| `@{{PACKAGE_SCOPE}}/domain` | `UserRole`, `BookingStatus`, ports, `MutationResult`, shared Zod DTOs |
+| `@{{PACKAGE_SCOPE}}/domain` | `UserRole`, entity statuses (Pulse: `BookingStatus`), ports, `MutationResult`, shared Zod DTOs |
 | `@{{PACKAGE_SCOPE}}/policy-server` | **`PolicySessionContext` / `UserRole`**, not `next-auth` `Session` |
 | `apps/web` | Auth.js augmentation, UI props, session → domain mappers |
 
@@ -25,7 +25,7 @@ Web-only `tsc` **does not** replace package checks.
 
 ## Domain literals
 
-- Roles/statuses from `@{{PACKAGE_SCOPE}}/domain` or typed constants — no inline `"trainer"` / `"pending"`.
+- Roles/statuses from `@{{PACKAGE_SCOPE}}/domain` or typed constants — no inline role / status strings (Pulse: `"trainer"` / `"pending"`).
 - **Mutation error codes** — import from `@{{PACKAGE_SCOPE}}/domain` (`AUTH_MUTATION_ERROR_CODES`, `MUTATION_ERROR_CODES`); no inline `"INVALID_CREDENTIALS"` / `"DUPLICATE_EMAIL"`. Full contract: **domain-literals-and-codes**.
 - Use type guards after string validation, not unsafe `as`.
 

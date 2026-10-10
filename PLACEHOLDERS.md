@@ -10,7 +10,6 @@
 | `{{PRODUCT_DESCRIPTION}}` | B2B marketplace for … | project-context, AGENTS |
 | `{{USER_ROLES}}` | client, vendor, admin | project-context, schema |
 | `{{DESIGN_SYSTEM_NAME}}` | Warm Forest | project-context, design_system_lab_spec, UI rules |
-| `{{DESIGN_SYSTEM_SLUG}}` | warm-forest | `ui-{{DESIGN_SYSTEM_SLUG}}-shadcn.mdc` Cursor Rule file name |
 | `{{MAIN_PROTOTYPE_HTML}}` | Acme_Prototype_v1.html | **единственный** канонический HTML-прототип: `docs/prototypes/{{MAIN_PROTOTYPE_HTML}}` (не `docs/prototype/`). Процесс: [`BOOTSTRAP.md`](BOOTSTRAP.md) §3.5; Claude Desktop: [`prompts/P1-html-prototype-claude-desktop.md`](prompts/P1-html-prototype-claude-desktop.md) |
 | `{{INTERIM_DESIGN_SYSTEM_DOC}}` | acme-design-system.md | interim DS в `docs/default_docs/` (detail when contract silent) |
 | `{{REFERENCE_EXAMPLE_COMPONENTS_REL_PATH}}` | examples/pulse/docs/example_components/ | optional pattern library relative to `docs/` — **не** default copy source |

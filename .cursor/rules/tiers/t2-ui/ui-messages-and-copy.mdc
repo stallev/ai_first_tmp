@@ -12,7 +12,7 @@ alwaysApply: false
 
 ## Source of truth
 
-- User-visible strings from **`@/lib/messages`** (`en.ts`, `ru.ts`). Nested namespaces: `auth`, `booking`, `trainer`, `admin`, `site`, `locale`, …
+- User-visible strings from **`@/lib/messages`** (`en.ts`, `ru.ts`). Nested namespaces по доменам продукта (Pulse: `auth`, `booking`, `trainer`, `admin`, `site`, `locale`, …)
 - **Default locale:** `en` · **Supported:** `en`, `ru` — see [`adr_009_ui_locale_strategy.md`](docs/prds/07_governance/adr_009_ui_locale_strategy.md)
 - **Do not** duplicate the same sentence in Server Action and component.
 
@@ -23,7 +23,7 @@ alwaysApply: false
 - Default `metadata` title/description.
 - **Display labels** for `<option>`; **domain/API values** — shared `@/lib/...` constants or `@{{PACKAGE_SCOPE}}/domain`.
 
-## Pulse domains (MVP)
+## Пример namespaces (Pulse MVP)
 
 - `auth` — login, register, password reset
 - `booking` — statuses, actions, errors

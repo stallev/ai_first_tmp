@@ -112,7 +112,7 @@ apps/web/src/app/
 │   └── _components/
 ```
 
-Skeleton should match page chrome (Warm Forest spacing, `Container` variant from catalog).
+Skeleton should match page chrome ({{DESIGN_SYSTEM_NAME}} spacing, `Container` variant from catalog).
 
 ### 3.2 Manual Suspense (within page)
 

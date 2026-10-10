@@ -28,7 +28,7 @@ UI-специфичные уточнения к канону:
 - **Этот документ** — операционный чеклист для агентов, ниже Guidelines.
 - **HTML-прототип** — visual reference only, как в каноне (subordinate to routes and MVP scope).
 
-**Visual canon:** `fitness-platform-design-system.md` + `Fitness_Platform_Prototype_v1.html`.
+**Visual canon:** `{{INTERIM_DESIGN_SYSTEM_DOC}}` + `{{MAIN_PROTOTYPE_HTML}}`.
 
 ---
 
@@ -231,7 +231,7 @@ Empty state и error state **MUST** содержать следующий шаг
 | Принцип | Product contract | Cursor Rule | Design Lab |
 |---------|-----------------|-------------|------------|
 | FX-1 Predictability | `ux_ui_principles.md` P4 | `ui-messages-and-copy` | L3 recipes |
-| FX-2 Hierarchy | P4 One Primary Action | `ui-warm-forest-shadcn` | Button variants |
+| FX-2 Hierarchy | P4 One Primary Action | `ui-design-system-shadcn` | Button variants |
 | FX-3 Disclosure | P1 | — | Tabs, WizardHeader |
 | FX-4 States | `ui_states_contract.md` | `app-router-streaming-loading` | Skeleton, Empty |
 | FX-5 A11y | `accessibility_requirements.md` | `ui-semantics-a11y` | — |
@@ -519,7 +519,7 @@ className="md:rounded-3xl md:p-6"
 
 ### Design Thinking
 - [ ] Purpose сформулирован: кто пользователь, какая задача
-- [ ] Aesthetic direction — Warm Forest tokens, не generic fallback
+- [ ] Aesthetic direction — {{DESIGN_SYSTEM_NAME}} tokens, не generic fallback
 - [ ] Один primary action на экран определён
 
 ### States
@@ -572,7 +572,7 @@ className="md:rounded-3xl md:p-6"
 | `type="time"` без locale control | Masked input / Select columns |
 | Success toast на каждое локальное изменение | Toast только при server commit |
 | Decoration without purpose | Убрать или обосновать |
-| Generic Inter + purple gradient | Warm Forest tokens: Source Serif 4 / Manrope |
+| Generic Inter + purple gradient | {{DESIGN_SYSTEM_NAME}} tokens и шрифты из `visual_identity_contract.md` |
 | `import * as Icons from 'lucide-react'` | `import { Search, User } from 'lucide-react'` |
 | Status/error только цветом | Icon + text + цвет |
 | Дублировать Design Lab примитив | Расширить CVA/atom variant, добавить Lab-секцию |
@@ -638,7 +638,7 @@ className="md:rounded-3xl md:p-6"
 | `docs/guidelines/security/ai_security_xss_csrf_guidelines.md` | XSS, CSRF, CSP |
 | `docs/reference/pulse_project_reference.md` | Pulse reference priority |
 | `docs/general/README.md` | General → Guidelines mapping |
-| `docs/default_docs/fitness-platform-design-system.md` | Warm Forest visual canon |
+| `docs/default_docs/{{INTERIM_DESIGN_SYSTEM_DOC}}` | {{DESIGN_SYSTEM_NAME}} visual canon |
 
 ---
 

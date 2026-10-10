@@ -1,7 +1,7 @@
 ---
-description: Domain literals, mutation error codes, and API string values — no inline magic strings (Pulse AI agents)
+description: Domain literals, mutation error codes, and API string values — no inline magic strings
 ---
-# Domain literals and codes — Pulse
+# Domain literals and codes
 
 **Methodology:** [`docs/meta/ai_first_project_methodology.md`](docs/meta/ai_first_project_methodology.md)  
 **Canon:** [`docs/guidelines/typescript/ai_typescript_monorepo_guidelines.md`](docs/guidelines/typescript/ai_typescript_monorepo_guidelines.md) §3–§4  
@@ -23,7 +23,7 @@ description: Domain literals, mutation error codes, and API string values — no
 |----------|----------|---------|
 | Коды ошибок мутаций | `@{{PACKAGE_SCOPE}}/domain` | `AUTH_MUTATION_ERROR_CODES`, `MUTATION_ERROR_CODES` |
 | Роли | `@{{PACKAGE_SCOPE}}/domain` | `USER_ROLE`, `USER_ROLES` |
-| Статусы брони / тренера | `@{{PACKAGE_SCOPE}}/domain` | `BOOKING_STATUSES`, `TRAINER_STATUSES` |
+| Статусы сущностей домена | `@{{PACKAGE_SCOPE}}/domain` | `<ENTITY>_STATUSES` (Pulse: `BOOKING_STATUSES`, `TRAINER_STATUSES`) |
 | UI-копирайт | `@/lib/messages` | `MESSAGES.auth.login.invalidCredentials` |
 
 Новый код ошибки → **сначала** добавить в `@{{PACKAGE_SCOPE}}/domain` (`packages/domain/src/constants/mutation-error-codes.ts` или доменный namespace), затем использовать в DAL/actions/UI.

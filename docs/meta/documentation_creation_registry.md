@@ -309,15 +309,15 @@ READ registry → READ dependencies → DRAFT file → ADD backlinks → UPDATE 
 
 - HTML-прототип [`{{MAIN_PROTOTYPE_HTML}}`](../prototypes/{{MAIN_PROTOTYPE_HTML}})
 - Interim design system [`{{INTERIM_DESIGN_SYSTEM_DOC}}`](../default_docs/{{INTERIM_DESIGN_SYSTEM_DOC}})
-- UX-прinciples из [`fitness-platform-pages.md`](../default_docs/fitness-platform-pages.md) § UX-прinciples
-- Cursor Rules: `ui-warm-forest-shadcn`, `ui-mobile-first`, `ui-prototype-fidelity`, `ui-semantics-a11y`, `ui-toast-mutations`, `ui-mutation-pending`, `ui-optimistic-mutations`
+- UX-прinciples из interim pages doc в `{{INTERIM_DOCS_GLOB}}` § UX-прinciples
+- Cursor Rules: `ui-design-system-shadcn`, `ui-mobile-first`, `ui-prototype-fidelity`, `ui-semantics-a11y`, `ui-toast-mutations`, `ui-mutation-pending`, `ui-optimistic-mutations`
 - Guidelines: [`typography_text_guidelines.md`](../guidelines/typography_text_guidelines.md), [`ai_semantics_a11y_guidelines.md`](../guidelines/react/ai_semantics_a11y_guidelines.md)
 
 | ID | Файл | Назначение |
 |----|------|------------|
 | UX-01 | `docs/design/ux_ui_principles.md` | Канон UX-прinciples: Progressive Disclosure, Zero Dead Ends, Thumb Zone, One Primary Action |
 | UX-02 | `docs/design/responsive_navigation_contract.md` | Bottom nav / sidebar, breakpoints md/lg, route groups |
-| UX-03 | `docs/design/visual_identity_contract.md` | Warm Forest tokens, typography atoms, shadcn mapping |
+| UX-03 | `docs/design/visual_identity_contract.md` | {{DESIGN_SYSTEM_NAME}} tokens, typography atoms, shadcn mapping |
 | UX-04 | `docs/design/interaction_design_contract.md` | Toast, optimistic UI, pending/busy, confirm dialogs |
 | UX-05 | `docs/design/ui_states_contract.md` | Empty / loading / error / forbidden — first-class для каждого типа экрана |
 | UX-06 | `docs/design/forms_and_validation_ux.md` | Field errors, labels, focus, submit pending |
@@ -331,6 +331,8 @@ READ registry → READ dependencies → DRAFT file → ADD backlinks → UPDATE 
 ---
 
 ## 5. Полный реестр документов по волнам
+
+> **Template note.** Структура волн и универсальные документы (governance, UX/UI, auth, runtime, data model, ops) — канон шаблона. Строки с доменными файлами (booking, trainer, wishlist, complaint …) — **пример Pulse**: в P2 заменить доменными аналогами {{PROJECT_NAME}} или удалить. Какие волны обязательны — по профилю качества проекта.
 
 Легенда колонок:
 
@@ -357,9 +359,9 @@ READ registry → READ dependencies → DRAFT file → ADD backlinks → UPDATE 
 |----|------|------------|-------------------|
 | W1-01 | `docs/prds/07_governance/adr_index.md` | ADR-001, ADR-002, registry | `07_governance/README.md`, `architecture_master_index.md` |
 | W1-02 | `docs/prds/07_governance/decision_process.md` | adr_index | adr_index, methodology |
-| W1-03 | `docs/prds/01_product_scope/mvp_scope.md` | `default_docs/fitness-platform-mvp.md`, user flows, ADR-001 | architecture_master_index, methodology checklist |
+| W1-03 | `docs/prds/01_product_scope/mvp_scope.md` | interim MVP brief (`{{INTERIM_DOCS_GLOB}}`), user flows, ADR-001 | architecture_master_index, methodology checklist |
 | W1-04 | `docs/prds/01_product_scope/post_mvp_deferrals.md` | mvp_scope, database_schema_v1 | mvp_scope |
-| W1-05 | `docs/prds/01_product_scope/pages_functional_spec.md` | mvp_scope, canonical_routes, `default_docs/fitness-platform-pages.md` | architecture_master_index, canonical_routes |
+| W1-05 | `docs/prds/01_product_scope/pages_functional_spec.md` | mvp_scope, canonical_routes, interim pages doc (`{{INTERIM_DOCS_GLOB}}`) | architecture_master_index, canonical_routes |
 | W1-06 | `docs/prds/01_product_scope/email_notifications_matrix.md` | mvp_scope | Post-MVP email spec; schema-ready on MVP *(→ email contract W8)* |
 
 ---
@@ -499,37 +501,13 @@ READ registry → READ dependencies → DRAFT file → ADD backlinks → UPDATE 
 |----|------|-------|------------|
 | W10-00 | `docs/design/wireframes/_page_template.md` | — | ui_states_contract, styleguide |
 | W10-01 | `docs/design/wireframes/route_index.md` | index | canonical_routes, prototype_route_mapping |
-| W10-02 | `.../mvp/public_landing.md` | `/` | pages_functional_spec, prototype mapping; **v2 W22** → standalone landing prototype |
-| W10-03 | `.../mvp/public_trainers_catalog.md` | `/trainers` | catalog_discovery_spec |
-| W10-04 | `.../mvp/public_trainer_profile.md` | `/trainers/[id]` | pages_functional_spec |
-| W10-05 | `.../mvp/auth_login.md` | `/auth/login` | auth_runtime_spec |
-| W10-06 | `.../mvp/auth_register_client.md` | `/auth/register` | auth_runtime_spec |
-| W10-07 | `.../mvp/auth_register_trainer.md` | `/auth/register/trainer` | trainer_onboarding_spec |
-| W10-08 | `.../mvp/booking_wizard.md` | `/book/[trainerId]` | booking_wizard_spec |
-| W10-09 | `.../mvp/booking_confirm.md` | `/book/[trainerId]/confirm` | booking_wizard_spec |
-| W10-10 | `.../mvp/session_placeholder.md` | `/sessions/[sessionId]` | mvp_scope post_mvp |
-| W10-11 | `.../mvp/client_dashboard.md` | `/client/dashboard` | client_flow |
-| W10-12 | `.../mvp/client_bookings_list.md` | `/client/bookings` | client_flow |
-| W10-13 | `.../mvp/client_booking_detail.md` | `/client/bookings/[id]` | booking_lifecycle_contract |
-| W10-14 | `.../mvp/client_review_form.md` | `/client/reviews/[bookingId]` | review_moderation_contract |
-| W10-15 | `.../mvp/client_profile.md` | `/client/profile` | pages_functional_spec |
-| W10-16 | `.../mvp/trainer_dashboard.md` | `/trainer/dashboard` | trainer_flow |
-| W10-17 | `.../mvp/trainer_profile_edit.md` | `/trainer/profile` | trainer_onboarding_spec |
-| W10-18 | `.../mvp/trainer_services.md` | `/trainer/services` | trainer_flow |
-| W10-19 | `.../mvp/trainer_schedule.md` | `/trainer/schedule` | trainer_schedule_spec |
-| W10-20 | `.../mvp/trainer_clients_list.md` | `/trainer/clients` | trainer_flow |
-| W10-21 | `.../mvp/trainer_client_detail.md` | `/trainer/clients/[id]` | privacy_data_handling |
-| W10-22 | `.../mvp/trainer_income.md` | `/trainer/income` | mvp_scope |
-| W10-23 | `.../mvp/admin_dashboard.md` | `/admin/dashboard` | admin_flow |
-| W10-24 | `.../mvp/admin_trainers_queue.md` | `/admin/trainers` | admin_verification_spec |
-| W10-25 | `.../mvp/admin_trainer_application.md` | `/admin/trainers/[id]` | admin_verification_spec |
-| W10-26 | `.../mvp/admin_complaints_list.md` | `/admin/complaints` | complaint_refund_spec |
-| W10-27 | `.../mvp/admin_complaint_detail.md` | `/admin/complaints/[id]` | complaint_refund_spec |
-| W10-28 | `.../mvp/admin_refunds.md` | `/admin/refunds` | complaint_refund_spec |
-| W10-29 | `.../mvp/admin_reviews_moderation.md` | `/admin/reviews` | review_moderation_contract |
-| W10-30 | `.../mvp/admin_trainer_approved_detail.md` | `/admin/trainers/[id]` (approved) | admin_people_ops_spec |
-| W10-31 | `.../mvp/admin_clients_registry.md` | `/admin/clients` | admin_people_ops_spec |
-| W10-32 | `.../mvp/admin_client_detail.md` | `/admin/clients/[id]` | admin_people_ops_spec |
+| W10-02 | `.../mvp/public_landing.md` | `/` | pages_functional_spec, prototype mapping |
+| W10-03… | `.../mvp/public_{screen}.md` | публичные маршруты из `canonical_routes` | pages_functional_spec, профильный spec |
+| W10-… | `.../mvp/auth_{login,register…}.md` | `/auth/*` | auth_runtime_spec |
+| W10-… | `.../mvp/{role}_{screen}.md` | кабинет каждой роли из `{{USER_ROLES}}` (dashboard, списки, детали, формы) | `{role}_flow`, профильный spec / contract |
+| W10-… | `.../mvp/admin_{screen}.md` | `/admin/*` (если есть роль admin) | admin_flow, профильный spec |
+
+Один wireframe на маршрут из `canonical_routes.md`; нумерация — сквозная в порядке route_index. Пример полного списка (32 экрана) — Pulse registry W10.
 
 **Обновить backlinks после W10:** `canonical_routes.md` § Wireframe index, `design/README.md`, `prototype_route_mapping.md`.
 
@@ -554,68 +532,6 @@ READ registry → READ dependencies → DRAFT file → ADD backlinks → UPDATE 
 | W11-13 | `P07_phase_description.md` | accessibility_requirements, ui_states | methodology |
 | W11-14 | `P07_tasks.md` | P07_phase | — |
 
-*(W11 superseded by W16 — см. миграцию [`_migration_P01-P07_to_P01-P15.md`](../implementation/mvp/phases_tasks_descriptions/_migration_P01-P07_to_P01-P15.md))*
-
----
-
-### Волна W16 — Phase restructure P01–P15 + UI matrix
-
-| ID | Файл | Зависит от | Обновить backlinks |
-|----|------|------------|-------------------|
-| W16-01 | `_phase_template.md` | W11 phase docs | methodology §2.5 |
-| W16-02 | `_migration_P01-P07_to_P01-P15.md` | W11 | AGENTS, README |
-| W16-03 | `ui_component_phase_matrix.md` | design_system_lab_spec | phase docs, specs |
-| W16-04 … W16-18 | `P01`…`P15_phase_description.md` | W11 split + new phases | methodology, mvp_scope |
-| W16-19 … W16-33 | `P01`…`P15_tasks.md` | matching phase docs | — |
-| W16-34 | Specs UI Catalog sections | ui_component_phase_matrix | global_shell, catalog, booking, onboarding, schedule, admin, complaint |
-| W16-35 | Cross-ref sync | W16 phases | AGENTS, architecture_master_index, guides, observability |
-
-*(Полные пути: `docs/implementation/mvp/`)*
-
-**Gate для phase tasks (W11 / W16 и последующих волн с `P{N}_tasks.md`):** «Зависит от» включает contracts / specs, прошедшие §2.3.6; задачи — по [`phase_tasks.template.md`](./phase_tasks.template.md) (§6.7); реализация фазы стартует после **Phase DoR audit**.
-
----
-
-### Волна W22 — Phase renumbering + P16 Landing v2
-
-| ID | Файл | Зависит от | Обновить backlinks |
-|----|------|------------|-------------------|
-| W22-01 | `_migration_P15-P20_renumbering.md` | W16, W17 | AGENTS, README, methodology |
-| W22-02 | `P21_phase_description.md`, `P21_tasks.md` | was P15 | cron guide, deferrals, email contract |
-| W22-03 | `P19_phase_description.md`, `P19_tasks.md` | was P20 → P17 → P19 (W23) | ADR-008, complaint_refund_spec |
-| W22-04 | `P16_phase_description.md`, `P16_tasks.md` | standalone landing prototype | route_index, wireframe |
-| W22-05 | `specs/public_landing_spec.md` | pages_functional_spec, global_shell | catalog_discovery, design_system_lab |
-| W22-06 | `wireframes/mvp/public_landing.md` v2 | public_landing_spec | prototype_route_mapping |
-| W22-07 | `ui_component_phase_matrix.md` v2 | P16/P17/P18/P19/P21 rows | phase docs |
-| W22-08 | Cross-ref sync | W22 | architecture_master_index, admin_flow, admin_people_ops P18, AGENTS, project-context |
-
-*(Полные пути: `docs/implementation/mvp/` + design wireframes)*
-
----
-
-### Волна W23 — Complaint phase P17 → P19
-
-| ID | Файл | Зависит от | Обновить backlinks |
-|----|------|------------|-------------------|
-| W23-01 | `_migration_P17_to_P19.md` | W22 | AGENTS, README, methodology |
-| W23-02 | `P19_phase_description.md`, `P19_tasks.md` | was P17 | ADR-008, complaint_refund_spec, matrix |
-| W23-03 | Cross-ref sync | W23 | architecture_master_index, admin_flow, project-context, adr_index |
-
-*(Полные пути: `docs/implementation/mvp/`)*
-
----
-
-### Волна W24 — P17 UI Internationalization (EN/RU)
-
-| ID | Файл | Зависит от | Обновить backlinks |
-|----|------|------------|-------------------|
-| W24-01 | `adr_009_ui_locale_strategy.md` | ADR-002, database_schema §1.2 | adr_index |
-| W24-02 | `contracts/i18n_runtime_spec.md` | ADR-009 | canonical_routes, copy_and_messages |
-| W24-03 | `P17_phase_description.md`, `P17_tasks.md` | P14, ADR-009, i18n contract | matrix, AGENTS |
-| W24-04 | `wireframes/mvp/client_profile.md` v2 | i18n contract | route_index |
-| W24-05 | Cross-ref sync | W24 | architecture_master_index, project-context, guidelines copy, matrix P17 row |
-
-*(Полные пути: `docs/implementation/mvp/` + `docs/prds/07_governance/` + design wireframes)*
 
 ---
 
@@ -730,29 +646,16 @@ READ registry → READ dependencies → DRAFT file → ADD backlinks → UPDATE 
 
 ## 8. Сводная статистика
 
-| Категория | Новых файлов |
-|-----------|--------------|
-| PRD (01–06) | 25 |
-| ADR (003–007) + governance index | 7 |
-| UX/UI contracts + styleguide | 10 |
-| Implementation contracts | 9 |
-| Implementation specs | 8 |
-| Wireframes + template + index | 30 |
-| Phases + tasks | 30 (W16) + 14 (W11 superseded) |
-| Operations + guides | 9 |
-| Architecture learning pack | 3 |
-| Meta sync (W14 — правки существующих) | 6 файлов |
-| **Итого новых markdown файлов** | **~115** |
+Заполняется в P2 после адаптации волн. Ориентир — Pulse (профиль Strict): ~115 новых markdown-файлов в W0–W14.
 
 ---
 
 ## 9. Быстрый старт для агента
 
-**Следующий шаг:** **P01 implementation** (monorepo & data layer) — [`P01_phase_description.md`](../implementation/mvp/phases_tasks_descriptions/P01_phase_description.md) + [`P01_tasks.md`](../implementation/mvp/tasks/P01_tasks.md).
-
-**Документация MVP-complete (W0–W24).** Core MVP: P01–P14 (W16). **Post-P14:** **P16** (Public Landing v2), **P17** (UI i18n EN/RU), **P19** (Complaint Resolution v2), **P18** (Admin People Ops spec), **P21** (Email, post-MVP).
-
-**После W24** имплементация post-P14: **P17 i18n complete**, P16 landing replace, P19 complaints (in progress), P18 people ops, P21 email after deferral unlock.
+1. Прочитать §2 (требования к документам) и профиль качества проекта.
+2. Найти первую незавершённую волну в §5 (до утверждения registry пользователем — gate G2 — волны не начинать).
+3. Выполнить волну через [`P3-wave-executor.md`](../../prompts/P3-wave-executor.md): одна сессия = одна волна или 1–3 файла.
+4. После волны — backlinks (§2.5), верификация (§2.6), строка в Change log.
 
 ---
 
@@ -760,27 +663,6 @@ READ registry → READ dependencies → DRAFT file → ADD backlinks → UPDATE 
 
 | Date | Change |
 |------|--------|
-| 2026-05-25 | **P17 implementation complete** — cookie-first EN/RU i18n in `apps/web`; `getMessages`/`useMessages`; formatters; LocaleSwitcher; auth `user.locale` persist |
-| 2026-05-25 | **W24 complete** — P17 UI i18n (EN/RU): ADR-009, i18n_runtime_spec, P17 phase/tasks, client_profile wireframe v2, matrix + cross-ref sync |
-| 2026-05-25 | **W23 complete** — Complaint Resolution v2 P17→P19; P17 slot reallocated W24; `_migration_P17_to_P19.md`; matrix + cross-ref sync |
-| 2026-05-25 | **W22 complete** — P16 landing v2 (`public_landing_spec`, phase/tasks, wireframe v2); renumber P15→P21, P20→P17; Admin People Ops P16→P18; `_migration_P15-P20_renumbering.md`; matrix + cross-ref sync |
-| 2026-05-25 | **W18-01** — `admin_people_ops_spec.md` (P18 People Ops); wireframes W10-30…32; canonical routes `/admin/clients*` |
-| 2026-05-25 | **W17-01** — ADR-008, complaint_refund_spec v2, P19 phase/tasks (was P20 → P17 → P19) |
-| 2026-05-23 | **W16 complete** — P01–P15 phase restructure (30 phase/task files), `_phase_template.md`, `_migration_P01-P07_to_P01-P15.md`, `ui_component_phase_matrix.md`, UI Catalog sections in specs, cross-ref sync |
-| 2026-05-23 | **W15-01** — `design_system_lab_spec.md` (shared UI primitives + Design Lab page) |
-| 2026-05-23 | **W14 complete** — final index sync: `architecture_master_index`, `prds/README`, `design/README`, methodology checklist, `AGENTS.md`, `implementation/mvp/README` |
-| 2026-05-23 | W13 complete — architecture learning pack: booking, trainer verification, email jobs layer walkthroughs |
-| 2026-05-23 | W12 complete — 06_operations (README, migration_runbook, observability_plan, cron_jobs_registry) + 5 implementation guides |
-| 2026-05-23 | W11 complete — P01–P07 phase descriptions + task checklists (14 files) |
-| 2026-05-23 | W10 complete — wireframe template, route_index, 28 MVP screen wireframes (public, auth, booking, client, trainer, admin) |
-| 2026-05-23 | W9 complete — 8 implementation specs (shell, password reset post-MVP, catalog, onboarding, booking wizard, schedule, admin verification, complaints/refunds) |
-| 2026-05-23 | W8 complete — 9 core contracts (monorepo, auth policy, schedule, booking, wishlist, trainer verification, file upload, review, email) |
-| 2026-05-23 | W7 complete — interaction_design, ui_states, forms_and_validation_ux, content_and_microcopy, styleguide |
-| 2026-05-23 | W6 complete — 03_data_model supplements (data_access_patterns, indexing_strategy, seed_data_spec) |
-| 2026-05-23 | W5 complete — 04_authorization_privacy (README, matrix, policy contract, privacy) + 05_runtime (README, backend, monorepo, auth spec, cache) |
-| 2026-05-23 | W4 complete — ADR-003 auth, ADR-004 timezone, ADR-005 booking, ADR-006 email, ADR-007 blob |
-| 2026-05-23 | W3 complete — 02_domain_model README, lifecycle_models, failure_modes_catalog, domain_invariants, use_cases_index |
-| 2026-05-23 | W2 complete — ux_ui_principles, responsive_navigation_contract, visual_identity_contract, accessibility_requirements, prototype_route_mapping |
-| 2026-05-23 | W1 complete — adr_index, decision_process, mvp_scope, post_mvp_deferrals, pages_functional_spec, email_notifications_matrix |
+| 2026-10-10 | Template cleanup — removed Pulse project history (waves W16, W22–W24, completion log, MVP status); W10 as generic patterns; domain rows marked as Pulse examples |
 | 2026-05-23 | v1.1 — §2.3 path coverage (happy/negative/security/races/drift), contract/spec templates, `failure_modes_catalog` in W3 |
 | 2026-05-23 | v1.0 — full wave plan, UX/UI block, agent requirements |

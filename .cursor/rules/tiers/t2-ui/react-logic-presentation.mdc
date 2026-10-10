@@ -34,7 +34,7 @@ alwaysApply: false
 
 1. **Перед новым UI** — открыть **Design Lab** `/design-system` и проверить каталог: `components/atoms/`, `components/ui/`, затем `components/{domain}/`.
 2. **Повтор на 2+ экранах** — вынести в shared; named export; один компонент — один файл.
-3. **Иерархия:** `ui/` primitives → `atoms/` typography → feature molecules → route composition. Каталог и import paths — **ui-warm-forest-shadcn** §Design Lab catalog.
+3. **Иерархия:** `ui/` primitives → `atoms/` typography → feature molecules → route composition. Каталог и import paths — **ui-design-system-shadcn** §Design Lab catalog.
 4. **Route files thin** — `page.tsx` только compose + metadata; логика не раздувает page.
 5. **MUST NOT** импортировать `@/components/design-lab/**` в product routes — только showcase; новый primitive → сначала в каталог + секция Design Lab.
 

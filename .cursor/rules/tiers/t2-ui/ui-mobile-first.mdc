@@ -9,8 +9,8 @@ alwaysApply: false
 # Mobile-first (`apps/web`)
 
 **Methodology:** [`docs/meta/ai_first_project_methodology.md`](docs/meta/ai_first_project_methodology.md)  
-**Design system:** [`fitness-platform-design-system.md`](docs/default_docs/fitness-platform-design-system.md) §2 Responsive Strategy  
-**User flows:** [`client_flow.md`](docs/prds/01_product_scope/user_flows/users_mvp/client_flow.md), [`trainer_flow.md`](docs/prds/01_product_scope/user_flows/users_mvp/trainer_flow.md)
+**Design system:** [`{{INTERIM_DESIGN_SYSTEM_DOC}}`](docs/default_docs/{{INTERIM_DESIGN_SYSTEM_DOC}}) §2 Responsive Strategy  
+**User flows:** [`docs/prds/01_product_scope/user_flows/users_mvp/`](docs/prds/01_product_scope/user_flows/users_mvp/) — по одному flow на роль из `{{USER_ROLES}}`
 
 ## Контракт
 
@@ -18,7 +18,7 @@ alwaysApply: false
 
 ## Breakpoints (Tailwind v4 defaults)
 
-| Token | Min width | Поведение Pulse |
+| Token | Min width | Поведение |
 |-------|-----------|-----------------|
 | default | 0 | Base layout, bottom nav, sheets |
 | `md` | 768px | Sidebar вместо bottom nav; tablet padding |
@@ -43,7 +43,7 @@ alwaysApply: false
 
 ## Связанные правила
 
-- Tokens/states: **ui-warm-forest-shadcn**
+- Tokens/states: **ui-design-system-shadcn**
 - Prototype parity: **ui-prototype-fidelity**
 - Shared nav/shell: **react-logic-presentation**
 

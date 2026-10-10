@@ -10,7 +10,7 @@ alwaysApply: true
 
 **Guide:** [`docs/guidelines/react/ai_optimistic_ui_pattern.md`](docs/guidelines/react/ai_optimistic_ui_pattern.md)
 
-## Когда применять (Pulse MVP)
+## Когда применять (примеры Pulse MVP — подставить аналоги домена)
 
 - **Wishlist toggle** — добавить/убрать тренера из избранного
 - **Service active toggle** — тренер вкл/выкл услугу

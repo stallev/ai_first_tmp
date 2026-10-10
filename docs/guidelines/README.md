@@ -1,6 +1,6 @@
 ﻿# Guidelines
 
-Нормы реализации — адаптированы из Pulse reference (fitapp) под Vercel, **Next.js 16.4** и design system проекта ({{DESIGN_SYSTEM_NAME}}).
+Нормы реализации — адаптированы из Pulse reference (fitapp) под Vercel, **Next.js 16.4** и design system проекта (Warm Forest).
 
 **Methodology (канон):** [`docs/meta/ai_first_project_methodology.md`](../meta/ai_first_project_methodology.md) — §2.7 Guidelines, §2.4 Cursor Rules.
 
@@ -58,7 +58,7 @@
 | `react-logic-presentation.mdc` | Logic vs presentation; shared UI |
 | `react-naming-conventions.mdc` | Naming best practices |
 | `react-state-management.mdc` | useReducer/useContext/Zustand/Redux Toolkit, SSR safety |
-| `ui-warm-forest-shadcn.mdc` | Design tokens, shadcn |
+| `ui-design-system-shadcn.mdc` | Design tokens, shadcn |
 | `ui-mobile-first.mdc` | Mobile-first responsive |
 | `ui-prototype-fidelity.mdc` | Prototype visual parity |
 | `ui-semantics-a11y.mdc` | Semantic markup, WCAG 2.1 AA |

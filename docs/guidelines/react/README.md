@@ -3,7 +3,7 @@
 Patterns for **Next.js 16.4 App Router**, **React 19**, **TypeScript**, **Tailwind CSS v4**, **shadcn/ui**, **sonner**.
 
 **Methodology:** [`docs/meta/ai_first_project_methodology.md`](../../meta/ai_first_project_methodology.md)  
-**Design system:** [`fitness-platform-design-system.md`](../../default_docs/fitness-platform-design-system.md)  
+**Design system:** [`{{INTERIM_DESIGN_SYSTEM_DOC}}`](../../default_docs/{{INTERIM_DESIGN_SYSTEM_DOC}})  
 **Typography:** [`typography_text_guidelines.md`](../typography_text_guidelines.md)  
 **Reference:** Pulse [`docs/examples/pulse/docs/guidelines/react/`](../../examples/pulse/docs/guidelines/react/) — **Guidelines текущего проекта override Pulse reference code** ([`pulse_project_reference.md`](../../reference/pulse_project_reference.md)).
 
@@ -14,7 +14,7 @@ Patterns for **Next.js 16.4 App Router**, **React 19**, **TypeScript**, **Tailwi
 | Area | Packages |
 |------|----------|
 | Framework | `next` **16.4** (pinned), `react` / `react-dom` 19.x |
-| Styling | `tailwindcss` 4.x, Warm Forest tokens |
+| Styling | `tailwindcss` 4.x, {{DESIGN_SYSTEM_NAME}} tokens |
 | UI | shadcn/ui, `lucide-react`, `next-themes`, `sonner` |
 | Dates | `date-fns`; timezone from **`TrainerProfile.timezone`** |
 
@@ -73,7 +73,7 @@ Patterns for **Next.js 16.4 App Router**, **React 19**, **TypeScript**, **Tailwi
 | `react-logic-presentation.mdc` | Logic vs UI; shared components |
 | `react-naming-conventions.mdc` | Components, hooks, utils naming |
 | `react-state-management.mdc` | useReducer/useContext/Zustand/Redux Toolkit, SSR safety |
-| `ui-warm-forest-shadcn.mdc` | Tokens, states |
+| `ui-design-system-shadcn.mdc` | Tokens, states |
 | `ui-mobile-first.mdc` | Mobile-first responsive |
 | `ui-prototype-fidelity.mdc` | Prototype typography/colors |
 | `ui-semantics-a11y.mdc` | Semantic HTML, WCAG 2.1 AA |

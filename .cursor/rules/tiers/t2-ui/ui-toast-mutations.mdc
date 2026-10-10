@@ -27,7 +27,7 @@ alwaysApply: true
 - При **редиректе после Server Action** toast из того же обработчика не сработает — **query-параметр** на целевом URL + клиентский компонент с `useSearchParams` + `toast` + `router.replace` без query.
 - Тексты — из `@/lib/messages`, не дублировать строки в action и UI.
 
-## Pulse-примеры
+## Примеры (Pulse)
 
 - Бронирование создано → toast + redirect на `/client/bookings/[id]`
 - Профиль тренера сохранён → toast или query `?saved=1` после redirect

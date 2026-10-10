@@ -51,7 +51,7 @@ Runtime policy: [ADR-001](docs/prds/07_governance/adr_001_stack_and_runtime.md) 
 
 **Vs Pulse snapshot:** root Cursor Rules **and** root Guidelines always win over [`docs/examples/pulse/`](docs/examples/pulse/) (even though Guidelines are #6 in this list). **Enforceable paths:** `.cursor/rules/*.mdc` at the repo root and `guidelines/**`. **Not canon:** `docs/examples/pulse/.cursor/rules/**`, `docs/examples/pulse/docs/guidelines/**`, any `docs/examples/lampto/**` (that tree is **not vendored**).
 
-**Pulse namesakes are not authoritative.** Snapshot files with the *same names* as root rules/guidelines (e.g. `ui-warm-forest-shadcn.mdc`) are a read-only code/domain reference — they do not override this file.
+**Pulse namesakes are not authoritative.** Snapshot files with the *same names* as root rules/guidelines (e.g. `ui-design-system-shadcn.mdc`) are a read-only code/domain reference — they do not override this file.
 
 ## Domain invariants (do not break — fill during W3/W4)
 

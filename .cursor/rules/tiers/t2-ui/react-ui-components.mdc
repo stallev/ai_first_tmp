@@ -23,7 +23,7 @@ alwaysApply: false
 
 ## Domain literals
 
-- **No inline domain strings** — roles, booking statuses, enum codes.
+- **No inline domain strings** — roles, entity statuses, enum codes.
 - Import from `@/lib/...` or `@{{PACKAGE_SCOPE}}/domain`.
 - **User-visible text** → `@/lib/messages` (**ui-messages-and-copy**).
 
@@ -33,12 +33,12 @@ alwaysApply: false
 - Arrow components `const X = (props: Props) => …` (exceptions: `page.tsx`, `layout.tsx`, `'use server'`).
 - Destructure props with defaults in the signature; early `return` per UI state (loading/error/empty/success), not nested ternaries; stable `key={item.id}` (never `index` on reorderable lists, never `Math.random()`) — full rationale: [ai_component_guidelines.md](docs/guidelines/react/ai_component_guidelines.md) §2.3.
 - Primitives in `components/ui/`; typography atoms in `components/atoms/`; features in dedicated folders.
-- **Design Lab catalog:** product UI **MUST** import from paths listed on `/design-system` — `@/components/atoms`, `@/components/ui/*` — not from `@/components/design-lab/**` (showcase-only). See **ui-warm-forest-shadcn** §Design Lab catalog.
+- **Design Lab catalog:** product UI **MUST** import from paths listed on `/design-system` — `@/components/atoms`, `@/components/ui/*` — not from `@/components/design-lab/**` (showcase-only). See **ui-design-system-shadcn** §Design Lab catalog.
 
 ## Styling
 
 - Tailwind + **`cn()`** from `@/lib/utils`; variants via **cva**.
-- Semantic tokens per **ui-warm-forest-shadcn** and [`fitness-platform-design-system.md`](docs/default_docs/fitness-platform-design-system.md).
+- Semantic tokens per **ui-design-system-shadcn** and [`{{INTERIM_DESIGN_SYSTEM_DOC}}`](docs/default_docs/{{INTERIM_DESIGN_SYSTEM_DOC}}).
 
 ## Equal-height card rows (обязательно)
 
@@ -50,7 +50,7 @@ alwaysApply: false
 2. **Обёртка** (`Reveal`, `<li>`, link-wrapper): `h-full` / `min-h-full`, если между grid и card есть промежуточный элемент.
 3. **Card:** `flex h-full flex-col`; переменный контент — `flex-1`; footer/CTA/chips — `mt-auto` при необходимости.
 
-**Канон:** `StepCard`, `TestimonialCard`, `FeaturedTrainerCardView`, `FeatureCardGrid`, `PulseCardKpi`.
+**Пример (Pulse):** `StepCard`, `TestimonialCard`, `FeaturedTrainerCardView`, `FeatureCardGrid`, `PulseCardKpi` — канон проекта задаёт каталог Design Lab.
 
 **Антипаттерн:** карточки «по контенту» в multi-column grid без `h-full` — ломает визуальный ритм landing и admin queue grids.
 
@@ -93,7 +93,7 @@ When `reactCompiler: true` in `next.config.ts` — do not add `memo` / `useCallb
 
 ## shadcn/ui
 
-Use **shadcn MCP** before hand-rolling primitives. Adapt to Warm Forest tokens. Prefer Radix-based primitives for a11y (**ui-semantics-a11y**).
+Use **shadcn MCP** before hand-rolling primitives. Adapt to {{DESIGN_SYSTEM_NAME}} tokens. Prefer Radix-based primitives for a11y (**ui-semantics-a11y**).
 
 ## Semantics & a11y
 
