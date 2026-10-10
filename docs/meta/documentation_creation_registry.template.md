@@ -1,7 +1,7 @@
 ﻿# Documentation Creation Registry — {{PROJECT_NAME}}
 
 **Проект:** {{PROJECT_NAME}} — {{PRODUCT_DESCRIPTION}}  
-**Версия реестра:** 1.0 (template)  
+**Версия реестра:** 1.1 (template) — DoR-ready: §2.3.2a пути H/N/S, §2.3.6 checklist, commit units в phase tasks  
 **Статус:** Template — адаптировать под домен в промпте P2; полный образец волн W0–W14: `docs/examples/pulse/docs/meta/documentation_creation_registry.md`  
 **Аудитория:** AI-агенты (Cursor, Claude, GPT)
 
@@ -72,10 +72,13 @@
 **Дата:** YYYY-MM-DD  
 **Волна:** W{N}  
 **Зависит от:** [список путей]  
-**Связанные документы:** [список путей — обновлять по мере создания]
+**Связанные документы:** [список путей — обновлять по мере создания]  
+**Проверено по:** next@16.4.x, next-auth@5.x — Context7, YYYY-MM-DD
 
 ---
 ```
+
+**`Проверено по`** — **MUST** для runtime/auth/data документов (темы §2.7): библиотека, пин версии, источник, дата сверки. Остальные типы — опускать. Пин в документе не совпадает с `package.json` → документ устарел для DoR ([§2.3.6](#236-implementation-ready-dor-ready-checklist)).
 
 ### 2.3 Структура тела документа (минимум для AI-readability)
 
@@ -88,9 +91,12 @@
 | **Definitions** | при domain/auth | Термины, enum-ы из `@{{PACKAGE_SCOPE}}/domain` |
 | **Requirements / Rules** | ✅ | Нумерованный список MUST/SHOULD/MAY |
 | **Flows / Diagrams** | при spec/contract | Mermaid или ASCII sequence |
-| **Acceptance criteria** | ✅ | Чеклист верификации для агента |
+| **Acceptance criteria** | ✅ | Чеклист верификации для агента; у каждого пункта — ожидаемый исход |
+| **Open questions** | ✅ | `Q-NN · вопрос · владелец · блокирует (ID задач / §)`. Пусто = «—». Непустая секция блокирует DoR задач, ссылающихся на затронутые разделы |
 | **Related documents** | ✅ | Таблица ссылок + «planned» placeholders |
 | **Agent notes** | ✅ | Антипаттерны, частые ошибки агентов |
+
+**Якоря разделов (MUST для PRD / contract / spec / ADR):** нумерованные заголовки `## 3. …` / `### 3.2 …`. Задачи в `P{N}_tasks.md` ссылаются на `§3.2`, не на файл целиком. Перенумерация существующих разделов — material change (bump версии + обновить ссылки из tasks).
 
 #### 2.3.2 Секции покрытия путей (happy / negative / security / races / drift)
 
@@ -106,6 +112,25 @@
 
 **Правило каноничности:** детали race/security описываются **один раз** в contract или `failure_modes_catalog.md`; остальные файлы **ссылаются** (FM-xxx), не копируют.
 
+#### 2.3.2a Критерии применимости путей H / N / S (канон)
+
+**Единственный источник** критериев: матрица §2.3.3, Definition of Ready ([`ai_agent_model_routing.md`](./ai_agent_model_routing.md) § DoR), шаблон задач ([`phase_tasks.template.md`](./phase_tasks.template.md)) и `reviewer` ссылаются сюда, не копируют. Решение «нужен ли путь» принимается по признакам ниже, а не по ощущению «if applicable».
+
+Пути описываются в contract / spec (в разделе с якорем `§N.M`); задача ссылается на раздел. Каждый путь — проверяемая строка Acceptance (smoke, тест или ручной шаг с ожидаемым исходом).
+
+| Путь | Обязателен, если | Что описать |
+|------|------------------|-------------|
+| **H — Happy** | Документ/задача вводит или меняет **наблюдаемое поведение**: маршрут/страница, user flow, Server Action, API route, DAL-функция, фоновая задача, письмо | Предусловие → действие → исход: UI-состояние, redirect, toast-ключ `@/lib/messages`, запись в БД / side effect |
+| **N — Negative** | **≥ 1 признак:** (1) внешний ввод — форма, query/route params, тело запроса, upload; (2) мутация данных или переход состояния (lifecycle, модерация); (3) I/O, который может упасть — БД, внешний API, email, storage; (4) данные, которых может не быть — not found, пустой список | Применимые случаи: validation · not found · conflict/duplicate · недопустимый переход · сбой I/O / timeout · empty. Для каждого: **код** (`MUTATION_ERROR_CODES` / `AUTH_MUTATION_ERROR_CODES` из `@{{PACKAGE_SCOPE}}/domain`) · **ключ сообщения** · **UI-состояние** (error / empty / forbidden / retry CTA) |
+| **S — Security** | **≥ 1 признак:** (1) runtime-код в sensitive zone ([`agent-code-review-subagent.mdc`](../../.cursor/rules/agent-code-review-subagent.mdc) § Sensitive zones); (2) доступ к данным зависит от пользователя/роли — ownership, RBAC, кабинеты; (3) мутация пользовательских данных; PII, секреты, сессия/токены; (4) новый публичный endpoint, upload, redirect по пользовательскому URL, webhook | Применимые случаи: аноним → login / 401 · чужая роль → 403 / forbidden state · чужой ресурс (IDOR) → 404 / 403 · подмена id/полей в запросе → отказ **на сервере** (policy в Server Action / Route Handler, не только UI) · DTO не отдаёт лишних полей. Ссылка на строку `authorization_matrix` |
+
+**Освобождены** (запись `Paths: n/a — <причина>` в задаче, `N/A — <причина>` в секции документа): T0 copy / CSS · docs-only · tooling · рефакторинг без изменения поведения · презентационный компонент без данных и мутаций. «N/A» **без** причины из этого списка = документ не complete.
+
+**Следствия:**
+- признак **S** → задача минимум task tier **T3** (отдельный commit unit, обязательный `reviewer`);
+- требуемый путь не описан → задача не проходит DoR → spec-gap (`architect` дописывает путь в contract/spec, не в задачу);
+- `reviewer` берёт перечисленные пути как ожидаемую форму (2b) и проверяет реализацию каждого (2c); пропуск — blocker.
+
 #### 2.3.3 Матрица обязательности секций по типу документа
 
 | Тип | Happy | Negative | Security | Races | Drift |
@@ -115,11 +140,13 @@
 | `lifecycle_models` | ✅ | ✅ invalid transitions | — | ✅ | — |
 | `failure_modes_catalog` | — | ✅ | ✅ | ✅ **канон-индекс** | ✅ |
 | `authorization_matrix` | — | — | ✅ **канон** | — | — |
-| **Contract** | ✅ | ✅ | ✅ if applicable | ✅ | ✅ |
-| **Spec** | ✅ | ✅ | ✅ if applicable | ссылка | — |
+| **Contract** | ✅ | ✅ по §2.3.2a | ✅ по §2.3.2a | ✅ | ✅ |
+| **Spec** | ✅ | ✅ по §2.3.2a | ✅ по §2.3.2a | ссылка | — |
 | Wireframe | ✅ | перечислить states | forbidden state | — | — |
-| ADR | decision path | rejected alternatives | ✅ if auth/security | ✅ if jobs/data | — |
-| Phase + tasks | smoke happy | smoke negative | smoke 403 | 1 race check | doc sync in DoD |
+| ADR | decision path | rejected alternatives | ✅ при признаке S (§2.3.2a) | ✅ if jobs/data | — |
+| Phase + tasks | `Paths` H на задачу | `Paths` N по §2.3.2a | `Paths` S по §2.3.2a → T3 | 1 race check | doc sync в CU DoD; Phase DoR audit |
+
+Ячейка «по §2.3.2a» = секция обязательна, если сработал хотя бы один признак; иначе `N/A — <причина из списка освобождений>`.
 | UX contract | ✅ | ✅ | a11y/forbidden UI | optimistic rollback | — |
 
 #### 2.3.4 Шаблон тела — Contract (обязательные секции)
@@ -127,26 +154,32 @@
 Каждый файл в `docs/implementation/mvp/contracts/` **MUST** включать секции в этом порядке:
 
 ```markdown
-## Happy path
-<!-- Актор, preconditions, sequence, postconditions, side effects -->
+## N. Happy path
+<!-- Актор, preconditions, sequence, postconditions, side effects. Один подраздел §N.M на операцию -->
 
-## Negative paths (business)
-<!-- Validation failures, illegal state, resource unavailable; expected error shape / UX -->
+## N. Negative paths (business)
+<!-- Обязательность — §2.3.2a (N). Таблица на операцию: -->
+| Случай | Условие | Код (`MUTATION_ERROR_CODES.*`) | Ключ сообщения | Исход / UI-состояние |
+|--------|---------|--------------------------------|----------------|----------------------|
 
-## Security paths
-<!-- Unauthorized role, IDOR, bypass attempts; MUST deny behavior. «N/A» — только если обосновано -->
+## N. Security paths
+<!-- Обязательность — §2.3.2a (S). Аноним / чужая роль / IDOR / tampering; MUST deny на сервере.
+     Ссылка на строку authorization_matrix. «N/A — <причина из списка освобождений §2.3.2a>» -->
 
-## Concurrency & idempotency
+## N. Concurrency & idempotency
 <!-- Races, double-submit, cron overlap; UNIQUE keys, transactions, idempotency_key -->
 
-## Drift & consistency notes
+## N. Drift & consistency notes
 <!-- Schema vs domain, cache invalidation, timezone; guards for agents -->
 
-## Policy & layer touchpoints
-<!-- proxy.ts vs policy/server vs domain; forbidden imports -->
+## N. Policy & layer touchpoints
+<!-- proxy.ts vs policy/server vs domain; forbidden imports; пакеты и модули, которые затрагивает реализация -->
 
-## Acceptance criteria
-<!-- Включая минимум 1 negative и 1 security check, если applicable -->
+## N. Acceptance criteria
+<!-- Каждый пункт — проверка + ожидаемый исход. Минимум по 1 на каждый обязательный путь H / N / S -->
+
+## N. Open questions
+<!-- Q-NN · вопрос · владелец · блокирует (§ / задачи). «—», если пусто -->
 ```
 
 Записи в [`failure_modes_catalog.md`](../prds/02_domain_model/failure_modes_catalog.md) для cross-cutting сценариев: **ID `FM-xxx`**, в contract — ссылка «implements FM-xxx».
@@ -156,29 +189,51 @@
 Каждый файл в `docs/implementation/mvp/specs/` **MUST** включать:
 
 ```markdown
-## Happy path
-<!-- Пошаговый UX + Server Action / Route Handler touchpoints -->
+## N. Files / area touchpoints
+<!-- Маршруты (ссылка на canonical_routes), route groups, feature-папки apps/web, Server Actions, DAL -->
 
-## Negative paths (UX)
-<!-- Empty, loading, error, retry, Zero Dead Ends CTA; toast.error on mutation failure -->
+## N. Happy path
+<!-- Пошаговый UX + Server Action / Route Handler touchpoints; toast-ключи @/lib/messages -->
 
-## Security paths
-<!-- Required role/session; 401/403 UX; «N/A» — только если экран public read-only -->
+## N. Negative paths (UX)
+<!-- Обязательность — §2.3.2a (N). Empty, loading, error, retry, Zero Dead Ends CTA; toast.error on mutation failure.
+     Для каждого случая: код из contract · ключ сообщения · UI-состояние -->
 
-## Concurrency notes
+## N. Security paths
+<!-- Обязательность — §2.3.2a (S). Required role/session; 401/403 / forbidden UX; IDOR → 404.
+     «N/A — <причина из списка освобождений §2.3.2a>», например public read-only экран -->
+
+## N. Concurrency notes
 <!-- Ссылка на contract + поведение UI (disabled, aria-busy, optimistic rollback) -->
 
-## UI states matrix
+## N. UI states matrix
 <!-- empty | loading | error | forbidden — per async region -->
 
-## Wireframe & prototype
+## N. Wireframe & prototype
 <!-- Link to wireframes/mvp/*.md and prototype section -->
 
-## Acceptance criteria
-<!-- Smoke: happy + минимум 1 negative UX + security, если applicable -->
+## N. Acceptance criteria
+<!-- Smoke с ожидаемым исходом: happy + по 1 на каждый обязательный путь N / S -->
+
+## N. Open questions
+<!-- Q-NN · вопрос · владелец · блокирует (§ / задачи). «—», если пусто -->
 ```
 
 **Запрещено:** описывать детали race resolution в spec, если они уже в contract — только UX-поведение при исходе race.
+
+#### 2.3.6 Implementation-ready (DoR-ready) checklist
+
+Автор документа выполняет **те же** проверки, которые потом проходит задача по Definition of Ready ([`ai_agent_model_routing.md`](./ai_agent_model_routing.md) § DoR). Документ, прошедший этот чеклист, даёт задачам DoR без spec-gap — это самый дешёвый момент закрыть пробел.
+
+Применяется к PRD, contract, spec, ADR (для ADR — только пункты 1, 2, 6, 7):
+
+1. **Якоря:** нумерованные разделы `§N.M` (§2.3.1) — на них ссылаются задачи.
+2. **Нет неопределённости в MUST:** ни `TBD`, ни `?`, ни «уточнить позже» в Requirements / путях / Acceptance; всё нерешённое — в Open questions с владельцем.
+3. **Пути H / N / S** — по признакам §2.3.2a; каждое `N/A` — с причиной из списка освобождений.
+4. **Коды и тексты названы:** коды ошибок — из `@{{PACKAGE_SCOPE}}/domain` constants (новый код помечен «добавить в domain»), user-visible тексты — ключи `@/lib/messages`, не готовые строки.
+5. **Acceptance проверяема:** у каждого пункта есть способ проверки (smoke / тест / ручной шаг) и ожидаемый исход.
+6. **Версии сверены:** `Проверено по` заполнено для тем §2.7; пины совпадают с `package.json` (после P5).
+7. **Touchpoints:** spec — Files / area; contract — Policy & layer touchpoints; ADR — Affected documents (§6.2).
 
 ### 2.4 Правила написания для AI-агентов
 
@@ -213,7 +268,9 @@
 - [ ] Cross-cutting failure/race: запись в `failure_modes_catalog.md` или ссылка `FM-xxx`
 - [ ] Backlinks добавлены в ранние файлы
 - [ ] Нет второго списка маршрутов (только ссылка на `canonical_routes.md`)
-- [ ] Acceptance criteria включают negative/security checks, если applicable
+- [ ] Пути H / N / S — по признакам §2.3.2a; каждое `N/A` с причиной из списка освобождений
+- [ ] DoR-ready checklist §2.3.6 пройден (якоря, нет TBD в MUST, коды/ключи названы, Acceptance с исходом, `Проверено по`, touchpoints)
+- [ ] Open questions пуст **или** каждый вопрос имеет владельца и список блокируемых § / задач
 - [ ] `architecture_master_index.md` обновлён при добавлении canonical PRD
 
 ### 2.7 Context7 — когда обращаться
@@ -225,6 +282,8 @@
 | Next.js 16 | `/vercel/next.js` | `proxy.ts`, async `cookies`/`headers`/`params` |
 | Auth.js v5 | `/websites/authjs_dev` | Credentials, JWT, role in token |
 | Prisma + Neon | `/websites/prisma_io` | `DATABASE_URL`, `DIRECT_URL`, migrate deploy |
+
+Результат сверки фиксировать в front matter: `**Проверено по:** <lib>@<pin> — Context7, YYYY-MM-DD` (§2.2). Без этой строки runtime/auth/data документ не проходит §2.3.6.
 
 ---
 
@@ -513,6 +572,8 @@ READ registry → READ dependencies → DRAFT file → ADD backlinks → UPDATE 
 
 *(Полные пути: `docs/implementation/mvp/`)*
 
+**Gate для phase tasks (W11 / W16 и последующих волн с `P{N}_tasks.md`):** «Зависит от» включает contracts / specs, прошедшие §2.3.6; задачи — по [`phase_tasks.template.md`](./phase_tasks.template.md) (§6.7); реализация фазы стартует после **Phase DoR audit**.
+
 ---
 
 ### Волна W22 — Phase renumbering + P16 Landing v2
@@ -603,11 +664,15 @@ READ registry → READ dependencies → DRAFT file → ADD backlinks → UPDATE 
 
 - Выводить **user-visible behavior**, не implementation details.
 - Каждое требование трассируется к user flow или page spec.
+- Каждое требование имеет ID `PRD-<area>-NN` — на него ссылаются specs, contracts и задачи.
+- Требование, влияющее на доступ (роль, ownership, PII), помечается `S` и ссылается на строку `authorization_matrix` (§2.3.2a).
 - Post-MVP — отдельная секция «Deferred», не смешивать с MVP MUST.
 
 ### 6.2 ADR
 
-- Формат: Context → Decision → Consequences → Alternatives rejected.
+- Формат: Context → Decision → Consequences → Alternatives rejected → **Affected documents**; полный шаблон — [`decision_process.template.md`](../prds/07_governance/decision_process.template.md).
+- **Affected documents** (MUST): contracts / specs / PRD, которые меняются из-за решения, — правятся **в том же изменении**, что и ADR (product-docs-alignment).
+- **Security consequences** — при признаке S (§2.3.2a).
 - Статус: PROPOSED → ACCEPTED (после review) или сразу ACCEPTED для MVP lock-in.
 - Нумерация: `adr_{NNN}_snake_case_topic.md`; регистр в `adr_index.md`.
 
@@ -641,8 +706,10 @@ READ registry → READ dependencies → DRAFT file → ADD backlinks → UPDATE 
 
 ### 6.7 Phase + Tasks
 
-- Phase: goal, in-scope paths, out-of-scope, contracts to read, definition of done.
-- Tasks: checkbox list, verifiable (`npm run typecheck`, smoke route).
+- Phase: goal, in-scope paths, out-of-scope, contracts to read, definition of done. Commit plan **не** дублировать — ссылка на `P{N}_tasks.md` § Commit plan.
+- Tasks: по шаблону [`phase_tasks.template.md`](./phase_tasks.template.md) — задачи сгруппированы в **commit units** (CU); у задачи `Tier`, ссылки на `§N.M` spec / contract / ADR / PRD, `Files`, `Acceptance` с исходом, `Paths` H / N / S по §2.3.2a.
+- Задачи пишутся **только** по документам, прошедшим §2.3.6; иначе — сначала дописать документ.
+- До старта реализации фазы — **Phase DoR audit** (один вызов `architect` в режиме spec-gap на всю фазу; [`ai_agent_model_routing.md`](./ai_agent_model_routing.md) § DoR).
 
 ---
 

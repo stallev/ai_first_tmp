@@ -17,7 +17,8 @@ Technical Writer для AI agents.
 ## Task
 1. Создай `docs/meta/documentation_creation_registry.md` из template
 2. **Адаптируй волны** под домен {{PROJECT_NAME}}:
-   - Сохрани структуру §2 (requirements, matrices, contract/spec templates)
+   - Сохрани структуру §2 (requirements, matrices, contract/spec templates), **включая** §2.3.2a (критерии путей H/N/S) и §2.3.6 (DoR-ready checklist) — не ослаблять до «if applicable»
+   - §6.7 и gate phase tasks — ссылка на [`phase_tasks.template.md`](../docs/meta/phase_tasks.template.md) (commit units, Paths)
    - **DB-first:** W3 data model (`database_schema_v1.md`) до W8 contracts
    - UX block UX-01..UX-10 в W2/W7
    - Замени Pulse-specific файлы на domain-specific paths
@@ -33,6 +34,7 @@ Verify pinned versions in §2.7: Next.js 16.4.x (Context7 `/vercel/next.js`), Au
 ## Verification
 - [ ] Registry — единственный source of doc order
 - [ ] §2.3 happy/negative/security/race/drift matrices present
+- [ ] §2.3.2a (H/N/S triggers) и §2.3.6 (DoR-ready) сохранены; front matter содержит `Проверено по`
 - [ ] Wave dependencies correct (schema before contracts)
 - [ ] Links to Pulse example for full W0–W14 reference
 - [ ] Methodology §3 links to registry

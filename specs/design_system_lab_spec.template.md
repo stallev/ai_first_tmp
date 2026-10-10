@@ -815,6 +815,20 @@ Populate from [`prototype_route_mapping.md`](../../../design/prototype_route_map
 
 ---
 
+## Security paths
+
+Triggers per registry §2.3.2a (S): new route with environment-dependent exposure.
+
+| Scenario | Expected behavior | Check |
+|----------|-------------------|-------|
+| Production build, `ALLOW_DESIGN_LAB` unset | `/design-system` -> 404 (`notFound()` server-side, Production guard) | `next build && next start` -> GET `/design-system` = 404 |
+| Product route imports `@/components/design-lab/**` | Forbidden - lint / review blocker | grep imports outside `(dev)/design-system` = 0 |
+| Sitemap / robots | Lab route excluded | sitemap output has no `/design-system` |
+
+Product shared components (atoms / ui): `Paths: n/a - presentational` (registry §2.3.2a exemption).
+
+---
+
 ## Drift risks & guards
 
 | Risk | Guard |
@@ -826,6 +840,14 @@ Populate from [`prototype_route_mapping.md`](../../../design/prototype_route_map
 | Lab strings bypass `@/lib/messages` | Allowed only in `components/design-lab/**` |
 | Agent skips Context7 for shadcn/Radix | Reject on verification; § Agent prerequisites — Context7 |
 | Component in wrong folder (`patterns/`, duplicate tile) | § Catalog layers decision tree |
+
+---
+
+## Open questions
+
+`Q-NN · question · owner · blocks (§ / tasks)` - "-" if empty. Non-empty blocks DoR of dependent P{N} tasks (registry §2.3.6).
+
+-
 
 ---
 

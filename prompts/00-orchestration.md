@@ -31,7 +31,7 @@
 | **P4** | [`P4-rules-guidelines.md`](P4-rules-guidelines.md) | После W1 | T1 rules активны, guidelines проверены |
 | **P5** | [`P5-nextjs-scaffold.md`](P5-nextjs-scaffold.md) | После W8+ contracts | Monorepo + Next.js 16.4 |
 | **P6** | [`P6-design-system-lab.md`](P6-design-system-lab.md) | После P5 + UX-03 | `/design-system` + T2 rules |
-| **P7+** | Phase tasks | После P6 | `P01_tasks.md` … по фазам |
+| **P7+** | Phase tasks | После P6 | `P01_tasks.md` … по фазам ([`phase_tasks.template.md`](../docs/meta/phase_tasks.template.md)); перед каждой фазой — **Phase DoR audit** (`architect` spec-gap, один вызов на фазу) |
 
 ---
 
@@ -52,6 +52,7 @@ Visual seed (реком.) ──▶ P0 ──▶ P1 (ingest/create) ──▶ P2
 | G3 → P5 | W1–W2 + W3 schema + минимум W5 auth + W8 boundaries contract |
 | G4 → P6 | Next.js build pass, `globals.css` scaffold |
 | G5 → P7 | Design Lab acceptance criteria pass |
+| G6 → каждая фаза P{N} | Phase DoR audit в `P{N}_tasks.md` закрыт: все задачи проходят DoR ([`ai_agent_model_routing.md`](../docs/meta/ai_agent_model_routing.md) § DoR) |
 
 ---
 
@@ -95,10 +96,11 @@ Visual seed (реком.) ──▶ P0 ──▶ P1 (ingest/create) ──▶ P2
 
 Из registry §2 — обязательно в каждом новом файле:
 
-- Front matter (тип, статус, волна, зависимости)
-- Purpose, Scope, Requirements (MUST/SHOULD/MAY)
-- **Happy paths** + **Negative paths** (+ Security / Races / Drift по матрице типа)
-- Acceptance criteria (минимум 1 negative check)
+- Front matter (тип, статус, волна, зависимости; `Проверено по` для runtime/auth/data)
+- Purpose, Scope, Requirements (MUST/SHOULD/MAY); нумерованные разделы `§N.M`
+- **Happy / Negative / Security** — по признакам registry §2.3.2a (+ Races / Drift по матрице типа)
+- Acceptance criteria с ожидаемым исходом — по 1 на каждый обязательный путь
+- Open questions (пусто или с владельцем) — DoR-ready checklist registry §2.3.6
 - Agent notes (антипаттерны)
 - Backlinks в ранние файлы (та же сессия)
 

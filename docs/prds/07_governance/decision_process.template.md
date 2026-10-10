@@ -53,16 +53,22 @@
 **Дата:** YYYY-MM-DD
 **Статус:** PROPOSED | ACCEPTED | DEPRECATED | SUPERSEDED
 **Проект:** {{PROJECT_NAME}}
+**Проверено по:** <lib>@<pin> — Context7, YYYY-MM-DD   <!-- runtime/auth/db ADR -->
 
-## Context
-## Decision
-## Rationale / Consequences
-## Rejected alternatives
-## Related documents
-## Agent checklist
+## 1. Context
+## 2. Decision
+## 3. Rationale / Consequences
+## 4. Security consequences      <!-- MUST при признаке S (registry §2.3.2a); иначе «N/A — <причина>» -->
+## 5. Rejected alternatives
+## 6. Affected documents         <!-- contract / spec / PRD § → что меняется; правятся в том же изменении -->
+## 7. Open questions             <!-- «—», если пусто; PROPOSED ADR с вопросами блокирует DoR зависимых задач -->
+## 8. Related documents
+## 9. Agent checklist
 ```
 
 Для security/auth ADR **MUST** включать rejected alternatives и agent checklist (см. registry §2.3.3).
+
+**Affected documents** — мост от решения к реализации: задачи фазы ссылаются на правленые разделы contract / spec, а не на ADR целиком. ADR без этой секции или с несинхронизированными документами не проходит DoR-ready checklist (registry §2.3.6).
 
 ---
 
@@ -96,7 +102,8 @@ MVP lock-in (ADR-001, ADR-002) — сразу **ACCEPTED** без ожидани
 4. **DRAFT** `adr_NNN_*.md` в `docs/prds/07_governance/`.
 5. **UPDATE** [`adr_index.md`](./adr_index.md) — строка в registry + Change log.
 6. **BACKLINKS** — `architecture_master_index.md`, затронутые PRD/contracts (planned → link).
-7. **VERIFY** checklist § Acceptance criteria.
+7. **SYNC** — правки из § Affected documents внесены в те же изменения (не «known drift»).
+8. **VERIFY** checklist § Acceptance criteria и registry §2.3.6 (пункты 1, 2, 6, 7).
 
 Одна сессия: **один ADR** или правка одного ACCEPTED ADR (не пакет из W4 без запроса).
 
@@ -121,6 +128,7 @@ MVP lock-in (ADR-001, ADR-002) — сразу **ACCEPTED** без ожидани
 2. **MUST** — material change: bump **Версия** в front matter ADR + Change log.
 3. **SHOULD** — PROPOSED ADR помечать в phase description как blocker, если фаза зависит от решения.
 4. **MUST NOT** — принимать решение против ACCEPTED ADR без нового ADR или explicit user override в задаче.
+5. **MUST** — секция Affected documents заполнена, перечисленные contract / spec / PRD обновлены в том же изменении.
 
 ---
 
@@ -130,6 +138,7 @@ MVP lock-in (ADR-001, ADR-002) — сразу **ACCEPTED** без ожидани
 - [ ] Шаблон и статусы согласованы с ADR-001/002
 - [ ] Указана интеграция с registry waves и Context7
 - [ ] `adr_index.md` и methodology ссылаются на этот процесс
+- [ ] Шаблон содержит Affected documents, Security consequences, Open questions
 
 ---
 

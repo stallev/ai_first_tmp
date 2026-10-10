@@ -23,10 +23,13 @@ For each row W{N}-XX **in order**:
 
 1. Draft file with front matter (§2.2 registry)
 2. Body sections per §2.3.3 matrix (type-specific)
-3. Contracts: §2.3.4 template · Specs: §2.3.5 template
-4. **Backlinks** in earlier files (same session)
-5. Update `architecture_master_index.md` status
-6. Add FM-xxx to `failure_modes_catalog.md` when applicable
+3. Contracts: §2.3.4 template · Specs: §2.3.5 template — numbered sections `§N.M`
+4. Paths H / N / S — decide by **triggers** in registry §2.3.2a (not «if applicable»); every `N/A` needs an exemption reason
+5. Run the **DoR-ready checklist** (registry §2.3.6); unresolved items → `Open questions` with owner, never `TBD` in MUST sections
+6. Phase tasks (`P{N}_tasks.md`) — from [`phase_tasks.template.md`](../docs/meta/phase_tasks.template.md): commit units, `Tier`, `§` links, `Paths`
+7. **Backlinks** in earlier files (same session)
+8. Update `architecture_master_index.md` status
+9. Add FM-xxx to `failure_modes_catalog.md` when applicable
 
 ## Special: W3 priority (DB-first)
 If W{N} includes `database_schema_v1.md`:
@@ -44,8 +47,10 @@ Create `docs/prds/01_product_scope/user_flows/users_mvp/*.md` from interim docs.
 
 ## Verification (per file — §2.6 registry)
 - [ ] Front matter complete
-- [ ] Happy + negative paths (security/race per matrix)
-- [ ] Acceptance criteria incl. 1+ negative check
+- [ ] Paths H / N / S per registry §2.3.2a triggers (race per matrix); `N/A` only with exemption reason
+- [ ] Acceptance criteria: expected outcome per item, ≥ 1 per required path
+- [ ] DoR-ready checklist §2.3.6: anchors, no `TBD` in MUST, error codes + message keys named, `Проверено по`, touchpoints
+- [ ] Open questions empty or each has owner + blocked § / tasks
 - [ ] Backlinks added
 - [ ] No silent drift with dependencies
 
