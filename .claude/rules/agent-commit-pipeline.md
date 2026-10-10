@@ -37,7 +37,7 @@ description: Commit pipeline: auto-commit at a commit-unit boundary or on explic
 - `npm run lint` — когда скрипт есть
 - `npm run rules:check` — если есть `.claude/rules/` (после `rules:sync`)
 - `npm run deps:check` — если в diff есть `package.json` / `package-lock.json` / `.npmrc` (`dependency-pinning.mdc`)
-- Тесты — по профилю качества ([`project_quality_profile.md`](docs/meta/project_quality_profile.md) D4 / D5 / D7; нет профиля → `standard`): `lean`+ — `npm run test`, если CU затрагивает код с тестами; `strict` — `npm run test:coverage` (пороги D4). E2E (`npm run test:e2e`) — в CI с `standard`; локально — когда CU меняет критичный flow
+- Тесты — по профилю качества ([`project_quality_profile.md`](docs/meta/project_quality_profile.md) D4 / D5 / D7; нет профиля → `standard`): `lean`+ — `npm run test`, если CU затрагивает код с тестами. `test:coverage` (пороги D4) и `test:e2e` — в CI с `standard`; e2e локально — когда CU меняет критичный flow
 - CU DoD из `P{N}_tasks.md` (и Phase DoD — на последнем CU фазы)
 
 Если в задаче правили `.cursor/rules/*.mdc` — в **той же задаче** `npm run rules:sync` и закоммитить `.claude/rules/`. Не править зеркало руками.

@@ -12,6 +12,9 @@
 
 # testing
 /apps/**/coverage/
+/coverage/
+/apps/**/playwright-report/
+/apps/**/test-results/
 /.playwright-mcp/
 
 # next.js

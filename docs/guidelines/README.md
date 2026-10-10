@@ -27,6 +27,7 @@
 | UX interaction & style (canon) | [`../design/interaction_design_contract.md`](../design/interaction_design_contract.md), [`ui_states_contract.md`](../design/ui_states_contract.md), [`styleguide.md`](../design/styleguide.md) |
 | Accessibility (canon) | [`../design/accessibility_requirements.md`](../design/accessibility_requirements.md) |
 | Security (XSS/CSRF/CSP) | [`security/README.md`](security/README.md) |
+| Testing (Vitest / Playwright) | [`testing/ai_testing_guidelines.md`](testing/ai_testing_guidelines.md) — объём по профилю качества D4 / D5 / D7 |
 | **General deep dives** | [`../general/`](../general/) |
 | **UI/UX agent ops** | [`../general/ai_agent_ui_ux_guideline.md`](../general/ai_agent_ui_ux_guideline.md) |
 | **Incidents (mitigation patterns)** | [`../incidents/`](../incidents/) — iOS Safari Server Actions |

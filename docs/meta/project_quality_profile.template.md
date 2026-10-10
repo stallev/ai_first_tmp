@@ -35,7 +35,7 @@
 | D4 | Unit / integration — Vitest (`unit_tests`) | Нет | `packages/domain` + policy-проверки для S-путей; без порога покрытия | domain + policy + критичный DAL; ≥ 60 % lines в `packages/domain`, `packages/policy` | ≥ 80 % lines domain / policy, ≥ 60 % DAL; тест на каждый N / S путь contract |
 | D5 | E2E — Playwright (`e2e`) | Нет | Нет (ручной smoke в Acceptance) | Smoke H критичных flows | H / N / S критичных flows + axe + `instant()` на критичных навигациях |
 | D6 | Review-гейт (`review`) | Без `reviewer`; оркестратор `diff-only` | `reviewer` только для CU с T3 / `Paths: S`; остальное — `diff-only` | `reviewer` на каждый CU с runtime-кодом | Как Standard |
-| D7 | Верификация и CI (`ci`) | typecheck + lint | + `npm run test` локально перед коммитом | + test и e2e smoke в CI | + coverage-порог и полный e2e в CI |
+| D7 | Верификация и CI (`ci`) | typecheck + lint | + `npm run test` локально перед коммитом | + в CI: `test:coverage` с порогами D4, e2e smoke | + в CI: полный e2e (H / N / S) и axe |
 | D8 | Доступность (`a11y`) | Семантичный HTML, labels | Правило `ui-semantics-a11y` | + WCAG 2.1 AA чек-лист ключевых экранов | + axe в CI |
 | D9 | Perf / observability (`perf`) | — | Sentry по желанию | Sentry включён; PSI по запросу | Sentry + PSI ≥ 90 на release-suite перед релизом |
 | D10 | Модули стека (`modules`) | Опциональные выключены | Design Lab обязателен; остальные — по потребности | Design Lab и Sentry включены; остальные — по потребности | По потребности продукта |

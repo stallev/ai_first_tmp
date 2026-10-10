@@ -31,7 +31,12 @@ Senior Fullstack Developer (Next.js 16 + PostgreSQL + monorepo).
    - `globals.css` with token placeholders
 7. Root `AGENTS.md` уже создан в P0. Скопировать `scaffold/apps/web/AGENTS.template.md` → `apps/web/AGENTS.md` (заменить placeholders); скопировать `scaffold/apps/web/CLAUDE.md` → `apps/web/CLAUDE.md` (статичный `@AGENTS.md`-импорт, без изменений). Корневой `CLAUDE.md` не дублировать MUST — зеркало `.claude/rules/`.
 8. Env example: `DATABASE_URL`, `DIRECT_URL`; по модулям — `AUTH_SECRET` (`auth`), S3 (`AWS_IAM_*`, `S3_BUCKET_*`; `s3_uploads`), Sentry vars (`sentry`) — см. [`BOOTSTRAP.md`](../BOOTSTRAP.md) §6–§10, [`ai_s3_file_upload_guidelines.md`](../docs/guidelines/nextjs/ai_s3_file_upload_guidelines.md)
-9. Создать `.cursor/skills/app-conventions/SKILL.md` — **проектный скилл поверх cursor rules**:
+9. **Тесты и CI по профилю** (D4 / D5 / D7; [`ai_testing_guidelines.md`](../docs/guidelines/testing/ai_testing_guidelines.md)):
+   - `lean`+: Vitest (`vitest`, `@vitest/coverage-v8`, exact versions) + [`scaffold/vitest.config.template.mjs`](../scaffold/vitest.config.template.mjs) → `vitest.config.mjs` (оставить блок порогов своего уровня); root scripts `test`, `test:coverage`; один пример теста в `packages/domain`
+   - `standard` / `strict`: Playwright (`@playwright/test`) + [`scaffold/apps/web/playwright.config.template.ts`](../scaffold/apps/web/playwright.config.template.ts) → `apps/web/playwright.config.ts`; `apps/web/e2e/`; root script `test:e2e`; `strict` — + `@axe-core/playwright`
+   - [`scaffold/.github/workflows/ci.template.yml`](../scaffold/.github/workflows/ci.template.yml) → `.github/workflows/ci.yml` — только jobs своего уровня (шапка файла)
+   - Зафиксировать способ DAL-тестов (Neon test branch или моки Prisma) в `local_dev_setup` / ADR
+10. Создать `.cursor/skills/app-conventions/SKILL.md` — **проектный скилл поверх cursor rules**:
    - Frontmatter: `name: app-conventions`; description без слов `performance`/`optimization`/`bundle`
    - Раздел `## Relationship to other skills` (defer-clause — обязателен, см. §4)
    - Раздел `## Cursor rules index` — таблица `контекст → существующий .mdc файл` (не копировать содержимое rules, только ссылки)
@@ -53,6 +58,7 @@ Core: Next.js 16.4 · Vercel · Neon · Prisma v7 · shadcn · Tailwind v4 · So
 - [ ] root `package.json` still has `rules:sync` / `rules:check` / `deps:check`
 - [ ] root `.npmrc` with `save-exact=true`; `npm run deps:check` pass; `package-lock.json` committed
 - [ ] `npm run typecheck` pass
+- [ ] Тесты по профилю: `lean`+ — `npm run test` pass; `standard`+ — `npm run test:coverage` (пороги D4) и `npm run test:e2e` pass; `.github/workflows/ci.yml` содержит jobs своего уровня
 - [ ] `npm run lint` pass
 - [ ] `next build` pass (minimal pages OK)
 - [ ] `proxy.ts` uses nodejs runtime
