@@ -46,8 +46,9 @@ Monorepo: **Next.js 16.4** App Router + Vercel + Neon PostgreSQL.
 | Область | Документ |
 |---------|----------|
 | Методология | [`docs/meta/ai_first_project_methodology.template.md`](docs/meta/ai_first_project_methodology.template.md) |
-| **Маршрутизация моделей** | [`docs/meta/ai_agent_model_routing.md`](docs/meta/ai_agent_model_routing.md) — task tier T0–T3; runtime: `model-routing.mdc` |
-| **Реестр создания docs** | [`docs/meta/documentation_creation_registry.md`](docs/meta/documentation_creation_registry.md) |
+| **Маршрутизация моделей** | [`docs/meta/ai_agent_model_routing.md`](docs/meta/ai_agent_model_routing.md) — task tier T0–T3, Definition of Ready, commit units; runtime: `model-routing.mdc` |
+| **Реестр создания docs** | [`docs/meta/documentation_creation_registry.md`](docs/meta/documentation_creation_registry.md) — §2.3.2a пути H / N / S, §2.3.6 DoR-ready документы |
+| Шаблон задач фазы | [`docs/meta/phase_tasks.template.md`](docs/meta/phase_tasks.template.md) — commit units, `Tier`, `Paths` |
 | Карта архитектуры | [`docs/prds/architecture_master_index.md`](docs/prds/architecture_master_index.md) |
 | MVP scope | [`docs/prds/01_product_scope/mvp_scope.md`](docs/prds/01_product_scope/mvp_scope.md) |
 | Database schema | [`docs/prds/03_data_model/database_schema_v1.md`](docs/prds/03_data_model/database_schema_v1.md) |
@@ -63,18 +64,19 @@ Monorepo: **Next.js 16.4** App Router + Vercel + Neon PostgreSQL.
 ```
 
 1. Прочитать этот файл + `project-context.mdc`. Классифицировать задачу (`Tier: T0|T1|T2|T3 — … · CU: P{N}-CU{k}`) и проверить Definition of Ready по [`ai_agent_model_routing.md`](docs/meta/ai_agent_model_routing.md) до правок. DoR пройден — код пишет оркестратор; не пройден — `architect` spec-gap правит документы.
-2. Определить фазу (`docs/implementation/mvp/phases_tasks_descriptions/P{N}_*.md`)
-3. Прочитать contracts для фазы
+2. Определить фазу (`docs/implementation/mvp/phases_tasks_descriptions/P{N}_*.md`). Перед первой задачей фазы — **Phase DoR audit** в `P{N}_tasks.md` (один вызов `architect` spec-gap на фазу).
+3. Прочитать разделы contracts / specs / ADR, на которые ссылается задача (`§N.M`), а не документы целиком.
+4. **Перед написанием/правкой кода** — прочитать применимые `.cursor/rules/*.mdc` для затрагиваемой области (индекс: [`.cursor/rules/README.md`](.cursor/rules/README.md) или таблица в `app-conventions` skill). Эти файлы — enforceable и имеют приоритет над `docs/examples/pulse/**` при конфликте (Pulse — донор/референс, не источник истины). Claude Code грузит зеркало `.claude/rules/*.md`, не `.mdc` (§ Cursor vs Claude Code rules).
+   Индекс в `.cursor/skills/app-conventions` может быть не виден Claude Code — при сомнении читать `.cursor/rules/` (или `.claude/rules/`) напрямую, не полагаясь только на skill.
+5. Выполнить задачи `docs/implementation/mvp/tasks/P{N}_tasks.md` по commit units (§ Commit plan), включая пути H / N / S из `Paths` задачи.
+6. `npm run typecheck` + `npm run lint` + CU DoD (обязательная ВЕРИФИКАЦИЯ). Runtime dual-view (`next-dev-loop`) и lab PSI (`npm run psi:lab`) — **только если пользователь явно попросил**; не auto.
+7. На границе CU — review и auto-commit (§ Commit & review).
+
 ## Cursor vs Claude Code rules
 
 **SoT MUST:** `.cursor/rules/*.mdc` only (not `tiers/` until copied to the rules root). After any `.mdc` edit in this task: `npm run rules:sync`. Before commit: `npm run rules:check`. Mirror: `.claude/rules/*.md` — generated, in git, never hand-edit. Playbook: [`docs/claude-code-cursor-rules-sync.md`](docs/claude-code-cursor-rules-sync.md).
 
 Cursor `alwaysApply: false` without `globs` (e.g. `agent-code-review-subagent.mdc`) is requestable in Cursor; Claude Code treats a missing `paths` as always-on — do not “fix” the Claude file by hand.
-
-4. **Перед написанием/правкой кода** — прочитать применимые `.cursor/rules/*.mdc` для затрагиваемой области (индекс: [`.cursor/rules/README.md`](.cursor/rules/README.md) или таблица в `app-conventions` skill). Эти файлы — enforceable и имеют приоритет над `docs/examples/pulse/**` при конфликте (Pulse — донор/референс, не источник истины). Claude Code грузит зеркало `.claude/rules/*.md`, не `.mdc`.
-   Индекс в `.cursor/skills/app-conventions` может быть не виден Claude Code — при сомнении читать `.cursor/rules/` (или `.claude/rules/`) напрямую, не полагаясь только на skill.
-5. Выполнить задачи `docs/implementation/mvp/tasks/P{N}_tasks.md` по commit units (§ Commit plan)
-6. `npm run typecheck` + `npm run lint` перед DoD (обязательная ВЕРИФИКАЦИЯ). Runtime dual-view (`next-dev-loop`) и lab PSI (`npm run psi:lab`) — **только если пользователь явно попросил**; не auto.
 
 ## Commit & review
 
