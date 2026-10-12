@@ -1,10 +1,43 @@
 # AI-First Monorepo Starter
 
+> Spec-first workflow template for building Next.js monorepos with AI coding agents (Claude Code, Cursor): agent rules, subagent roles, a single review gate and step-by-step bootstrap prompts. A starting point, not a product.
+
 **Стартовый шаблон** (не продукт) для создания новых проектов на стеке **Next.js 16.4 + Vercel + Neon PostgreSQL + Prisma v7 + Auth.js v5 + shadcn/ui + Tailwind v4**.
 
 **Методология:** [`docs/meta/ai_first_project_methodology.md`](docs/meta/ai_first_project_methodology.md)  
 **Bootstrap (пошагово):** [`BOOTSTRAP.md`](BOOTSTRAP.md)  
 **Оркестрация промптов:** [`prompts/00-orchestration.md`](prompts/00-orchestration.md)
+
+---
+
+## Что это и зачем
+
+AI-агент быстро пишет код, но без контракта сам придумывает архитектуру и расходится с документацией. Шаблон задаёт процесс, в котором документация — runtime-инструкция для агента, а каждый шаг имеет проверяемый критерий готовности.
+
+- **Спецификация раньше кода.** Задача берётся в работу, только если проходит Definition of Ready: ссылки на разделы спецификации, проверяемые Acceptance, названные файлы и пути проверки.
+- **Правила по уровням.** Rules активируются по мере bootstrap (T0 → T1 → T2), а не все сразу. Состав уровней — в [манифесте](.cursor/rules/README.md).
+- **Роли агентов.** Оркестратор пишет код готовых задач; `architect` исправляет документацию и планирует; `implementer` нужен для изоляции контекста; `reviewer` — единственный read-only review-гейт на commit unit. Модели закреплены в [`.cursor/agents/`](.cursor/agents/).
+- **Один review на commit unit.** Уровень review зависит от содержимого diff, а не от типа коммита ([`agent-code-review-subagent.mdc`](.cursor/rules/agent-code-review-subagent.mdc)).
+- **Детерминированные проверки до review.** `rules:check`, `deps:check`, `encoding:check`, `docs:links` — см. [`package.json`](package.json).
+- **Профиль качества.** `prototype` / `lean` / `standard` / `strict` задаёт объём документации, тестов и review под стадию проекта ([`P00`](prompts/P00-quality-profile.md)).
+
+## Как идёт работа
+
+```
+КОНТЕКСТ → TIER / DoR → ФАЗА → КОНТРАКТ → ЗАДАЧИ (CU) → [SPEC-GAP] → РЕАЛИЗАЦИЯ → ВЕРИФИКАЦИЯ → REVIEW (CU) → COMMIT
+```
+
+Подробно: [методология](docs/meta/ai_first_project_methodology.md) §2.2, маршрутизация и делегирование — [`ai_agent_model_routing.md`](docs/meta/ai_agent_model_routing.md).
+
+## Для кого
+
+Для одного разработчика или небольшой команды, которые строят продукт на Next.js с помощью Claude Code или Cursor и хотят воспроизводимый процесс вместо ad-hoc промптов.
+
+## Границы
+
+- Здесь нет прикладного кода и продуктовой документации: только методология, правила, guidelines, промпты и scaffold.
+- Параллельная работа агентов допускается только для шагов с непересекающимися `Files` ([`model-routing.mdc`](.cursor/rules/model-routing.mdc) §2); по умолчанию процесс рассчитан на последовательную работу с контролем стоимости.
+- [Pulse](docs/examples/pulse/) — read-only снимок референса, не канон: при конфликте Rules и Guidelines важнее.
 
 ---
 
