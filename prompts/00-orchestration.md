@@ -33,7 +33,8 @@
 | **P4** | [`P4-rules-guidelines.md`](P4-rules-guidelines.md) | После W1 | T1 rules активны, guidelines проверены |
 | **P5** | [`P5-nextjs-scaffold.md`](P5-nextjs-scaffold.md) | После W8+ contracts | Monorepo + Next.js 16.4 |
 | **P6** | [`P6-design-system-lab.md`](P6-design-system-lab.md) | После P5 + UX-03 | `/design-system` + T2 rules |
-| **P7+** | Phase tasks | После P6 | `P01_tasks.md` … по фазам ([`phase_tasks.template.md`](../docs/meta/phase_tasks.template.md)); перед каждой фазой — **Phase DoR audit** (`architect` spec-gap, один вызов на фазу) |
+| **P7+** | Phase tasks | После P6 | Написание `P{N}_tasks.md` по фазам ([`phase_tasks.template.md`](../docs/meta/phase_tasks.template.md)); перед каждой фазой — **Phase DoR audit** (`architect` spec-gap, один вызов на фазу). Число фаз — registry §6.7 |
+| **Phase run** | [`phase-implementation.md`](phase-implementation.md) | После Phase DoR audit этой фазы | Прогон одной фазы. Стартовая фраза называет среду. Написание task-файлов — отдельная сессия (P3 / W11) |
 
 ---
 
@@ -69,7 +70,7 @@ P00 ──▶ Visual seed (реком.) ──▶ P0 ──▶ P1 (ingest/create
 | W3 | 5 | 1–2 | Domain model + **data model priority** |
 | W4–W7 | ~15 | 2–3 | ADR, auth, runtime, design, wireframes |
 | W8 | ~10 | 2 | **Contracts** (happy/negative/security/race) |
-| W9–W11 | ~12 | 2 | Specs, phases, guides |
+| W9–W11 | W9–W10 по реестру; W11 — 20–24 файла (10–12 фаз × description + tasks) | 2–4 | Specs, wireframes, фазы по registry §6.7 |
 | W12–W14 | ~8 | 1–2 | Learning pack, ops, quality |
 
 **Правило:** 1 сессия = **одна волна** или **1–3 файла** внутри волны (см. registry §3).

@@ -4,6 +4,7 @@ description: Orchestration and model routing for multi-step coding tasks. Decide
 # Model routing & delegation
 
 You are the ORCHESTRATOR. You classify, check readiness, implement ready tasks, delegate only when it pays, and integrate.
+A launched phase (§2a) is the exception: the chat stays thin and each commit unit goes to `implementer`.
 Models are pinned in `.cursor/agents/*.md` (Claude Code: generated `.claude/agents/*.md`). Routing = choosing the subagent.
 Never spawn a separate "router" agent.
 Canon: [`docs/meta/ai_agent_model_routing.md`](docs/meta/ai_agent_model_routing.md).
@@ -13,7 +14,7 @@ Canon: [`docs/meta/ai_agent_model_routing.md`](docs/meta/ai_agent_model_routing.
 | Role | Model | Why |
 |---|---|---|
 | Orchestrator (chat) | Composer 2.5, NOT fast (set in the model picker) | Writes code for ready tasks; same model as `implementer`, so delegating a ready task only adds a cold start |
-| `implementer` | `composer-2.5[fast=false]` | Context isolation / parallel steps only (§2) |
+| `implementer` | `composer-2.5[fast=false]` | Isolation / parallel steps (§2); every CU of a phase run (§2a) |
 | `architect` | `grok-4.7[effort=high,fast=false]` | Spec-gap (fix docs) and plans; errors here are the most expensive |
 | `reviewer` | `grok-4.7[effort=high,fast=false]`, readonly | The single review gate per commit unit (§6) |
 | Search | built-in Explore | Already uses a fast cheap model |
@@ -52,7 +53,7 @@ Rules of thumb:
 
 ## 2. Delegate only when it pays
 
-The orchestrator implements T0/T1 and T2 after spec-gap itself. Spawn a subagent ONLY if at least one is true:
+Outside a phase run (§2a), the orchestrator implements T0/T1 and T2 after spec-gap itself. Spawn a subagent ONLY if at least one is true:
 - DoR fails → `architect` spec-gap (docs only, no code).
 - The work would add >~20k tokens of noise to this context (exploration, logs, long diffs) → `implementer` / Explore.
 - Independent steps with non-overlapping `Files` can run in parallel → `implementer` per step.
@@ -60,9 +61,21 @@ The orchestrator implements T0/T1 and T2 after spec-gap itself. Spawn a subagent
 - Commit-unit review (§6) → `reviewer`.
 
 Do NOT spawn for: T0 tasks; ready tasks that fit this context; sequential steps touching the same files; anything finishable in ≤3 tool calls.
+Exception: a phase run (§2a) delegates every CU to `implementer`.
 Each subagent starts cold and re-reads files — over-splitting costs more than it saves.
 
 **Phase DoR audit:** before the first task of a phase, ONE `architect` spec-gap call checks DoR for all tasks in `P{N}_tasks.md` and fixes the docs (profile D3 `standard` / `strict`; `lean` — the orchestrator self-audits inline; `prototype` — none). Ad-hoc spec-gap later — only for gaps found mid-task.
+
+## 2a. Phase execution
+
+When a phase is launched from [`prompts/phase-implementation.md`](prompts/phase-implementation.md), follow [`docs/guidelines/agent-phase-orchestration.md`](docs/guidelines/agent-phase-orchestration.md). Do not copy that flow here.
+
+- One fresh context per CU. The chat does not write code and does not read source or diffs. Nothing carries over between CUs; state lives in `P{N}_tasks.md` and in git.
+- Each CU is a fresh `implementer` that receives the driver's IMPLEMENTER block and writes the code. The rule "the orchestrator writes ready code" applies inside that CU session and to work outside a phase run.
+- Verify and commit are scripts only: `cu-verify.mjs` and `cu-commit.mjs` ([`agent-commit-pipeline.mdc`](agent-commit-pipeline.mdc)). Do not run the production build in the session; the hook does.
+- Review and commit follow the driver's ORCHESTRATOR block. One level of subagents.
+
+Doc waves, ad-hoc edits, and an explicit commit stay on §2.
 
 ## 3. Handoff contract
 
@@ -76,7 +89,7 @@ Planned in advance in `P{N}_tasks.md` § Commit plan ([`phase_tasks.template.md`
 
 - CU = one logical commit: several T0/T1 tasks on one topic **or** one T2 task. **T3 = always its own CU.**
 - Target ≤ ~400 hand-written lines per CU; larger → split at phase planning.
-- CU header = commit subject `type(scope): subject`; plus `Review: reviewer|diff-only`.
+- CU header = commit subject `type(scope): subject`; plus `Review: reviewer|diff-only` and `Smoke: none|deferred|blocking` (grammar: [`agent-phase-orchestration.md`](docs/guidelines/agent-phase-orchestration.md) §5.1).
 - A task outside any CU (ad-hoc small fix) is **not** committed on its own: it stays in the working tree until a CU boundary or an explicit user request.
 
 ## 4. Escalation ladder
@@ -97,5 +110,5 @@ Planned in advance in `P{N}_tasks.md` § Commit plan ([`phase_tasks.template.md`
 ## 6. Review & commit at the CU boundary
 
 - **One gate per CU** — [`agent-code-review-subagent.mdc`](agent-code-review-subagent.mdc): runtime code in the CU → `reviewer` (protocol 2a→2b→2c, Paths H/N/S as expected shape) — which CUs need it depends on profile D6 (`agent-code-review-subagent.mdc` § Depth); docs / `.mdc` / tests / tooling only → `diff-only` by the orchestrator.
-- **Auto-commit** — [`agent-commit-pipeline.mdc`](agent-commit-pipeline.mdc): when the last task of a declared CU is done, VERIFICATION is green and `reviewer` has no blockers (≤1 delta re-review), commit without asking. Never push, `--amend`, `--no-verify`; never stage `.env*` / secrets. Blocker remains → stop and report.
+- **Auto-commit** — [`agent-commit-pipeline.mdc`](agent-commit-pipeline.mdc): when the last task of a declared CU is done, VERIFICATION is green and `reviewer` has no blockers (≤1 delta re-review), commit without asking. Never push, `--amend`, `--no-verify`; never stage `.env*` / secrets. Blocker remains → stop and report. During a phase run, verify and git writes go through `cu-verify.mjs` / `cu-commit.mjs`; the session does not run the production build.
 - **Do not** enable IDE Agent Review on every save/commit as a substitute for this contract.

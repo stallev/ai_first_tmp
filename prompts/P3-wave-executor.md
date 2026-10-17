@@ -27,7 +27,7 @@ For each row W{N}-XX **in order**:
 3. Contracts: §2.3.4 template · Specs: §2.3.5 template — numbered sections `§N.M`
 4. Paths H / N / S — decide by **triggers** in registry §2.3.2a (not «if applicable»), depth per profile D2; every `N/A` needs an exemption reason
 5. Run the **DoR-ready checklist** (registry §2.3.6); unresolved items → `Open questions` with owner, never `TBD` in MUST sections
-6. Phase tasks (`P{N}_tasks.md`) — from [`phase_tasks.template.md`](../docs/meta/phase_tasks.template.md): commit units, `Tier`, `§` links, `Paths`
+6. Phase tasks (`P{N}_tasks.md`) — from [`phase_tasks.template.md`](../docs/meta/phase_tasks.template.md): commit units, `Tier`, `§` links, `Paths`, `Smoke`. Полный W11 — 10–12 фаз функционала (registry §6.7), не фиксированные P01–P07
 7. **Backlinks** in earlier files (same session)
 8. Update `architecture_master_index.md` status
 9. Add FM-xxx to `failure_modes_catalog.md` when applicable

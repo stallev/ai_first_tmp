@@ -1,7 +1,7 @@
 ﻿# Documentation Creation Registry — {{PROJECT_NAME}}
 
 **Проект:** {{PROJECT_NAME}} — {{PRODUCT_DESCRIPTION}}  
-**Версия реестра:** 1.1 (template) — DoR-ready: §2.3.2a пути H/N/S, §2.3.6 checklist, commit units в phase tasks  
+**Версия реестра:** 1.2 (template) — DoR-ready: §2.3.2a пути H/N/S, §2.3.6 checklist, commit units в phase tasks; полный W11 — 10–12 фаз (§6.7)  
 **Статус:** Template — адаптировать под домен в промпте P2; полный образец волн W0–W14: `docs/examples/pulse/docs/meta/documentation_creation_registry.md`  
 **Аудитория:** AI-агенты (Cursor, Claude, GPT)
 
@@ -542,23 +542,18 @@ READ registry → READ dependencies → DRAFT file → ADD backlinks → UPDATE 
 
 ### Волна W11 — Phase descriptions + tasks
 
+Полный W11 (`lean` / `standard` / `strict`) — **10–12 фаз** функционала MVP. Правило нарезки — §6.7. Фиксированный список P01–P07 не задаёт состав волны: названия и границы фаз выбираются в P2 из продукта.
+
+Каждая фаза — два файла, по порядку `P01` … `P{последняя}`:
+
 | ID | Файл | Зависит от | Обновить backlinks |
 |----|------|------------|-------------------|
-| W11-01 | `docs/implementation/mvp/phases_tasks_descriptions/P01_phase_description.md` | W8 contracts (01–02), monorepo_packages, global_shell_spec | methodology §2.5 |
-| W11-02 | `docs/implementation/mvp/tasks/P01_tasks.md` | P01_phase_description | — |
-| W11-03 | `P02_phase_description.md` | P01, catalog_discovery_spec, wireframes public/* | methodology |
-| W11-04 | `P02_tasks.md` | P02_phase | — |
-| W11-05 | `P03_phase_description.md` | booking_*, client wireframes | methodology |
-| W11-06 | `P03_tasks.md` | P03_phase | — |
-| W11-07 | `P04_phase_description.md` | trainer specs/contracts | methodology |
-| W11-08 | `P04_tasks.md` | P04_phase | — |
-| W11-09 | `P05_phase_description.md` | admin specs | methodology |
-| W11-10 | `P05_tasks.md` | P05_phase | — |
-| W11-11 | `P06_phase_description.md` | email_notifications_contract, adr_006 | methodology |
-| W11-12 | `P06_tasks.md` | P06_phase | — |
-| W11-13 | `P07_phase_description.md` | accessibility_requirements, ui_states | methodology |
-| W11-14 | `P07_tasks.md` | P07_phase | — |
+| W11-phase | `docs/implementation/mvp/phases_tasks_descriptions/P{N}_phase_description.md` | Контракты и specs инкремента этой фазы; для N>1 — предыдущая фаза | methodology §2.5 |
+| W11-tasks | `docs/implementation/mvp/tasks/P{N}_tasks.md` | `P{N}_phase_description.md`, [`phase_tasks.template.md`](./phase_tasks.template.md) | — |
 
+Профиль `prototype`: упрощённый список задач (§5.0), без требования 10–12 фаз.
+
+Исполнение готовой фазы — [`agent-phase-orchestration.md`](../guidelines/agent-phase-orchestration.md).
 
 ---
 
@@ -651,9 +646,10 @@ READ registry → READ dependencies → DRAFT file → ADD backlinks → UPDATE 
 ### 6.7 Phase + Tasks
 
 - Phase: goal, in-scope paths, out-of-scope, contracts to read, definition of done. Commit plan **не** дублировать — ссылка на `P{N}_tasks.md` § Commit plan.
-- Tasks: по шаблону [`phase_tasks.template.md`](./phase_tasks.template.md) — задачи сгруппированы в **commit units** (CU); у задачи `Tier`, ссылки на `§N.M` spec / contract / ADR / PRD, `Files`, `Acceptance` с исходом, `Paths` H / N / S по §2.3.2a.
+- **Число фаз.** Полный W11 (`lean` / `standard` / `strict`) нарезает функционал MVP на **10–12 фаз** (P01…P10–P12). Каждая фаза — пара `phases_tasks_descriptions/P{N}_phase_description.md` + `tasks/P{N}_tasks.md`. Нарезка на 7 укрупнённых фаз не используется: она раздувает Commit plan. Если инкремент тянет длинный список CU, его делят на две фазы. Лимит ~400 hand-written строк на CU не меняется. Названия фаз берутся из продукта в P2, не из списка Pulse (foundation, catalog, booking, trainer, admin, email, a11y). Профиль `prototype` по §5.0 остаётся упрощённым списком задач — 10–12 на него не распространяется.
+- Tasks: по шаблону [`phase_tasks.template.md`](./phase_tasks.template.md) — задачи сгруппированы в **commit units** (CU); у задачи `Tier`, ссылки на `§N.M` spec / contract / ADR / PRD, `Files`, `Acceptance` с исходом, `Paths` H / N / S по §2.3.2a. Заголовок CU включает `Review` и `Smoke` (грамматика — [`agent-phase-orchestration.md`](../guidelines/agent-phase-orchestration.md) §5.1).
 - Задачи пишутся **только** по документам, прошедшим §2.3.6; иначе — сначала дописать документ.
-- До старта реализации фазы — **Phase DoR audit** (один вызов `architect` в режиме spec-gap на всю фазу; [`ai_agent_model_routing.md`](./ai_agent_model_routing.md) § DoR).
+- До старта реализации фазы — **Phase DoR audit** (один вызов `architect` в режиме spec-gap на всю фазу; [`ai_agent_model_routing.md`](./ai_agent_model_routing.md) § DoR). Прогон фазы — [`agent-phase-orchestration.md`](../guidelines/agent-phase-orchestration.md), запуск — [`prompts/phase-implementation.md`](../../prompts/phase-implementation.md).
 
 ---
 

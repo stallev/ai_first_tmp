@@ -29,6 +29,20 @@ description: Commit pipeline: auto-commit at a commit-unit boundary or on explic
 граница CU | запрос → ВЕРИФИКАЦИЯ → stage → review (уровень по diff) → compose message → git commit → commitlint (hook)
 ```
 
+Этот порядок — для работы **вне** прогона фазы (ad-hoc, явный запрос, коммит в этом шаблоне).
+
+### Прогон фазы
+
+Когда фаза запущена из [`prompts/phase-implementation.md`](prompts/phase-implementation.md), поток — [`docs/guidelines/agent-phase-orchestration.md`](docs/guidelines/agent-phase-orchestration.md). Здесь только пайплайн границы CU:
+
+```
+граница CU → cu-verify.mjs → cu-commit.mjs stage → review → cu-commit.mjs commit → hook
+```
+
+- Индекс и коммит меняет **только** `cu-commit.mjs`. Сырые `git add` и `git commit` в этом режиме запрещены.
+- Production build в сессии не запускать: его выполняет pre-commit hook.
+- Ограничители auto-commit выше те же: зелёная верификация, нет blockers, в индексе только файлы CU, нет секретов, subject = заголовок CU, без push / amend / no-verify.
+
 ### 1. Deterministic verification
 
 Перед коммитом, если затронут код:
@@ -49,6 +63,8 @@ description: Commit pipeline: auto-commit at a commit-unit boundary or on explic
 **Lab PSI (`psi-lab-testing`):** только по **явному запросу** на задеплоенный origin (`npm run psi:lab`). Не часть обязательной ВЕРИФИКАЦИИ перед commit. Не смешивать с `next-dev-loop` и не мерить `localhost`.
 
 ### 2. Collect git context
+
+Вне прогона фазы. В прогоне фазы индекс собирает `cu-commit.mjs stage` (секция «Прогон фазы»).
 
 Параллельно:
 
@@ -123,6 +139,8 @@ main: chore(docs): sync canonical routes
 - ❌ Один коммит на несколько несвязанных фич
 
 ### 5. Execute commit
+
+Вне прогона фазы. В прогоне фазы коммит создаёт только `cu-commit.mjs commit` — без сырого `git commit`.
 
 - HEREDOC для message (Windows/PowerShell: эквивалент без интерактива)
 - После commit — `git status` для verify

@@ -16,7 +16,7 @@
 | `.claude/agents/` | Generated для Claude Code (`npm run rules:sync`) — не править руками |
 | `docs/meta/` | Методология, registry, routing, шаблон задач фазы (статус «Template») |
 | `docs/guidelines/` | Канон реализации (HOW) |
-| `prompts/` | P0–P6 bootstrap; карта — [`prompts/00-orchestration.md`](prompts/00-orchestration.md) |
+| `prompts/` | P0–P6 bootstrap, прогон фазы [`prompts/phase-implementation.md`](prompts/phase-implementation.md); карта — [`prompts/00-orchestration.md`](prompts/00-orchestration.md) |
 | `scaffold/`, `specs/` | Заготовки, которые копирует P5 / P6 |
 | `docs/examples/pulse/` | Read-only snapshot референса Pulse — **не канон**, не править |
 

@@ -93,7 +93,7 @@ AI-агент быстро пишет код, но без контракта с�
 │   ├── reference/                    → pulse_project_reference.md, stack patterns
 │   ├── claude-code-cursor-rules-sync.md
 │   └── examples/pulse/               → snapshot референса (заполнить вручную)
-├── prompts/                          → P00 (профиль качества), P0–P6, Claude Desktop seed, orchestration
+├── prompts/                          → P00 (профиль качества), P0–P6, прогон фазы, Claude Desktop seed, orchestration
 ├── specs/                            → design_system_lab_spec.template.md
 └── scaffold/                         → пустой monorepo skeleton
 ```

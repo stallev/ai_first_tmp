@@ -39,6 +39,7 @@
   - Ориентир ≤ ~400 hand-written строк на CU; больше — делить при планировании.
   - Заголовок CU = commit subject: `type(scope): subject` (agent-commit-pipeline).
   - Review: по профилю D6 (agent-code-review-subagent § Depth): `standard` / `strict` — `reviewer` при runtime-коде; `diff-only` — только docs / .mdc / tests / tooling.
+  - Smoke: `none` | `deferred` | `blocking`. По умолчанию `none`. Грамматика заголовка — docs/guidelines/agent-phase-orchestration.md §5.1.
   - Commit: auto — агент коммитит на границе CU после зелёной ВЕРИФИКАЦИИ и review без blockers.
 Формат задачи:
   - [ ] P{N}-T{k} · T0|T1|T2|T3 · Spec: [file §N.M](…) · Contract: [file §N.M](…) · ADR/PRD: [ID](…)
@@ -46,7 +47,7 @@
         Paths: H [§] · N [§: случаи] · S [§, authz row]   |   Paths: n/a — <причина из registry §2.3.2a>
 -->
 
-### P{N}-CU1 — feat(web): {subject} · Review: reviewer · Commit: auto
+### P{N}-CU1 — feat(web): {subject} · Review: reviewer · Smoke: none · Commit: auto
 
 - [ ] P{N}-T1 · T1 · Spec: [{spec} §3](../specs/{spec}.md) · Contract: [{contract} §2](../contracts/{contract}.md)
       Files: `apps/web/src/app/...` · Acceptance: {проверка} → {исход}
@@ -56,7 +57,7 @@
 
 **CU DoD:** `npm run typecheck` · `npm run lint` · тесты по профилю D4 / D5 · smoke {route} (H + N)
 
-### P{N}-CU2 — feat(auth): {subject} · Review: reviewer · Commit: auto
+### P{N}-CU2 — feat(auth): {subject} · Review: reviewer · Smoke: none · Commit: auto
 
 - [ ] P{N}-T3 · T3 · Contract: [{contract} §4](../contracts/{contract}.md) · ADR: [adr_{NNN}](../../../prds/07_governance/adr_{NNN}_{topic}.md)
       Files: `apps/web/src/app/.../actions.ts`, `packages/policy/**` · Acceptance: {проверка} → {исход}
@@ -64,7 +65,7 @@
 
 **CU DoD:** `npm run typecheck` · `npm run lint` · тесты по профилю D4 / D5 (S-пути — тестом с `lean`) · smoke H / N / S (403 и IDOR)
 
-### P{N}-CU3 — docs(docs): sync {area} docs · Review: diff-only · Commit: auto
+### P{N}-CU3 — docs(docs): sync {area} docs · Review: diff-only · Smoke: none · Commit: auto
 
 - [ ] P{N}-T4 · T0 · Files: `docs/...` · Acceptance: ссылки открываются, нет drift с кодом CU1–CU2
       Paths: n/a — docs-only

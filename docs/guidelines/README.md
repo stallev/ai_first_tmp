@@ -19,6 +19,7 @@
 | **Lab PSI (portable)** | [`psi-lab-testing.md`](psi-lab-testing.md) — deployed origin via REST `runPagespeed`; not `next-dev-loop` |
 | **Code review protocol** | [`ai_code_review_protocol.md`](ai_code_review_protocol.md) — problem → expected shape → diff; subagent prompt. WHEN/levels/budget: rule `agent-code-review-subagent.mdc`. Не Bugbot. Не заменяет T3-субагента `reviewer`. |
 | **Маршрутизация моделей** | [`../meta/ai_agent_model_routing.md`](../meta/ai_agent_model_routing.md) — task tier T0–T3, субагенты, гигиена токенов; runtime: `model-routing.mdc` |
+| **Прогон фазы** | [`agent-phase-orchestration.md`](agent-phase-orchestration.md) — тонкий оркестратор, свежий контекст на CU, скрипты verify/commit. Запуск: [`../../prompts/phase-implementation.md`](../../prompts/phase-implementation.md) |
 | React | [`react/README.md`](react/README.md) |
 | Auth | [`auth/ai_auth_implementation_guide.md`](auth/ai_auth_implementation_guide.md) |
 | Typography | [`typography_text_guidelines.md`](typography_text_guidelines.md) |
