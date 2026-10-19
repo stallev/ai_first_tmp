@@ -22,7 +22,7 @@
 | **Прогон фазы** | [`agent-phase-orchestration.md`](agent-phase-orchestration.md) — тонкий оркестратор, свежий контекст на CU, скрипты verify/commit. Запуск: [`../../prompts/phase-implementation.md`](../../prompts/phase-implementation.md) |
 | **Прогон волны документации** | [`agent-docs-orchestration.md`](agent-docs-orchestration.md) — те же принципы для `docs/**` в Claude Code: свежий `doc-writer` на DU, скрипты verify/commit. Запуск: [`../../prompts/wave-run.md`](../../prompts/wave-run.md) |
 | React | [`react/README.md`](react/README.md) |
-| Auth | [`auth/ai_auth_implementation_guide.md`](auth/ai_auth_implementation_guide.md) |
+| Auth | [`auth/ai_auth_implementation_guide.md`](auth/ai_auth_implementation_guide.md) — incl. Telegram OIDC [`auth/ai_telegram_oidc_auth_guide.md`](auth/ai_telegram_oidc_auth_guide.md) |
 | Typography | [`typography_text_guidelines.md`](typography_text_guidelines.md) |
 | Visual identity (canon) | [`../design/visual_identity_contract.md`](../design/visual_identity_contract.md) |
 | **UI component catalog (Design Lab)** | [`../implementation/mvp/specs/design_system_lab_spec.md`](../implementation/mvp/specs/design_system_lab_spec.md) — `/design-system` |
