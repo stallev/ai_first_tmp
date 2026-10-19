@@ -112,7 +112,7 @@ Principles are the same as in the phase guide §6 (pure core with unit tests, th
 | Script | Contract |
 |--------|----------|
 | `run-wave.mjs W{NN}` | `STATUS: du\|complete\|gate-blocking\|dirty <id>` first; paths-file `.local/wave-runs/<DU>.paths`; on completion writes `W{NN}-gate.md` (the gate checklist for the human) |
-| `doc-verify.mjs` | Over the DU's changed files: front matter fields (registry §2.2), no `TBD` in MUST sections, every `N/A` has a reason, relative links resolve (`docs:links`), UTF-8 (`encoding:check`), `rules:check` if `.claude/` is touched. Does not judge meaning — that is `doc-reviewer` |
+| `doc-verify.mjs` | Over the DU's changed files: the registry §2.2 bold header (`**Тип:**`, `**Статус:**`, `**Версия:**`, `**Дата:**`, `**Волна:**`, `**Зависит от:**`, `**Связанные документы:**`; `**Проверено по:**` for runtime/auth/data paths), §2.3.1 sections `Open questions` and `Agent notes`, no `TBD` outside `Open questions`, every `N/A` has a reason, relative links resolve (`docs:links`), UTF-8 (`encoding:check`), `rules:check` if `.claude/` is touched. Does not judge meaning — that is `doc-reviewer` |
 | `cu-commit.mjs` | Unchanged: the only writer of the index and commits |
 
 ## 7. Writer discipline

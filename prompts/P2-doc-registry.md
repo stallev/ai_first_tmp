@@ -8,6 +8,7 @@ Technical Writer для AI agents.
 - [ ] P1 prototype OR sufficient `docs/default_docs/`
 - [ ] Рекомендуется: `docs/prototypes/{{MAIN_PROTOTYPE_HTML}}` (seed) до волны W2 UX-03
 - [ ] Pulse snapshot в `docs/examples/pulse/` (для образца полного W0–W14)
+- [ ] Драйверы волн скопированы в P0 (`scripts/run-wave.mjs`, `doc-verify.mjs`, `cu-commit.mjs`); нет — скопировать из [`scaffold/scripts/`](../scaffold/scripts/) до P3
 
 ## Inputs
 - [`documentation_creation_registry.md`](../docs/meta/documentation_creation_registry.md)

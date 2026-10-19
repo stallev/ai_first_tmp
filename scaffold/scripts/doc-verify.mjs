@@ -1,7 +1,7 @@
 #!/usr/bin/env node
 /**
  * DU verification (mechanical only; meaning is judged by `doc-reviewer`).
- * Checks the changed markdown files under docs/ (git status): front matter, no `TBD` in MUST sections,
+ * Checks the changed markdown files under docs/ (git status): registry §2.2 header, §2.3.1 sections, no `TBD`,
  * every `N/A` has a reason; then runs the repo checks that exist: docs:links, encoding:check, rules:check.
  * Output: `doc-verify: ok` or the findings + non-zero exit.
  */
@@ -12,8 +12,14 @@ import { fileURLToPath } from "node:url";
 import { logTail, parsePorcelain } from "./unit-driver.mjs";
 
 const rootDir = path.resolve(path.dirname(fileURLToPath(import.meta.url)), "..");
-/** Adapt to registry §2.2 for the project. */
-const REQUIRED_FRONT_MATTER = ["title", "status"];
+/** Registry §2.2: bold header lines at the top of every new document. Adapt if the project registry changes them. */
+const HEADER_FIELDS = ["Тип", "Статус", "Версия", "Дата", "Волна", "Зависит от", "Связанные документы"];
+/** Registry §2.3.1: sections every document carries. */
+const REQUIRED_SECTIONS = ["Open questions", "Agent notes"];
+/** Registry §2.2: `Проверено по` is MUST for runtime/auth/data documents (§2.7). */
+const CHECKED_BY_PATH = /(^|\/)(03_data_model|04_authorization_privacy|05_runtime)\//;
+/** Only documents created by waves; templates and meta docs follow their own format. */
+const WAVE_DOCS = /^docs\/(prds|design|implementation)\/.+\.md$/;
 const findings = [];
 
 const status = spawnSync("git", ["status", "--porcelain", "--untracked-files=all"], { cwd: rootDir, encoding: "utf8" });
@@ -21,10 +27,16 @@ const changed = parsePorcelain(status.stdout ?? "").filter((p) => /^docs\/.+\.md
 
 for (const file of changed) {
   const text = fs.readFileSync(path.join(rootDir, file), "utf8");
-  const fm = text.match(/^---\r?\n([\s\S]*?)\r?\n---/);
-  if (fm) {
-    for (const key of REQUIRED_FRONT_MATTER) if (!new RegExp(`^${key}:`, "m").test(fm[1])) findings.push(`${file}: front matter без «${key}»`);
-  } else if (!file.startsWith("docs/meta/")) findings.push(`${file}: нет front matter`);
+  if (WAVE_DOCS.test(file)) {
+    const head = text.split(/\r?\n/).slice(0, 25).join("\n");
+    for (const field of HEADER_FIELDS) {
+      if (!new RegExp(`\\*\\*${field}:\\*\\*`).test(head)) findings.push(`${file}: в шапке нет «${field}»`);
+    }
+    if (CHECKED_BY_PATH.test(file) && !/\*\*Проверено по:\*\*/.test(head)) findings.push(`${file}: runtime/auth/data без «Проверено по»`);
+    for (const section of REQUIRED_SECTIONS) {
+      if (!new RegExp(`^#{1,4} .*${section}`, "im").test(text)) findings.push(`${file}: нет секции «${section}»`);
+    }
+  }
   text.split(/\r?\n/).forEach((line, i) => {
     if (/\bTBD\b/.test(line) && !/Open questions/i.test(line)) findings.push(`${file}:${i + 1}: TBD (допустимо только в Open questions с owner)`);
     if (/\bN\/A\b/.test(line) && !/N\/A\s*[—:-]\s*\S/.test(line)) findings.push(`${file}:${i + 1}: N/A без причины`);

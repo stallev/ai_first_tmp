@@ -176,7 +176,7 @@ rg '\{\{' --glob '!node_modules' .
 
 **DB-first:** в P3 волна с `database_schema_v1.md` **до** domain contracts (W8).
 
-**Среды (кто что пишет):** документацию (P2→P3, волны W0–W14) пишет **Claude Code** — волну ведёт `run-wave.mjs`, [`prompts/wave-run.md`](prompts/wave-run.md), канон [`agent-docs-orchestration.md`](docs/guidelines/agent-docs-orchestration.md). Код фаз пишет **Cursor AI** — [`prompts/phase-implementation.md`](prompts/phase-implementation.md), канон [`agent-phase-orchestration.md`](docs/guidelines/agent-phase-orchestration.md). Скрипты драйверов появляются в проекте на P5 (`scaffold/scripts/`); до P5 волны идут в ручном режиме P3 (одна сессия = 1–3 файла) — либо скопируйте `scaffold/scripts/` раньше.
+**Среды (кто что пишет):** документацию (P2→P3, волны W0–W14) пишет **Claude Code** — волну ведёт `run-wave.mjs`, [`prompts/wave-run.md`](prompts/wave-run.md), канон [`agent-docs-orchestration.md`](docs/guidelines/agent-docs-orchestration.md). Код фаз пишет **Cursor AI** — [`prompts/phase-implementation.md`](prompts/phase-implementation.md), канон [`agent-phase-orchestration.md`](docs/guidelines/agent-phase-orchestration.md). Скрипты драйверов копирует P0 (`scaffold/scripts/` → `scripts/`), поэтому волны P3 запускаются драйвером сразу; на P5 они только донастраиваются под lint/test/typecheck.
 
 ---
 
