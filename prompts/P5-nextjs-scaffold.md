@@ -18,6 +18,7 @@ Senior Fullstack Developer (Next.js 16 + PostgreSQL + monorepo).
 
 ## Task
 1. **Monorepo root:** package.json workspaces, `npm run typecheck`, `npm run lint`. **Keep** existing `rules:sync` / `rules:check` / `deps:check` (do not drop them when adding workspaces). Set `"engines": { "node": "24.x" }` (local, CI, Vercel). Copy [`scaffold/.npmrc`](../scaffold/.npmrc) → root `.npmrc` **before** the first `npm install`; all versions exact per **`.cursor/rules/dependency-pinning.mdc`**; commit `package-lock.json`; CI / Vercel install command — `npm ci`.
+1a. **Драйверы фазы и волны:** скопировать [`scaffold/scripts/`](../scaffold/scripts/) → `scripts/` (`unit-driver.mjs` + `.test.mjs`, `run-unit.mjs`, `run-phase.mjs`, `run-wave.mjs`, `cu-verify.mjs`, `doc-verify.mjs`, `cu-commit.mjs`); в `unit-driver.mjs` проверить константы (`SECRET_FILES`, `COMMIT_TYPES`, пути задач в `PROFILES`); [`scaffold/.claude/settings.json`](../scaffold/.claude/settings.json) → `.claude/settings.json`; root scripts: `cu:verify`, `cu:commit`, `phase:run`, `wave:run`, `doc:verify` (каждый — `node scripts/<имя>.mjs`) и `drivers:test` (`node --test scripts/unit-driver.test.mjs`); `.local/` в `.gitignore`. Канон: [`agent-phase-orchestration.md`](../docs/guidelines/agent-phase-orchestration.md) §12, [`agent-docs-orchestration.md`](../docs/guidelines/agent-docs-orchestration.md).
 2. **Git commit tooling:** скопировать из [`scaffold/`](../scaffold/) → `commitlint.config.mjs`, `.husky/`; установить devDeps и scripts по **`.cursor/rules/agent-commit-pipeline.mdc` § Git tooling setup**. Optional: husky pre-commit also runs `npm run rules:check`.
 3. **packages/db:** Prisma schema from `database_schema_v1.md`, Neon URLs
 4. **packages/domain:** mutation codes scaffold, ports
@@ -68,6 +69,7 @@ Core: Next.js 16.4 · Node.js 24.x · Vercel · Neon · Prisma v7 · shadcn (Bas
 - [ ] `apps/web/AGENTS.md` содержит секцию `## Skills` со ссылкой на `app-conventions`
 - [ ] `apps/web/CLAUDE.md` exists, содержит `@AGENTS.md`
 - [ ] `npm run rules:check` pass
+- [ ] `npm run drivers:test` pass; `run-phase.mjs` / `run-wave.mjs` печатают `STATUS:` первой строкой (при наличии файлов задач)
 - [ ] commitlint + husky: `echo "main: chore: test" | npx commitlint` pass; `.husky/commit-msg` в репо
 
 ## Next

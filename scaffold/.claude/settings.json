@@ -1,0 +1,21 @@
+{
+  "permissions": {
+    "allow": [
+      "Bash(node scripts/cu-verify.mjs:*)",
+      "Bash(node scripts/doc-verify.mjs:*)",
+      "Bash(node scripts/cu-commit.mjs:*)",
+      "Bash(node scripts/run-phase.mjs:*)",
+      "Bash(node scripts/run-wave.mjs:*)",
+      "Bash(npm run lint:*)", "Bash(npm run test:*)", "Bash(npm run typecheck:*)",
+      "Bash(npm run rules:sync:*)", "Bash(npm run rules:check:*)", "Bash(npm run deps:check:*)",
+      "Bash(npm run docs:links:*)", "Bash(npm run encoding:check:*)",
+      "Bash(git status:*)", "Bash(git diff:*)", "Bash(git log:*)",
+      "Edit", "Write", "Read", "Grep", "Glob"
+    ],
+    "deny": [
+      "Bash(git push:*)", "Bash(git commit:*)", "Bash(git add:*)",
+      "Bash(git reset --hard:*)", "Bash(git rebase:*)",
+      "Read(./.env*)", "Edit(./.env*)", "Write(./.env*)"
+    ]
+  }
+}
