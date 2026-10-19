@@ -33,7 +33,9 @@ for (const file of changed) {
       if (!new RegExp(`\\*\\*${field}:\\*\\*`).test(head)) findings.push(`${file}: в шапке нет «${field}»`);
     }
     if (CHECKED_BY_PATH.test(file) && !/\*\*Проверено по:\*\*/.test(head)) findings.push(`${file}: runtime/auth/data без «Проверено по»`);
-    for (const section of REQUIRED_SECTIONS) {
+    // Tasks files follow phase_tasks.template.md: header yes, §2.3.1 sections no.
+    const isTasks = /\*\*Тип:\*\*\s*Tasks/.test(head);
+    for (const section of isTasks ? [] : REQUIRED_SECTIONS) {
       if (!new RegExp(`^#{1,4} .*${section}`, "im").test(text)) findings.push(`${file}: нет секции «${section}»`);
     }
   }
