@@ -12,7 +12,7 @@
 
 ## Стартовая фраза
 
-Человек запускает фазу одной фразой. В ней **обязана** быть среда: **`Среда: Cursor AI`** или **`Среда: Claude Code`**.
+Код пишет **Cursor AI** (основная среда); Claude Code headless — опция. Документацию пишет Claude Code — [`wave-run.md`](wave-run.md). Человек запускает фазу одной фразой. В ней **обязана** быть среда: **`Среда: Cursor AI`** или **`Среда: Claude Code`**.
 
 ```text
 Реализуй фазу P{NN} по docs/implementation/mvp/tasks/P{NN}_tasks.md.
