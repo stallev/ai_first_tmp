@@ -4,7 +4,9 @@
 По типу волны: **PM** (W1 product) · **Domain Architect** (W3–W4) · **UX Writer** (W2/W7) · **Security** (W5)
 
 ## Parameter
-`{N}` = номер волны (1, 2, 3, … 14). **Одна сессия = одна волна.**
+`{N}` = номер волны (1, 2, 3, … 14).
+
+**Режимы.** Основной — драйвер волны: [`wave-run.md`](wave-run.md) запускает `run-wave.mjs`, а этот файл — инструкция свежего `doc-writer` на один DU (строки Task ниже применяются к файлам этого DU). Ручной режим (профиль `prototype`, нет `W{NN}_units.md`): одна сессия = одна волна или 1–3 файла.
 
 ## Preconditions
 - [ ] P2 registry canonical

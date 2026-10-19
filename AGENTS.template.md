@@ -54,6 +54,7 @@ Monorepo: **Next.js 16.4** App Router + Vercel + Neon PostgreSQL.
 | **Реестр создания docs** | [`docs/meta/documentation_creation_registry.md`](docs/meta/documentation_creation_registry.md) — §2.3.2a пути H / N / S, §2.3.6 DoR-ready документы |
 | Шаблон задач фазы | [`docs/meta/phase_tasks.template.md`](docs/meta/phase_tasks.template.md) — commit units, `Tier`, `Paths`, `Smoke` |
 | Прогон фазы | [`docs/guidelines/agent-phase-orchestration.md`](docs/guidelines/agent-phase-orchestration.md) — запуск: [`prompts/phase-implementation.md`](prompts/phase-implementation.md) |
+| Прогон волны документации | [`docs/guidelines/agent-docs-orchestration.md`](docs/guidelines/agent-docs-orchestration.md) — запуск: [`prompts/wave-run.md`](prompts/wave-run.md) (Claude Code) |
 | Карта архитектуры | [`docs/prds/architecture_master_index.md`](docs/prds/architecture_master_index.md) |
 | MVP scope | [`docs/prds/01_product_scope/mvp_scope.md`](docs/prds/01_product_scope/mvp_scope.md) |
 | Database schema | [`docs/prds/03_data_model/database_schema_v1.md`](docs/prds/03_data_model/database_schema_v1.md) |

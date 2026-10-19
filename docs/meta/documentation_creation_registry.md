@@ -291,7 +291,7 @@
 READ registry → READ dependencies → DRAFT file → ADD backlinks → UPDATE master index → VERIFY checklist → NEXT file
 ```
 
-**Одна сессия агента = одна волна или 1–3 файла внутри волны** (не смешивать unrelated волны).
+**Одна сессия агента = один documentation unit (DU): 1–3 файла внутри волны** (не смешивать unrelated волны). Прогон волны драйвером — [`agent-docs-orchestration.md`](../guidelines/agent-docs-orchestration.md): свежий `doc-writer` на DU, verify/commit — скрипты, единицы — `docs/meta/doc-waves/W{NN}_units.md`.
 
 **Запрещено:**
 
@@ -678,7 +678,7 @@ READ registry → READ dependencies → DRAFT file → ADD backlinks → UPDATE 
 
 1. Прочитать §2 (требования к документам) и профиль качества проекта.
 2. Найти первую незавершённую волну в §5 (до утверждения registry пользователем — gate G2 — волны не начинать).
-3. Выполнить волну через [`P3-wave-executor.md`](../../prompts/P3-wave-executor.md): одна сессия = одна волна или 1–3 файла.
+3. Выполнить волну через [`wave-run.md`](../../prompts/wave-run.md) (драйвер `run-wave.mjs`, Claude Code) по инструкции [`P3-wave-executor.md`](../../prompts/P3-wave-executor.md): один DU = 1–3 файла, свежий контекст.
 4. После волны — backlinks (§2.5), верификация (§2.6), строка в Change log.
 
 ---

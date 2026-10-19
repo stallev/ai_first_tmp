@@ -149,5 +149,5 @@ PRD · ADR · Contract · Spec · Phase · Tasks · Guideline · Cursor Rule · 
 
 - HTML prototype — **не** канон; путь `docs/prototypes/{{MAIN_PROTOTYPE_HTML}}`; при конфликте — PRD/schema
 - Context7 перед runtime docs: Next.js **16.4**, Auth.js v5, Prisma v7; прототип: Tailwind v4 Play CDN (`/websites/tailwindcss`).
-- Одна сессия = одна doc wave или 1–3 файла внутри волны
+- Один DU (documentation unit) = 1–3 файла внутри волны; волну ведёт драйвер — [`agent-docs-orchestration.md`](../guidelines/agent-docs-orchestration.md)
 - DB-first: `database_schema_v1.md` до domain contracts

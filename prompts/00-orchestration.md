@@ -73,7 +73,7 @@ P00 ──▶ Visual seed (реком.) ──▶ P0 ──▶ P1 (ingest/create
 | W9–W11 | W9–W10 по реестру; W11 — 20–24 файла (10–12 фаз × description + tasks) | 2–4 | Specs, wireframes, фазы по registry §6.7 |
 | W12–W14 | ~8 | 1–2 | Learning pack, ops, quality |
 
-**Правило:** 1 сессия = **одна волна** или **1–3 файла** внутри волны (см. registry §3).
+**Правило:** 1 DU (documentation unit) = **1–3 файла** внутри волны, свежий контекст (см. registry §3). Волну ведёт драйвер `run-wave.mjs` ([`wave-run.md`](wave-run.md), Claude Code); канон — [`agent-docs-orchestration.md`](../docs/guidelines/agent-docs-orchestration.md). Фазу кода ведёт `run-phase.mjs` (Cursor, [`phase-implementation.md`](phase-implementation.md)). Документация и код не делят сессию.
 
 Полный перечень файлов — [`documentation_creation_registry.md`](../docs/meta/documentation_creation_registry.md) и Pulse snapshot.
 

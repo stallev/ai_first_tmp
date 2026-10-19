@@ -17,7 +17,9 @@
 | `docs/meta/` | Методология, registry, routing, шаблон задач фазы (статус «Template») |
 | `docs/guidelines/` | Канон реализации (HOW) |
 | `prompts/` | P0–P6 bootstrap, прогон фазы [`prompts/phase-implementation.md`](prompts/phase-implementation.md); карта — [`prompts/00-orchestration.md`](prompts/00-orchestration.md) |
-| `scaffold/`, `specs/` | Заготовки, которые копирует P5 / P6 |
+| `docs/guidelines/agent-phase-orchestration.md`, `agent-docs-orchestration.md` | Прогон фазы (код, Cursor) и волны (документация, Claude Code): каноны потока |
+| `scaffold/scripts/` | Драйверы `run-phase` / `run-wave`, `cu-verify`, `doc-verify`, `cu-commit`, ядро `unit-driver` + `node --test`; P5 копирует в проект |
+| `scaffold/`, `specs/` | Прочие заготовки, которые копирует P5 / P6 |
 | `docs/examples/pulse/` | Read-only snapshot референса Pulse — **не канон**, не править |
 
 ## Правила правки шаблона

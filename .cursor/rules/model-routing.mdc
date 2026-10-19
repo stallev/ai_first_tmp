@@ -77,7 +77,11 @@ When a phase is launched from [`prompts/phase-implementation.md`](prompts/phase-
 - Verify and commit are scripts only: `cu-verify.mjs` and `cu-commit.mjs` ([`agent-commit-pipeline.mdc`](agent-commit-pipeline.mdc)). Do not run the production build in the session; the hook does.
 - Review and commit follow the driver's ORCHESTRATOR block. One level of subagents.
 
-Doc waves, ad-hoc edits, and an explicit commit stay on §2.
+Doc waves, ad-hoc edits, and an explicit commit stay on §2 — except a launched wave (§2b).
+
+## 2b. Documentation wave
+
+When a wave is launched from [`prompts/wave-run.md`](prompts/wave-run.md), follow [`docs/guidelines/agent-docs-orchestration.md`](docs/guidelines/agent-docs-orchestration.md) (Claude Code). Same shape as §2a: the chat does not write or read the docs; each documentation unit (DU) is a fresh `doc-writer`; verify and commit are scripts (`doc-verify.mjs`, `cu-commit.mjs`); one `doc-reviewer` per normative DU. Docs and code never share a session.
 
 ## 3. Handoff contract
 

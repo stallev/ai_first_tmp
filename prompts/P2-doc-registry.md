@@ -25,7 +25,8 @@ Technical Writer для AI agents.
    - UX block UX-01..UX-10 в W2/W7
    - Замени Pulse-specific файлы на domain-specific paths
 3. Адаптируй `docs/meta/ai_first_project_methodology.md` на месте (статус Template → Canonical)
-4. Выведи в чат **список файлов W1** — **не создавай их** (unless user asks)
+4. Сгенерируй `docs/meta/doc-waves/W{NN}_units.md` для каждой включённой волны (грамматика — [`agent-docs-orchestration.md`](../docs/guidelines/agent-docs-orchestration.md) §5): DU по 1–3 связанных файла, `Review` по типу документа, `Gate: blocking` на границах G2/G3, `Depends:` из колонки «Зависит от». Для профиля `prototype` файлы волн не нужны (ручной режим P3)
+5. Выведи в чат **список файлов W1** — **не создавай их** (unless user asks)
 
 ## Context budget
 **Только registry + methodology.** Не создавать PRD/contracts/code.
@@ -39,6 +40,7 @@ Verify pinned versions in §2.7: Next.js 16.4.x (Context7 `/vercel/next.js`), Au
 - [ ] §2.3.2a (H/N/S triggers) и §2.3.6 (DoR-ready) сохранены; front matter содержит `Проверено по`
 - [ ] Wave dependencies correct (schema before contracts)
 - [ ] Links to Pulse example for full W0–W14 reference
+- [ ] `docs/meta/doc-waves/W{NN}_units.md` есть для каждой включённой волны, заголовки DU проходят грамматику
 - [ ] Methodology §3 links to registry
 
 ## Next

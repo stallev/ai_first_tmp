@@ -176,6 +176,8 @@ rg '\{\{' --glob '!node_modules' .
 
 **DB-first:** в P3 волна с `database_schema_v1.md` **до** domain contracts (W8).
 
+**Среды (кто что пишет):** документацию (P2→P3, волны W0–W14) пишет **Claude Code** — волну ведёт `run-wave.mjs`, [`prompts/wave-run.md`](prompts/wave-run.md), канон [`agent-docs-orchestration.md`](docs/guidelines/agent-docs-orchestration.md). Код фаз пишет **Cursor AI** — [`prompts/phase-implementation.md`](prompts/phase-implementation.md), канон [`agent-phase-orchestration.md`](docs/guidelines/agent-phase-orchestration.md). Скрипты драйверов появляются в проекте на P5 (`scaffold/scripts/`); до P5 волны идут в ручном режиме P3 (одна сессия = 1–3 файла) — либо скопируйте `scaffold/scripts/` раньше.
+
 ---
 
 ## Шаг 6 — Neon PostgreSQL
@@ -296,6 +298,7 @@ GCP: включить **PageSpeed Insights API**. Прогон: `npm run psi:lab
 
 - [ ] `documentation_creation_registry.md` canonical
 - [ ] `ai_first_project_methodology.md` canonical
+- [ ] `docs/meta/doc-waves/W{NN}_units.md` созданы для включённых волн (кроме профиля `prototype`)
 
 ### После P5
 
@@ -305,6 +308,7 @@ GCP: включить **PageSpeed Insights API**. Прогон: `npm run psi:lab
 - [ ] `cd apps/web && npm run build`
 - [ ] `proxy.ts` present, not legacy middleware patterns
 - [ ] `apps/web/CLAUDE.md` exists (`@AGENTS.md` import)
+- [ ] `scripts/{unit-driver,run-phase,run-wave,cu-verify,doc-verify,cu-commit}.mjs`, `.claude/settings.json`; `npm run drivers:test` pass
 - [ ] `next` pinned to current 16.4.x patch (no `^16`)
 - [ ] root `.npmrc` (`save-exact=true`) from `scaffold/.npmrc`; `npm run deps:check` pass; CI / Vercel on `npm ci`
 

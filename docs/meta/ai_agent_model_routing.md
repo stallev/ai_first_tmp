@@ -74,6 +74,7 @@ Cursor **Agent Review** (панель IDE, `/agent-review`, Quick/Deep) — от
 14. **MUST NOT** — варианты `-fast`, effort `xhigh` и контекст 500k, пока пользователь явно не попросил.
 15. **MUST** — один контекст держать ниже ~200k токенов (выше этого Grok 4.7 тарифицируется с множителем 2). Дальше — новый чат или делегирование. Читать файлы по пути, не перечитывать уже известное, править точечно. Когда задача закрыта или контекст устарел — предложить новый чат.
 16. **MUST** — прогон фазы: чат не пишет код; каждый CU — свежий `implementer`; verify и commit — только скрипты; production build в сессии не запускать. Канон потока — [`agent-phase-orchestration.md`](../guidelines/agent-phase-orchestration.md).
+17. **MUST** — прогон волны документации: чат не пишет и не читает документы; каждый DU — свежий `doc-writer`; verify и commit — только скрипты. Канон — [`agent-docs-orchestration.md`](../guidelines/agent-docs-orchestration.md).
 
 ### Классификация задачи
 
@@ -111,7 +112,11 @@ Sensitive zones — единый список в [`agent-code-review-subagent.md
 - Каждый CU — свежий `implementer` с блоком IMPLEMENTER драйвера; код пишет он. Правило «код готовой задачи пишет оркестратор» действует внутри этой CU-сессии и для работы вне прогона фазы.
 - Verify и commit — только `cu-verify.mjs` и `cu-commit.mjs` ([`agent-commit-pipeline.mdc`](../../.cursor/rules/agent-commit-pipeline.mdc)). Production build в сессии не запускать: его выполняет hook.
 
-Вне прогона фазы (волны документации, ad-hoc, явный коммит) код пишет оркестратор чата.
+Вне прогона фазы (ad-hoc, явный коммит) код пишет оркестратор чата.
+
+## Исполнение волны документации
+
+Канон — [`agent-docs-orchestration.md`](../guidelines/agent-docs-orchestration.md); запуск — [`prompts/wave-run.md`](../../prompts/wave-run.md). Среда — Claude Code. Те же принципы, что в «Исполнение фазы»: тонкий чат, свежий `doc-writer` на DU, verify и commit — скрипты (`doc-verify.mjs`, `cu-commit.mjs`), один гейт `doc-reviewer` на нормативный DU. Единицы волны — `docs/meta/doc-waves/W{NN}_units.md` (генерирует P2). Ручной режим «сессия = волна» остаётся для профиля `prototype`.
 
 ## Commit units
 
